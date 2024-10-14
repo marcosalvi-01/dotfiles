@@ -15,7 +15,6 @@ vim.keymap.set({ "n", "v" }, "<Down>", "j")
 vim.keymap.set({ "n", "v" }, "<BS>", "g", { remap = true })
 vim.keymap.set({ "n", "v" }, "<BS><BS>", "gg", { remap = true })
 vim.keymap.set({ "n", "v" }, "<Del>", "G", { remap = true })
-vim.keymap.set({ "n", "v" }, "<Del><Del>", "ggVG", { remap = true })
 
 -- Go handle error
 vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return err<CR>}<Esc>k$b", { desc = "[H]andle [E]rror" })
@@ -26,7 +25,7 @@ vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return err<CR>}<Esc>k$b",
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set("n", "<C-Left>", "<C-w><C-h>", { remap = true, desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-Right>", "<C-w><C-l>", { remap = true, desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-Down>", "<C-w><C-l>", { remap = true, desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-Down>", "<C-w><C-j>", { remap = true, desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-Up>", "<C-w><C-k>", { remap = true, desc = "Move focus to the upper window" })
 -- vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { remap = true, desc = "Move focus to the left window" })
 -- vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { remap = true, desc = "Move focus to the right window" })
@@ -67,3 +66,5 @@ vim.keymap.set("n", "s", "i<CR><Esc>")
 
 vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")
+
+vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete word in insert mode" })
