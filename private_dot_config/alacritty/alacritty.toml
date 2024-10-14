@@ -1,11 +1,12 @@
+live_config_reload = true
+
 [env]
 TERM = "xterm-256color"
 
 [window]
+startup_mode = "SimpleFullscreen"
 opacity = 0.5
 blur = true
-
-option_as_alt = "Both"
 
 [font]
 normal.family = "JetBrainsMono Nerd Font"

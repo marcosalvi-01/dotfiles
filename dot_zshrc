@@ -112,6 +112,7 @@ alias tmuxconfig="chezmoi edit --apply ~/.tmux.conf"
 alias p10kconfig="chezmoi edit --apply ~/.p10k.zsh && exec zsh"
 alias vim="nvim"
 alias ls="eza --icons=always"
+alias l="eza --icons=always -l"
 
 export EDITOR="nvim"
 
