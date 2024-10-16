@@ -7,6 +7,8 @@ return {
 			vim.g.gruvbox_material_background = "medium"
 			vim.g.gruvbox_material_foreground = "material"
 
+			vim.g.gruvbox_material_transparent_background = 2
+
 			vim.g.gruvbox_material_enable_italic = false
 
 			-- Enable better performance
@@ -24,8 +26,9 @@ return {
 					local bg_color = "#282828"
 					local fg_color = "#a89984"
 
-					vim.api.nvim_set_hl(0, "NormalFloat", { bg = bg_color })
-					vim.api.nvim_set_hl(0, "FloatBorder", { bg = bg_color, fg = fg_color })
+					-- Make the popups bordered and have no background
+					vim.api.nvim_set_hl(0, "NormalFloat", {})
+					vim.api.nvim_set_hl(0, "FloatBorder", { fg = fg_color })
 				end,
 			})
 

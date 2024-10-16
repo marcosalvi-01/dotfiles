@@ -16,3 +16,5 @@ vim.diagnostic.config({
 vim.filetype.add({ extension = { cwl = "cwl" } })
 -- Register cwl files as yaml for syntax highlighting
 vim.treesitter.language.register("yaml", { "yaml", "cwl" })
+
+vim.opt.pumblend = 0
