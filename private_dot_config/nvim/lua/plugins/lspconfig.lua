@@ -166,5 +166,19 @@ return {
 				end,
 			},
 		})
+
+		local lspconfig = require("lspconfig")
+		local configs = require("lspconfig.configs")
+
+		if not configs.cwl_lsp then
+			configs.cwl_lsp = {
+				default_config = {
+					cmd = { "benten-ls" },
+					root_dir = lspconfig.util.root_pattern(".git"),
+					filetypes = { "cwl" },
+				},
+			}
+		end
+		lspconfig.cwl_lsp.setup({})
 	end,
 }
