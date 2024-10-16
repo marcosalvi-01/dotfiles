@@ -1,33 +1,28 @@
--- Customized Bubbles config for lualine with brown theme and enhanced git info
--- Based on lokesh-krishna's config
--- MIT license, see LICENSE for more details.
--- stylua: ignore
 local colors = {
-  brown_dark = '#2C2117',
-  brown_light = '#8B7355',
-  beige = '#D2B48C',
-  cream = '#FAEBD7',
-  rust = '#8B4513',
-  olive = '#6B8E23',
-  sage = '#9CA97E',
-  taupe = '#483C32',
-  coffee = '#6F4E37',
+	background = "#282828", -- Dark background, unchanged
+	foreground = "#e5c7b2", -- Brighter and warmer beige foreground (slightly adjusted)
+	beige = "#f2d5bb", -- Slightly warmer beige for better contrast
+	cream = "#f8e9d1", -- Softer and lighter cream for highlights
+	olive = "#a3a12b", -- Brighter olive for better readability
+	taupe = "#6e635d", -- A slightly lighter taupe for secondary elements
+	neutral_gray = "#3e3a36", -- Neutral gray with a touch of warmth for inactive elements
+	yellow_light = "#fabd2f", -- Bright yellow, unchanged for emphasis
+	yellow_dark = "#d79921", -- Muted yellow, unchanged for balance
 }
-
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.cream, bg = colors.coffee },
-		b = { fg = colors.cream, bg = colors.taupe },
-		c = { fg = colors.beige, bg = colors.brown_dark },
+		a = { fg = colors.foreground, bg = colors.background },
+		b = { fg = colors.foreground, bg = colors.taupe },
+		c = { fg = colors.beige, bg = nil },
 	},
-	insert = { a = { fg = colors.brown_dark, bg = colors.sage } },
-	visual = { a = { fg = colors.brown_dark, bg = colors.beige } },
-	replace = { a = { fg = colors.cream, bg = colors.rust } },
-	command = { a = { fg = colors.brown_dark, bg = colors.olive } },
+	insert = { a = { fg = colors.background, bg = colors.cream } },
+	visual = { a = { fg = colors.background, bg = colors.beige } },
+	replace = { a = { fg = colors.foreground, bg = colors.olive } },
+	command = { a = { fg = colors.background, bg = colors.foreground } },
 	inactive = {
-		a = { fg = colors.beige, bg = colors.brown_dark },
-		b = { fg = colors.beige, bg = colors.brown_dark },
-		c = { fg = colors.beige, bg = colors.brown_dark },
+		a = { fg = colors.foreground, bg = nil },
+		b = { fg = colors.foreground, bg = nil },
+		c = { fg = colors.foreground, bg = nil },
 	},
 }
 
@@ -51,15 +46,15 @@ return {
 					{
 						"branch",
 						icon = "⎇", -- Branch icon
-						color = { fg = colors.cream, bg = colors.taupe },
+						color = { fg = colors.foreground, bg = colors.taupe },
 					},
 					{
 						"diff",
-						symbols = { added = "+", modified = "~", removed = "-" }, -- Git status symbols
+						symbols = { added = "+", modified = "~", removed = "-" },
 						diff_color = {
-							added = { fg = colors.sage, bg = colors.taupe },
+							added = { fg = colors.yellow_light, bg = colors.taupe },
 							modified = { fg = colors.beige, bg = colors.taupe },
-							removed = { fg = colors.rust, bg = colors.taupe },
+							removed = { fg = colors.olive, bg = colors.taupe },
 						},
 					},
 				},
@@ -69,25 +64,25 @@ return {
 						sources = { "nvim_diagnostic" },
 						symbols = { error = " ", warn = " ", info = " ", hint = " " },
 						diagnostics_color = {
-							error = { fg = colors.rust, bg = colors.brown_dark },
-							warn = { fg = colors.olive, bg = colors.brown_dark },
-							info = { fg = colors.sage, bg = colors.brown_dark },
-							hint = { fg = colors.beige, bg = colors.brown_dark },
+							error = { fg = colors.olive, bg = colors.background },
+							warn = { fg = colors.yellow_dark, bg = colors.background },
+							info = { fg = colors.yellow_light, bg = colors.background },
+							hint = { fg = colors.beige, bg = colors.background },
 						},
 					},
 				},
 				lualine_x = {
-					{ "encoding", fg = colors.beige, bg = colors.brown_dark },
+					{ "encoding", fg = colors.beige, bg = colors.background },
 					{
 						"fileformat",
 						symbols = { unix = "LF", dos = "CRLF", mac = "CR" },
 						fg = colors.beige,
-						bg = colors.brown_dark,
+						bg = colors.background,
 					},
 				},
 				lualine_y = {
-					{ "filetype", fg = colors.cream, bg = colors.taupe },
-					{ "progress", fg = colors.cream, bg = colors.taupe },
+					{ "filetype", fg = colors.foreground, bg = colors.taupe },
+					{ "progress", fg = colors.foreground, bg = colors.taupe },
 				},
 				lualine_z = {
 					{ "location", separator = { right = "" }, left_padding = 2 },

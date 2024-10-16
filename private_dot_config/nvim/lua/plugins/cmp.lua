@@ -67,11 +67,10 @@ return { -- Autocompletion
 			window = {
 				documentation = cmp.config.window.bordered(),
 				completion = cmp.config.window.bordered({
-					winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+					winhighlight = "Scrollbar:CmpScrollbar,ScrollbarThumb:CmpScrollbarThumb",
+					scrolloff = 1,
 				}),
 			},
-			letion = { completeopt = "menu,menuone,noinsert" },
-
 			-- For an understanding of why these mappings were
 			-- chosen, you will need to read `:help ins-completion`
 			--
