@@ -12,3 +12,7 @@ blur = true
 normal.family = "JetBrainsMono Nerd Font"
 
 size = 21
+
+[mouse]
+hide_when_typing = true
+
