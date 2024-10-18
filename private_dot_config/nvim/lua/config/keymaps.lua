@@ -30,7 +30,7 @@ vim.keymap.set("n", "<C-Down>", "<C-w><C-j>", { remap = true, desc = "Move focus
 vim.keymap.set("n", "<C-Up>", "<C-w><C-k>", { remap = true, desc = "Move focus to the upper window" })
 
 -- File explorer (netrw)
-vim.keymap.set("n", "-", vim.cmd.Ex)
+-- vim.keymap.set("n", "-", vim.cmd.Ex)
 
 -- Move lines
 vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down one line" })
