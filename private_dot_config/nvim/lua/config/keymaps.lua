@@ -16,6 +16,7 @@ vim.keymap.set({ "n", "v" }, "<Down>", "j")
 
 -- Backspace as 'g'
 vim.keymap.set({ "n", "v" }, "<BS>", "g", { remap = true })
+vim.keymap.set({ "n", "v" }, "<BS>cc", "gcc", { remap = true })
 vim.keymap.set({ "n", "v" }, "<BS><BS>", "gg", { remap = true })
 vim.keymap.set({ "n", "v" }, "<Del>", "G", { remap = true })
 
