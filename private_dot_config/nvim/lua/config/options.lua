@@ -58,3 +58,5 @@ vim.opt.foldlevelstart = -1
 vim.opt.updatetime = 50
 
 vim.opt.termguicolors = true
+
+vim.opt.timeoutlen = 200
