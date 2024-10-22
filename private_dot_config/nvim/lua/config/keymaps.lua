@@ -68,3 +68,5 @@ vim.keymap.set("v", "<leader>p", "p")
 vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete word in insert mode" })
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
+
+vim.keymap.set("n", "<leader>s", ":w<CR>", { desc = "Save buffer" })
