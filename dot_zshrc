@@ -123,13 +123,11 @@ export EDITOR="nvim"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Created by `pipx` on 2024-10-16 12:47:47
-export PATH="$PATH:/Users/marcosalvi/.local/bin"
-
 export PATH="$PATH:/snap/bin/"
 
-# Created by `pipx` on 2024-10-19 17:04:42
-export PATH="$PATH:/home/marco/.local/bin"
+# pipx
+export PATH="$PATH:/home/$USER/.local/bin"
+export PATH="$PATH:/Users/$USER/.local/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

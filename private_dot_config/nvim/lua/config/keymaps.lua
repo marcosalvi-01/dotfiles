@@ -30,9 +30,6 @@ vim.keymap.set("n", "<C-Right>", "<C-w><C-l>", { remap = true, desc = "Move focu
 vim.keymap.set("n", "<C-Down>", "<C-w><C-j>", { remap = true, desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-Up>", "<C-w><C-k>", { remap = true, desc = "Move focus to the upper window" })
 
--- File explorer (netrw)
--- vim.keymap.set("n", "-", vim.cmd.Ex)
-
 -- Move lines
 vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down one line" })
 vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selected line up one line" })
@@ -65,7 +62,8 @@ vim.keymap.set("n", "s", "i<CR><Esc>")
 vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")
 
-vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete word in insert mode" })
+-- using ctrl + h because kitty seems to interpret ctrl + backspace as that, don't know why
+vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete word in insert mode" })
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
