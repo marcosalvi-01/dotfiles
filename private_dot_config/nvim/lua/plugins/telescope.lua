@@ -52,7 +52,7 @@ return {
 		vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep (Telescope)" })
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics (Telescope)" })
 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume (Telescope)" })
-		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers (Telescope)" })
+		vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "[ ] Find existing buffers (Telescope)" })
 		vim.keymap.set(
 			"n",
 			"<leader>s.",

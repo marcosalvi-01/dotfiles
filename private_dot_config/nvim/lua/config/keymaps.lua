@@ -15,10 +15,10 @@ vim.keymap.set({ "n", "v" }, "<Up>", "k")
 vim.keymap.set({ "n", "v" }, "<Down>", "j")
 
 -- Backspace as 'g'
-vim.keymap.set({ "n", "v" }, "<BS>", "g", { remap = true })
-vim.keymap.set({ "n", "v" }, "<BS>cc", "gcc", { remap = true })
-vim.keymap.set({ "n", "v" }, "<BS><BS>", "gg", { remap = true })
-vim.keymap.set({ "n", "v" }, "<Del>", "G", { remap = true })
+vim.keymap.set({ "n", "v" }, "<BS>", "g")
+-- vim.keymap.set({ "n", "v" }, "<BS><BS>", "gg", { remap = true })
+-- vim.keymap.set({ "n", "v" }, "<DEL>", "G", { remap = true })
+-- vim.keymap.set({ "n", "v" }, "<S-BS>", "G", { remap = true })
 
 -- Go handle error
 vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return err<CR>}<Esc>k$b", { desc = "[H]andle [E]rror" })
@@ -67,4 +67,6 @@ vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete word in insert mode" })
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
-vim.keymap.set("n", "<leader>s", ":w<CR>", { desc = "Save buffer" })
+--vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "[W]rite buffer" })
+vim.keymap.set({ "i", "n" }, "<leader>w", "<cmd>silent! wa<cr>", { desc = "[W]rite all buffer" })
+
