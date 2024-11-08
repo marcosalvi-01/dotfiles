@@ -68,5 +68,5 @@ vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete word in insert mode" })
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
 --vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "[W]rite buffer" })
-vim.keymap.set({ "i", "n" }, "<leader>w", "<cmd>silent! wa<cr>", { desc = "[W]rite all buffer" })
+vim.keymap.set({ "i", "n" }, "<leader>w", "<cmd>silent! wa<cr><cmd>echo 'All buffer changes written'<cr>", { desc = "[W]rite all buffer" })
 
