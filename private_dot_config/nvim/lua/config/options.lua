@@ -59,7 +59,7 @@ vim.opt.updatetime = 50
 
 vim.opt.termguicolors = true
 
-vim.opt.timeoutlen = 200
+--vim.opt.timeoutlen = 200
 
 -- Hide the tilde empty lines
 vim.opt.fillchars = {eob = " "}
