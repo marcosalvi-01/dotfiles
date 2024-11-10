@@ -17,7 +17,7 @@ return {
 			},
 		},
 		hints = {
-			dictionary = "crstneiadvjh.,lyfpuo",
+			dictionary = "neiatsrch.,-dvjw",
 		},
 		sort = "default",
 	},

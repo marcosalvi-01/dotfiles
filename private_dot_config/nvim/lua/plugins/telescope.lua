@@ -23,11 +23,31 @@ return {
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 	},
 	config = function()
+		local actions = require("telescope.actions")
 		require("telescope").setup({
 			defaults = {
 				mappings = {
-					-- i = { ["<c-enter>"] = "to_fuzzy_refine" },
-					i = { ["<c-s>"] = "select_vertical" },
+					-- i = {  },
+					i = {
+						-- Open in vertical slit
+						["<c-s>"] = "select_vertical",
+						-- Clear the prompt
+						["<c-u>"] = false,
+						-- Close the telescope window with <BS> if the prompt is empty
+						["<bs>"] = function(bufnr)
+							local prompt = require("telescope.actions.state").get_current_line()
+							if prompt == "" then
+								actions.close(bufnr)
+							else
+								vim.api.nvim_feedkeys(
+									vim.api.nvim_replace_termcodes("<bs>", true, true, true),
+									"n",
+									false
+								)
+							end
+						end,
+						["<c-enter>"] = "to_fuzzy_refine",
+					},
 				},
 			},
 			extensions = {
