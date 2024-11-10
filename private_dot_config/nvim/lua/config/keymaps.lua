@@ -23,13 +23,6 @@ vim.keymap.set({ "n", "v" }, "<BS>", "g")
 -- Go handle error
 vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return err<CR>}<Esc>k$b", { desc = "[H]andle [E]rror" })
 
--- Keybinds to make split navigation easier.
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set("n", "<C-Left>", "<C-w><C-h>", { remap = true, desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-Right>", "<C-w><C-l>", { remap = true, desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-Down>", "<C-w><C-j>", { remap = true, desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-Up>", "<C-w><C-k>", { remap = true, desc = "Move focus to the upper window" })
-
 -- Move lines
 vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down one line" })
 vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selected line up one line" })
