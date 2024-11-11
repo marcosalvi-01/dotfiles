@@ -127,6 +127,7 @@ export EDITOR="nvim"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH="$PATH:/snap/bin/"
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # pipx
 export PATH="$PATH:/home/$USER/.local/bin"
