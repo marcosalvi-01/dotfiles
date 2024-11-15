@@ -1,3 +1,15 @@
+-- Declare a global function to retrieve the current directory
+local function get_buf_name()
+	local dir = require("oil").get_current_dir()
+	if dir then
+		return vim.fn.fnamemodify(dir, ":~")
+	else
+		-- Get the buffer name and strip the path to get only the file name
+		local buf_name = vim.api.nvim_buf_get_name(0)
+		return vim.fn.fnamemodify(buf_name, ":t")
+	end
+end
+
 local colors = {
 	background = "#282828", -- Dark background, unchanged
 	foreground = "#e5c7b2", -- Brighter and warmer beige foreground (slightly adjusted)
@@ -8,6 +20,7 @@ local colors = {
 	neutral_gray = "#3e3a36", -- Neutral gray with a touch of warmth for inactive elements
 	yellow_light = "#fabd2f", -- Bright yellow, unchanged for emphasis
 	yellow_dark = "#d79921", -- Muted yellow, unchanged for balance
+	red = "#993300",
 }
 local bubbles_theme = {
 	normal = {
@@ -42,7 +55,8 @@ return {
 					{ "mode", separator = { left = "" }, right_padding = 2 },
 				},
 				lualine_b = {
-					"filename",
+					get_buf_name,
+					--"filename",
 					{
 						"branch",
 						icon = "⎇", -- Branch icon
@@ -64,7 +78,7 @@ return {
 						sources = { "nvim_diagnostic" },
 						symbols = { error = " ", warn = " ", info = " ", hint = " " },
 						diagnostics_color = {
-							error = { fg = colors.olive, bg = colors.background },
+							error = { fg = colors.red, bg = colors.background },
 							warn = { fg = colors.yellow_dark, bg = colors.background },
 							info = { fg = colors.yellow_light, bg = colors.background },
 							hint = { fg = colors.beige, bg = colors.background },
@@ -89,7 +103,10 @@ return {
 				},
 			},
 			inactive_sections = {
-				lualine_a = { "filename" },
+				lualine_a = {
+					get_buf_name,
+					--"filename"
+				},
 				lualine_b = {},
 				lualine_c = {},
 				lualine_x = {},
@@ -97,7 +114,7 @@ return {
 				lualine_z = { "location" },
 			},
 			tabline = {},
-			extensions = {},
+			extensions = { "oil", "fugitive", "man", "mason", "lazy", "quickfix" },
 		})
 	end,
 }

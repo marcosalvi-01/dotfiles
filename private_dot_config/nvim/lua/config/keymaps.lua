@@ -56,7 +56,7 @@ vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")
 
 -- using ctrl + h because kitty seems to interpret ctrl + backspace as that, don't know why
-vim.keymap.set("i", "<C-H>", "<C-w>", { desc = "Delete word in insert mode" })
+vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete word in insert mode" })
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
@@ -67,3 +67,5 @@ vim.keymap.set(
 	"<cmd>silent! wa<cr><cmd>echo 'All buffer changes written'<cr>",
 	{ desc = "[W]rite all buffer" }
 )
+
+vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
