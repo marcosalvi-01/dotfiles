@@ -31,47 +31,32 @@ return {
 	---@module 'oil'
 	---@type oil.SetupOpts
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	opts = {
-		keymaps = {
-			["g?"] = "actions.show_help",
-			["<CR>"] = "actions.select",
-			["<C-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-			["<C-h>"] = {
-				"actions.select",
-				opts = { horizontal = true },
-				desc = "Open the entry in a horizontal split",
-			},
-			["<C-p>"] = "actions.preview",
-			["<C-c>"] = "actions.close",
-			["<C-l>"] = "actions.refresh",
-			["-"] = "actions.parent",
-			["_"] = "actions.open_cwd",
-			["`"] = "actions.cd",
-			-- ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory", mode = "n" },
-			["gs"] = "actions.change_sort",
-			["g."] = "actions.toggle_hidden",
-			-- ["g\\"] = "actions.toggle_trash",
-		},
-		use_default_keymaps = false,
-		view_options = {
-			show_hidden = true,
-			is_hidden_file = function(name)
-				local not_hidden_dotfiles = {
-					"../",
-					".gitignore",
-				}
-				if vim.startswith(name, ".") and not vim.tbl_contains(not_hidden_dotfiles, name) then
-					return true
-				end
-				local ignored_files = get_git_ignored_files_in(require("oil").get_current_dir())
-				return vim.tbl_contains(ignored_files, name)
-			end,
-		},
-	},
 	config = function()
 		local detail = false
 		require("oil").setup({
 			keymaps = {
+				["g?"] = "actions.show_help",
+				["<CR>"] = "actions.select",
+				["<C-s>"] = {
+					"actions.select",
+					opts = { vertical = true },
+					desc = "Open the entry in a vertical split",
+				},
+				["<C-h>"] = {
+					"actions.select",
+					opts = { horizontal = true },
+					desc = "Open the entry in a horizontal split",
+				},
+				["<C-p>"] = "actions.preview",
+				["<C-c>"] = "actions.close",
+				["<C-l>"] = "actions.refresh",
+				["-"] = "actions.parent",
+				["_"] = "actions.open_cwd",
+				["`"] = "actions.cd",
+				-- ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory", mode = "n" },
+				["gs"] = "actions.change_sort",
+				["g."] = "actions.toggle_hidden",
+				-- ["g\\"] = "actions.toggle_trash",
 				["gd"] = {
 					desc = "Toggle file detail view (Oil)",
 					callback = function()
@@ -84,7 +69,26 @@ return {
 					end,
 				},
 			},
-			-- Enable oil-git-status (it needs to be here)
+			use_default_keymaps = false,
+			view_options = {
+				show_hidden = false,
+				is_hidden_file = function(name)
+					-- Two possibilities:
+					-- - git repo: a file is hidden only if it is ignored or it is in the "ignored" table
+					-- - non git repo: a file is hidden only if it starts with "."
+					local ignored_files = get_git_ignored_files_in(vim.fn.getcwd())
+					if ignored_files == {} then
+						return vim.startswith(name, ".")
+					end
+
+					local ignored = {
+						".git",
+					}
+
+					return vim.tbl_contains(ignored_files, name) or vim.tbl_contains(ignored, name)
+				end,
+			},
+			-- Enable oil-git-status
 			win_options = {
 				signcolumn = "yes:2",
 			},

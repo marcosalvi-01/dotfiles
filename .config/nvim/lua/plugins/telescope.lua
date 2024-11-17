@@ -23,11 +23,9 @@ return {
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 	},
 	config = function()
-		local actions = require("telescope.actions")
 		require("telescope").setup({
 			defaults = {
 				mappings = {
-					-- i = {  },
 					i = {
 						-- Open in vertical slit
 						["<c-s>"] = "select_vertical",
@@ -37,7 +35,7 @@ return {
 						["<bs>"] = function(bufnr)
 							local prompt = require("telescope.actions.state").get_current_line()
 							if prompt == "" then
-								actions.close(bufnr)
+								require("telescope.actions").close(bufnr)
 							else
 								vim.api.nvim_feedkeys(
 									vim.api.nvim_replace_termcodes("<bs>", true, true, true),
@@ -65,7 +63,12 @@ return {
 		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp (Telescope)" })
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps (Telescope)" })
-		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles (Telescope)" })
+		vim.keymap.set(
+			"n",
+			"<leader>sf",
+			"<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>",
+			{ desc = "[S]earch [F]iles (Telescope)" }
+		)
 		vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Search [G]it [F]iles (Telescope)" })
 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope (Telescope)" })
 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord (Telescope)" })
