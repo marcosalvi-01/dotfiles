@@ -78,14 +78,15 @@ zstyle ':fzf-tab:complete:diff:*' popup-min-size 80 12	# only apply to 'diff'
 zstyle ':fzf-tab:*' redraw-prompt true
 
 # Aliases
-alias ls='eza --icons=always'
 alias l='eza --icons=always -l --git'
+alias ls='eza --icons=always'
 alias la='eza --icons=always -la --git'
 alias lt='eza --icons=always -l --tree --git --level 3'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias vim='nvim .'
+alias vim='nvim'
+alias xx='exit'
 
 export EDITOR="nvim"
 
