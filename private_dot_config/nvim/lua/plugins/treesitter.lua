@@ -4,7 +4,7 @@ return {
 		require("nvim-treesitter.configs").setup({
 			indent = {
 				enable = true,
-				disable = { "cwl" },
+				disable = { "cwl", "json" },
 			},
 			modules = {},
 			-- A list of parser names, or "all" (the listed parsers MUST always be installed)
