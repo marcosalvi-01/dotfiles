@@ -119,7 +119,7 @@ alias p10kconfig="chezmoi edit --apply ~/.p10k.zsh && exec zsh"
 alias vim="nvim"
 alias ls="eza --icons=always"
 alias l="eza --icons=always -l --git"
-alias lt="eza --icons=always -la --tree --git --level 3"
+alias lt="eza --icons=always -l --tree --git --level 3"
 
 export EDITOR="nvim"
 
