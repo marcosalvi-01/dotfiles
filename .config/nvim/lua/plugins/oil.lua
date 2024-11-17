@@ -94,11 +94,10 @@ return {
 			},
 		})
 
-		-- TODO
-		vim.api.nvim_create_autocmd("BufLeave", {
-			pattern = "*.oil",
+		-- Discard all oil changes when leaving the oil buffer
+		vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" }, {
+			pattern = { "oil://*" },
 			callback = function()
-				print("Oil changes discarded")
 				require("oil").discard_all_changes()
 			end,
 		})
