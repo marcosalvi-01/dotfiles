@@ -206,9 +206,9 @@
   typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=
 
   ##################################[ dir: current directory ]##################################
-  typeset -g POWERLEVEL9K_DIR_PATH_SEPARATOR_FOREGROUND=108
+  typeset -g POWERLEVEL9K_DIR_PATH_SEPARATOR_FOREGROUND='#83a598'
   # Default current directory color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=108
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND='#83a598'
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
@@ -342,7 +342,8 @@
 
   #####################################[ vcs: git status ]######################################
   # Branch icon. Set this parameter to '\UE0A0 ' for the popular Powerline branch icon.
-  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='⎇ '
+  #typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='⎇ '
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='󰘬 '
   #typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\UE0A0 '
 
   # Untracked files icon. It's really a question mark, your font isn't broken.
