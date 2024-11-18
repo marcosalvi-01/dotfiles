@@ -59,7 +59,7 @@ return {
 					--"filename",
 					{
 						"branch",
-						icon = "⎇", -- Branch icon
+						icon = "󰘬", -- Branch icon
 						color = { fg = colors.foreground, bg = colors.taupe },
 					},
 					{
@@ -114,7 +114,7 @@ return {
 				lualine_z = { "location" },
 			},
 			tabline = {},
-			extensions = { "oil", "fugitive", "man", "mason", "lazy", "quickfix" },
+			extensions = { "oil", "man", "mason", "lazy", "quickfix" },
 		})
 	end,
 }
