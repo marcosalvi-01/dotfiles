@@ -70,4 +70,4 @@ vim.keymap.set(
 
 vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
 
-vim.keymap.set("n", "<leader>nl", "<cmd>Noice log<cr>", { desc = "Open [N]oice [L]ogs" })
+vim.keymap.set("n", "<leader>nl", "<cmd>Noice telescope<cr>", { desc = "Open [N]oice [L]ogs" })

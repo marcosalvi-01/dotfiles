@@ -6,36 +6,43 @@ local function get_buf_name()
 	else
 		-- Get the buffer name and strip the path to get only the file name
 		local buf_name = vim.api.nvim_buf_get_name(0)
-		return vim.fn.fnamemodify(buf_name, ":t")
+		local file_name = vim.fn.fnamemodify(buf_name, ":t")
+		-- Check if the buffer is modified and add an icon if it is
+		if vim.bo.modified then
+			return file_name .. " ●"
+		else
+			return file_name
+		end
 	end
 end
 
 local colors = {
-	background = "#282828", -- Dark background, unchanged
-	foreground = "#e5c7b2", -- Brighter and warmer beige foreground (slightly adjusted)
-	beige = "#f2d5bb", -- Slightly warmer beige for better contrast
-	cream = "#f8e9d1", -- Softer and lighter cream for highlights
-	olive = "#a3a12b", -- Brighter olive for better readability
-	taupe = "#6e635d", -- A slightly lighter taupe for secondary elements
-	neutral_gray = "#3e3a36", -- Neutral gray with a touch of warmth for inactive elements
-	yellow_light = "#fabd2f", -- Bright yellow, unchanged for emphasis
-	yellow_dark = "#d79921", -- Muted yellow, unchanged for balance
-	red = "#993300",
+	background = "#282828", -- Gruvbox fg1
+	foreground = "#ddc7a1", -- Gruvbox fg2
+	taupe = "#504945", -- Gruvbox color2
+	neutral_gray = "#32302f", -- Gruvbox color3
+	beige = "#a89984", -- Gruvbox color4
+	blue_green = "#7daea3", -- Gruvbox color5
+	greenish = "#a9b665", -- Gruvbox color6
+	yellowish = "#d8a657", -- Gruvbox color7
+	pinkish = "#d3869b", -- Gruvbox color8
+	reddish = "#ea6962", -- Gruvbox color9
 }
+
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.foreground, bg = colors.background },
-		b = { fg = colors.foreground, bg = colors.taupe },
-		c = { fg = colors.beige, bg = nil },
+		a = { fg = colors.background, bg = colors.beige, gui = "bold" },
+		b = { fg = colors.foreground, bg = colors.background, gui = "bold" },
+		c = { fg = colors.foreground, bg = nil, gui = "bold" },
 	},
-	insert = { a = { fg = colors.background, bg = colors.cream } },
-	visual = { a = { fg = colors.background, bg = colors.beige } },
-	replace = { a = { fg = colors.foreground, bg = colors.olive } },
-	command = { a = { fg = colors.background, bg = colors.foreground } },
+	insert = { a = { fg = colors.background, bg = colors.greenish, gui = "bold" } },
+	visual = { a = { fg = colors.background, bg = colors.reddish, gui = "bold" } },
+	replace = { a = { fg = colors.background, bg = colors.yellowish, gui = "bold" } },
+	command = { a = { fg = colors.background, bg = colors.blue_green, gui = "bold" } },
 	inactive = {
-		a = { fg = colors.foreground, bg = nil },
-		b = { fg = colors.foreground, bg = nil },
-		c = { fg = colors.foreground, bg = nil },
+		a = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
+		b = { fg = colors.foreground, bg = colors.background, gui = "bold" },
+		c = { fg = colors.foreground, bg = nil, gui = "bold" },
 	},
 }
 
@@ -53,22 +60,21 @@ return {
 			sections = {
 				lualine_a = {
 					{ "mode", separator = { left = "" }, right_padding = 2 },
-				},
-				lualine_b = {
-					get_buf_name,
-					--"filename",
 					{
 						"branch",
 						icon = "󰘬", -- Branch icon
-						color = { fg = colors.foreground, bg = colors.taupe },
+						color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
 					},
+				},
+				lualine_b = {
+					get_buf_name,
 					{
 						"diff",
 						symbols = { added = "+", modified = "~", removed = "-" },
 						diff_color = {
-							added = { fg = colors.yellow_light, bg = colors.taupe },
-							modified = { fg = colors.beige, bg = colors.taupe },
-							removed = { fg = colors.olive, bg = colors.taupe },
+							added = { fg = colors.greenish, gui = "bold" },
+							modified = { fg = colors.yellowish, gui = "bold" },
+							removed = { fg = colors.reddish, gui = "bold" },
 						},
 					},
 				},
@@ -76,37 +82,33 @@ return {
 					{
 						"diagnostics",
 						sources = { "nvim_diagnostic" },
-						symbols = { error = " ", warn = " ", info = " ", hint = " " },
+						symbols = { error = " ", warn = " ", info = " ", hint = " " },
 						diagnostics_color = {
-							error = { fg = colors.red, bg = colors.background },
-							warn = { fg = colors.yellow_dark, bg = colors.background },
-							info = { fg = colors.yellow_light, bg = colors.background },
-							hint = { fg = colors.beige, bg = colors.background },
+							error = { fg = colors.reddish, gui = "bold" },
+							warn = { fg = colors.yellowish, gui = "bold" },
+							info = { fg = colors.blue_green, gui = "bold" },
+							hint = { fg = colors.beige, gui = "bold" },
 						},
 					},
 				},
 				lualine_x = {
-					{ "encoding", fg = colors.beige, bg = colors.background },
+					{ "encoding", color = { fg = colors.beige, bg = colors.background, gui = "bold" } },
 					{
 						"fileformat",
 						symbols = { unix = "LF", dos = "CRLF", mac = "CR" },
-						fg = colors.beige,
-						bg = colors.background,
+						color = { fg = colors.beige, bg = colors.background, gui = "bold" },
 					},
 				},
 				lualine_y = {
-					{ "filetype", fg = colors.foreground, bg = colors.taupe },
-					{ "progress", fg = colors.foreground, bg = colors.taupe },
+					{ "filetype", color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" } },
+					{ "progress", color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" } },
 				},
 				lualine_z = {
 					{ "location", separator = { right = "" }, left_padding = 2 },
 				},
 			},
 			inactive_sections = {
-				lualine_a = {
-					get_buf_name,
-					--"filename"
-				},
+				lualine_a = { get_buf_name },
 				lualine_b = {},
 				lualine_c = {},
 				lualine_x = {},
