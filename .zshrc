@@ -90,6 +90,17 @@ alias xx='exit'
 
 export EDITOR="nvim"
 
+# Fzf preview theme: not working right now
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --color=fg:-1,fg+:#ddc7a1,bg:-1,bg+:#32302f
+  --color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b
+  --color=prompt:#689d6a,spinner:#83a598,pointer:#ddc7a1,header:#83a598
+  --color=gutter:#1d1d1d,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae
+  --color=query:#d4be98
+  --border="rounded" --border-label="" --preview-window="border-rounded" --padding=""
+  --prompt="❯ " --marker="❯" --pointer="❯" --separator="─"
+  --scrollbar="│" --layout="reverse" --info="right"'
+
 # SDKMAN (lazy-loaded)
 export SDKMAN_DIR="$HOME/.sdkman"
 if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then

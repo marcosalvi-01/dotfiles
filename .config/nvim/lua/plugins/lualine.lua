@@ -31,13 +31,13 @@ local colors = {
 
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.background, bg = colors.beige, gui = "bold" },
+		a = { fg = colors.background, bg = colors.yellowish, gui = "bold" },
 		b = { fg = colors.foreground, bg = colors.background, gui = "bold" },
 		c = { fg = colors.foreground, bg = nil, gui = "bold" },
 	},
 	insert = { a = { fg = colors.background, bg = colors.greenish, gui = "bold" } },
 	visual = { a = { fg = colors.background, bg = colors.reddish, gui = "bold" } },
-	replace = { a = { fg = colors.background, bg = colors.yellowish, gui = "bold" } },
+	replace = { a = { fg = colors.background, bg = colors.pinkish, gui = "bold" } },
 	command = { a = { fg = colors.background, bg = colors.blue_green, gui = "bold" } },
 	inactive = {
 		a = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
