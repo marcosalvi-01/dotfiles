@@ -20,6 +20,7 @@ vim.opt.expandtab = false
 
 -- Linewrap
 vim.opt.wrap = false
+vim.opt.linebreak = true
 vim.opt.sidescrolloff = 30
 
 -- Undo
