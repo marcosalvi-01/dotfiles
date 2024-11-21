@@ -11,6 +11,16 @@ return { -- Collection of various small independent plugins/modules
 		-- - sr)'  - [S]urround [R]eplace [)] [']
 		require("mini.surround").setup()
 
+		-- Move lines in every direction
+		require("mini.move").setup({
+			mappings = {
+				left = "<S-Left>",
+				right = "<S-Right>",
+				down = "<S-Down>",
+				up = "<S-Up>",
+			},
+		})
+
 		-- ... and there is more!
 		--  Check out: https://github.com/echasnovski/mini.nvim
 	end,

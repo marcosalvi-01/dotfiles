@@ -15,6 +15,7 @@ return {
 			open_win_override = {
 				border = "rounded",
 			},
+			text_align = "file-first"
 		},
 		hints = {
 			dictionary = "neiatsrch.,-dvjw",

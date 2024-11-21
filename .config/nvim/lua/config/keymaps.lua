@@ -3,10 +3,12 @@
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show error" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfixlist" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show [E]rror" })
 vim.keymap.set("n", "ge", vim.diagnostic.goto_next, { desc = "[G]o to next [E]rror" })
 vim.keymap.set("n", "gE", vim.diagnostic.goto_prev, { desc = "[G]o to next [E]rror" })
+vim.keymap.set("n", "<leader>gE", vim.cmd.cprev, { desc = "[G]o to previous [E]rror in the Quickfix list" })
+vim.keymap.set("n", "<leader>ge", vim.cmd.cnext, { desc = "[G]o to next [E]rror in the Quickfix list" })
 
 -- Remap arrows
 vim.keymap.set({ "n", "v" }, "<Left>", "h")
@@ -24,8 +26,8 @@ vim.keymap.set({ "n", "v" }, "<BS>", "g")
 vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return err<CR>}<Esc>k$b", { desc = "[H]andle [E]rror" })
 
 -- Move lines
-vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down one line" })
-vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selected line up one line" })
+-- vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down one line" })
+-- vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selected line up one line" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving the cursor" })
 
@@ -72,4 +74,4 @@ vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
 
 vim.keymap.set("n", "<leader>nl", "<cmd>Noice telescope<cr>", { desc = "Open [N]oice [L]ogs" })
 
-vim.keymap.set("n", "<leader>osw", "<cmd>set wrap<cr>", {desc = "([O]ptions) [S]et [W]rap"})
+vim.keymap.set("n", "<leader>osw", "<cmd>set wrap<cr>", { desc = "([O]ptions) [S]et [W]rap" })

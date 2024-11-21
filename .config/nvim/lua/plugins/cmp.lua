@@ -122,5 +122,9 @@ return { -- Autocompletion
 				{ name = "buffer" },
 			},
 		})
+
+		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+		cmp.event:on("confirmation_done", cmp_autopairs.on_confirm_done()
+)
 	end,
 }
