@@ -9,6 +9,10 @@ return {
 			resize = {
 				enable_default_keybindings = false,
 			},
+			-- IMPORTANT: sync with the system clipboard
+			copy_sync = {
+				redirect_to_clipboard = true,
+			},
 		})
 
 		require("tmux.keymaps").register("n", {
