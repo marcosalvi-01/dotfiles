@@ -77,6 +77,11 @@ config.keys = {
 		mods = "CMD",
 		action = wezterm.action.DecreaseFontSize,
 	},
+	{
+		key = "v",
+		mods = "CTRL",
+		action = wezterm.action.PasteFrom("Clipboard"),
+	},
 }
 
 config.max_fps = 144

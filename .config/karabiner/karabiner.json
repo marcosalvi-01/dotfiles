@@ -4,6 +4,54 @@
       "complex_modifications": {
         "rules": [
           {
+            "description": "Launch Google Chrome with Ctrl+Option+Cmd+Shift+1",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift",
+                      "option",
+                      "control",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "open -a 'Google Chrome'"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Launch WezTerm with Ctrl+Option+Cmd+Shift+0",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift",
+                      "option",
+                      "control",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "open -a wezterm"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "description": "Ctrl+C, Ctrl+V, Ctrl+X => Cmd+C (Copy), Cmd+V (Paste), Cmd+X (Cut)",
             "manipulators": [
               {
