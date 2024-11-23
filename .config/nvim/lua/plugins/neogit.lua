@@ -15,6 +15,7 @@ return {
 				item = { "", "" },
 				section = { "", "" },
 			},
+			graph_style = "kitty",
 		})
 		vim.keymap.set(
 			"n",

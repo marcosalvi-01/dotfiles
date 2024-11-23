@@ -2,8 +2,15 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- Set font
-config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono", { weight = "Regular" })
+config.font = wezterm.font_with_fallback({
+	"JetBrainsMonoNL Nerd Font Mono",
+	-- https://github.com/rbong/flog-symbols to display git branches
+	"Flog Symbols",
+})
 config.font_size = 21
+
+config.enable_kitty_graphics = true
+config.enable_kitty_keyboard = true
 
 -- Disable ligatures
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }

@@ -37,6 +37,7 @@ return {
 			keymaps = {
 				["g?"] = "actions.show_help",
 				["<CR>"] = "actions.select",
+				["<Tab>"] = "actions.select",
 				["<C-s>"] = {
 					"actions.select",
 					opts = { vertical = true },
