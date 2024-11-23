@@ -12,6 +12,8 @@ config.font_size = 21
 config.enable_kitty_graphics = true
 config.enable_kitty_keyboard = true
 
+config.default_domain = "WSL:Ubuntu"
+
 -- Disable ligatures
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
