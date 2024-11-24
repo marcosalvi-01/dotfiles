@@ -184,5 +184,17 @@ return {
 			}
 		end
 		lspconfig.cwl_lsp.setup({})
+
+		-- set the nixlsp to be nil (not installed by mason)
+		if not configs.nix_lsp then
+			configs.nix_lsp = {
+				default_config = {
+					cmd = { "nil" },
+					root_dir = lspconfig.util.root_pattern(".git"),
+					filetypes = { "nix" },
+				},
+			}
+		end
+		lspconfig.nix_lsp.setup({})
 	end,
 }
