@@ -12,7 +12,7 @@ config.font_size = 21
 config.enable_kitty_graphics = true
 config.enable_kitty_keyboard = true
 
-config.default_domain = "WSL:Ubuntu"
+-- config.default_domain = "WSL:Ubuntu"
 
 -- Disable ligatures
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
@@ -82,7 +82,7 @@ config.keys = {
 	},
 	{
 		-- for some reason wezterm identifies - as = (at least on mac)
-		key = "=",
+		key = "-",
 		mods = "CMD",
 		action = wezterm.action.DecreaseFontSize,
 	},
