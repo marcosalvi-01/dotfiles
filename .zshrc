@@ -89,6 +89,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias vim='nvim'
 alias xx='exit'
+alias pipes='pipes.sh -t 3'
 
 export EDITOR="nvim"
 
