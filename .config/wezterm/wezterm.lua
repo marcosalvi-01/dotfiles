@@ -81,7 +81,6 @@ config.keys = {
 		action = wezterm.action.IncreaseFontSize,
 	},
 	{
-		-- for some reason wezterm identifies - as = (at least on mac)
 		key = "-",
 		mods = "CMD",
 		action = wezterm.action.DecreaseFontSize,
@@ -90,6 +89,11 @@ config.keys = {
 		key = "v",
 		mods = "CTRL",
 		action = wezterm.action.PasteFrom("Clipboard"),
+	},
+	{
+		key = "Enter",
+		mods = "ALT",
+		action = wezterm.action.ToggleFullScreen,
 	},
 }
 
