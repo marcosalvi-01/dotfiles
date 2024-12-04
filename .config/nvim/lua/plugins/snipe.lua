@@ -15,7 +15,10 @@ return {
 			open_win_override = {
 				border = "rounded",
 			},
-			text_align = "file-first"
+			text_align = "file-first",
+			-- preselect = function()
+			-- 	require("snipe").preselect_by_classifier("#")
+			-- end,
 		},
 		hints = {
 			dictionary = "neiatsrch.,-dvjw",
