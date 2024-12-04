@@ -32,7 +32,8 @@ config.audible_bell = "Disabled"
 config.enable_tab_bar = false
 
 -- Hide window decorations
-config.window_decorations = "NONE"
+-- config.window_decorations = "NONE"
+config.window_decorations = "RESIZE"
 
 -- Set background image
 config.background = {
