@@ -90,6 +90,7 @@ alias ....='cd ../../..'
 alias vim='nvim'
 alias xx='exit'
 alias pipes='pipes.sh -t 3'
+alias fortune='fortune | cowsay -f stegosaurus'
 
 export EDITOR="nvim"
 
@@ -117,4 +118,3 @@ fi
 # Load p10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-fortune | cowsay -f stegosaurus
