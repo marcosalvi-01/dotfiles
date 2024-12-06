@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    # If a directory was provided as an argument, use that directly.
+    selected=${1/#\~/$HOME}
+    query=""
+else
+    # Capture both the typed query and the selection from fzf
+    # The first line of output is the query typed by the user.
+    # The second line (if any) is the selected directory.
+    fzf_output=$(find ~ -mindepth 1 -maxdepth 1 -type d -not -name ".*" \
+        | sed "s|^$HOME|~|" \
+        | fzf --print-query)
+
+    # Read the query (typed text) and the selected line
+    query=$(echo "$fzf_output" | sed -n '1p')
+    displayed=$(echo "$fzf_output" | sed -n '2p')
+
+    if [[ -z "$displayed" ]]; then
+        # No directory selected in fzf
+        if [[ -n "$query" ]]; then
+            # Create a new directory under $HOME with the given query as name
+            selected=${query/#\~/$HOME}
+            selected="$HOME/$selected"
+            mkdir -p "$selected"
+        else
+            # No query and no selection means user cancelled
+            exit 0
+        fi
+    else
+        # Convert back from ~ to $HOME
+        selected=${displayed/#\~/$HOME}
+    fi
+fi
+
+# Normalize the session name
+selected_name=$(basename "$selected" | tr ".,: " "____")
+
+switch_to() {
+    if [[ -z "$TMUX" ]]; then
+        tmux attach-session -t "$selected_name"
+    else
+        tmux switch-client -t "$selected_name"
+    fi
+}
+
+if tmux has-session -t="$selected_name" 2>/dev/null; then
+    switch_to
+else
+    tmux new-session -ds "$selected_name" -c "$selected"
+    switch_to
+
+    tmux send-keys -t "$selected_name" "ready-tmux" Enter
+fi
+
