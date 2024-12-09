@@ -12,9 +12,10 @@ if [[ $# -eq 1 ]]; then
 else
     # Define known directories in the form: path:icon label
     known_dirs=(
-		"$HOME/dotfiles: dotfiles"
+        "$HOME/dotfiles: dotfiles"
         "$HOME: home"
         "$HOME/Downloads: downloads"
+        "$HOME/Desktop:󰇄 desktop"
         "$HOME/Music: music"
         "$HOME/Documents:󰈙 documents"
         "$HOME/Pictures: pictures"
@@ -28,12 +29,15 @@ else
             done
 
             # Print top-level directories in home (excluding hidden)
-            # and give them labels without icons
-				find ~ -mindepth 1 -maxdepth 1 -type d -not -name ".*" | while read -r dir; do
-				display_dir="${dir/#$HOME/\~}"   # Replace $HOME with ~
-				echo "$dir:$display_dir"
-			done
-        ) | awk -F: '!seen[$1]++' | fzf --print-query --delimiter=: --with-nth=2
+            find ~ -mindepth 1 -maxdepth 1 -type d -not -name ".*" | while read -r dir; do
+                display_dir="${dir/#$HOME/\~}"
+                echo "$dir:$display_dir"
+            done
+        ) | awk -F: '!seen[$1]++' | fzf \
+            --print-query \
+            --delimiter=: \
+            --with-nth=2 \
+            --preview 'eza --icons=always --color=always --oneline {1}'
     )
 
     # Read the query (typed text) and the selected line
@@ -64,7 +68,7 @@ else
             exit 0
         fi
     else
-        # Extract the real directory part from before the colon
+        # Extract the real directory from before the colon
         selected=$(echo "$displayed" | cut -d: -f1)
     fi
 fi
