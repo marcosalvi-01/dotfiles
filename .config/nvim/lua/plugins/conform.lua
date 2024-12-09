@@ -35,6 +35,7 @@ return { -- Autoformat
 			lua = { "stylua" },
 			json = { "jq" },
 			zsh = { "beautysh" },
+			sh = { "beautysh" },
 			nix = { "nixpkgs_fmt" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },

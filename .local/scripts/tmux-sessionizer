@@ -1,16 +1,30 @@
 #!/usr/bin/env bash
 
+# Function to guess if something is a git URL
+is_git_url() {
+    local input="$1"
+    # This is a simplistic check, you can refine it if needed:
+    # Matches common git URLs like:
+    # - git@github.com:user/repo.git
+    # - https://github.com/user/repo.git
+    # - http://...
+    # - ssh://...
+    # If you need a stricter check, you can refine this regex.
+    [[ "$input" =~ ^(git@|https://|http://|ssh://).+\.git$ ]]
+}
+
 if [[ $# -eq 1 ]]; then
     # If a directory was provided as an argument, use that directly.
     selected=${1/#\~/$HOME}
     query=""
 else
-    # Capture both the typed query and the selection from fzf
-    # The first line of output is the query typed by the user.
-    # The second line (if any) is the selected directory.
-    fzf_output=$(find ~ -mindepth 1 -maxdepth 1 -type d -not -name ".*" \
-        | sed "s|^$HOME|~|" \
-        | fzf --print-query)
+	# The directories indexed by fzf
+	fzf_output=$(
+		(
+			echo "$HOME" | sed "s|^$HOME| home|" 
+			find ~ -mindepth 1 -maxdepth 1 -type d -not -name ".*" | sed "s|^$HOME|~|"
+		) | fzf --print-query
+	)
 
     # Read the query (typed text) and the selected line
     query=$(echo "$fzf_output" | sed -n '1p')
@@ -19,10 +33,23 @@ else
     if [[ -z "$displayed" ]]; then
         # No directory selected in fzf
         if [[ -n "$query" ]]; then
-            # Create a new directory under $HOME with the given query as name
-            selected=${query/#\~/$HOME}
-            selected="$HOME/$selected"
-            mkdir -p "$selected"
+            # Check if query is a git URL
+            if is_git_url "$query"; then
+                # Extract the repo name (strip trailing .git if present)
+                repo_name=$(basename "$query")
+                repo_name="${repo_name%.git}"
+                # Clone into home directory
+                git clone "$query" "$HOME/$repo_name" && selected="$HOME/$repo_name"
+                if [[ -z "$selected" ]]; then
+                    echo "Failed to clone repository. Exiting."
+                    exit 1
+                fi
+            else
+                # Create a new directory under $HOME with the given query as name
+                selected=${query/#\~/$HOME}
+                selected="$HOME/$selected"
+                mkdir -p "$selected"
+            fi
         else
             # No query and no selection means user cancelled
             exit 0
