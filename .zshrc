@@ -94,8 +94,6 @@ alias pipes='pipes.sh -t 3'
 alias fortune='fortune | cowsay -f stegosaurus'
 
 export EDITOR="nvim"
-# fix k9s colors
-export TERM=xterm-256color
 export XDG_CONFIG_HOME=~/.config/
 
 # Fzf preview theme: not working right now
