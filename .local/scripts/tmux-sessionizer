@@ -13,6 +13,7 @@ else
     # Define known directories in the form: path:icon label
     known_dirs=(
         "$HOME/dotfiles: dotfiles"
+        "$HOME/note: note"
         "$HOME: home"
         "$HOME/Downloads: downloads"
         "$HOME/Desktop:󰇄 desktop"
