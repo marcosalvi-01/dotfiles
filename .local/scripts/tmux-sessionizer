@@ -24,9 +24,12 @@ else
 
     fzf_output=$(
         (
-            # Print known directories
+            # Print known directories that exist
             for entry in "${known_dirs[@]}"; do
-                echo "$entry"
+                dir="${entry%%:*}"
+                if [[ -d "$dir" ]]; then
+                    echo "$entry"
+                fi
             done
 
             # Print top-level directories in home (excluding hidden)
