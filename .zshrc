@@ -47,7 +47,8 @@ zinit wait"0a" lucid for \
 	zsh-users/zsh-history-substring-search
 
 # History substring search (prefix only)
-bindkey "^[[A" history-substring-search-up    # Up arrow
+bindkey "^[[A" history-substring-search-up   
+bindkey "^[[B" history-substring-search-down  
 HISTORY_SUBSTRING_SEARCH_PREFIXED=1
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=#83a598,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=#ea6962,bold'
