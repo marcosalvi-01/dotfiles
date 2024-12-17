@@ -43,24 +43,25 @@ zinit wait"0a" lucid for \
     blockf \
     zsh-users/zsh-completions \
     atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions
+    zsh-users/zsh-autosuggestions \
+	zsh-users/zsh-history-substring-search
 
-# zinit wait"0b" lucid for \
-    #     Aloxaf/fzf-tab
+# History substring search (prefix only)
+bindkey "^[[A" history-substring-search-up    # Up arrow
+HISTORY_SUBSTRING_SEARCH_PREFIXED=1
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=#83a598,bold'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=#ea6962,bold'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND+=' underline'
 
-# History settings (optimized)
 HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt extended_history       # Record timestamp
-setopt inc_append_history    # Add commands as they are typed
-setopt hist_expire_dups_first # Delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # Ignore duplicated commands
-setopt hist_ignore_space      # Ignore commands that start with space
-setopt hist_verify           # Show command with history expansion to user before running it
-setopt share_history         # Share command history data
-setopt hist_find_no_dups
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
 
 # Key bindings for command prefix completion with arrows
 bindkey "$terminfo[kcuu1]" history-search-backward
@@ -78,7 +79,7 @@ zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' popup-min-size 80 20					# apply to all command
 zstyle ':fzf-tab:complete:diff:*' popup-min-size 80 12	# only apply to 'diff'
 zstyle ':fzf-tab:*' redraw-prompt true
-zstyle ':fzf-tab:*' fzf-flags --color=fg:-1,fg+:-1,bg:-1,bg+:#262626 --color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b --color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598 --color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae --color=query:#d4be98 --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="❯ " --marker="❯" --pointer="❯" --separator="─" --scrollbar="│" --info="right"
+zstyle ':fzf-tab:*' fzf-flags --color=fg:-1,fg+:-1,bg:-1,bg+:#262626 --color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b --color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598 --color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae --color=query:#d4be98 --border-label="" --preview-window="border-rounded" --prompt="❯ " --marker="❯" --pointer="❯" --separator="─" --scrollbar="│" --info="right"
 
 # Aliases
 alias l='eza --icons=always -l --git'
@@ -103,7 +104,7 @@ export FZF_DEFAULT_OPTS='
   --color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598
   --color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae
   --color=query:#d4be98
-  --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="❯ "
+  --border-label="" --preview-window="border-rounded" --prompt="❯ "
   --marker="❯" --pointer="❯" --separator="─" --scrollbar="│"
   --info="right"'
 

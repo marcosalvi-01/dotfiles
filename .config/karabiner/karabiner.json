@@ -52,7 +52,7 @@
             ]
           },
           {
-            "description": "Launch WezTerm with Ctrl+Option+Cmd+Shift+0",
+            "description": "Launch Kitty with Ctrl+Option+Cmd+Shift+0",
             "manipulators": [
               {
                 "type": "basic",
@@ -69,7 +69,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "open -a wezterm"
+                    "shell_command": "open -a kitty"
                   }
                 ]
               }
