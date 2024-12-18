@@ -13,8 +13,8 @@ vim.keymap.set("n", "<leader>ge", vim.cmd.cnext, { desc = "[G]o to next [E]rror 
 -- Remap arrows
 vim.keymap.set({ "n", "v" }, "<Left>", "h")
 vim.keymap.set({ "n", "v" }, "<Right>", "l")
-vim.keymap.set({ "n", "v" }, "<Up>", "k")
-vim.keymap.set({ "n", "v" }, "<Down>", "j")
+vim.keymap.set({ "n", "v" }, "<Up>", "gk")
+vim.keymap.set({ "n", "v" }, "<Down>", "gj")
 
 -- Backspace as 'g'
 vim.keymap.set({ "n", "v" }, "<BS>", "g")
