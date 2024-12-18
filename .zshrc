@@ -38,7 +38,6 @@ zinit light romkatv/powerlevel10k
 zinit wait"0a" lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     Aloxaf/fzf-tab \
-	joshskidmore/zsh-fzf-history-search \
     zsh-users/zsh-syntax-highlighting \
     blockf \
     zsh-users/zsh-completions \
@@ -63,6 +62,7 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
+setopt EXTENDED_HISTORY
 
 # Key bindings for command prefix completion with arrows
 bindkey "$terminfo[kcuu1]" history-search-backward
@@ -98,7 +98,7 @@ alias fortune='clear && fortune | cowsay -f stegosaurus'
 export EDITOR="nvim"
 export XDG_CONFIG_HOME=~/.config/
 
-# Fzf preview theme: not working right now
+# Fzf preview theme
 export FZF_DEFAULT_OPTS='
   --color=fg:-1,fg+:-1,bg:-1,bg+:#262626
   --color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b
@@ -108,6 +108,48 @@ export FZF_DEFAULT_OPTS='
   --border-label="" --preview-window="border-rounded" --prompt="❯ "
   --marker="❯" --pointer="❯" --separator="─" --scrollbar="│"
   --info="right"'
+
+
+# Fzf history search
+COLOR_LINE_NUM="\033[36m"     # Cyan for line number
+COLOR_TIMESTAMP="\033[33m"    # Yellow for timestamp
+COLOR_RESET="\033[0m"
+fzf-history-widget() {
+    local selected raw_line
+    
+    # Use awk to colorize line number and timestamp
+    # History line format: N YYYY-MM-DD HH:MM:SS command...
+    selected="$(
+        history -i 0 \
+        | awk -v cnum="$COLOR_LINE_NUM" -v ctime="$COLOR_TIMESTAMP" -v cre="$COLOR_RESET" '
+          {
+            line_num = $1
+            date = $2
+            time = $3
+            # Rebuild the rest of the command
+            cmd = ""
+            for (i = 4; i <= NF; i++) cmd = cmd " " $i
+            # Print colored line number and timestamp, then the command
+            printf("%s%s%s %s%s %s%s%s\n", cnum, line_num, cre, ctime, date, time, cre, cmd)
+          }
+        ' \
+        | fzf --tac --ansi --height 50% --reverse --border --prompt='history ❯ '
+    )"
+
+    if [[ -n "$selected" ]]; then
+        # Strip ANSI escape codes before extracting the command fields
+        raw_line=$(echo "$selected" | sed 's/\x1b\[[0-9;]*m//g')
+        
+        # Now extract just the command, removing the first three fields
+        # Fields after stripping ANSI codes: N YYYY-MM-DD HH:MM:SS command...
+        LBUFFER=$(echo "$raw_line" | awk '{ $1=""; $2=""; $3=""; sub(/^ +/, ""); print }')
+        zle end-of-line
+    fi
+    zle redisplay
+}
+
+zle -N fzf-history-widget
+bindkey '^R' fzf-history-widget
 
 # SDKMAN (lazy-loaded)
 export SDKMAN_DIR="$HOME/.sdkman"
