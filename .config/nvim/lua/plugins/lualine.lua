@@ -116,7 +116,7 @@ return {
 				lualine_z = { "location" },
 			},
 			tabline = {},
-			extensions = { "oil", "man", "mason", "lazy", "quickfix" },
+			extensions = { "man", "mason", "lazy", "quickfix" },
 		})
 	end,
 }

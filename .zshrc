@@ -93,7 +93,7 @@ alias ....='cd ../../..'
 alias vim='nvim'
 alias xx='exit'
 alias pipes='pipes.sh -t 3'
-alias fortune='fortune | cowsay -f stegosaurus'
+alias fortune='clear && fortune | cowsay -f stegosaurus'
 
 export EDITOR="nvim"
 export XDG_CONFIG_HOME=~/.config/
