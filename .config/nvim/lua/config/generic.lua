@@ -31,3 +31,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 	pattern = { "cwl" },
 })
+
+-- for hyprland conf
+vim.filetype.add({
+	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+})

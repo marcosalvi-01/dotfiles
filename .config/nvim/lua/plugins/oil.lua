@@ -9,7 +9,7 @@ local function get_git_ignored_files_in(dir)
 	end
 
 	local cmd =
-		string.format('git -C %s ls-files --ignored --exclude-standard --others --directory | grep -v "/.*\\/"', dir)
+		string.format('git -C %s ls-files --ignored --exclude-standard --others --directory | grep -v "/*.*/"', dir)
 
 	local handle = io.popen(cmd)
 	if handle == nil then
@@ -34,6 +34,7 @@ return {
 	config = function()
 		local detail = false
 		require("oil").setup({
+			watch_for_changes = true,
 			keymaps = {
 				["g?"] = "actions.show_help",
 				["<CR>"] = "actions.select",
@@ -73,6 +74,9 @@ return {
 			use_default_keymaps = false,
 			view_options = {
 				show_hidden = false,
+				is_always_hidden = function (name, bufnr)
+					return name == ".."
+				end,
 				is_hidden_file = function(name)
 					-- Two possibilities:
 					-- - git repo: a file is hidden only if it is ignored or it is in the "ignored" table
@@ -84,6 +88,7 @@ return {
 
 					local ignored = {
 						".git",
+						"../"
 					}
 
 					return vim.tbl_contains(ignored_files, name) or vim.tbl_contains(ignored, name)

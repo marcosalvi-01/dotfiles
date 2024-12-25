@@ -1,0 +1,11 @@
+@import url("/home/marco/.cache/ulauncher_cache/themes/dark/generated.css");
+
+@import url("theme.css");
+
+.input {
+    caret-color: #ddc7a1;
+}
+.selected.item-box {
+    /* workaround for a bug in GTK+ < 3.20 */
+    border: none;
+}

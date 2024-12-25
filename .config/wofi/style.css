@@ -1,0 +1,68 @@
+window {
+    margin: 0px;
+    border: 1px solid #a89984;
+    background-color: #282828;
+    border-radius: 8px;
+}
+
+#input {
+    margin: 5px;
+    border: none;
+    color: #ddc7a1;
+    background-color: #32302f;
+    border-radius: 4px;
+}
+
+#input:focus,
+#input:active,
+#input:hover {
+    box-shadow: 0 0 0 2px #a9b665;
+}
+
+#inner-box {
+    margin: 5px;
+    border: none;
+    background-color: #282828;
+}
+
+#outer-box {
+    margin: 5px;
+    border: none;
+    background-color: #282828;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
+
+#text {
+    margin: 5px;
+    border: none;
+    color: #ddc7a1;
+}
+
+#entry:selected {
+    background-color: #504945;
+    outline: none;
+    border: none;
+
+
+#entry:selected #text {
+    font-weight: bold;
+}
+
+/* Scrollbar styling */
+scrollbar {
+    background-color: #282828;
+    border: none;
+}
+
+scrollbar slider {
+    background-color: #504945;
+    border-radius: 4px;
+}
+
+scrollbar slider:hover {
+    background-color: #a89984;
+}
