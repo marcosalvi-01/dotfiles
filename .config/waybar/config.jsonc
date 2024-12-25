@@ -1,0 +1,113 @@
+{
+	"layer": "top", // Waybar at top layer
+	"position": "top",
+	"height": 50,
+	"spacing": 2, // Gaps between modules
+	"margin-bottom": -11,
+	"modules-left": ["hyprland/workspaces", "custom/audio_idle_inhibitor"],
+	"modules-right": [
+		"custom/spotify",
+		"cpu",
+		"memory",
+		"network",
+		"pulseaudio",
+	],
+	"modules-center": ["clock#date", "clock#time", "custom/weather"],
+
+	"custom/spotify": {
+		"exec": "/usr/bin/python3 ~/.config/waybar/mediaplayer.py --player spotify",
+		"format": "{}  󰓇",
+		"return-type": "json",
+		"on-click": "playerctl play-pause",
+		"on-scroll-up": "playerctl next",
+		"on-scroll-down": "playerctl previous"
+	},
+	"custom/weather": {
+		"exec": "python ~/.config/waybar/weather.py",
+		"restart-interval": 300,
+		"return-type": "json",
+		"on-click": "xdg-open https://www.google.com/search?q=meteo+roma"
+	},
+
+	"hyprland/workspaces": {
+		"on-scroll-down": "hyprctl dispatch workspace e+1",
+		"on-scroll-up": "hyprctl dispatch workspace e-1",
+		"format-icons": {
+			"1": "0",
+			"2": "1",
+			"3": "2",
+			"4": "3",
+			"5": "4",
+			"6": "0",
+			"7": "1",
+			"8": "2",
+			"9": "3",
+			"10": "4"
+		},
+		"format": "{icon}",
+		//"format-empty": "{icon}",
+		//"window-rewrite-default": "?",
+		//"window-rewrite": {
+		//	"class<kitty>": "",
+		//	"class<google-chrome>": "󰊯"
+		//},
+		"format-window-separator": " ",
+		"all-outputs": false
+	},
+	"clock#date": {
+		"interval": 60,
+		"format": "   {:%d %b, %Y}",
+		"tooltip-format": "<tt><small>{calendar}</small></tt>",
+		"calendar": {
+			"mode": "month",
+			"on-scroll": 1,
+			"format": {
+				"months": "<span color='#689d6a'><b>{}</b></span>",
+				"days": "<span color='#d4be98'><b>{}</b></span>",
+				"weeks": "<span color='#83a598'><b>W{}</b></span>",
+				"weekdays": "<span color='#d8a657'><b>{}</b></span>",
+				"today": "<span color='#d3869b'><b><u>{}</u></b></span>"
+			}
+		}
+	},
+	"clock#time": {
+		"interval": 1,
+		"format": "󰥔   {:%H : %M : %S}"
+	},
+	"cpu": {
+		"interval": 10,
+		"format": "   {}%",
+		"max-length": 10,
+		"on-click": "kitty --class system_monitor -e btop"
+	},
+	"memory": {
+		"format": "󰇖   {}%",
+		"interval": 1,
+		"on-click": "kitty --class system_monitor -e btop",
+		"max-lenght": 35
+	},
+	"network": {
+		"interface": "wlan0",
+		"format-wifi": "󰤨   {signalStrength}%",
+		"format-disconnected": "󰤭   Offline",
+		"tooltip-format": "󰱶   {ifname} via {gwaddr}",
+		"tooltip-format-wifi": "{essid}",
+		//"on-click": "kitty --class network_devices -e iwctl device list"
+	},
+	"pulseaudio": {
+		"format": "{icon}   {volume}%",
+		"format-bluetooth": "{icon}   {volume}%",
+		"format-bluetooth-muted": "婢  muted",
+		"format-muted": "󰖁 muted",
+		"format-icons": {
+			"headphone": "󰋋",
+			"hands-free": "",
+			"headset": "󰋋",
+			"phone": "󰄜",
+			"portable": "",
+			"car": "󰸛",
+			"default": ["󰕿", "󰖀", "󰕾"]
+		},
+		"on-click": "pavucontrol",
+	}
+}
