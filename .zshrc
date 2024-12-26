@@ -93,7 +93,15 @@ alias ....='cd ../../..'
 alias vim='nvim'
 alias xx='exit'
 alias pipes='pipes.sh -t 3'
-alias fortune='clear && fortune | cowsay -f stegosaurus'
+alias fortune='clear && fortune | cowsay -f stegosaurus | lolcat'
+
+# Fortune widget with ctrl+f
+fortune_widget() {
+	fortune
+    zle reset-prompt
+}
+zle -N fortune_widget
+bindkey '^F' fortune_widget
 
 export EDITOR="nvim"
 export XDG_CONFIG_HOME=~/.config/

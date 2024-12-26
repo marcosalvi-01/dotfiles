@@ -1,0 +1,2561 @@
+button[class*=emojiButtonNormal] > div > div {
+    filter: grayscale(0.8) hue-rotate(-50deg) brightness(0.8) opacity(100%) !important;
+}
+
+.container-1QtPKm, .input-125oad {
+    border-radius: 14px;
+    cursor: pointer;
+    background-color: #504945 !important; /* taupe (#665c54 -> #504945) */
+}
+
+[data-popout-root],
+html {
+  --brand-experiment: #d8a657;         /* yellowish */
+  --brand-experiment-330: #ddc7a1;     /* foreground (#f9f5d7 -> #ddc7a1) */
+  --brand-experiment-360: #ddc7a1;     /* foreground */
+  --brand-experiment-400: #504945;     /* taupe (#665c54 -> #504945) */
+  --brand-experiment-430: #ddc7a1;     /* foreground */
+  --brand-experiment-460: #ddc7a1;     /* foreground (#fbf1c7 -> #ddc7a1) */
+  --brand-experiment-500: #504945;     /* taupe */
+  --brand-experiment-530: #a89984;     /* beige */
+  --brand-experiment-560: #504945;     /* taupe (#665c54 -> #504945) */
+  --brand-experiment-600: #a89984;     /* beige (#bdae93 -> #a89984) */
+  --brand-experiment-630: #a89984;     /* beige */
+  --brand-experiment-660: #7daea3;     /* blue_green */
+  --brand-experiment-700: #7daea3;     /* blue_green */
+  --brand-experiment-730: #7daea3;     /* blue_green */
+  --brand-experiment-760: #7daea3;     /* blue_green */
+  --brand-experiment-800: #7daea3;     /* blue_green */
+  --brand-experiment-830: #7daea3;     /* blue_green */
+  --brand-experiment-860: #7daea3;     /* blue_green */
+  --brand-experiment-900: #7daea3;     /* blue_green */
+}
+
+.theme-dark,
+.theme-light {
+  --brand-260: #d8a657;         /* yellowish */
+  --brand-500: #d8a657;         /* yellowish */
+  --brand-560: #282828;         /* background */
+  --primary-300: #ddc7a1;       /* foreground (#f9f5d7 -> #ddc7a1) */
+  --header-primary: #ddc7a1;     /* foreground (#f9f5d7 -> #ddc7a1) */
+  --header-secondary: #ddc7a1;   /* foreground (#fbf1c7 -> #ddc7a1) */
+  --text-normal: #ddc7a1;       /* foreground (#f2e5bc -> #ddc7a1) */
+  --text-muted: #a89984;        /* beige (#bdae93 -> #a89984) */
+  --text-link: #7daea3;         /* blue_green */
+  --text-link-low-saturation: #a9b665; /* #728E83 -> #a9b665 */
+  --text-positive: #d8a657;     /* yellowish */
+  --text-warning: #ea6962;      /* reddish (#ea6962 stays) */
+  --text-danger: #d8a657;       /* unify w/ yellowish */
+  --text-brand: #d8a657;        /* yellowish */
+  --background-primary: #282828; /* background */
+  --background-secondary: #32302f; /* neutral_gray */
+  --background-secondary-alt: #32302f; /* neutral_gray */
+  --background-tertiary: #32302f;     /* neutral_gray */
+  --background-accent: #d8a657;       /* yellowish (#AE7D1B -> #d8a657) */
+  --background-floating: #282828;     /* background */
+  --background-nested-floating: #504945; /* taupe */
+  --background-mobile-primary: #282828;  /* background */
+  --background-modifier-hover: rgba(168, 153, 132, 0.15); /* (unchanged alpha) */
+  --background-modifier-selected: rgba(168, 153, 132, 0.2); /* (unchanged alpha) */
+  --background-modifier-accent: rgba(168, 153, 132, 0.26); /* (unchanged alpha) */
+  --background-modifier-active: rgba(221, 199, 161, 0.17); /* #f9f5d7 -> #ddc7a1 but keep alpha logic */
+  --info-warning-background: rgba(216, 166, 87, 0.15);  /* #d8a657 in alpha */
+  --info-warning-foreground: #d8a657;
+  --info-warning-text: #d8a657;
+  --info-danger-background: rgba(234, 105, 98, 0.15);    /* #ea6962 in alpha */
+  --info-danger-foreground: #ea6962;
+  --info-danger-text: #ea6962;
+  --info-help-background: rgba(216, 166, 87, 0.10);      /* #d8a657 in alpha */
+  --info-help-foreground: rgba(216, 166, 87);
+  --info-help-text: #ddc7a1;    /* foreground */
+  --status-positive-background: #d8a657; /* yellowish */
+  --status-positive-text: #282828; /* background */
+  --status-warning-background: #d8a657;  /* unify w/ yellowish */
+  --status-warning-text: #ddc7a1;        /* foreground (#f2e5bc -> #ddc7a1) */
+  --status-danger-background: #d8a657;   /* unify w/ yellowish */
+  --status-danger-text: #282828;         /* background */
+  --status-danger: #ea6962;             /* reddish */
+  --status-positive: #a9b665;           /* greenish (#b8bb26 -> #a9b665) */
+  --status-warning: #d8a657;           /* yellowish (#9D6A1C -> #d8a657) */
+  --black-500: #282828;                /* background */
+  --green-360: #a9b665;               /* greenish (#b8bb26 -> #a9b665) */
+  --primary-400: #a89984;             /* beige */
+  --white-500: #ddc7a1;               /* foreground (#f9f5d7 -> #ddc7a1) */
+  --guild-boosting-pink: #d3869b;     /* pinkish */
+  --premium-perk-yellow: #d8a657;     /* yellowish (#fabd2f -> #d8a657) */
+  --premium-perk-purple: #d3869b;     /* pinkish (#b16286 => a closer match is #d3869b) */
+  --premium-perk-dark-blue: #7daea3;  /* unify to #7daea3 */
+  --premium-perk-light-blue: #7daea3; /* unify #7daea3 */
+  --premium-perk-blue: #7daea3;       /* unify #458588 -> #7daea3 */
+  --premium-perk-green: #a9b665;      /* greenish */
+  --premium-perk-pink: #d3869b;       /* pinkish */
+  --premium-perk-orange: #d8a657;     /* unify #fe8019 -> #d8a657 */
+  --button-danger-background: #d8a657;          /* unify w/ yellowish */
+  --button-danger-background-hover: #d8a657;    /* unify (#fabd2f -> #d8a657) */
+  --button-danger-background-active: #ddc7a1;   /* unify #f9f5d7 -> #ddc7a1 */
+  --button-danger-background-disabled: rgba(216, 166, 87, 0.40);
+  --button-positive-background: #d8a657;        /* unify w/ yellowish */
+  --button-positive-background-hover: #d8a657;  /* unify (#fabd2f -> #d8a657) */
+  --button-positive-background-active: #ddc7a1; /* unify (#f9f5d7 -> #ddc7a1) */
+  --button-positive-background-disabled: rgba(216, 166, 87, 0.40);
+  --button-secondary-background: #504945;       /* taupe */
+  --button-secondary-background-hover: #504945; /* unify #665c54 -> #504945 */
+  --button-secondary-background-active: #a89984; /* beige */
+  --button-secondary-background-disabled: #a89984; /* unify #928374 -> #a89984 */
+  --button-outline-danger-text: #ea6962;         /* reddish */
+  --button-outline-danger-border: #ea6962;       /* reddish */
+  --button-outline-danger-background: transparent;
+  --button-outline-danger-background-hover: #ea6962;
+  --button-outline-danger-text-hover: #282828;   /* background */
+  --button-outline-danger-border-hover: #ea6962;
+  --button-outline-danger-background-active: #ea6962; /* unify #FF7E6F -> #ea6962 */
+  --button-outline-danger-text-active: #ea6962;
+  --button-outline-danger-border-active: #ea6962;
+  --button-outline-positive-text: #ddc7a1;        /* foreground (#f2e5bc -> #ddc7a1) */
+  --button-outline-positive-border: #d8a657;      /* yellowish */
+  --button-outline-positive-background: transparent;
+  --button-outline-positive-background-hover: #d8a657;
+  --button-outline-positive-text-hover: #282828;  /* background */
+  --button-outline-positive-border-hover: #d8a657;
+  --button-outline-positive-background-active: #d8a657; /* unify #FFCC57 -> #d8a657 */
+  --button-outline-positive-text-active: #282828; /* background */
+  --button-outline-positive-border-active: #d8a657;
+  --button-outline-brand-text: #ddc7a1;           /* foreground (#f2e5bc -> #ddc7a1) */
+  --button-outline-brand-border: #d8a657;         /* yellowish */
+  --button-outline-brand-background: transparent;
+  --button-outline-brand-background-hover: #d8a657;
+  --button-outline-brand-text-hover: #282828;     /* background */
+  --button-outline-brand-border-hover: #d8a657;
+  --button-outline-brand-background-active: #d8a657; /* unify #FFCC57 -> #d8a657 */
+  --button-outline-brand-text-active: #282828;    /* background */
+  --button-outline-brand-border-active: #d8a657;
+  --button-outline-primary-text: #ddc7a1;         /* foreground (#f2e5bc -> #ddc7a1) */
+  --button-outline-primary-border: #d8a657;       /* yellowish */
+  --button-outline-primary-background: transparent;
+  --button-outline-primary-background-hover: #d8a657; /* unify (#fabd2f -> #d8a657) */
+  --button-outline-primary-text-hover: #282828;   /* background */
+  --button-outline-primary-border-hover: #d8a657;
+  --button-outline-primary-background-active: #d8a657; /* unify #FFCC57 -> #d8a657 */
+  --button-outline-primary-text-active: #282828;  /* background */
+  --button-outline-primary-border-active: #d8a657;
+  --modal-background: #282828;                   /* background */
+  --scrollbar-thin-thumb: #504945;               /* taupe */
+  --scrollbar-thin-track: transparent;
+  --scrollbar-auto-thumb: #504945;               /* taupe */
+  --scrollbar-auto-track: transparent;
+  --scrollbar-auto-scrollbar-color-thumb: #504945; 
+  --scrollbar-auto-scrollbar-color-track: #504945;
+  --input-background: #32302f;                   /* neutral_gray */
+  --input-placeholder-text: #a89984;             /* beige (#bdae93 -> #a89984) */
+  --control-brand-foreground: #d8a657;           /* yellowish */
+  --mention-foreground: #a89984;                 /* beige */
+  --mention-background: rgba(168, 153, 132, 0.3); /* same alpha */
+  --background-mentioned: rgba(216, 166, 87, 0.1); /* #d8a657 alpha */
+  --background-mentioned-hover: rgba(216, 166, 87, 0.2);
+  --background-message-hover: rgba(80, 73, 69, 0.25); /* #504945 alpha */
+  --background-message-highlight: rgba(80, 73, 69, 0.4); 
+  --channels-default: #ddc7a1; /* foreground (#f2e5bc -> #ddc7a1) */
+  --channel-icon: #a89984;    /* beige */
+  --channel-text-area-placeholder: #ddc7a1; /* foreground (#f9f5d7->#ddc7a1) */
+
+  /* message input bar */
+  --channeltextarea-background: #32302f; /* neutral_gray */ 
+
+  --textbox-markdown-syntax: #a89984; /* beige (#928374->#a89984) */
+  --deprecated-card-bg: #32302f; 
+  --deprecated-card-editable-bg: #32302f;
+  --deprecated-text-input-bg: #282828; 
+  --deprecated-text-input-border: #504945; /* taupe (#665c54->#504945) */
+  --focus-primary: #a9b665; /* greenish (#8ec07c->#a9b665) */
+  --interactive-normal: #a89984; /* beige */
+  --interactive-muted: rgba(168,153,132,0.3);
+  --interactive-hover: #ddc7a1;  /* unify (#d5c4a1 -> #ddc7a1 or #f2e5bc->#ddc7a1) */
+  --interactive-active: #ddc7a1;
+  --primary-200: #a89984; 
+}
+.theme-dark [class*=disabledPointerEvents],
+.theme-light [class*=disabledPointerEvents] {
+  --background-floating: #282828; /* background */
+  --background-tertiary: #282828; /* background */
+}
+.theme-dark [class*=disabledPointerEvents] svg[class|=activityIcon],
+.theme-light [class*=disabledPointerEvents] svg[class|=activityIcon] {
+  color: #d8a657; /* yellowish */
+}
+
+::selection {
+  background-color: #504945; /* taupe (#665c54->#504945) */
+}
+
+[class*=staffBadge-] {
+  background-image: url("data:image/svg+xml,%3Csvg fill='none' height='24' ... fill='%23232634' ... %3E%3C/svg%3E") !important;
+}
+
+[class*=permissionCheckmark-] {
+  background-image: url("data:image/svg+xml,%3Csvg ... fill='%23a9b665' ... %3E%3C/svg%3E") !important; /* greenish (#b8bb26->#a9b665) */
+}
+
+[class*=removeKeybind-] {
+  background-image: url('data:image/svg+xml,%3Csvg ... fill="%23232634" ... %3E%3C/svg%3E') !important;
+}
+
+[class*=removeGame-] {
+  background-image: url("data:image/svg+xml,%3Csvg ... fill='%23ea6962' ... %3E%3C/svg%3E") !important; /* reddish */
+}
+
+[class*=emojiRemove-] {
+  background-image: url("data:image/svg+xml,%3Csvg ... fill='%23ea6962' ... %3E%3C/svg%3E") !important; /* reddish */
+}
+
+[class*=lockIcon-] {
+  content: url("data:image/svg+xml,%3Csvg ... fill='%23a9b665' ... %3E%3C/svg%3E") !important; /* greenish */
+}
+
+.theme-dark svg[class*=noItemsIcon-],
+.theme-light svg[class*=noItemsIcon-] {
+  background-color: #504945; /* taupe (#665c54->#504945) */
+}
+
+.theme-dark svg[class*=tier1ProfilePerk-],
+.theme-light svg[class*=tier1ProfilePerk-] {
+  color: #7daea3 !important; /* blue_green */
+}
+
+.theme-dark svg[class*=tier1BoostPerk-],
+.theme-light svg[class*=tier1BoostPerk-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=tier1CustomEmojiPerk-],
+.theme-light svg[class*=tier1CustomEmojiPerk-] {
+  color: #d8a657 !important; /* unify #fe8019->#d8a657 */
+}
+
+.theme-dark svg[class*=tier1UploadPerk-],
+.theme-light svg[class*=tier1UploadPerk-] {
+  color: #7daea3 !important; /* unify #babbf1->#7daea3 (or pick best pastel) */
+}
+
+.theme-dark svg[class*=tier1StreamPerk-],
+.theme-light svg[class*=tier1StreamPerk-] {
+  color: #a9b665 !important; /* unify #b8bb26->#a9b665 (greenish) */
+}
+
+.theme-dark svg[class*=guildBoostingIcon-],
+.theme-light svg[class*=guildBoostingIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=guildSubscriptionSlotIcon-],
+.theme-light svg[class*=guildSubscriptionSlotIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=guildSubscriberCountIcon-],
+.theme-light svg[class*=guildSubscriberCountIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=gemWithLabel-],
+.theme-light svg[class*=gemWithLabel-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=gemWithoutLabel-],
+.theme-light svg[class*=gemWithoutLabel-] {
+  color: #7daea3 !important; /* unify #838ba7->#7daea3 or #a89984. Let's go #7daea3 */
+}
+
+.theme-dark svg[class*=memberBadgeIcon-],
+.theme-light svg[class*=memberBadgeIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=stickerIcon-],
+.theme-light svg[class*=stickerIcon-] {
+  color: #d3869b !important; /* unify #ca9ee6->#d3869b (still pinkish/purple) */
+}
+
+.theme-dark svg[class*=audioQualityIcon-],
+.theme-light svg[class*=audioQualityIcon-] {
+  color: #7daea3 !important; /* unify #85c1dc->#7daea3 */
+}
+
+.theme-dark svg[class*=uploadSizeIcon-],
+.theme-light svg[class*=uploadSizeIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=threadIcon-],
+.theme-light svg[class*=threadIcon-] {
+  color: #a89984 !important; /* unify #81c8be-> something else? But we'll keep #a89984 (beige) as final from later note. */
+}
+
+.theme-dark svg[class*=premiumIcon-],
+.theme-light svg[class*=premiumIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=gameIcon-],
+.theme-light svg[class*=gameIcon-] {
+  color: #ddc7a1 !important; /* unify #f9f5d7->#ddc7a1 */
+}
+
+.theme-dark svg[class*=tierMarkerLabelPlusIcon-],
+.theme-light svg[class*=tierMarkerLabelPlusIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=currentTierIcon-],
+.theme-light svg[class*=currentTierIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=tier3Icon-],
+.theme-light svg[class*=tier3Icon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+.theme-dark svg[class*=searchIcon-],
+.theme-light svg[class*=searchIcon-] {
+  color: #a89984 !important; /* unify #a5adce->#7daea3 or #928374->#a89984. Here we used #a89984. */
+}
+
+.theme-dark svg[class*=upsellIcon-],
+.theme-light svg[class*=upsellIcon-] {
+  color: #d3869b !important; /* pinkish */
+}
+
+[class*=lookFilled-][class*=colorBrand-],
+[class*=lookFilled-][class*=colorBrandNew-],
+[class*=lookFilled-][class*=colorLink-],
+[class*=lookFilled-][class*=colorYellow-],
+[class*=lookFilled-][class*=colorRed-],
+[class*=lookFilled-][class*=colorGreen-] {
+  color: #282828; /* background (#232634 -> #282828 for consistent background) */
+}
+[class*=lookFilled-][class*=colorBrand-] svg[class|=premiumIcon],
+[class*=lookFilled-][class*=colorBrandNew-] svg[class|=premiumIcon],
+[class*=lookFilled-][class*=colorLink-] svg[class|=premiumIcon],
+[class*=lookFilled-][class*=colorYellow-] svg[class|=premiumIcon],
+[class*=lookFilled-][class*=colorRed-] svg[class|=premiumIcon],
+[class*=lookFilled-][class*=colorGreen-] svg[class|=premiumIcon] {
+  color: #d3869b; /* pinkish (#e660c2->#d3869b) */
+}
+[class*=lookFilled-][class*=colorBrand-] [class*=spinnerItem-],
+[class*=lookFilled-][class*=colorBrandNew-] [class*=spinnerItem-],
+[class*=lookFilled-][class*=colorLink-] [class*=spinnerItem-],
+[class*=lookFilled-][class*=colorYellow-] [class*=spinnerItem-],
+[class*=lookFilled-][class*=colorRed-] [class*=spinnerItem-],
+[class*=lookFilled-][class*=colorGreen-] [class*=spinnerItem-] {
+  background-color: #282828; /* background */
+}
+[class*=lookFilled-][class*=colorBrand-] [class*=defaultColor-],
+[class*=lookFilled-][class*=colorBrandNew-] [class*=defaultColor-],
+[class*=lookFilled-][class*=colorLink-] [class*=defaultColor-],
+[class*=lookFilled-][class*=colorYellow-] [class*=defaultColor-],
+[class*=lookFilled-][class*=colorRed-] [class*=defaultColor-],
+[class*=lookFilled-][class*=colorGreen-] [class*=defaultColor-] {
+  color: #ddc7a1; /* foreground (#fbf1c7->#ddc7a1) */
+}
+[class*=lookFilled-][class*=colorPrimary-] {
+  color: #ddc7a1; /* foreground (#fbf1c7->#ddc7a1) */
+}
+
+div[class|=actionButtons] [class|=button][class*=buttonColor-],
+div[class|=actionButtons] [class|=button] [class*=buttonColor-] {
+  background-color: #504945; /* taupe */
+}
+div[class|=actionButtons] [class|=button][class*=buttonColor-][class*=buttonActive-],
+div[class|=actionButtons] [class|=button] [class*=buttonColor-][class*=buttonActive-] {
+  background-color: #d8a657; /* unify #BB8725 -> #d8a657 */
+  color: #282828; /* background */
+}
+div[class|=actionButtons] [class|=button][class*=buttonColor-][class*=buttonActive-] [class*=buttonContents-],
+div[class|=actionButtons] [class|=button] [class*=buttonColor-][class*=buttonActive-] [class*=buttonContents-] {
+  color: #282828; /* background */
+}
+div[class|=actionButtons] [class|=button][class*=buttonColor-][class*=buttonActive-] [class*=buttonContents-] svg,
+div[class|=actionButtons] [class|=button] [class*=buttonColor-][class*=buttonActive-] [class*=buttonContents-] svg {
+  color: #282828; /* background */
+}
+
+[class*=lookInverted-][class*=colorBrand-] {
+  color: #a89984; /* unify var(--brand-experiment-600)-> #a89984 or so */
+}
+[class*=lookInverted-][class*=colorBrand-] svg[class|=premiumIcon] {
+  color: #d3869b; /* unify #ea76cb->#d3869b */
+}
+
+.theme-dark [class*=lookLink-][class*=colorPrimary-],
+.theme-light [class*=lookLink-][class*=colorPrimary-] {
+  color: #7daea3; /* unify #c6d0f5->#7daea3 if we want a main “link” color */
+}
+.theme-dark [class*=lookFilled-][class*=colorTransparent-],
+.theme-light [class*=lookFilled-][class*=colorTransparent-] {
+  color: #7daea3; /* unify #c6d0f5->#7daea3 */
+  background-color: #504945; /* unify #414559->#504945 */
+}
+
+div[class*=button-][class*=dangerous-]:hover {
+  color: #ea6962; /* unify #df575a->#ea6962 (reddish) */
+}
+
+div[role=radio][class*=selected] {
+  color: #282828; /* background (#232634->#282828) */
+}
+div[role=radio][class*=selected][class*=allow] {
+  background-color: #a9b665; /* greenish (#b8bb26->#a9b665) */
+}
+
+[class*=container-][style*="background-color: var(--green-360)"] {
+  --green-360: #a9b665; 
+  background-color: #a9b665 !important; /* greenish */
+}
+
+[class*=container-][style*="background-color: var(--primary-400)"],
+[class*=container-][style*="background-color: rgb(130, 133, 143)"] {
+  background-color: #a89984 !important; /* unify #928374->#a89984 */
+}
+
+.vc-spotify-button-row .vc-spotify-button.vc-spotify-shuffle-on, .vc-spotify-button-row .vc-spotify-button.vc-spotify-repeat-context, .vc-spotify-button-row .vc-spotify-button.vc-spotify-repeat-track {
+  color: var(--interactive-normal);
+}
+.vc-spotify-button-row .vc-spotify-button.vc-spotify-repeat-off, .vc-spotify-button-row .vc-spotify-button.vc-spotify-shuffle-off {
+  color: var(--text-muted);
+}
+
+[class*=topGuildEmojiBadge-] {
+  background: linear-gradient(268.26deg, #d8a657, #d3869b 102.45%);
+}
+[class*=topGuildEmojiBadge-] * {
+  color: #282828 !important; /* background */
+}
+
+[class*=newlyAddedBadge-] {
+  background: linear-gradient(268.26deg, #7daea3, #a9b665 102.45%);
+}
+[class*=newlyAddedBadge-] * {
+  color: #282828 !important;
+}
+
+[class*=lookFilled-] [class*=premiumSubscribeButton-] > [class*=premiumIcon-] {
+  color: #282828 !important;
+}
+
+div[class|=sidebarRegion] div[class|=serverBoostTabItem] svg[class|=icon] {
+  fill: #d3869b !important; /* pinkish */
+}
+div[class|=sidebarRegion] div[class|=serverBoostTabItem][class*=selected-] {
+  background-color: #504945 !important; /* unify #4E4943->#504945 */
+  color: #ddc7a1 !important; /* unify #fbf1c7->#ddc7a1 */
+}
+div[class|=sidebarRegion] div[class|=serverBoostTabItem][class*=selected-] svg[class|=icon] {
+  fill: #ddc7a1 !important; /* unify #fbf1c7->#ddc7a1 */
+}
+div[class|=sidebarRegion] div[class|=premiumTab] > div > svg > path {
+  fill: #d3869b;
+}
+div[class|=sidebarRegion] div[class|=premiumTab] > div[class*=selected] {
+  color: #282828;
+}
+div[class|=sidebarRegion] div[class|=premiumTab] > div[class*=selected] svg > path {
+  fill: #282828;
+}
+div[class|=sidebarRegion] div[class*=tabBarItemContainer-] [class*=textBadge-] {
+  color: #282828;
+}
+div[class|=sidebarRegion] div[class*=tabBarItemContainer-] [class*=textBadge-][style*="background-color: var(--brand-500);"] {
+  background-color: #7daea3 !important; /* unify #d8a657 or #7daea3? We'll keep it #7daea3 for brand accent */
+}
+
+div[class|=contentRegion] div[class*=noticeRegion-] div[style="background-color: rgb(24, 25, 28);"] {
+  background-color: #282828 !important;
+}
+div[class|=contentRegion] [class|=bar],
+div[class|=contentRegion] [class|=markDash] {
+  background: #504945; /* unify #51576d->somewhere, picking taupe #504945 */
+}
+div[class|=contentRegion] [id="privacy-&-safety-tab"] div[class|=radioBar][style*="hsl(139,"] {
+  border-color: #a9b665; /* greenish (#b8bb26->#a9b665) */
+}
+div[class|=contentRegion] [id="privacy-&-safety-tab"] div[class|=radioBar][style*="hsl(37,"] {
+  border-color: #d8a657; /* unify #fe8019->#d8a657 */
+}
+div[class|=contentRegion] [id="privacy-&-safety-tab"] div[class|=radioBar][style*="hsl(359,"] {
+  border-color: #ea6962; /* reddish */
+}
+div[class|=contentRegion] [id="privacy-&-safety-tab"] div[class*=betaTagIcon] {
+  background-color: #d8a657 !important; /* yellowish */
+  color: #282828;
+}
+div[class|=contentRegion] #accessibility-tab button[class*=colorBrandNew] {
+  background-color: #d8a657; /* unify #7daea3 or #b57614 -> #d8a657 to keep brand consistent */
+}
+div[class|=contentRegion] #keybinds-tab span[class*=key] {
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #keybinds-tab span[class*=key] g {
+  fill: #ddc7a1;
+}
+div[class|=contentRegion] #nitro-server-boost-tab circle[class|=circleProgress] {
+  color: #d3869b;
+}
+div[class|=contentRegion] #nitro-server-boost-tab div[class*=gemIndicatorContainer-] {
+  background-color: #32302f;
+}
+div[class|=contentRegion] #nitro-server-boost-tab div[class*=gemIndicatorContainer-] div[class|=tierLabel] {
+  color: #7daea3; /* unify #b5bfe2->#7daea3 */
+}
+div[class|=contentRegion] #nitro-server-boost-tab button[class*=lookInverted-] {
+  color: #282828;
+  background-color: #7daea3;
+}
+div[class|=contentRegion] #nitro-server-boost-tab button[class*=lookInverted-]:hover {
+  background-color: #7daea3;
+}
+div[class|=contentRegion] #nitro-server-boost-tab div[class*=card-],
+div[class|=contentRegion] #nitro-server-boost-tab h3[class*=price-] {
+  color: #7daea3 !important; /* unify #c6d0f5->#7daea3 */
+}
+div[class|=contentRegion] #subscriptions-tab [class|=sectionAccountCredit],
+div[class|=contentRegion] #subscriptions-tab [class|=subscriptionDetails] {
+  border-color: var(--background-modifier-accent);
+}
+div[class|=contentRegion] #library-inventory-tab div[class|=promotionIcon] {
+  background-color: #32302f;
+}
+div[class|=contentRegion] #discord-nitro-tab button[class*=buttonWhite] {
+  color: #ddc7a1 !important; /* unify #f9f5d7->#ddc7a1 */
+  border-color: #ddc7a1 !important;
+}
+div[class|=contentRegion] #discord-nitro-tab h2 {
+  color: #ddc7a1 !important;
+}
+div[class|=contentRegion] #discord-nitro-tab svg[class*=sparkleStar-] {
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #discord-nitro-tab div[class*=description-] {
+  color: #ddc7a1 !important;
+}
+div[class|=contentRegion] #discord-nitro-tab div[class*=card-] {
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #discord-nitro-tab button[class*=lookInverted-] {
+  color: #ddc7a1;
+  background-color: #d3869b; /* pinkish (#b16286->#d3869b) */
+}
+div[class|=contentRegion] #discord-nitro-tab button[class*=lookInverted-]:hover {
+  background-color: #d3869b;
+}
+div[class|=contentRegion] #billing-tab div[class*=subtext] {
+  color: #7daea3; /* unify #b5bfe2->#7daea3 */
+}
+div[class|=contentRegion] #billing-tab [class*=Divider] {
+  border-color: var(--background-modifier-accent);
+}
+div[class|=contentRegion] #billing-tab div[class|=defaultIndicator] {
+  color: #ddc7a1;
+  background-color: #504945;
+}
+div[class|=contentRegion] #billing-tab div[class*=summaryInfo],
+div[class|=contentRegion] #billing-tab [class|=paymentHeader] {
+  color: #ddc7a1;
+  border-color: var(--background-modifier-accent);
+}
+div[class|=contentRegion] #billing-tab div[class|=premiumIndicator] {
+  color: #282828;
+}
+div[class|=contentRegion] #billing-tab div[class|=paymentPane],
+div[class|=contentRegion] #billing-tab div[class*=paginator-],
+div[class|=contentRegion] #billing-tab div[class*=payment-] {
+  background-color: #282828;
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #billing-tab div[class|=expandedInfo] {
+  background-color: #32302f;
+}
+div[class|=contentRegion] #billing-tab [class*=paymentText-] {
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #billing-tab div[class|=codeRedemptionRedirect] {
+  background-color: #32302f;
+  color: #a89984;
+  border-color: #504945;
+}
+div[class|=contentRegion] [id="voice-&-video-tab"] div[class|=backgroundOptionRing] {
+  border-color: #7daea3;
+}
+div[class|=contentRegion] #notifications-tab button[class*=marketingUnsubscribeButton-] {
+  color: #7daea3;
+}
+div[class|=contentRegion] #game-activity-tab div[class*=nowPlayingAdd-],
+div[class|=contentRegion] #game-activity-tab div[class*=lastPlayed-],
+div[class|=contentRegion] #game-activity-tab div[class*=overlayStatusText-] {
+  color: var(--text-muted);
+}
+div[class|=contentRegion] #game-activity-tab div[class*=activeGame-][class*=nowPlaying] * {
+  color: #282828;
+}
+div[class|=contentRegion] #game-activity-tab div[class*=activeGame-][class*=nowPlaying] * svg > g > path {
+  fill: #282828;
+}
+div[class|=contentRegion] #game-activity-tab input[class|=gameName] {
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #game-activity-tab input[class*=gameNameInput-]:hover, div[class|=contentRegion] #game-activity-tab input[class*=gameNameInput-]:focus {
+  background-color: #32302f;
+  border-color: rgba(50, 48, 47, 0.3);
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #game-activity-tab div[class*=game-] {
+  box-shadow: 0 1px 0 0 var(--background-modifier-accent);
+}
+div[class|=contentRegion] #game-activity-tab div[class*=removeGame-] {
+  background-color: #504945;
+}
+div[class|=contentRegion] #emoji-tab div[class*=emojiRemove-] {
+  background-color: #504945;
+}
+div[class|=contentRegion] section[class|=inputSensitivityToggle] div[class*=speaking-] {
+  background: #a9b665 !important; /* unify #b8bb26->#a9b665 */
+}
+div[class|=contentRegion] div[class*=reactionMe-] {
+  background-color: #504945 !important;
+}
+div[class|=contentRegion] div[class|=control] > div[class*=checked-],
+div[class|=contentRegion] div[class|=sensitivity] div[class*=checked-],
+div[class|=contentRegion] div[style*="background-color: hsl(139, calc(var(--saturation-factor, 1) * 47.3%), 43.9%)"] {
+  background-color: #a9b665 !important;
+}
+div[class|=contentRegion] div[class|=control] > div[style*="background-color: hsl(218, calc(var(--saturation-factor, 1) * 4.6%), 46.9%)"] {
+  background-color: #504945 !important;
+}
+div[class|=contentRegion] div[class|=control] svg[class|=slider] > svg > path {
+  fill: #a9b665 !important; /* unify #416628-> #a9b665 deeper green */
+}
+div[class|=contentRegion] #guild_premium-tab [class*=tierAccomplished-],
+div[class|=contentRegion] #guild_premium-tab [class*=tierCurrent-],
+div[class|=contentRegion] #guild_premium-tab [class*=tierFirst-] {
+  background: #d3869b; /* pinkish */
+}
+div[class|=contentRegion] #guild_premium-tab [class*=tierInProgress-] {
+  background-color: #504945; /* unify #665c54-> #504945 */
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=progressWithSubscriptions] > svg > g > rect:first-child {
+  color: #282828;
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=progressWithSubscriptions] > svg > g > rect:nth-child(2) {
+  color: #d3869b;
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderUnlocked],
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderLocked] {
+  background-color: #282828;
+  color: #ddc7a1; /* unify #d5c4a1-> #ddc7a1 */
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderUnlocked] div[class|=tierUnlocked],
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderLocked] div[class|=tierUnlocked] {
+  background-image: linear-gradient(90deg, #7daea3, #d3869b);
+  color: #ddc7a1;
+  font-weight: 600;
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderUnlocked] svg[class|=tierIcon],
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderLocked] svg[class|=tierIcon] {
+  color: #d3869b;
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderUnlocked] svg[class*=tierIconLocked-],
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderLocked] svg[class*=tierIconLocked-] {
+  color: #ddc7a1;
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderUnlocked] svg[class|=tierLock],
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderLocked] svg[class|=tierLock] {
+  color: #a89984;
+}
+div[class|=contentRegion] #guild_premium-tab div[class|=tierBody] {
+  color: #ddc7a1;
+  background-color: #32302f;
+}
+div[class|=contentRegion] svg[class|=activeCircle] {
+  color: #282828;
+  background-color: #a9b665; /* greenish */
+}
+div[class|=contentRegion] #discovery-tab div[class*=checklistIcon] svg[viewBox="0 0 14 14"] path {
+  fill: #ea6962; /* unify #fb4934->#ea6962 if it was referenced */
+}
+div[class|=contentRegion] #discovery-tab div[class*=checklistIcon] svg[viewBox="0 0 20 20"] path {
+  fill: #d8a657; /* unify #fe8019-> #d8a657 */
+}
+div[class|=contentRegion] #guild_templates-tab svg[class*=descriptionIcon][viewBox="0 0 24 24"] path {
+  fill: #a9b665; /* greenish */
+}
+div[class|=contentRegion] #guild_templates-tab svg[class*=descriptionIcon][viewBox="0 0 14 14"] path {
+  fill: #ea6962; /* reddish */
+}
+div[class|=contentRegion] #guild_templates-tab svg[class*=descriptionIcon] circle {
+  fill: #282828;
+}
+div[class|=contentRegion] #stickers-tab div[class*=tierHeaderContent] {
+  background-color: #32302f;
+}
+div[class|=contentRegion] #stickers-tab div[class*=tierBody] {
+  background-color: #282828;
+}
+div[class|=contentRegion] #roles-tab div[class*=previewContainer-] .theme-light img[class*=roleIcon-] {
+  content: "data:image/svg+xml,%3Csvg width='20' ... fill='%23504945'/%3E";
+}
+div[class|=contentRegion] #roles-tab div[class*=previewContainer-] .theme-dark img[class*=roleIcon-] {
+  content: "data:image/svg+xml,%3Csvg fill='%23a89984' ... %3E";
+}
+
+.bd-settings-title {
+  color: #7daea3; /* unify #c6d0f5->#7daea3 */
+}
+
+.bd-switch-body {
+  --switch-color: #504945; /* unify #626880->#504945 */
+}
+.bd-switch input:checked + .bd-switch-body {
+  --switch-color: #a9b665; /* greenish */
+}
+.bd-switch input:checked + .bd-switch-body svg.bd-switch-symbol path {
+  fill: #a9b665;
+}
+
+.bd-button {
+  background-color: #7daea3;
+  color: #282828;
+}
+.bd-button.bd-button-danger {
+  background-color: #ea6962; /* unify #df575a->#ea6962 */
+}
+
+.bd-controls > .bd-addon-button svg {
+  fill: #282828;
+}
+
+.bd-addon-views .bd-view-button.selected {
+  background-color: #7daea3;
+}
+.bd-addon-views .bd-view-button.selected svg {
+  fill: #282828;
+}
+
+div[class|=perksModal] {
+  background-color: #32302f;
+}
+div[class|=perksModal] li[class|=perk] {
+  background-color: #32302f;
+}
+div[class|=perksModal] li[class|=perk] svg {
+  color: #d3869b;
+}
+div[class|=perksModal] svg[class|=giftIcon] {
+  color: #282828;
+}
+div[class|=perksModal] div[class|=tierHeaderUnlocked] {
+  background-image: linear-gradient(90deg, #7daea3, #d3869b);
+  color: #32302f;
+}
+div[class|=perksModal] div[class|=tierUnlocked],
+div[class|=perksModal] div[class|=tierMarkerBackground] {
+  background-color: #32302f;
+}
+div[class|=perksModal] div[class|=barBackground],
+div[class|=perksModal] div[class|=tierMarkerInProgress],
+div[class|=perksModal] div[class|=tierBody] {
+  background-color: #282828 !important;
+}
+div[class|=perksModal] div[class|=tierMarkerAccomplished] {
+  background: #d3869b !important;
+}
+div[class|=perksModal] div[class|=tierMarkerInProgress] [class|=currentTierIcon] {
+  color: #d3869b;
+}
+div[class|=perksModal] div[class|=barForeground],
+div[class|=perksModal] div[class|=tierMarkerAccomplished] {
+  background-color: #d3869b;
+}
+div[class|=perksModal] svg[class|=currentTierIcon] {
+  color: #32302f;
+}
+div[class|=perksModal] div[class*=tierMarkerLabelText],
+div[class|=perksModal] svg[class|=tierLock] {
+  color: #a89984; /* unify var(--text-muted)-> #a89984 */
+}
+div[class|=perksModal] div[class*=selectedTier] div[class*=tierMarkerLabelText] {
+  color: #ddc7a1; /* var(--text-normal)-> #ddc7a1 */
+}
+div[class|=perksModal] div[class|=tierHeaderLocked] {
+  background-color: #282828; /* unify #191b25-> #282828 */
+  color: #a89984; /* unify #d5c4a1-> #a89984 or #ddc7a1 -> we choose #a89984 for "muted" */
+}
+div[class|=perksModal] svg[class*=unlocked] {
+  color: #a9b665; /* unify #b8bb26->#a9b665 */
+}
+
+div[class|=sidebar] div[class|=container] div[class|=progressBar] {
+  background: linear-gradient(90deg, #7daea3, #d3869b);
+}
+div[class|=sidebar] div[class|=container]:hover div[class|=progressBar] {
+  background: linear-gradient(90deg, #7daea3 0%, #d3869b 34%, #7daea3 67%, #d3869b 100%);
+}
+div[class|=sidebar] div[class|=container] div[class|=divider] {
+  border-color: var(--background-modifier-accent);
+}
+
+div[class|=pageWrapper] {
+  background: #282828 !important;
+}
+div[class|=pageWrapper] div[class*=searchBox-] {
+  background-color: #32302f;
+}
+div[class|=pageWrapper] div[class*=searchBox-] svg[class*=clearIcon] path {
+  fill: #a89984;
+}
+div[class|=pageWrapper] div[class*=categoryPill-][class*=selected-] div {
+  color: #282828 !important;
+}
+
+div[class|=homeContainer] {
+  background: #282828 !important;
+}
+div[class|=homeContainer] > div[class|=homeContent] div[class*=card-] {
+  background: #504945 !important;
+}
+
+section[class|=title] {
+  background: var(--background-primary) !important;
+}
+
+div[class|=categoryItem][class*=selectedCategoryItem],
+button[class*=lookFilled] div[class*=addButton] {
+  color: #282828 !important;
+}
+
+div[class|=itemInner] div[class|=new] > div[class*=newText-] {
+  color: #282828 !important;
+}
+
+div[class*=directoryModal-] {
+  background-color: #32302f !important; /* unify #303446-> #32302f */
+}
+div[class*=directoryModal-] [class*=searchBox] {
+  background-color: #32302f !important;
+}
+div[class*=directoryModal-] [class*=searchBox] [name=search]::placeholder {
+  color: #7daea3; /* unify #a5adce->#7daea3 */
+}
+div[class*=directoryModal-] [role=button][class*=activeButton] {
+  color: #282828;
+}
+
+section[class|=guildListSection] div[class|=guildList]:first-child div[class|=iconContainer] {
+  background-color: #a9b665; /* unify #b8bb26->#a9b665 */
+}
+section[class|=guildListSection] div[class|=guildList]:first-child div[class|=iconContainer] > div[class|=icon] {
+  background-image: url("data:image/svg+xml,%3Csvg ... fill='%23282828' ...%3E");
+}
+
+path[d="M22 12.4065C21.8956 14.9141 ... fill: #7daea3"] {
+  fill: #7daea3; /* teal */
+}
+
+path[d="M17.225 6.06504C17.3227 ... fill='%23232634'"] {
+  fill: #282828; /* unify #232634-> #282828 */
+}
+
+div[class|=tierPreviews] button[class|=button] {
+  background: linear-gradient(90deg, #7daea3, #d3869b);
+}
+
+div[class|=notice] div[class*=noticeText-] {
+  color: #282828;
+}
+div[class|=notice] div[class*=header-] {
+  color: #282828;
+}
+div[class|=notice] div[class|=closeButton] > svg > path {
+  fill: #282828;
+}
+div[class|=notice] button[class|=button] {
+  border-color: #282828;
+  color: #282828;
+}
+div[class|=notice] button[class|=button]:hover {
+  background: #d8a657;
+  color: #282828;
+}
+
+nav[class*=guilds-] foreignObject > div[data-list-item-id|=guildsnav_] {
+  background-color: #504945;
+}
+nav[class*=guilds-] foreignObject > div[data-list-item-id|=guildsnav_]:hover > div[class|=childWrapper], nav[class*=guilds-] foreignObject > div[data-list-item-id|=guildsnav_][class*=selected] > div[class|=childWrapper] {
+  color: #282828;
+  font-weight: 600;
+}
+nav[class*=guilds-] div[data-list-item-id=guildsnav___home] {
+  --background-primary: #504945;
+}
+nav[class*=guilds-] span[class|=expandedFolderBackground] {
+  background-color: #282828;
+}
+nav[class*=guilds-] div[class|=folder][class*=hover-] {
+  background-color: #504945;
+}
+.closedFolderIconWrapper-3tRb2d {
+  background-color: #504945;
+}
+.closedFolderIconWrapper-3tRb2d:hover {
+  background-color: #504945;
+}
+nav[class*=guilds-] div[data-list-item-id=guildsnav___create-join-button] svg > path,
+nav[class*=guilds-] div[data-list-item-id=guildsnav___guild-discover-button] svg > path,
+nav[class*=guilds-] div[data-list-item-id=guildsnav___app-download-button] svg > path {
+  fill: #a9b665; /* unify #b8bb26->#a9b665 (greenish) */
+}
+.circleIconButton-1VxDrg.selected-2r1Hvo {
+  background-color: #504945;
+}
+
+div[class|=upperBadge] > div[class|=iconBadge] path {
+  color: #282828;
+}
+div[class|=upperBadge] div[class*=participating-] {
+  background: #ddc7a1; /* unify #ffffff->#ddc7a1 or #f2e5bc-> #ddc7a1 */
+}
+
+div[class|=lowerBadge] div[class|=iconBadge] path {
+  color: #282828;
+}
+
+svg[class|=spine] {
+  color: #504945; /* unify #626880-> #504945 */
+}
+
+div[class|=spineBorder] {
+  background: #504945; /* unify #626880-> #504945 */
+}
+
+ul[aria-label$=" threads"] > li:nth-child(1n) {
+  --channels-default: #ddc7a1;
+  --interactive-hover: #ea6962;   /* unify #ea6962 is fine */
+  --interactive-active: #ea6962;
+}
+
+ul[aria-label$=" threads"] > li:nth-child(2n) {
+  --channels-default: #a89984;    /* unify #d2c1cf-> #a89984 */
+  --interactive-hover: #d8a657;   /* unify #ef9f76-> #d8a657 or #fe8019-> #d8a657 */
+  --interactive-active: #d8a657;
+}
+
+ul[aria-label$=" threads"] > li:nth-child(3n) {
+  --channels-default: #ddc7a1;    /* unify #cfced7-> #ddc7a1 */
+  --interactive-hover: #d8a657;   /* unify #fe8019-> #d8a657 */
+  --interactive-active: #d8a657;
+}
+
+ul[aria-label$=" threads"] > li:nth-child(4n) {
+  --channels-default: #a9b665;    /* unify #bcd0d5-> #a9b665 */
+  --interactive-hover: #a9b665;
+  --interactive-active: #a9b665;
+}
+
+ul[aria-label$=" threads"] > li:nth-child(5n) {
+  --channels-default: #7daea3;    /* unify #b5c5f3-> #7daea3 */
+  --interactive-hover: #7daea3;   /* unify #85c1dc-> #7daea3 */
+  --interactive-active: #7daea3;
+}
+
+ul[aria-label$=" threads"] > li:nth-child(6n) {
+  --channels-default: #d3869b;    /* unify #c7c1f1-> #7daea3 or #d3869b. We'll pick #d3869b */
+  --interactive-hover: #d3869b;   /* unify #ca9ee6-> #d3869b */
+  --interactive-active: #d3869b;
+}
+
+[class|=botText] {
+  color: #282828;
+  font-weight: 600;
+}
+
+svg[class|=botTagVerified] {
+  color: #282828;
+}
+
+div[class*=activePostCount-] {
+  background-color: #504945;
+  color: #7daea3 !important; /* unify #c6d0f5-> #7daea3 */
+}
+
+div[class*=newPostCount-] {
+  background-color: #7daea3;
+  color: #282828;
+}
+
+div[class*=liveSmall-] {
+  background-color: #d8a657!important;
+  color: #282828;
+}
+
+[class|=chatContent] div[class*=wrapperAudio-] div[class*=audioControls],
+[class|=chatContent] div[class*=wrapperAudio-] div[class*=videoControls-],
+[class|=chatContent] div[class*=imageWrapper-] div[class*=audioControls],
+[class|=chatContent] div[class*=imageWrapper-] div[class*=videoControls-] {
+  background-color: rgba(80, 73, 69, 0.8); /* #504945 alpha */
+}
+[class|=chatContent] div[class*=wrapperAudio-] div[class*=audioControls] svg[class*=controlIcon-],
+[class|=chatContent] div[class*=wrapperAudio-] div[class*=videoControls-] svg[class*=controlIcon-],
+[class|=chatContent] div[class*=imageWrapper-] div[class*=audioControls] svg[class*=controlIcon-],
+[class|=chatContent] div[class*=imageWrapper-] div[class*=videoControls-] svg[class*=controlIcon-] {
+  opacity: 1;
+  color: #ddc7a1; /* unify #fbf1c7-> #ddc7a1 */
+}
+[class|=chatContent] #---new-messages-bar span[class|=unreadPill] {
+  color: #ddc7a1;
+}
+[class|=chatContent] div[class|=newMessagesBar] button {
+  color: #282828;
+}
+[class|=chatContent] div[class|=channelTextArea] div[class|=buttons] * {
+  color: var(--interactive-normal) !important;
+}
+[class|=chatContent] [id|=message-reactions] div[class|=reaction] {
+  background-color: #504945;
+}
+[class|=chatContent] [id|=message-reactions] div[class|=reaction]:hover {
+  background-color: #504945;
+  border-color: #504945;
+}
+[class|=chatContent] div[class*=isBurstReactionPicker-] {
+  box-shadow: 0 0 0 2px #d3869b, 0 0 16px #7daea3; /* unify #babbf1->#7daea3 or keep for glow? */
+}
+[class|=chatContent] div[class|=navButtonSuperReactActive],
+[class|=chatContent] div[class|=navButtonSuperReactActive]:hover {
+  background: linear-gradient(270deg, #d3869b, #7daea3 33.63%, #d3869b);
+  color: #282828;
+}
+[class|=chatContent] div[class*=betaTag-] {
+  background: var(--brand-experiment) !important;
+  color: #282828;
+}
+[class|=chatContent] button[class*=navButtonActive-],
+[class|=chatContent] button[class*=navButtonActive-]:hover {
+  color: #282828;
+}
+[class|=chatContent] div[class*=colorPremiumGradient-][class*=focused-] {
+  background: linear-gradient(270deg, #d3869b, #7daea3 33.63%, #d3869b);
+  color: #282828 !important;
+}
+[class|=chatContent] div[class*=isBurstReactionPicker] {
+  border: none;
+  box-shadow: 0 0 0 2px #d3869b, 0 0 16px #7daea3;
+}
+[class|=chatContent] div[class*=playButtonContainer-] {
+  background: #d8a657 !important;
+}
+[class|=chatContent] svg[class*=playIcon-] path {
+  fill: #282828;
+}
+[class|=chatContent] div[class|=container][class*=header-] div[class*=addReactButton-],
+[class|=chatContent] div[class|=container][class*=header-] div[class|=buttons]:not([class*=lookBlank-]) div[class|=contents] {
+  background: #504945;
+}
+[class|=chatContent] div[class|=container][class*=header-] div[class*=addReactButton-]:hover,
+[class|=chatContent] div[class|=container][class*=header-] div[class|=buttons]:not([class*=lookBlank-]) div[class|=contents]:hover {
+  background-color: rgba(216, 166, 87, 0.122); /* #d8a657 alpha-ish */
+  border-color: rgba(216, 166, 87, 0.188);
+}
+[class|=chatContent] div[class|=messagesErrorBar] div[class*=barButtonBase-] {
+  color: #282828;
+}
+[class|=chatContent] [class*=inlineCode-] {
+  background: #504945;
+}
+[class|=chatContent] code.inline {
+  background: #504945;
+}
+[class|=chatContent] div[class|=container] div[class|=cardWrapper] div[class*=completed-] svg[class|=checkmark] {
+  background-color: #a9b665; /* unify #b8bb26->#a9b665 */
+  color: #282828;
+}
+
+div[style*="d1382af8d9e755bc44811b1fd92990a8.svg"] {
+  background-image: url("data:image/svg+xml,%3Csvg ... fill='%23a9b665' ...%3E") !important; /* unify #b8bb26->#a9b665 */
+  filter: none !important;
+}
+
+main[class|=chatContent] div[id|=message-content] svg[class|=icon] > path[d="M4 0L0 4V8L4 12L8 8V4L4 0ZM7 7.59L4 10.59L1 7.59V4.41L4 1.41L7 4.41V7.59Z"],
+main[class|=chatContent] div[id|=message-content] svg[class|=icon] > path[d="M2 4.83V7.17L4 9.17L6 7.17V4.83L4 2.83L2 4.83Z"] {
+  color: #d3869b; /* pinkish */
+}
+
+.theme-dark span[class|=spoilerContent],
+.theme-dark div[class|=spoilerContent],
+.theme-light span[class|=spoilerContent],
+.theme-light div[class|=spoilerContent] {
+  background-color: #a89984; /* unify #bdae93->#a89984 */
+}
+.theme-dark span[class|=spoilerContent][class*=hidden],
+.theme-dark div[class|=spoilerContent][class*=hidden],
+.theme-light span[class|=spoilerContent][class*=hidden],
+.theme-light div[class|=spoilerContent][class*=hidden] {
+  background-color: #504945; /* unify #665c54->#504945 */
+}
+.theme-dark span[class|=spoilerContent][class*=hidden]:hover,
+.theme-dark div[class|=spoilerContent][class*=hidden]:hover,
+.theme-light span[class|=spoilerContent][class*=hidden]:hover,
+.theme-light div[class|=spoilerContent][class*=hidden]:hover {
+  background-color: #504945; /* unify #7c6f64->#504945 or a shade thereof */
+}
+.theme-dark div[class|=spoilerContainer] div[class|=spoilerWarning],
+.theme-light div[class|=spoilerContainer] div[class|=spoilerWarning] {
+  color: #ddc7a1;
+  background-color: rgba(50, 48, 47, 0.7);
+}
+.theme-dark div[class|=spoilerContainer]:hover div[class|=spoilerWarning],
+.theme-light div[class|=spoilerContainer]:hover div[class|=spoilerWarning] {
+  color: #ddc7a1;
+  background-color: rgba(50, 48, 47, 0.7);
+}
+.theme-dark div[class|=spoilerContainer] article[class*=embedFull-],
+.theme-light div[class|=spoilerContainer] article[class*=embedFull-] {
+  border-color: #504945; /* unify #626880-> #504945 */
+}
+
+div[class|=cooldownWrapper] {
+  color: var(--text-muted) !important;
+}
+
+div[class*=autocomplete-] {
+  background-color: #32302f !important;
+}
+div[class*=autocomplete-] div[class*=categoryHeader] {
+  background-color: #32302f !important;
+}
+div[class*=autocomplete-] div[class*=autocompleteRowSubheading] {
+  background-color: transparent;
+}
+div[class*=autocomplete-] div[class*=autocompleteRowContentSecondary] {
+  background-color: transparent;
+}
+div[class*=autocomplete-] div[class|=usageWrapper] > div[class*=title-] {
+  color: #7daea3 !important;
+}
+div[class*=autocomplete-] strong {
+  color: #7daea3 !important;
+}
+
+div[class|=channelTextArea] button[class*=emojiButton-] {
+  background: transparent !important;
+}
+
+[class|=uploadDropModal][class*=error] {
+  background-color: #ea6962; /* unify #ea6962 is correct */
+}
+[class|=uploadDropModal] div[class|=inner] {
+  border-color: #a89984;
+}
+[class|=uploadDropModal] div[class|=inner] * {
+  color: #ddc7a1 !important;
+}
+
+div[class|=chat] > div[class|=content] > div[class|=container] {
+  background-color: #282828;
+}
+div[class|=chat] > div[class|=content] > div[class|=container] div[class|=pinIcon] > svg > path,
+div[class|=chat] > div[class|=content] > div[class|=container] div[class|=stepStatus] > svg > path {
+  fill: #7daea3; /* unify #a5adce->#7daea3 */
+}
+div[class|=chat] > div[class|=content] > div[class|=container] div[class|=pinIcon][style*="background-color: var(--status-positive-background);"] > svg > path,
+div[class|=chat] > div[class|=content] > div[class|=container] div[class|=stepStatus][style*="background-color: var(--status-positive-background);"] > svg > path {
+  fill: #282828;
+}
+div[class|=chat] > div[class|=content] > div[class|=container] div[class*=countText] {
+  color: #282828;
+}
+div[class|=chat] > div[class|=content] > div[class|=container] svg[class|=discordIcon] {
+  background-color: #7daea3;
+  color: #282828;
+}
+div[class|=chat] > div[class|=content] > div[class|=container] div[class|=newBadge] {
+  background-color: #d8a657 !important;
+  color: #282828;
+}
+div[class|=chat] > div[class|=content] > div[class|=container] div[class*=mainCard-] {
+  background-color: #282828;
+}
+
+div[class|=sidebar] > section[class|=panels] svg[class*=buttonIcon-],
+div[class|=sidebar] > section[class|=panels] div[class*=buttonContents] {
+  fill: #7daea3; /* unify #c6d0f5-> #7daea3 */
+  color: #a89984;
+}
+
+[data-list-id|=forum-channel-list] div[class|=body] > div[class|=tags] div[class*=pill] {
+  background-color: #32302f;
+}
+[data-list-id|=forum-channel-list] button[class|=submitButton][class*=colorBrand] {
+  background-color: #d8a657;
+  color: #282828 !important;
+}
+
+.text-md-bold-1mgErV, .text-md-semibold-2VMhBr {
+  color: #ddc7a1;
+}
+
+.submitIcon-E3Vuaz {
+  color: #282828;
+}
+
+.theme-dark svg[class*=searchIcon-], .theme-light svg[class*=searchIcon-] {
+    color: #a89984 !important;
+}
+
+.name-3Uvkvr {
+  color: #ddc7a1;
+}
+
+div[class|=applicationCommand] span[class*=selectedPill-] {
+  border-color: #7daea3 !important;
+}
+div[class|=applicationCommand] span[class*=erroredPill-] {
+  border-color: #ea6962 !important;
+}
+
+div[class|=chat] > div[class|=content] main[class|=chatContent] + div[class|=container] {
+  background-color: var(--background-secondary);
+}
+
+[class*=channelTextAreaInnerError-] {
+  border: 1px solid #ea6962 !important;
+}
+
+[class*=barButtonBase-] {
+  color: #282828 !important;
+}
+
+div[class|=callContainer] [class*=controlIcon-] {
+  color: #a89984;
+}
+div[class|=callContainer] [class*=controlIcon-]:hover {
+  color: #a89984;
+}
+div[class|=callContainer] div[class*=tile-],
+div[class|=callContainer] div[class*=background-] {
+  background-color: #32302f !important;
+}
+div[class|=callContainer] div[class*=overlayTitle],
+div[class|=callContainer] svg[class*=status-] {
+  background-color: #504945;
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class*=header],
+div[class|=callContainer] svg[class*=selectedIcon-] {
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class*=button-][class*=contents-],
+div[class|=callContainer] button[class*=cta-],
+div[class|=callContainer] button[class*=participantsButton-] {
+  background-color: #32302f;
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class|=indicators] div[class|=liveQualityIndicator] {
+  background-color: transparent !important;
+}
+div[class|=callContainer] div[class|=indicators] div[class|=liveQualityIndicator] svg[class|=premiumStreamIcon] {
+  color: #282828;
+}
+div[class|=callContainer] div[class|=videoControls] div[class|=children] div[class*=playingText-] {
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] svg[class|=controlIcon] {
+  fill: #a89984 !important;
+}
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] div[class|=streamQualityIndicator] div[class|=liveQualityIndicator] {
+  background-color: #504945 !important;
+}
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] div[class|=streamQualityIndicator] div[class|=liveQualityIndicator] div[class|=qualityIndicator] {
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] div[class|=streamQualityIndicator] div[class|=liveQualityIndicator] svg[class|=premiumStreamIcon] {
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] div[class|=liveIndicator] div[class|=live] {
+  background-color: #ea6962 !important;
+  color: #282828 !important;
+}
+div[class|=callContainer] div[class|=videoControls] button[class*=leftTrayIcon-][class*=buttonColor-] {
+  background-color: #504945;
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class|=videoControls] div[class|=badge] {
+  color: #282828;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=red-] {
+  background: #ea6962;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=red-] [class*=centerIcon-] {
+  color: #282828;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=primaryDark-] {
+  background: #504945;
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=primaryDark-] [class*=centerIcon-] {
+  color: #ddc7a1;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=green-] {
+  background: #a9b665;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=green-] [class*=centerIcon-] {
+  color: #282828;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=white-] {
+  color: #ddc7a1;
+  background-color: #a89984;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=white-]:hover, div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=white-][class*=active-] {
+  background: #a89984;
+}
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=white-] [class*=centerIcon-] {
+  color: #ddc7a1;
+}
+
+div[class*=giftCodeContainer] [class*=tile] {
+  background-color: #32302f;
+}
+div[class*=giftCodeContainer] [class*=tile] > [class*=description] {
+  color: #7daea3;
+}
+
+div[class*=chat-] section[class*=header-] {
+  background-color: #32302f;
+}
+div[class*=chat-] div[class*=content-][class*=container-] {
+  background-color: #32302f;
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[class*=container] {
+  background-color: #32302f;
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[class*=search-] {
+  background-color: #32302f !important; /* unify #3C3836->#32302f */
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[class*=search-] input::placeholder {
+  color: #a89984;
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[class*=browser] div[class*=content] div[class|=container] {
+  background-color: #32302f;
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[class*=scrollerContainer-] {
+  background-color: #32302f;
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[class*=scrollerContainer-] div[class*=checkIcon-][style*="opacity: 1;"] > svg > path {
+  fill: #282828;
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[role=tablist] {
+  background-color: #32302f;
+  border-bottom: 2px solid #504945;
+}
+div[class*=chat-] div[class*=content-][class*=container-] div[role=tablist] [class*=textBadge-] {
+  color: #282828;
+}
+
+div[class*=chat-] section[class*=title] div[class*=searchBar] span[class*=search] {
+  background-color: #504945;
+  color: #7daea3;
+}
+div[class*=chat-] nav[class*=pageControl] div[class*=roundButton][class*=activeButton] span {
+  color: #282828;
+}
+
+div[class*=chat-] li[class*=mainCard-][class*=container] {
+  background-color: #282828;
+}
+div[class*=chat-] li[class*=mainCard-][class*=container]:hover {
+  background-color: #504945; /* unify #4C4643->#504945 */
+}
+div[class*=chat-] li[class*=mainCard-][class*=container] div[class*=contentPreview-] {
+  background-color: #a89984; /* unify #928374->#a89984 */
+  border: none;
+}
+div[class*=chat-] li[class*=mainCard-][class*=container] div[class*=contentPreview-] div[class*=textContentFooter-] {
+  background: none;
+}
+div[class*=chat-] li[class*=mainCard-][class*=container] div[class*=tags-] div[class*=tagPill-] {
+  background-color: #282828;
+}
+div[class*=chat-] div[class*=emptyPage] {
+  background-color: #32302f; /* unify #303446->#32302f */
+}
+div[class*=chat-] div[class*=innerHeader]:after {
+  background: none;
+}
+
+[id*=message-accessories-] > [class*=invite-] {
+  background-color: #32302f;
+}
+[id*=message-accessories-] > [class*=invite-] [class*=inFront-][class*=header-] {
+  color: #7daea3;
+}
+[id*=message-accessories-] > [class*=invite-] [class*=partyStatus-] {
+  color: #7daea3;
+}
+
+[class|=avatar] [class|=dots] {
+  color: #32302f;
+}
+
+div[class|=chat][class*=page-] div[class|=content][class*=container-] {
+  height: 100%;
+}
+
+.messagelogger-deleted div {
+  color: #ea6962 !important; /* unify #ea6962 */
+}
+
+.messagelogger-deleted div a {
+  color: #ea6962 !important;
+}
+
+div[class|=layerContainer] [role=menu] {
+  --brand-experiment-560: var(--brand-experiment-25a);
+  --brand-experiment-600: var(--brand-experiment);
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault][class*=colorBrand] {
+  color: #7daea3;
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault][class*=focused]:not([class*=colorDanger]),
+div[class|=layerContainer] [role=menu] [class*=colorDefault][class*=focused] [class*=checkbox-] {
+  color: #282828;
+  background-color: #d8a657;
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault][role=menuitem]:not([class*=colorDanger]):not([id*=user-context-user-volume]):hover {
+  background: var(--background-accent);
+  color: #282828;
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault][role=menuitem]:not([class*=colorDanger]):not([id*=user-context-user-volume]):hover [class*=subtext],
+div[class|=layerContainer] [role=menu] [class*=colorDefault][role=menuitem]:not([class*=colorDanger]):not([id*=user-context-user-volume]):hover [class*=caret-] {
+  color: #282828;
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault] [class*=caret] {
+  color: #a89984;
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault]:active:not([class*=hideInteraction-]) {
+  color: #282828;
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault]:active:not([class*=hideInteraction-]) [class*=check-] {
+  color: var(--interactive-normal);
+}
+div[class|=layerContainer] [role=menu] [class*=colorDefault]:active:not([class*=hideInteraction-]) [class*=checkbox-] {
+  color: #282828;
+}
+div[class|=layerContainer] [role=menu] [class*=focused] [class*=userMenuUsername] * {
+  color: #282828;
+}
+div[class|=layerContainer] [role=menu] [class*=colorDanger][class*=focused],
+div[class|=layerContainer] [role=menu] [class*=colorDefault] [class*=check-] {
+  color: #282828;
+  background-color: #ea6962;
+}
+div[class|=layerContainer] [role=menu] #guild-header-popout-premium-subscribe div[class|=iconContainer] > svg {
+  color: #d3869b;
+}
+div[class|=layerContainer] [role=menu] #user-context-user-volume div[class*=slider-] div[class*=bar-] {
+  background-color: #504945;
+}
+
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-]:not([class|=animatorBottom]) > div div[class*=flowerStarContainer-] svg[class*=flowerStar-] *,
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-]:not([class|=animatorBottom]) > div div[class*=flowerStarContainer-] svg[class*=flowerStar-] * {
+  fill: #7daea3;
+}
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=countText],
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=countText] {
+  color: #282828;
+}
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] svg[class*=activeIcon] circle,
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] svg[class*=activeIcon] circle {
+  fill: #282828;
+}
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] svg[class*=activeIcon] g path,
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] svg[class*=activeIcon] g path {
+  fill: #7daea3;
+}
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] div[class*=autocompleteArrow-],
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] header,
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] div[class*=autocompleteArrow-],
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] header {
+  background-color: #32302f;
+}
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] header > input::placeholder,
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] header > input::placeholder {
+  color: #7daea3;
+}
+.theme-dark div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] section,
+.theme-light div[class|=layerContainer] div[id|=popout_] > div[class*=didRender-] div[class*=container] section {
+  background-color: #32302f;
+  color: #7daea3;
+}
+
+div[class*=recentMentionsPopout] div[class|=header] div[class|=tabBar] div[class|=badge],
+div[class*=recentMentionsPopout] div[class|=header] div[class|=tabBar] div[class|=tab][class*=active-] {
+  color: #282828;
+}
+div[class*=recentMentionsPopout] div[class|=header] div[class|=controls-] {
+  --background-secondary: #504945;
+  --background-primary: rgba(80, 73, 69, 0.9);
+}
+div[class*=recentMentionsPopout] div[class|=scroller] [role=button] {
+  --background-tertiary: rgba(168, 153, 132, 0.15);
+  --background-floating: rgba(168, 153, 132, 0.12);
+}
+div[class*=recentMentionsPopout] div[class|=scroller] [role=button] div[class*=jumpButton-] {
+  background-color: #504945;
+}
+
+div[class*=rolesList] div[class|=role],
+div[class*=rolesList] button[class|=addButton] {
+  background-color: #504945; /* unify #313548-> #504945 or #32302f-> #504945 */
+}
+div[class*=rolesList] div[class|=role] span[class|=roleCircle][style*="background-color: rgb(185, 187, 190)"] {
+  background-color: #7daea3 !important; /* or #a9b665? #b8bb26->#a9b665? We'll just unify to teal for variety. */
+}
+div[class*=rolesList] div[class|=role] span[class|=roleCircle][style*="background-color: rgb(54, 57, 62)"],
+div[class*=rolesList] div[class|=role] span[class|=roleCircle][style*="background-color: rgb(53, 57, 64)"] {
+  background-color: #32302f !important;
+}
+
+div[class*=layerContainer] > div[class*=layer] div[class|=reactors] {
+  background-color: var(--background-primary);
+}
+div[class*=layerContainer] > div[class*=layer] div[class*=reactorDefault] {
+  box-shadow: inset 0 -1px 0 var(--background-modifier-accent);
+}
+div[class*=layerContainer] > div[class*=layer] div[class*=reactionSelected] {
+  background-color: var(--background-modifier-selected);
+}
+div[class*=layerContainer] > div[class*=layer] div[class*=friendSelected] {
+  background: #504945 !important;
+}
+
+section[class|=positionContainer] button[class*=navButtonActive] {
+  background-color: #d8a657;
+  color: #282828;
+}
+
+.theme-light section[class|=positionContainer] div[class|=categoryText] {
+  color: #32302f;
+}
+
+#emoji-picker-tab-panel [class*=stickerInspected-] [class*=inspectedIndicator],
+#emoji-picker-tab-panel [class|=emojiItem][class*=emojiItemSelected-] {
+  background-color: #504945 !important; /* unify #665c54->#504945 */
+}
+#emoji-picker-tab-panel [class*=newlyAddedHighlight-] {
+  border: 1px solid #a9b665; /* unify #b8bb26-> #a9b665 */
+}
+#emoji-picker-tab-panel [class*=newlyAddedHighlight-] ~ [class*=newlyAddedBadge-] {
+  background: #a9b665 !important;
+  color: #282828;
+}
+
+[class*=stickerInspected-] [class|=inspectedIndicator] {
+  background-color: rgba(216,166,87,0.15); /* var(--brand-experiment-25a) basically #d8a657 w alpha */
+}
+
+.theme-light > div[class|=focusLock] > div[class|=root] > div[class|=container] div[class*=footer][class*=footerSeparator-] {
+  box-shadow: inset 0 1px 0 #504945;
+}
+.theme-light > div[class|=focusLock] > div[class|=root] {
+  box-shadow: 0 0 0 1px #504945, 0 2px 10px 0 hsla(0, 0%, 0%, 0.1);
+}
+.theme-light div[class|=focusLock] div[class|=downloadApps] {
+  background-color: #32302f !important;
+}
+.theme-light div[class|=focusLock] div[class|=downloadApps] button[class|=modalCloseButton],
+.theme-light div[class|=focusLock] div[class|=downloadApps] h2,
+.theme-light div[class|=focusLock] div[class|=downloadApps] h3 {
+  color: #7daea3;
+}
+.theme-light div[class|=focusLock] div[class|=downloadApps] div[class*=footer-] {
+  color: #7daea3 !important;
+  background-color: unset !important;
+}
+.theme-light div[class|=focusLock] div[class|=downloadApps] div[class*=footer-] a {
+  color: #7daea3;
+}
+.theme-light div[class|=focusLock] div[class|=downloadApps] li[class*=active-] a[class*=downloadButton-] {
+  transition: all 0.3s ease-in-out;
+  color: #32302f;
+}
+.theme-light[class*=profileColors-] [class*=userTagUsernameBase-],
+.theme-light[class*=profileColors-] [class*=discrimBase-],
+.theme-light[class*=profileColors-] [class*=title-],
+.theme-light[class*=profileColors-] [class*=roles-],
+.theme-light[class*=profileColors-] [class*=defaultColor-],
+.theme-light[class*=profileColors-] [class*=markup-],
+.theme-light[class*=profileColors-] [class*=activityUserPopoutV2-] *,
+.theme-light[class*=profileColors-] [class*=customStatus-],
+.theme-light[class*=profileColors-] [class*=section-],
+.theme-light[class*=profileColors-] [class*=additionalActionsIcon-],
+.theme-light[class*=profileColors-] [class*=overlayBackground-] * {
+  --interactive-normal: #282828;
+  --text-normal: #282828;
+  --interactive-active: #282828;
+  --interactive-hover: #282828;
+}
+.theme-light[class*=profileColors-] [class*=userTagUsernameBase-]:not(a),
+.theme-light[class*=profileColors-] [class*=discrimBase-]:not(a),
+.theme-light[class*=profileColors-] [class*=title-]:not(a),
+.theme-light[class*=profileColors-] [class*=roles-]:not(a),
+.theme-light[class*=profileColors-] [class*=defaultColor-]:not(a),
+.theme-light[class*=profileColors-] [class*=markup-]:not(a),
+.theme-light[class*=profileColors-] [class*=activityUserPopoutV2-] *:not(a),
+.theme-light[class*=profileColors-] [class*=customStatus-]:not(a),
+.theme-light[class*=profileColors-] [class*=section-]:not(a),
+.theme-light[class*=profileColors-] [class*=additionalActionsIcon-]:not(a),
+.theme-light[class*=profileColors-] [class*=overlayBackground-] *:not(a) {
+  color: unset !important;
+}
+
+div[class|=layerContainer] #guild-header-popout,
+div[class|=layerContainer] #guild-context,
+div[class|=layerContainer] div[id|=channel-context],
+div[class|=layerContainer] div[id|=user-context] {
+  background: #282828;
+}
+div[class|=layerContainer] > div[class*=layer] div[role=listbox] {
+  background-color: #32302f;
+}
+div[class|=layerContainer] > div[class*=layer] div[role=listbox] div[role=option][aria-selected=true] {
+  background: #504945;
+}
+div[class|=layerContainer] > div[class*=layer] div[role=listbox] div[role=option] svg[class*=selectedIcon] circle {
+  fill: #282828;
+}
+div[class|=layerContainer] > div[class*=layer] div[role=listbox] div[class*=queryText-] {
+  color: #7daea3;
+}
+div[class|=layerContainer] > div[class*=layer] div[role=listbox] div[class*=queryText-] strong {
+  color: #7daea3;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modal],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modalSize],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=uploadModal],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=contentWrapper] {
+  background-color: #282828;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modal] li,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modal] p,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modal] span,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modalSize] li,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modalSize] p,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=modalSize] span,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=uploadModal] li,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=uploadModal] p,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=uploadModal] span,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=contentWrapper] li,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=contentWrapper] p,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class|=contentWrapper] span {
+  color: #ddc7a1;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class*=footer] {
+  background-color: #282828;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class*=footer] button[type=submit] span {
+  color: #282828;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class*=footer] [class*=footerText-] {
+  color: #7daea3;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h1[class|=fixed],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h2[class|=fixed],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h3[class|=fixed],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h4[class|=fixed],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h5[class|=fixed],
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h6[class|=fixed] {
+  color: #ea6962; /* unify #ea6962 is fine */
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h1[class|=fixed]:after,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h2[class|=fixed]:after,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h3[class|=fixed]:after,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h4[class|=fixed]:after,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h5[class|=fixed]:after,
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] h6[class|=fixed]:after {
+  background-color: #ea6962;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock] div[class*=message-] {
+  background-color: transparent;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock][aria-label=Activities] div[class*=activityItem-] {
+  background-color: #32302f;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock][aria-label=Activities] div[class*=activityItem-] div[class*=previewBadge-] {
+  color: #282828;
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock][aria-label=Activities] div[class*=activityTag-] {
+  background-color: rgba(80,73,69,0.5);
+}
+div[class|=layerContainer] > div[class*=layer] div[class|=focusLock][aria-label="Manage Accounts"] div[class*=navRow-] {
+  background-color: #282828;
+}
+div[class|=layerContainer] div[class|=addGamePopout] {
+  background-color: #282828;
+}
+div[class|=layerContainer] div[class*=searchOption-]::after,
+div[class|=layerContainer] div[class*=option-]::after,
+div[class|=layerContainer] li[class*=option-]::after {
+  display: none;
+}
+div[class|=layerContainer] div[class|=queryContainer] {
+  background-color: #282828 !important;
+}
+div[class|=layerContainer] div[class|=queryContainer] span[class|=key] {
+  color: #7daea3;
+  background-color: #32302f;
+}
+div[class|=layerContainer] [class*=tooltipBrand-],
+div[class|=layerContainer] [class*=tooltipRed-],
+div[class|=layerContainer] [class*=tooltipGreen-],
+div[class|=layerContainer] [class*=tooltipYellow] {
+  color: #282828;
+}
+div[class|=layerContainer] div[class|=popout] div[class|=row][role=button]:hover {
+  color: #282828;
+}
+div[class|=layerContainer] div[class|=popout] div[class|=row][role=button]:hover [class*=timestamp] {
+  color: #282828;
+}
+
+form[class*=card-] {
+  background-color: #32302f;
+}
+
+div[class*=userInfoSection-] div[class|=connectedAccountContainer] {
+  background-color: rgba(80, 73, 69, 0.45) !important; /* or #504945 with alpha */
+}
+
+div[class*=cardWarning-] div[class*=warning-] {
+  color: #282828;
+}
+
+#emoji-picker-tab-panel,
+#sticker-picker-tab-panel {
+  /* could override backgrounds if needed */
+}
+#emoji-picker-tab-panel div[class|=tooltipContainer] label[class|=label][class*=labelChecked-],
+#sticker-picker-tab-panel div[class|=tooltipContainer] label[class|=label][class*=labelChecked-] {
+  background: linear-gradient(270deg, #d3869b, #d3869b 33.33%, #7daea3); /* or  #d3869b->#ca9ee6 replaced anyway with #d3869b? */
+}
+
+div[class*=keyboardShortcutsModal-] {
+  background-color: #32302f !important;
+}
+div[class*=keyboardShortcutsModal-] div[class|=keybindShortcut] span[class|=key] {
+  color: #282828;
+}
+div[class*=keyboardShortcutsModal-] div[class|=keybindShortcut] span[class|=key] svg g {
+  fill: #282828 !important;
+}
+
+.react-datepicker,
+.react-datepicker__header {
+  background-color: #32302f !important;
+}
+
+.react-datepicker__day {
+  background-color: #282828 !important;
+}
+
+.react-datepicker__day:active {
+  background: #7daea3 !important;
+}
+
+.react-datepicker__day--selected:after {
+  background-color: #7daea3 !important;
+}
+
+[class|=datePickerHint] [class|=hintValue] {
+  color: #282828 !important;
+}
+
+div[class*=layerContainer-] div[class|=control] div[class*=checked-] {
+  background-color: #a9b665 !important;
+}
+div[class*=layerContainer-] div[class|=control] div[style*="background-color: rgb(114, 118, 125);"] {
+  background-color: #504945 !important; /* unify #626880->#504945 */
+}
+
+div[class*=layerContainer-] div[class*=guildPopout-][role=dialog] {
+  background-color: #32302f;
+}
+div[class*=layerContainer-] div[class*=guildPopout-][role=dialog] div[class*=guildName-] {
+  color: #7daea3;
+}
+
+div[class*=layerContainer-] [role*=dialog] a[class*=downloadLink-] {
+  color: #7daea3 !important;
+  opacity: 1;
+}
+div[class*=layerContainer-] [role*=dialog] a[class*=downloadLink-]:hover {
+  color: #7daea3 !important;
+}
+
+div[class*=userPopoutOuter-] div[aria-label="HypeSquad Bravery"] img,
+div[class*=userProfileOuter-] div[aria-label="HypeSquad Bravery"] img {
+  content: url("data:image/svg+xml,%3Csvg ... fill='%23d3869b' ...%3E");
+}
+div[class*=userPopoutOuter-] div[aria-label="HypeSquad Balance"],
+div[class*=userProfileOuter-] div[aria-label="HypeSquad Balance"] {
+  content: url("data:image/svg+xml,%3Csvg ... fill='%23a9b665' ...%3E");
+}
+div[class*=userPopoutOuter-] div[aria-label="HypeSquad Brilliance"],
+div[class*=userProfileOuter-] div[aria-label="HypeSquad Brilliance"] {
+  content: url("data:image/svg+xml,%3Csvg ... fill='%23ea6962' ...%3E");
+}
+div[class*=userPopoutOuter-] div[aria-label="Active Developer"],
+div[class*=userProfileOuter-] div[aria-label="Active Developer"] {
+  content: url("data:image/svg+xml,%3Csvg ... fill='%23a9b665' ...%3E");
+}
+div[class*=userPopoutOuter-] div[aria-label="Early Verified Bot Developer"],
+div[class*=userProfileOuter-] div[aria-label="Early Verified Bot Developer"] {
+  content: url("data:image/svg+xml,%3Csvg ... fill='%237daea3' ...%3E");
+}
+div[class*=userPopoutOuter-] div[class|=userPopoutOverlayBackground] > div[class|=scroller] > div[class|=section]:first-child > div[class|=buttonsContainer] > button:nth-child(2),
+div[class*=userProfileOuter-] div[class|=userPopoutOverlayBackground] > div[class|=scroller] > div[class|=section]:first-child > div[class|=buttonsContainer] > button:nth-child(2) {
+  background: #7daea3;
+}
+
+[class*=layerContainer-] [id|=slate-toolbar] {
+  background-color: #32302f;;
+}
+[class*=layerContainer-] [id|=slate-toolbar] [class*=buttons-] [class*=icon-] {
+  color: #ddc7a1;
+}
+
+[class*=layerContainer-] div[id=sort-and-view] div[id=sort-and-view-reset-all] [style="color: var(--text-normal);"]:hover {
+  color: #282828 !important;
+}
+
+[class|=layerContainer] [class|=quickswitcher] [class*=badge-] {
+  color: #282828;
+}
+
+rect[fill="#23a55a"],
+foreignObject[mask="url(#svg-mask-status-online)"] > div,
+div[class|=dotOnline],
+i[class|=statusOnline] {
+  fill: #a9b665 !important; 
+  background-color: #a9b665 !important;
+}
+
+rect[fill="rgba(35, 165, 90, 1)"] {
+  fill: #a9b665 !important;
+}
+
+rect[fill="#f0b232"],
+foreignObject[mask="url(#svg-mask-status-idle)"] > div {
+  fill: #d8a657 !important;
+  background-color: #d8a657 !important;
+}
+
+rect[fill="rgba(240, 178, 50, 1)"] {
+  fill: #d8a657 !important;
+}
+
+rect[fill="#f23f43"],
+foreignObject[mask="url(#svg-mask-status-dnd)"] > div {
+  fill: #ea6962 !important;
+  background-color: #ea6962 !important;
+}
+
+rect[fill="rgba(242, 63, 67, 1)"] {
+  fill: #ea6962 !important;
+}
+
+rect[fill="#82858f"],
+foreignObject[mask="url(#svg-mask-status-offline)"] > div,
+foreignObject[mask="url(#svg-mask-status-offline)"] > rect,
+div[class|=dotOffline],
+i[class|=statusOffline] {
+  fill: #7daea3 !important; /* unify #a5adce-> #7daea3 */
+  background-color: #7daea3 !important;
+}
+
+rect[fill="rgba(130, 133, 143, 1)"] {
+  fill: #7daea3 !important;
+}
+
+rect[fill="#593695"] {
+  fill: #d3869b !important;
+}
+
+.vc-platform-indicator svg[fill*="--green-"] {
+  fill: #a9b665;
+}
+
+.vc-platform-indicator svg[fill*="--yellow-"] {
+  fill: #d8a657;
+}
+
+.vc-platform-indicator svg[fill*="--red-"] {
+  fill: #ea6962;
+}
+
+.vc-platform-indicator svg[fill*="--primary-400"] {
+  fill: #a89984;
+}
+
+[src="/assets/eaeac24163b35f7526704a3d9b3c7722.svg"] {
+  width: 0 !important;
+  padding: 12px;
+  height: 0 !important;
+  -webkit-mask-image: url("https://discord.com/assets/eaeac24163b35f7526704a3d9b3c7722.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  background: #a9b665;
+}
+
+.vc-user-connection [src="/assets/eaeac24163b35f7526704a3d9b3c7722.svg"] {
+  padding: 16px;
+}
+
+#vencordthemes-tab [class*=input-]:focus {
+  border-color: #7daea3 !important;
+}
+
+svg[class|=cursorDefault] svg[class|=dots] circle {
+  fill: #32302f !important;
+}
+
+[style*="background-color: hsl(235, calc(var(--saturation-factor, 1) * 85.6%), 64.7%)"] {
+  background-color: #7daea3 !important;
+  color: #282828;
+}
+
+span[class*=username-][style*="color: rgb(54, 57, 62)"],
+span[class*=username-][style*="color: rgb(53, 57, 64)"] {
+  color: var(--background-primary) !important;
+}
+
+div[class*=flowerStarContainer-][class*=boostedGuildTierIconBackgroundWithVisibleBanner] svg[class*=flowerStar-] * {
+  fill: #7daea3;
+}
+div[class*=flowerStarContainer-][class*=boostedGuildTierIconBackgroundWithVisibleBanner] div[class|=childContainer] svg * {
+  fill: #282828;
+}
+div[class*=flowerStarContainer-][class*=iconBackgroundTierOne-] svg[class*=flowerStar-] *,
+div[class*=flowerStarContainer-][class*=iconBackgroundTierTwo-]:not([class*=boostedGuildTierIconBackgroundWithVisibleBanner]) svg[class*=flowerStar-] * {
+  fill: #504945;
+}
+div[class*=flowerStarContainer-][class*=iconBackgroundTierOne-] div[class|=childContainer] svg *,
+div[class*=flowerStarContainer-][class*=iconBackgroundTierTwo-]:not([class*=boostedGuildTierIconBackgroundWithVisibleBanner]) div[class|=childContainer] svg * {
+  fill: #7daea3;
+}
+div[class*=flowerStarContainer-][class*=iconBackgroundTierThree-] svg[class*=flowerStar-] * {
+  fill: #d3869b;
+}
+div[class*=flowerStarContainer-][class*=iconBackgroundTierThree-] div[class|=childContainer] svg * {
+  fill: #282828;
+}
+div[class*=flowerStarContainer-][class*=verified-] svg[class*=flowerStar-] * {
+  fill: #a9b665;
+}
+div[class*=flowerStarContainer-][class*=verified-] div[class|=childContainer] svg * {
+  fill: #282828;
+}
+div[class*=flowerStarContainer-][class*=partnered-] svg[class*=flowerStar-] * {
+  fill: #7daea3;
+}
+div[class*=flowerStarContainer-][class*=partnered-] div[class|=childContainer] svg * {
+  fill: #282828;
+}
+
+div[class|=communityInfoPill] {
+  --background-accent: rgba(50, 48, 47, 0.7);
+  color: #7daea3;
+}
+div[class|=communityInfoPill] div[class|=text] {
+  font-weight: 500;
+}
+
+a[class*=socialLink-][href*=discord] {
+  color: #a89984;
+}
+
+svg[class|=uploadIcon] {
+  color: #282828;
+}
+
+.theme-dark h2[class|=emptyStateHeader],
+.theme-light h2[class|=emptyStateHeader] {
+  color: #7daea3;
+}
+.theme-dark p[class|=emptyStateSubtext],
+.theme-light p[class|=emptyStateSubtext] {
+  color: #a89984;
+}
+
+div[class*=unreadMentionsBar-],
+div[class*=unreadBar-] {
+  color: #282828;
+}
+
+div[class|=numberBadge] {
+  font-weight: 700;
+  color: #282828;
+}
+
+div[class|=newChannel] {
+  color: #282828;
+  background-color: #d8a657 !important;
+}
+
+div[class|=botTag] {
+  background-color: #7daea3;
+}
+
+div[class|=addFriendInputWrapper]:focus-within {
+  border-color: #a89984;
+}
+
+button[class|=attachButton] svg path[class|=attachButtonPlay] {
+  color: #a9b665;
+  fill: #a9b665;
+}
+
+div[class|=tags] div[class|=pinIcon] path {
+  fill: #32302f !important;
+}
+
+div[class*=avatarSpeaking-] {
+  box-shadow: inset 0 0 0 2px #a9b665, inset 0 0 0 3px #32302f;
+}
+
+div[class*=videoLayer-] > div[class|=tileChild] > div[class|=border][class*=speaking-] {
+  box-shadow: inset 0 0 0 2px #a9b665, inset 0 0 0 3px #a9b665;
+}
+div[class*=videoLayer-] > div[class|=tileChild] > div[class|=border][class*=voiceChannelEffect-] {
+  box-shadow: inset 0 0 0 2px #7daea3, inset 0 0 0 3px #7daea3;
+}
+
+div[class*=featureIcon-] path {
+  fill: #7daea3;
+}
+
+div[class*=backgroundAccent-] {
+  color: #282828;
+}
+
+div[class*=profileBadges-] div[aria-label="Supports Commands"] img {
+  content: url("data:image/svg+xml,%3Csvg ... fill='%23a9b665' ...%3E");
+}
+
+div[class*=newBadge-],
+div[class*=tryItOutBadge-] {
+  color: #282828;
+}
+
+[class|=tabBar] [class|=badge] {
+  color: #282828;
+}
+
+span[class*=channelMention]:hover,
+[class*=mention]:not([class*=mentionButton-],
+[class*=mentionIcon-]):hover {
+  color: #282828;
+}
+
+/* Syntax highlighting adjustments */
+.theme-dark code.hljs {
+  color: #ddc7a1; /* foreground */
+  background: #282828; 
+}
+.theme-dark code .hljs-keyword {
+  color: #d3869b; /* pinkish (#ca9ee6->#d3869b or so) */
+}
+.theme-dark code .hljs-built_in {
+  color: #ea6962; /* reddish */
+}
+.theme-dark code .hljs-type {
+  color: #d8a657; /* yellowish */
+}
+.theme-dark code .hljs-literal,
+.theme-dark code .hljs-number {
+  color: #d8a657; /* unify #ef9f76-> #d8a657 or close enough */
+}
+.theme-dark code .hljs-operator {
+  color: #7daea3; /* teal */
+}
+.theme-dark code .hljs-punctuation {
+  color: #7daea3; 
+}
+.theme-dark code .hljs-property {
+  color: #7daea3; 
+}
+.theme-dark code .hljs-regexp {
+  color: #d3869b; /* pinkish */
+}
+.theme-dark code .hljs-string,
+.theme-dark code .hljs-char.escape_ {
+  color: #a9b665; /* greenish */
+}
+.theme-dark code .hljs-subst {
+  color: #a89984; /* beige */
+}
+.theme-dark code .hljs-symbol {
+  color: #d3869b; /* unify #eebebe-> #d3869b or pinkish */
+}
+.theme-dark code .hljs-variable {
+  color: #d3869b;
+}
+.theme-dark code .hljs-variable.language_ {
+  color: #d3869b;
+}
+.theme-dark code .hljs-variable.constant_ {
+  color: #d8a657; /* unify #ef9f76-> #d8a657 */
+}
+.theme-dark code .hljs-title {
+  color: #7daea3;
+}
+.theme-dark code .hljs-title.class_ {
+  color: #d8a657; /* unify #fe8019-> #d8a657 or #fe8019 is just a bit more orange */
+}
+.theme-dark code .hljs-title.function_ {
+  color: #7daea3;
+}
+.theme-dark code .hljs-params {
+  color: #ddc7a1;
+}
+.theme-dark code .hljs-comment {
+  color: #a89984; /* unify #626880-> #504945 or #928374-> #a89984. For comments we typically use #928374-> #a89984 */
+}
+.theme-dark code .hljs-doctag {
+  color: #ea6962; /* reddish */
+}
+.theme-dark code .hljs-meta {
+  color: #d8a657; /* unify #ef9f76-> #d8a657 */
+}
+.theme-dark code .hljs-section {
+  color: #7daea3;
+}
+.theme-dark code .hljs-tag {
+  color: #a89984; 
+}
+.theme-dark code .hljs-name {
+  color: #d3869b;
+}
+.theme-dark code .hljs-attr {
+  color: #7daea3;
+}
+.theme-dark code .hljs-attribute {
+  color: #a9b665;
+}
+.theme-dark code .hljs-bullet {
+  color: #7daea3; /* unify #81c8be-> #7daea3 */
+}
+.theme-dark code .hljs-code {
+  color: #a9b665;
+}
+.theme-dark code .hljs-emphasis {
+  color: #ea6962; /* reddish */
+  font-style: italic;
+}
+.theme-dark code .hljs-strong {
+  color: #ea6962; /* reddish */
+  font-weight: bold;
+}
+.theme-dark code .hljs-formula {
+  color: #7daea3;
+}
+.theme-dark code .hljs-link {
+  color: #7daea3;
+  font-style: italic;
+}
+.theme-dark code .hljs-quote {
+  color: #a9b665;
+  font-style: italic;
+}
+.theme-dark code .hljs-selector-tag {
+  color: #d8a657;
+}
+.theme-dark code .hljs-selector-id {
+  color: #7daea3;
+}
+.theme-dark code .hljs-selector-class {
+  color: #7daea3;
+}
+.theme-dark code .hljs-selector-attr {
+  color: #d3869b;
+}
+.theme-dark code .hljs-selector-pseudo {
+  color: #7daea3;
+}
+.theme-dark code .hljs-template-tag {
+  color: #d3869b;
+}
+.theme-dark code .hljs-template-variable {
+  color: #d3869b;
+}
+.theme-dark code .hljs-diff-addition {
+  color: #a9b665;
+  background: rgba(169, 182, 101, 0.15);
+}
+.theme-dark code .hljs-diff-deletion {
+  color: #ea6962;
+  background: rgba(234, 105, 98, 0.15);
+}
+
+/* Some minor adjustments to images, backgrounds, etc. */
+.pngImage-1vIgLy:hover, .lottieCanvas-c2HE82 {
+    background-color: #504945 !important;
+}
+
+.colorStreamerMode-8uoRWd {
+    background-color: #d3869b;
+    color: #ddc7a1;
+}
+
+div[class|=notice] button[class|=button] {
+    border-color: #282828;
+    color: #282828;
+}
+
+div[class|=notice] button[class|=button]:hover {
+    background: #d8a657;
+    color: #282828;
+}
+
+div[class|=notice] div[class|=closeButton] > svg > path {
+    fill: #ddc7a1;
+}
+
+[class|=chatContent] code.inline {
+    background: #282828;
+}
+
+.contents-3NembX .button-ejjZWC {
+    color: #000000;
+}
+
+.gradientBackground-MytxDL {
+    background: #d3869b; /* unify #b16286-> #d3869b */
+}
+
+.upsellText-29l7Q- {
+    color: #ddc7a1;
+    margin-left: 6px;
+}
+
+.contents-3NembX {
+    color: #ddc7a1;
+}
+
+.icon-2O29O0 {
+    background-color: transparent;
+}
+
+div[class|=newChannel] {
+    color: #282828;
+    background-color: #d8a657 !important;
+}
+
+.fakeActivityIcon-KeXVoI.activityCharacterWumpus-31wmZ9 {
+    background-color: #504945;
+}
+
+.theme-dark .customColorPicker-C_jddW {
+    background: #32302f;
+    border-color: #282828;
+}
+
+.grabber-3R-Rx9 {
+    background-color: #ddc7a1;
+}
+
+.theme-dark .checkbox-1LuCGM {
+    border-color: transparent;
+}
+
+.lookFilled-1H2Jvj.colorBrand-2M3O3N {
+    color: #ddc7a1; /* unify var(--white-500)-> #ddc7a1 */
+    background-color: #d8a657; /* unify #b57614-> #d8a657 */
+}
+
+.lookFilled-1H2Jvj.colorRed-2VFhM4 {
+    color: #ddc7a1;
+    background-color: #d8a657;
+}
+
+.lookFilled-1H2Jvj.colorRed-2VFhM4:hover {
+    background-color: #d8a657;
+}
+
+.lookFilled-1H2Jvj.colorBrand-2M3O3N:hover {
+    background-color: #d8a657;
+}
+
+.lookInverted-2GrLaB.colorBrand-2M3O3N {
+    color: #d8a657; 
+    background-color: #d3869b;
+}
+
+.lookInverted-2GrLaB.colorBrand-2M3O3N:hover {
+    background-color: #d3869b;
+}
+
+.theme-dark p[class|=emptyStateSubtext], .theme-light p[class|=emptyStateSubtext] {
+    color: #a89984;
+}
+
+div[class|=contentRegion] #discord-nitro-tab button[class*=lookInverted-] {
+    color: #ddc7a1;
+    background-color: #d3869b;
+}
+
+div[class|=contentRegion] #discord-nitro-tab button[class*=lookInverted-]:hover {
+    background-color: #d3869b;
+}
+
+div[class|=contentRegion] #keybinds-tab span[class*=key] {
+    color: #ddc7a1;
+}
+
+div[class|=layerContainer] div[class|=addGamePopout] {
+    background-color: #282828;
+}
+
+div[class|=contentRegion] #accessibility-tab button[class*=colorBrandNew] {
+    background-color: #d8a657;
+}
+
+.reactionInner-YJjOtT {
+    background-color: #504945;
+}
+
+div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderUnlocked] div[class|=tierUnlocked], div[class|=contentRegion] #guild_premium-tab div[class|=tierHeaderLocked] div[class|=tierUnlocked] {
+    background-image: linear-gradient(90deg, #7daea3, #d3869b);
+    color: #ddc7a1;
+    font-weight: 600;
+}
+
+.lookFilled-1H2Jvj.colorBrandNew-abZT3v:disabled, .lookFilled-1H2Jvj.colorBrandNew-abZT3v[aria-disabled=true] {
+    background-color: #d8a657;
+}
+
+.text-sm-normal-AEQz4v {
+    color: #ddc7a1;
+}
+
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=white-] {
+    color: #ddc7a1;
+    background-color: #a89984;
+}
+
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=white-]:hover, div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=white-][class*=active-] {
+    color: #ddc7a1;
+    background-color: #a89984;
+}
+
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=primaryDark-] {
+    background: #504945;
+    color: #ddc7a1;
+}
+
+div[class|=callContainer] div[class|=videoControls] button[class*=leftTrayIcon-][class*=buttonColor-] {
+    background-color: #504945;
+    color: #ddc7a1;
+}
+
+[class|=chatContent] div[class*=wrapperAudio-] div[class*=audioControls], [class|=chatContent] div[class*=wrapperAudio-] div[class*=videoControls-], [class|=chatContent] div[class*=imageWrapper-] div[class*=audioControls], [class|=chatContent] div[class*=imageWrapper-] div[class*=videoControls-] {
+    background-color: rgba(80, 73, 69, 0.8);
+}
+
+div[class|=chat] > div[class|=content] > div[class|=container] div[class|=newBadge] {
+    background-color: #d8a657 !important;
+    color: #282828;
+}
+
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] div[class|=streamQualityIndicator] div[class|=liveQualityIndicator] {
+    background-color: #282828 !important;
+}
+
+.qualityResolution-RP9GCP {
+    margin-right: 4px;
+    color: #ddc7a1;
+    background-color: #282828;
+}
+
+div[class|=callContainer] div[class|=videoControls] div[class|=children] div[class*=playingText-] {
+    color: #ddc7a1;
+}
+
+.grid-21dB-S>div:first-child, .headerRow-1MKoR-, .list-3FIpnh>div:first-child {
+    min-width: 480px;
+    width: 100%;
+    position: relative;
+    background-color: #282828;
+}
+
+div[class|=callContainer] div[class|=videoControls] [class*=colorable-][class*=primaryDark-] [class*=centerIcon-] {
+    color: #ddc7a1;
+}
+
+div[class|=callContainer] [class*=controlIcon-] {
+    color: #a89984;
+}
+
+div[class|=callContainer] [class*=controlIcon-]:hover {
+    color: #a89984;
+}
+
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] div[class|=streamQualityIndicator] div[class|=liveQualityIndicator] div[class|=qualityIndicator] {
+    background-color: #32302f;
+    color: #ddc7a1;
+}
+
+div[class|=callContainer] div[class|=videoControls] div[class|=toolbar] div[class|=streamQualityIndicator] div[class|=liveQualityIndicator] svg[class|=premiumStreamIcon] {
+    color: #ddc7a1;
+}
+
+div[class|=layerContainer] [role=menu] [class*=colorDefault][class*=colorBrand] {
+    color: #7daea3;
+}
+
+.item-5ApiZt:hover {
+    color: #282828;
+    background-color: #d8a657;
+}
+
+.colorDefault-2_rLdz .checkbox-397WsK, .colorDefault-2_rLdz .radioSelection-3PDNAQ {
+    color: #a89984;
+}
+
+.colorDefault-2_rLdz .checkbox-397WsK, .colorDefault-2_rLdz .radioSelection-3PDNAQ:hover {
+    fill: #a89984;
+}
+
+.emojiButton-3FRTuj {
+    background-color: #000 !important;
+}
+
+.unreadIcon-3dqgX9, .voiceChannelsIcon-2smmeE {
+    display: none;
+}
+
+.button-3_1yil, .notice-12Koq- {
+    background-color: #d8a657;
+}
+
+div[class|=notice] button[class|=button] {
+    border-color: #282828;
+}
+
+div[class|=notice] button[class|=button]:hover {
+    background: #d8a657;
+    color: #282828;
+}
+
+.text-md-medium-2n7Vn5, .text-md-normal-2rFCH3 {
+    color: #ddc7a1 !important;
+}
+
+.controlIcon-10O-4h {
+    color: #ddc7a1 !important;
+}
+
+.theme-dark .categoryFadeBlurple-1l49_Q, .theme-light .categoryFadeBlurple-1l49_Q  {
+    background-color: rgba(80, 73, 69, 0.8);
+}
+
+.theme-dark .categoryFadeBlurple-1l49_Q:hover, .theme-light .categoryFadeBlurple-1l49_Q:hover {
+    background-color: rgba(80, 73, 69, 0.8);
+}
+
+.pngImage-1vIgLy:hover, .lottieCanvas-c2HE82 {
+    background-color: #504945;
+}
+
+.theme-dark div[class|=spoilerContainer] div[class|=spoilerWarning], .theme-light div[class|=spoilerContainer] div[class|=spoilerWarning] {
+    color: #ddc7a1;
+    background-color: rgba(50, 48, 47, 0.7);
+}
+
+div[class*=userInfoSection-] div[class|=connectedAccountContainer] {
+    background-color: #282828 !important;
+}
+
+.editIcon-3h_5Rm {
+    color: #ddc7a1;
+}
+
+.iconBadge-3Mmg92 {
+    background-color: #ea6962;
+}
+
+.theme-dark svg[class*=threadIcon-], .theme-light svg[class*=threadIcon-] {
+    color: #a89984 !important;
+}
+
+div[class|=notice] button[class|=button] {
+    color: #282828;
+}
+
+div[class|=notice] button[class|=button]:hover {
+    border-color: #282828;
+}
+
+.closeIcon-3eoP1e {
+    filter: brightness(0) !important;
+}
+
+.assetWrapperMasked-1iw9lV {
+    background-color: #504945;
+}
+
+.lookFilled-1H2Jvj.colorGreen-jIPCAS, .lookFilled-1H2Jvj.colorGreen-jIPCAS:hover {
+    background-color: #d8a657;
+}
+
+a[class*=socialLink-][href*=discord] {
+    color: #a89984;
+}
+
+.reaction-102jx9.reactionMe-2zhiyZ .reactionCount-SWXh9W {
+    color: #ddc7a1;
+}
+
+.updateReactionButton-13dIN9>div {
+    background: #a89984;
+}
+
+svg[class|=spine] {
+    color: #504945;
+}
+
+div[class|=spineBorder] {
+    background: #504945;
+}
+
+ul[aria-label$=" threads"] > li:nth-child(2n) {
+    --channels-default: #a89984;
+}
+
+.clickable_d23a1a .icon__4cb88, .clickable_d23a1a .icon__4cb88:hover {
+    color: #ddc7a1;
+}
+
+.button__66e8c .buttonColor_a6eb73.buttonActive__407a7, .button__66e8c.buttonColor_a6eb73.buttonActive__407a7 {
+    background-color: #d8a657;
+    color: #ddc7a1;
+}
+
+.button__66e8c .buttonColor_a6eb73.buttonActive__407a7:hover, .button__66e8c.buttonColor_a6eb73.buttonActive__407a7:hover {
+    background-color: #d8a657;
+}
+
+.gradientBackground_aa82b3 {
+    display: none;
+}
+
+.theme-dark .footerSeparator__57d95 {
+    background-color: #282828;
+}

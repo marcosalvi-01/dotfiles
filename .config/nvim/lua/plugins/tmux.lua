@@ -21,10 +21,10 @@ return {
 			["<C-Up>"] = [[<cmd>lua require'tmux'.move_top()<cr>]],
 			["<C-Right>"] = [[<cmd>lua require'tmux'.move_right()<cr>]],
 
-			["<A-Left>"] = [[<cmd>lua require'tmux'.resize_left()<cr>]],
-			["<A-Down>"] = [[<cmd>lua require'tmux'.resize_bottom()<cr>]],
-			["<A-Up>"] = [[<cmd>lua require'tmux'.resize_top()<cr>]],
-			["<A-Right>"] = [[<cmd>lua require'tmux'.resize_right()<cr>]],
+			["<S-Left>"] = [[<cmd>lua require'tmux'.resize_left()<cr>]],
+			["<S-Down>"] = [[<cmd>lua require'tmux'.resize_bottom()<cr>]],
+			["<S-Up>"] = [[<cmd>lua require'tmux'.resize_top()<cr>]],
+			["<S-Right>"] = [[<cmd>lua require'tmux'.resize_right()<cr>]],
 		})
 
 		return tmux
