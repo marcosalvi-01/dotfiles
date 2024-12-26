@@ -103,7 +103,7 @@ prediction = f"\n\n    (hourly) {prediction}" if len(prediction) > 0 else 
 
 # tooltip text
 tooltip_text = str.format(
-    "\t\t{}\t\t\n{}\n{}\n{}\n\n{}\n{}\n{}{}",
+    "\t\t{}\t{}\n{}\n{}\n\n{}\n{}\n{}{}",
     f'<span size="xx-large">{temp}</span>',
     f"<big>{icon}</big>",
     f"<big>{status}</big>",

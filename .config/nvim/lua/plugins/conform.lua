@@ -38,7 +38,8 @@ return { -- Autoformat
 			sh = { "beautysh" },
 			nix = { "nixpkgs_fmt" },
 			markdown = { "prettier" },
-			jsonc = { "biome" }
+			jsonc = { "biome" },
+			python = { "black" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--

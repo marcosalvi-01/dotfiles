@@ -115,16 +115,15 @@ class PlayerManager:
         if player_name == "spotify" and "mpris:trackid" in metadata.keys() and ":ad:" in player.props.metadata["mpris:trackid"]:
             track_info = "Advertisement"
         elif artist is not None and title is not None:
-            # track_info = f"{artist} - {title}"
-            track_info = f" {title}"
+            track_info = f"{artist} - {title}"
         else:
             track_info = title
 
         if track_info:
             if player.props.status == "Playing":
-                track_info = " " + track_info
+                track_info = "󰐊 " + track_info
             else:
-                track_info = " " + track_info
+                track_info = "󰓛 " + track_info
         # only print output if no other player is playing
         current_playing = self.get_first_playing_player()
         if current_playing is None or current_playing.props.player_name == player.props.player_name:
@@ -162,15 +161,23 @@ def main():
     arguments = parse_arguments()
 
     # Initialize logging
+    # if arguments.enable_logging:
+    #     logfile = os.path.join(os.path.dirname(
+    #         os.path.realpath(__file__)), "media-player.log")
+    #     logging.basicConfig(filename=logfile, level=logging.DEBUG,
+    #                         format="%(asctime)s %(name)s %(levelname)s:%(lineno)d %(message)s")
     if arguments.enable_logging:
-        logfile = os.path.join(os.path.dirname(
-            os.path.realpath(__file__)), "media-player.log")
-        logging.basicConfig(filename=logfile, level=logging.DEBUG,
-                            format="%(asctime)s %(name)s %(levelname)s:%(lineno)d %(message)s")
+        import sys
+        logging.basicConfig(
+            stream=sys.stdout,  # Log to standard out
+            level=logging.DEBUG,
+            format="%(asctime)s %(name)s %(levelname)s:%(lineno)d %(message)s"
+        )
 
     # Logging is set by default to WARN and higher.
     # With every occurrence of -v it's lowered by one
-    logger.setLevel(max((3 - arguments.verbose) * 10, 0))
+    # logger.setLevel(max((3 - arguments.verbose) * 10, 0))
+    logger.setLevel("DEBUG")
 
     logger.info("Creating player manager")
     if arguments.player:
@@ -178,6 +185,10 @@ def main():
     player = PlayerManager(arguments.player)
     player.run()
 
+def truncate(text: str, length: int) -> str:
+    if len(text) <= length:
+        return text
+    return text[:length-3] + "..."
 
 if __name__ == "__main__":
     main()
