@@ -5,13 +5,7 @@
 	"spacing": 2, // Gaps between modules
 	"margin-bottom": -11,
 	"modules-left": ["hyprland/workspaces", "custom/audio_idle_inhibitor"],
-	"modules-right": [
-		"custom/spotify",
-		"cpu",
-		"memory",
-		"network",
-		"pulseaudio",
-	],
+	"modules-right": ["custom/spotify", "cpu", "memory", "network", "pulseaudio"],
 	"modules-center": ["clock#date", "clock#time", "custom/weather"],
 
 	"custom/spotify": {
@@ -91,7 +85,7 @@
 		"format-wifi": "󰤨   {signalStrength}%",
 		"format-disconnected": "󰤭   Offline",
 		"tooltip-format": "󰱶   {ifname} via {gwaddr}",
-		"tooltip-format-wifi": "{essid}",
+		"tooltip-format-wifi": "{essid}"
 		//"on-click": "kitty --class network_devices -e iwctl device list"
 	},
 	"pulseaudio": {
@@ -108,6 +102,6 @@
 			"car": "󰸛",
 			"default": ["󰕿", "󰖀", "󰕾"]
 		},
-		"on-click": "pavucontrol",
+		"on-click": "pavucontrol"
 	}
 }

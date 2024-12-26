@@ -8,6 +8,7 @@
 @define-color green                 #8ec07c;
 @define-color green2                #689d6a;
 @define-color yellow                #d8a657;
+@define-color yellow2               #b68242;
 @define-color red                   #ea6962;
 @define-color magenta               #d3869b;
 @define-color aqua                  #a9b665;
@@ -47,14 +48,15 @@ window#waybar {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.377);
     padding-left: 20px;
     padding-bottom: 3px;
-	background: @green2;
-    /*background: linear-gradient(45deg, @green2, @lightblue);*/
-    /*animation: gradient 40s ease infinite;*/
+    background: @green2; /* Added !important to override .empty */
     background-size: 300% 300%;
     color: @black;
     font-weight: bolder;
 }
 
+#workspaces button.empty:not(.active) { /* Only apply when .empty and not .active */
+    background-color: rgba(216, 166, 87, 0.5);
+}
 @keyframes gradient {
     0% {
         background-position: 0% 50%;
