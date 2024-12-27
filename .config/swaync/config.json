@@ -48,7 +48,7 @@
           "command": "sh -c 'if pgrep hyprsunset > /dev/null; then pkill hyprsunset; else hyprsunset -t 4500; fi && echo done'",
           "type": "toggle",
           "update-command": "sh -c 'pgrep hyprsunset > /dev/null && echo true || echo false'",
-          "active": false
+          "active": true
         },
         {
           "label": " ",
