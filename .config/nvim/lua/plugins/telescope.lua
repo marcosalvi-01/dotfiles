@@ -74,8 +74,10 @@ return {
 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord (Telescope)" })
 		vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep (Telescope)" })
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics (Telescope)" })
-		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume (Telescope)" })
+		vim.keymap.set("n", "<leader>sR", builtin.resume, { desc = "[S]earch [R]esume (Telescope)" })
+		vim.keymap.set("n", "<leader>sr", builtin.registers, { desc = "[S]earch [R]egisters (Telescope)" })
 		vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "[S] Find existing [B]uffers (Telescope)" })
+		vim.keymap.set("n", "<leader>sm", builtin.man_pages, { desc = "[S] Find [M]an pages (Telescope)" })
 		vim.keymap.set(
 			"n",
 			"<leader>s.",

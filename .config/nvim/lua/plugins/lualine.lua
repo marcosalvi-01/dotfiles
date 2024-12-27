@@ -54,20 +54,21 @@ return {
 			options = {
 				theme = bubbles_theme,
 				component_separators = "",
-				section_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
 				globalstatus = true,
 			},
 			sections = {
 				lualine_a = {
-					{ "mode", separator = { left = "" }, right_padding = 2 },
+					{ "mode", separator = { left = "", right = "" }, right_padding = 2 },
 					{
 						"branch",
 						icon = "󰘬", -- Branch icon
 						color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
+						separator = { left = "", right = "" },
 					},
 				},
 				lualine_b = {
-					get_buf_name,
+					{ get_buf_name, separator = { right = "" } },
 					{
 						"diff",
 						symbols = { added = "+", modified = "~", removed = "-" },
@@ -76,6 +77,7 @@ return {
 							modified = { fg = colors.yellowish, gui = "bold" },
 							removed = { fg = colors.reddish, gui = "bold" },
 						},
+						separator = { left = "", right = "" },
 					},
 				},
 				lualine_c = {
@@ -92,11 +94,16 @@ return {
 					},
 				},
 				lualine_x = {
-					{ "encoding", color = { fg = colors.beige, bg = colors.background, gui = "bold" } },
+					{
+						"encoding",
+						color = { fg = colors.beige, bg = colors.background, gui = "bold" },
+						separator = { left = "" },
+					},
 					{
 						"fileformat",
 						symbols = { unix = "LF", dos = "CRLF", mac = "CR" },
 						color = { fg = colors.beige, bg = colors.background, gui = "bold" },
+						separator = { left = "" },
 					},
 				},
 				lualine_y = {
@@ -104,7 +111,7 @@ return {
 					{ "progress", color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" } },
 				},
 				lualine_z = {
-					{ "location", separator = { right = "" }, left_padding = 2 },
+					{ "location", separator = { left = "", right = "" }, left_padding = 2 },
 				},
 			},
 			inactive_sections = {
