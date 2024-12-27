@@ -30,9 +30,12 @@
   ],
   "widget-config": {
     "title": {
-      "text": "󰂚  Notifications",
+      "text": " 󰂚  Notifications",
       "clear-all-button": true,
       "button-text": "  Clear"
+    },
+    "dnd": {
+      "text": "   Do Not Disturb"
     },
     "mpris": {
       "image-size": 96,
@@ -61,8 +64,5 @@
         }
       ]
     }
-  },
-  "dnd": {
-    "text": "Do Not Disturb"
   }
 }

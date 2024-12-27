@@ -30,19 +30,13 @@
 @define-color text-color-disabled #928374;
 @define-color noti-border-color   alpha(shade(@dark, 1.4), 0.85);
 
-/* Example: If you want a bright “warning” color for 
-   close buttons or icons, reuse @red or @yellow, etc. */
-
 /* ----------------------------------------------------------------------- */
 /*  Font and Global Settings                                               */
 /* ----------------------------------------------------------------------- */
 * {
     font-family: Symbols Nerd Font, JetBrainsMono Nerd Font;
     font-size: 18px;
-    /*font-feature-settings: "zero", "tnum", "ss01", "ss02", "ss03", "cv01";*/
 }
-
-/* You can keep the ASCII Art at the top if you like */
 
 /* ----------------------------------------------------------------------- */
 /*  Notification Rows                                                      */
@@ -271,13 +265,13 @@
 /*  Widgets                                                                */
 /* ----------------------------------------------------------------------- */
 .widget-title {
-    color: @red;
-    margin: 20px 20px 5px 20px;
-    font-size: 16px;
-    font-weight: bolder;
-    background: shade(@dark, 1.1);    /* Added solid background */
-    border-radius: 15px;              /* Ensured rounded corners */
-    padding: 10px;                     /* Added padding for better appearance */
+	color: @red;
+    background: shade(@dark, 0.9);         /* Changed to solid background */
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid @noti-close-bg;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */ 
 }
 
 .widget-title > button {
@@ -299,12 +293,13 @@
 /* Make the DND Switch More Noticeable (Off)  */
 /* ------------------------------------------- */
 .widget-dnd {
-    margin: 20px 20px 5px 20px;
-    font-size: 16px;
-    font-weight: bolder;
-    background: shade(@dark, 1.1);    /* Added solid background */
-    border-radius: 15px;              /* Ensured rounded corners */
-    padding: 10px;                     /* Added padding for better appearance */
+	color: @text-color;
+    background: shade(@dark, 0.9);         /* Changed to solid background */
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid @noti-close-bg;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */ 
 }
 .widget-dnd > switch {
     font-weight: bolder;
@@ -348,7 +343,7 @@
     margin: 10px;
     border: 1px solid @noti-close-bg;
     border-radius: 15px;
-    box-shadow: none;                      /* Removed shadow */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */
 }
 
 .widget-mpris-title {
@@ -369,7 +364,7 @@
     border: 1px solid @noti-close-bg;
     border-radius: 15px;
     background: shade(@dark, 0.9);         /* Changed to solid background */
-    box-shadow: none;                      /* Removed shadow */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */
 }
 .widget-buttons-grid.active {
     background: @text-color;
@@ -405,6 +400,7 @@
     font-size: x-large;
     color: @black;
     font-weight: bolder;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */
 }
 .widget-volume > box > button {
     background: @red;
@@ -417,6 +413,7 @@
     padding: 4px 8px 8px;
     margin: 0 8px 8px;
     border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */
 }
 
 /* Backlight Widget */
@@ -429,6 +426,7 @@
     font-size: x-large;
     color: @black;
     font-weight: bolder;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */
 }
 
 /* Inhibitors */
@@ -436,6 +434,7 @@
     margin: 8px;
     font-size: 1.5rem;
     font-weight: bolder;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Added shadow */
 }
 .widget-inhibitors > button {
     font-size: 14px;
