@@ -1,0 +1,453 @@
+/* -------------------------------------------------------- */
+/*  Unified SwayNC Theme (coordinated with your Waybar)     */
+/* -------------------------------------------------------- */
+
+/* Reuse the same color definitions you have in Waybar. */
+@define-color dark       #282828;
+@define-color blue       #7daea3;
+@define-color green      #8ec07c;
+@define-color green2     #689d6a;
+@define-color yellow     #d8a657;
+@define-color yellow2    #b68242;
+@define-color red        #ea6962;
+@define-color magenta    #d3869b;
+@define-color aqua       #a9b665;
+@define-color lightblue  #7daea3;
+@define-color white      #EBDBB2;
+@define-color black      #282828;
+
+/* 
+   Then define or map SwayNC-specific colors to match 
+   your new palette. You can rename them or simply map them 
+   so existing references still work.
+*/
+@define-color cc-bg             @dark;            /* Control center bg */
+@define-color noti-bg           shade(@dark, 0.9);/* Slightly lighter/darker variant */
+@define-color noti-bg-darker    shade(@dark, 1.2);
+@define-color noti-bg-hover     shade(@dark, 1.1);
+@define-color noti-close-bg     shade(@dark, 1.2);
+@define-color noti-close-bg-hover shade(@dark, 1.3);
+@define-color text-color        @white;
+@define-color text-color-disabled #928374;
+@define-color noti-border-color shade(@dark, 1.4);
+
+/* Example: If you want a bright “warning” color for 
+   close buttons or icons, reuse @red or @yellow, etc. */
+
+/* ----------------------------------------------------------------------- */
+/*  Font and Global Settings                                               */
+/* ----------------------------------------------------------------------- */
+* {
+    font-family: Symbols Nerd Font, JetBrainsMono Nerd Font;
+    font-size: 18px;
+    /*font-feature-settings: "zero", "tnum", "ss01", "ss02", "ss03", "cv01";*/
+}
+
+/* You can keep the ASCII Art at the top if you like */
+
+/* ----------------------------------------------------------------------- */
+/*  Notification Rows                                                      */
+/* ----------------------------------------------------------------------- */
+.control-center .notification-row:focus,
+.control-center .notification-row:hover {
+    opacity: 1;
+    background: alpha(@yellow, 0.2);  /* a subtle highlight */
+    border-radius: 15px;
+    margin: 2px;
+    box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px;
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Individual Notification Styling                                        */
+/* ----------------------------------------------------------------------- */
+.notification {
+    border-radius: 15px;
+    padding: 0;
+    border: 1px solid @noti-close-bg;
+    background: @noti-bg-darker;
+    box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px;
+}
+
+.notification-content {
+    background: transparent;
+    padding: 10px;
+    font-weight: bolder;
+    color: @text-color;
+}
+
+/* Close Button */
+.close-button {
+    background: @noti-close-bg;
+    color: @red;
+    text-shadow: none;
+    padding: 0;
+    border-radius: 100%;
+    margin-top: 20px;
+    margin-right: 13px;
+    box-shadow: none;
+    border: none;
+    min-width: 24px;
+    min-height: 24px;
+    transition: all 0.15s ease-in-out;
+}
+
+.close-button:hover {
+    background: @noti-close-bg-hover;
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Notification Action Buttons                                            */
+/* ----------------------------------------------------------------------- */
+.notification-default-action,
+.notification-action {
+    padding: 4px;
+    margin: 0;
+    background: @noti-bg;
+    border: none;
+    color: @text-color;
+    transition: all 0.15s ease-in-out;
+    font-size: 14px;
+    font-weight: bolder;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px;
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+    background: @noti-bg-hover;
+}
+
+/* If you have multiple action buttons that stack, adjust corners: */
+.notification-default-action:not(:only-child) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.notification-action:first-child {
+    border-bottom-left-radius: 8px;
+}
+.notification-action:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Group Headers                                                          */
+/* ----------------------------------------------------------------------- */
+.notification-group-headers {
+    font-weight: bolder;
+    font-size: 16px;
+    color: @white;
+}
+
+.notification-group-icon {
+    color: @red;
+    margin-right: 8px;
+}
+
+/* Buttons for collapsing/closing groups */
+.notification-group-collapse-button,
+.notification-group-close-all-button {
+    background: @noti-close-bg;
+    border: none;
+    min-width: 24px;
+    min-height: 24px;
+    color: @white;
+    transition: background 0.15s ease-in-out;
+}
+.notification-group-collapse-button:hover,
+.notification-group-close-all-button:hover {
+    background: @noti-close-bg-hover;
+    color: @red;
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Inline Reply                                                           */
+/* ----------------------------------------------------------------------- */
+.inline-reply {
+    margin-top: 8px;
+}
+
+.inline-reply-entry {
+    background: @noti-bg-darker;
+    color: @text-color;
+    caret-color: @text-color;
+    border: 1px solid @noti-border-color;
+    border-radius: 15px;
+    font-size: 14px;
+    padding: 4px;
+}
+
+.inline-reply-button {
+    margin-left: 4px;
+    background: @noti-bg;
+    border: 1px solid @noti-border-color;
+    border-radius: 15px;
+    color: @text-color;
+    font-weight: bolder;
+}
+
+.inline-reply-button:disabled {
+    background: initial;
+    color: @text-color-disabled;
+    border: 1px solid transparent;
+}
+
+.inline-reply-button:hover {
+    background: @noti-bg-hover;
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Notification Images                                                    */
+/* ----------------------------------------------------------------------- */
+.body-image {
+    margin-top: 0px;
+    background-color: transparent;
+    border-radius: 15px;
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Notification Text                                                      */
+/* ----------------------------------------------------------------------- */
+.summary {
+    font-size: 14px;
+    font-weight: bolder;
+    background: transparent;
+    color: @red;
+    margin-left: 10px;
+}
+
+.time {
+    font-size: 14px;
+    font-weight: bolder;
+    font-style: italic;
+    background: transparent;
+    color: @magenta;
+    margin-right: 10px;
+}
+
+.body {
+    font-size: 14px;
+    font-weight: bolder;
+    background: transparent;
+    color: @text-color;
+    margin-left: 10px;
+}
+
+.image {
+    background: transparent;
+    border-radius: 8px;
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Control Center Main Panel                                              */
+/* ----------------------------------------------------------------------- */
+.control-center {
+    background: alpha(@dark, 0.95);
+    border-left: 1px solid @noti-close-bg;
+    border-radius: 15px;
+    margin-left: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 8px 2px;
+}
+
+.control-center-list {
+    background: transparent;
+}
+
+.control-center-list-placeholder {
+    opacity: 0.5;
+}
+
+/* For floating notifications */
+.floating-notifications .notification-row {
+    background: transparent;
+    margin: 15px 10px 0 0;
+}
+
+/* Blank area for minimal windows */
+.blank-window {
+    background: alpha(@black, 0.0);
+}
+
+/* ----------------------------------------------------------------------- */
+/*  Widgets                                                                */
+/* ----------------------------------------------------------------------- */
+.widget-title {
+    color: @red;
+    margin: 20px 20px 5px 20px;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.widget-title > button {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Symbols Nerd Font;
+    color: @black;
+    background: @green;
+    border: 1px solid @noti-border-color;
+    border-radius: 15px;
+    padding: 4px 8px;
+}
+
+.widget-title > button:hover {
+    background: @green2;
+}
+
+/* ------------------------------------------- */
+/* Make the DND Switch More Noticeable (Off)  */
+/* ------------------------------------------- */
+.widget-dnd > switch {
+	font-weight: bolder;
+    border-radius: 999px;
+    background: alpha(@dark, 0.7); /* Slightly lighter to stand out against dark backgrounds */
+    padding: 2px;
+    border: 2px solid alpha(@white, 0.2); /* Subtle border */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4); /* Soft outer shadow */
+    transition: background 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* The "slider" inside the switch (when off) */
+.widget-dnd > switch slider {
+    background: alpha(@white, 0.1); /* A faint white highlight */
+    border-radius: 999px;
+}
+
+/* When switch is ON/checked */
+.widget-dnd > switch:checked {
+    background: @green2; /* Keep your existing 'on' color */
+    border-color: alpha(@white, 0.2); /* Slightly adjust border to match */
+}
+
+/* Slider when ON (if you want a slightly different color than off) */
+.widget-dnd > switch:checked slider {
+    background: alpha(@white, 0.7);
+}
+
+.widget-label {
+    margin: 10px;
+}
+
+.widget-label > label {
+    font-size: 1.5rem;
+    color: @text-color;
+    font-weight: bolder;
+}
+
+.widget-mpris {
+    color: @text-color;
+    background: @noti-bg;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid @noti-close-bg;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px;
+}
+
+.widget-mpris-title {
+    font-weight: bolder;
+    font-size: 1.25rem;
+}
+
+.widget-mpris-subtitle {
+    font-size: 1.1rem;
+}
+
+/* Grid of Buttons */
+.widget-buttons-grid {
+    font-size: x-large;
+    padding: 8px;
+	padding-left: 20px;
+    margin: 20px 10px 10px;
+    border: 1px solid @noti-close-bg;
+    border-radius: 15px;
+    background: @noti-bg;
+    box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px;
+}
+.widget-buttons-grid.active {
+    background: @text-color;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button {
+    margin: 3px;
+    background: transparent;
+    border-radius: 15px;
+    color: @text-color;
+    font-weight: bolder;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+    color: @green;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button.active {
+    background: @green2;
+}
+
+/* Menubar Buttons */
+.widget-menubar > box > .menu-button-bar > button,
+.topbar-buttons > button {
+    border: none;
+    background: transparent;
+}
+
+/* Volume Widget */
+.widget-volume {
+    background: @noti-bg;
+    padding: 8px 16px;
+    margin: 10px;
+    border: 1px solid @noti-close-bg;
+    border-radius: 15px;
+    font-size: x-large;
+    color: @black;
+    font-weight: bolder;
+}
+.widget-volume > box > button {
+    background: @red;
+    border: 1px solid @noti-close-bg;
+}
+
+/* Per-app volume row */
+.per-app-volume {
+    background-color: @noti-bg;
+    padding: 4px 8px 8px;
+    margin: 0 8px 8px;
+    border-radius: 15px;
+}
+
+/* Backlight Widget */
+.widget-backlight {
+    background: @noti-bg;
+    padding: 8px 16px;
+    margin: 10px;
+    border: 1px solid @noti-close-bg;
+    border-radius: 15px;
+    font-size: x-large;
+    color: @black;
+    font-weight: bolder;
+}
+
+/* Inhibitors */
+.widget-inhibitors {
+    margin: 8px;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+.widget-inhibitors > button {
+    font-size: 14px;
+    color: @text-color;
+    background: @noti-bg;
+    border: 1px solid @noti-border-color;
+    border-radius: 15px;
+    font-weight: bolder;
+}
+.widget-inhibitors > button:hover {
+    background: @noti-bg-hover;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button.toggle:checked {
+  background: @green2;         /* Use a color from your theme palette */
+  color: @black;               /* Match text color to the button's background */
+  font-weight: bolder;         /* Maintain bold font for active state */
+  border-radius: 15px;         /* Ensure consistency with the overall button style */
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3), 
+              2px 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle depth */
+  transition: background 0.2s ease-in-out, 
+              box-shadow 0.2s ease-in-out;   /* Smooth transitions */
+}
+

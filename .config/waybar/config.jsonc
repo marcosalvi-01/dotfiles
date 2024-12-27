@@ -28,30 +28,23 @@
 		"on-scroll-down": "hyprctl dispatch workspace e+1",
 		"on-scroll-up": "hyprctl dispatch workspace e-1",
 		"format-icons": {
-			"1": "0",
-			"2": "1",
+			"1": "<span font-weight='normal'></span>",
+			"2": "<span font-weight='normal'></span>",
 			"3": "2",
 			"4": "3",
 			"5": "4",
-			"6": "0",
-			"7": "1",
-			"8": "2",
+			"6": "<span font-weight='normal'></span>",
+			"7": "<span font-weight='normal'>󰊯</span>",
+			"8": "<span font-weight='normal'></span>",
 			"9": "3",
 			"10": "4"
 		},
 		"format": "{icon}",
-		//"format-empty": "{icon}",
-		//"window-rewrite-default": "?",
-		//"window-rewrite": {
-		//	"class<kitty>": "",
-		//	"class<google-chrome>": "󰊯"
-		//},
-		"format-window-separator": " ",
 		"all-outputs": false
 	},
 	"clock#date": {
 		"interval": 60,
-		"format": "   {:%d %b, %Y}",
+		"format": "<span font-weight='normal' rise='1500'></span> {:%d %b, %Y}",
 		"tooltip-format": "<tt><small>{calendar}</small></tt>",
 		"calendar": {
 			"mode": "month",
@@ -66,40 +59,41 @@
 		}
 	},
 	"clock#time": {
+		"tooltip": false,
 		"interval": 1,
-		"format": "󰥔   {:%H : %M : %S}"
+		"format": "<span font-weight='normal' rise='1500'>󰥔</span> {:%H:%M:%S}"
 	},
 	"cpu": {
 		"interval": 10,
-		"format": "   {}%",
+		"format": "<span font-weight='normal' rise='1500'></span> {}%",
 		"on-click": "kitty --class system_monitor -e btop"
 	},
 	"memory": {
-		"format": "󰇖   {}%",
+		"format": "<span font-weight='normal' rise='1500'>󰇖</span> {}%",
 		"interval": 1,
 		"on-click": "kitty --class system_monitor -e btop",
 		"max-lenght": 35
 	},
 	"network": {
 		"interface": "wlan0",
-		"format-wifi": "󰤨   {signalStrength}%",
-		"format-disconnected": "󰤭   Offline",
-		"tooltip-format": "󰱶   {ifname} via {gwaddr}",
+		"format-wifi": "<span font-weight='normal' rise='1500'>󰤨</span> {signalStrength}%",
+		"format-disconnected": "<span font-weight='normal' rise='1500'>󰤭</span> Offline",
+		"tooltip-format": "<span font-weight='normal' rise='1500'>󰱶</span> {ifname} via {gwaddr}",
 		"tooltip-format-wifi": "{essid}"
 		//"on-click": "kitty --class network_devices -e iwctl device list"
 	},
 	"pulseaudio": {
-		"format": "{icon}   {volume}%",
-		"format-bluetooth": "{icon}   {volume}%",
+		"format": "{icon} {volume}%",
+		"format-bluetooth": "{icon} {volume}%",
 		"format-bluetooth-muted": "婢  muted",
-		"format-muted": "󰖁 muted",
+		"format-muted": "<span font-weight='normal' rise='1500'>󰖁</span> muted",
 		"format-icons": {
-			"headphone": "󰋋",
+			"headphone": "<span font-weight='normal' rise='1500'>󰋋</span>",
 			"hands-free": "",
-			"headset": "󰋋",
-			"phone": "󰄜",
-			"portable": "",
-			"car": "󰸛",
+			"headset": "<span font-weight='normal' rise='1500'>󰋋</span>",
+			"phone": "<span font-weight='normal' rise='1500'>󰄜</span>",
+			"portable": "<span font-weight='normal' rise='1500'></span>",
+			"car": "<span font-weight='normal' rise='1500'>󰸛</span>",
 			"default": ["󰕿", "󰖀", "󰕾"]
 		},
 		"on-click": "pavucontrol"

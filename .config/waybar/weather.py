@@ -47,7 +47,7 @@ status_code = html_data("#regionHeader").attr("class").split(" ")[2].split("-")[
 
 # status icon
 icon = (
-    weather_icons[status_code]
+    f'<span font-weight="normal" rise="1500">{weather_icons[status_code]}</span>'
     if status_code in weather_icons
     else weather_icons["default"]
 )
@@ -103,7 +103,7 @@ prediction = f"\n\n    (hourly) {prediction}" if len(prediction) > 0 else 
 
 # tooltip text
 tooltip_text = str.format(
-    "\t\t{}\t{}\n{}\n{}\n\n{}\n{}\n{}{}",
+    "\t{}\t{}\n{}\n{}\n\n{}\n{}\n{}{}",
     f'<span size="xx-large">{temp}</span>',
     f"<big>{icon}</big>",
     f"<big>{status}</big>",
@@ -116,7 +116,7 @@ tooltip_text = str.format(
 
 # print waybar module data
 out_data = {
-    "text": f"{icon}   {temp}",
+    "text": f"{icon} {temp}",
     "alt": status,
     "tooltip": tooltip_text,
     "class": status_code,
