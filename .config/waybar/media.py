@@ -1,0 +1,419 @@
+#!/usr/bin/env python3
+import gi
+
+gi.require_version("Playerctl", "2.0")
+from gi.repository import Playerctl, GLib
+import sys
+import json
+import logging
+import argparse
+import signal
+import subprocess
+import json
+
+logger = logging.getLogger(__name__)
+
+
+def get_players():
+    # Run the command and capture the output
+    result = subprocess.run(
+        ["playerctl", "--list-all"],
+        capture_output=True,  # Captures stdout and stderr
+        text=True,  # Decodes bytes to string automatically
+        check=True,  # Raises CalledProcessError for non-zero exit codes
+    )
+    return result.stdout.strip()
+
+
+def get_active_player():
+    try:
+        # Run the command and capture the output
+        result = subprocess.run(
+            ["playerctl", "metadata"],
+            capture_output=True,  # Captures stdout and stderr
+            text=True,  # Decodes bytes to string automatically
+            check=True,  # Raises CalledProcessError for non-zero exit codes
+        )
+
+        # Get the standard output as a string
+        output = result.stdout.strip()
+
+        if not output:
+            print("No output received from the command.")
+            return None
+
+        # Split the output into words and get the first one
+        first_word = output.split()[0]
+
+        return first_word
+
+    except subprocess.CalledProcessError as e:
+        print(f"Command failed with exit code {e.returncode}")
+        print(f"Error output: {e.stderr}")
+        return None
+    except FileNotFoundError:
+        print(
+            "The 'playerctl' command was not found. Please ensure it is installed and in your PATH."
+        )
+        return None
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return None
+
+
+class UniqueStack:
+    def __init__(self):
+        self.stack = []
+        self.set = set()
+
+    def top(self):
+        if len(self.stack) == 0:
+            return None
+        return self.stack[-1]
+
+    def push(self, item):
+        if item in self.set:
+            self.stack.remove(item)
+        self.stack.append(item)
+        self.set.add(item)
+
+    def pop(self):
+        if not self.stack:
+            raise IndexError("pop from empty stack")
+        item = self.stack.pop()
+        self.set.remove(item)
+        return item
+
+    def remove(self, item):
+        if item in self.set:
+            self.stack.remove(item)
+            self.set.remove(item)
+        else:
+            raise ValueError(f"Item '{item}' not found in stack")
+
+    def __contains__(self, item):
+        return item in self.set
+
+    def __len__(self):
+        return len(self.stack)
+
+    def __repr__(self):
+        return f"UniqueStack({self.stack})"
+
+
+def signal_handler(sig, frame):
+    logger.info("Received signal to stop, exiting")
+    sys.stdout.write("\n")
+    sys.stdout.flush()
+    sys.exit(0)
+
+
+class Players:
+    def __init__(self):
+        self.playing_players = UniqueStack()
+        self.paused_players = UniqueStack()
+        self.stopped_players = UniqueStack()
+
+    def add_player(self, player):
+        player_name = getattr(player.props, "player_name", "Unknown")
+        player_status = getattr(player.props, "status", "Unknown")
+        logger.debug(
+            f"Attempting to add player '{player_name}' with status '{player_status}'."
+        )
+
+        # Remove player from all stacks first to maintain uniqueness across all states
+        for stack_name, stack in [
+            ("playing_players", self.playing_players),
+            ("paused_players", self.paused_players),
+            ("stopped_players", self.stopped_players),
+        ]:
+            try:
+                stack.remove(player)
+                logger.info(
+                    f"Removed player '{player_name}' from '{stack_name}' stack before adding to new stack."
+                )
+            except ValueError:
+                logger.debug(
+                    f"Player '{player_name}' not found in '{stack_name}' stack. No removal necessary."
+                )
+
+        # Now add to the appropriate stack
+        if player_status == "Playing":
+            self.playing_players.push(player)
+            logger.info(f"Added player '{player_name}' to the 'playing_players' stack.")
+        elif player_status == "Paused":
+            self.paused_players.push(player)
+            logger.info(f"Added player '{player_name}' to the 'paused_players' stack.")
+        elif player_status == "Stopped":
+            self.stopped_players.push(player)
+            logger.info(f"Added player '{player_name}' to the 'stopped_players' stack.")
+        else:
+            logger.warning(
+                f"Player '{player_name}' has an unrecognized status '{player_status}'. No stack added."
+            )
+        self.set_as_active(self.top())
+
+    def remove_player(self, player):
+        player_name = getattr(player.props, "player_name", "Unknown")
+        logger.debug(f"Attempting to remove player '{player_name}' from all stacks.")
+
+        removed = False
+        for stack_name, stack in [
+            ("playing_players", self.playing_players),
+            ("paused_players", self.paused_players),
+            ("stopped_players", self.stopped_players),
+        ]:
+            try:
+                stack.remove(player)
+                logger.info(
+                    f"Removed player '{player_name}' from '{stack_name}' stack."
+                )
+                removed = True
+            except ValueError:
+                logger.debug(
+                    f"Player '{player_name}' not found in '{stack_name}' stack."
+                )
+
+        if not removed:
+            logger.error(f"Error: Player '{player_name}' not found in any stack.")
+
+        # if it is the last player there is no top
+        top = self.top()
+        if top != None:
+            self.set_as_active(top)
+
+    def update_player(self, player):
+        player_name = getattr(player.props, "player_name", "Unknown")
+        player_status = getattr(player.props, "status", "Unknown")
+        logger.debug(f"Updating player '{player_name}' to status '{player_status}'.")
+
+        # Add to the new status stack
+        try:
+            if player_status == "Playing":
+                self.playing_players.push(player)
+                logger.info(
+                    f"Player '{player_name}' updated to 'Playing' and added to 'playing_players' stack."
+                )
+            elif player_status == "Paused":
+                self.paused_players.push(player)
+                logger.info(
+                    f"Player '{player_name}' updated to 'Paused' and added to 'paused_players' stack."
+                )
+            elif player_status == "Stopped":
+                self.stopped_players.push(player)
+                logger.info(
+                    f"Player '{player_name}' updated to 'Stopped' and added to 'stopped_players' stack."
+                )
+            else:
+                logger.warning(
+                    f"Player '{player_name}' has an unrecognized status '{player_status}'. No stack updated."
+                )
+        except Exception as e:
+            logger.error(
+                f"Failed to add player '{player_name}' to the '{player_status}' stack: {e}"
+            )
+
+        # Remove from the other stacks
+        for stack_name, stack in [
+            ("playing_players", self.playing_players),
+            ("paused_players", self.paused_players),
+            ("stopped_players", self.stopped_players),
+        ]:
+            if stack_name.lower() != f"{player_status.lower()}_players":
+                try:
+                    stack.remove(player)
+                    logger.info(
+                        f"Removed player '{player_name}' from '{stack_name}' stack during update."
+                    )
+                except ValueError:
+                    logger.debug(
+                        f"Player '{player_name}' not found in '{stack_name}' stack during update."
+                    )
+
+        self.set_as_active(self.top())
+
+    def top(self):
+        top = self.playing_players.top()
+        if top == None:
+            top = self.paused_players.top()
+            if top == None:
+                top = self.stopped_players.top()
+                if top == None:
+                    logger.error(f"Error: NO TOP")
+                    return None
+        logger.debug(f"TOP STACK: {top.props.player_name}")
+        logger.debug(f"ACTIVE PLAYER: {get_active_player()}")
+        return top
+
+    # set a player as the active playerctl player
+    def set_as_active(self, player):
+        logger.debug(f"Setting active player: {player.props.player_name}")
+        active_player = get_active_player()
+        if active_player == None:
+            logger.debug(f"No current active players")
+            return None
+        max = 10
+        while (active_player != player.props.player_name) and max >= 0:
+            logger.debug(
+                f"Currently active player: {active_player}, searching for {player.props.player_name}. Shifting..."
+            )
+            subprocess.run(["playerctld", "shift"])
+            max = max - 1
+        if max < 0:
+            logger.error(
+                f"Done searching, originally searching for {player.props.player_name}. NOT FOUND"
+            )
+            logger.error(f"Active players: {get_players()}")
+        else:
+            logger.debug(
+                f"Done searching, set active player: {active_player}, originally searching for {player.props.player_name}"
+            )
+
+
+class PlayerManager:
+    def run(self):
+        logger.info("Starting main loop")
+        self.loop.run()
+
+    def __init__(self):
+        # initialization stuff
+        self.manager = Playerctl.PlayerManager()
+        self.loop = GLib.MainLoop()
+
+        # for every player, (already active or future) add a function that runs when it appears or vanishes
+        self.manager.connect(
+            "name-appeared", lambda *args: self.on_player_appeared(*args)
+        )
+        self.manager.connect(
+            "player-vanished", lambda *args: self.on_player_vanished(*args)
+        )
+
+        self.players = Players()
+
+        # command handling
+        signal.signal(signal.SIGINT, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+        # initialize the already active players if there are any
+        for player in self.manager.props.player_names:
+            self.init_player(player)
+
+    # initialize a player
+    def init_player(self, player):
+        logger.info(f"Initializing player: {player.name}")
+        player = Playerctl.Player.new_from_name(player)
+        logger.info(f"Player is currently: {player.props.status}")
+
+        # give the player callbacks for status changed an metadata changed
+        player.connect("playback-status", self.on_playback_status_changed, None)
+        player.connect("metadata", self.on_metadata_changed, None)
+
+        # not sure but this makes the callbacks work
+        self.manager.manage_player(player)
+
+        # add to the players
+        self.players.add_player(player)
+
+    def on_player_appeared(self, _, player):
+        logger.info(f"Player has appeared: {player}")
+        self.init_player(player)
+
+    def on_player_vanished(self, _, player):
+        logger.info(f"Player has vanished: {player.props.player_name}")
+        self.players.remove_player(player)
+        self.on_metadata_changed(player)
+
+    def on_metadata_changed(self, player, metadata=None, _=None):
+        logger.info(f"Metadata  has changed for player: {player.props.player_name}")
+
+        # print the output of the player on top
+        player = self.players.top()
+        if player == None:
+            self.clear_output()
+            return
+
+        player_name = player.props.player_name
+        artist = player.get_artist()
+        title = player.get_title()
+
+        track_info = ""
+        if artist is not None and title is not None:
+            track_info = f"{artist} - {title}"
+        else:
+            track_info = title
+
+        if track_info:
+            if player.props.status == "Playing":
+                track_info = "󰐊 " + track_info
+            else:
+                track_info = "󰓛 " + track_info
+        self.write_output(track_info, player)
+
+    def on_playback_status_changed(self, player, status, _=None):
+        logger.info(
+            f"Playback status changed for player: {player.props.player_name}. New status: {status}"
+        )
+        self.players.update_player(player)
+        self.on_metadata_changed(player, player.props.metadata)
+
+    def write_output(self, text, player):
+        logger.debug(f"Writing output: {text}")
+
+        output = {
+            "text": text,
+            "class": "custom-" + player.props.player_name,
+            "alt": player.props.player_name,
+        }
+
+        sys.stdout.write(json.dumps(output) + "\n")
+        sys.stdout.flush()
+
+    def clear_output(self):
+        logger.debug("Clearing output")
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+
+    # Increase verbosity with every occurrence of -v
+    parser.add_argument("-v", "--verbose", action="count", default=0)
+
+    parser.add_argument("--enable-logging", action="store_true")
+    parser.add_argument("--player-info")
+
+    return parser.parse_args()
+
+
+def main():
+    arguments = parse_arguments()
+
+    if arguments.enable_logging:
+        import sys
+
+        logging.basicConfig(
+            stream=sys.stdout,
+            level=logging.DEBUG,
+            format="%(asctime)s %(name)s %(levelname)s:%(lineno)d %(message)s",
+        )
+
+    if arguments.player_info:
+        pass
+
+    logger.setLevel("DEBUG")
+
+    logger.info("Creating player manager")
+    player = PlayerManager()
+    player.run()
+
+
+def truncate(text: str, length: int) -> str:
+    if len(text) <= length:
+        return text
+    return text[: length - 3] + "..."
+
+
+if __name__ == "__main__":
+    main()
