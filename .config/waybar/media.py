@@ -380,7 +380,8 @@ class PlayerManager:
         logger.info("Starting main loop")
         self.loop.run()
 
-    def __init__(self):
+    def __init__(self, player_info=False):
+        self.player_info = player_info
         # initialization stuff
         self.manager = Playerctl.PlayerManager()
         self.loop = GLib.MainLoop()
@@ -459,18 +460,30 @@ class PlayerManager:
         artist = player.get_artist()
         title = player.get_title()
 
+        player_icon = ""
+        if player_name == "spotify":
+            player_icon = ""
+        elif player_name == "chromium":
+            player_icon = "󰊯"
+        elif player_name == "vlc":
+            player_icon = "󰕼"
+
         track_info = ""
         if artist is not None and title is not None:
-            track_info = f"{artist} - {title}"
+            track_info = f"{title} - {artist}"
         else:
             track_info = title
 
+        state = ""
         if track_info:
             if player.props.status == "Playing":
-                track_info = "󰐊 " + track_info
+                state = "󰺢"
             else:
-                track_info = "󰓛 " + track_info
-        self.write_output(track_info, player)
+                state = ""
+        if self.player_info:
+            self.write_output(player_icon, player_icon)
+        else:
+            self.write_output(truncate(track_info, 20), f"{player_icon}    {state}")
 
     def on_playback_status_changed(self, player, status, _=None):
         logger.info(
@@ -479,13 +492,13 @@ class PlayerManager:
         self.players.update_player(player)
         self.on_metadata_changed(player, player.props.metadata)
 
-    def write_output(self, text, player):
+    def write_output(self, text, player_and_state):
         logger.debug(f"Writing output: {text}")
 
         output = {
             "text": text,
-            "class": "custom-" + player.props.player_name,
-            "alt": player.props.player_name,
+            "class": "custom-media",
+            "alt": player_and_state,
         }
 
         sys.stdout.write(json.dumps(output) + "\n")
@@ -504,7 +517,7 @@ def parse_arguments():
     parser.add_argument("-v", "--verbose", action="count", default=0)
 
     parser.add_argument("--enable-logging", action="store_true")
-    parser.add_argument("--player-info")
+    parser.add_argument("--player-info", action="store_true")
 
     return parser.parse_args()
 
@@ -526,7 +539,7 @@ def main():
     logger.setLevel("DEBUG")
 
     logger.info("Creating player manager")
-    player = PlayerManager()
+    player = PlayerManager(arguments.player_info)
 
     # Start the run_playerctl coroutine in a separate daemon thread
     playerctl_thread = threading.Thread(
@@ -543,6 +556,11 @@ def truncate(text: str, length: int) -> str:
     if len(text) <= length:
         return text
     return text[: length - 3] + "..."
+
+
+def wrap_icon(icon: str) -> str:
+    # return f"<span font-weight='normal'>{icon}</span>"
+    return icon
 
 
 if __name__ == "__main__":

@@ -6,7 +6,8 @@
 	"margin-bottom": -11,
 	"modules-left": ["hyprland/workspaces", "custom/audio_idle_inhibitor"],
 	"modules-right": [
-		"custom/spotify",
+		"custom/track",
+		//"custom/player",
 		"cpu",
 		"memory",
 		"network",
@@ -14,16 +15,22 @@
 	],
 	"modules-center": ["clock#date", "clock#time", "custom/weather"],
 
-	"custom/spotify": {
+	"custom/track": {
 		"exec": "/usr/bin/python3 ~/.config/waybar/media.py 2> /dev/null",
-		"format": "{}",
+		"format": "<span font-weight='normal'> {1}</span> {0} {2}",
 		"return-type": "json",
 		"on-click": "playerctl play-pause",
+		"on-scroll-up": "playerctl next",
+		"on-scroll-down": "playerctl previous",
+		"on-click-backward": "playerctld shift",
+		"on-click-forward": "playerctld unshift"
+	},
+	"custom/player": {
+		"exec": "/usr/bin/python3 ~/.config/waybar/media.py --player-info 2> /dev/null",
+		"format": "<span font-weight='normal'>{}</span>",
+		"return-type": "json",
 		"on-scroll-up": "playerctld shift",
-		"on-scroll-down": "playerctld unshift",
-		//"on-scroll-up": "playerctl next",
-		//"on-scroll-down": "playerctl previous",
-		"max-length": 25
+		"on-scroll-down": "playerctld unshift"
 	},
 	"custom/weather": {
 		"exec": "python ~/.config/waybar/weather.py",

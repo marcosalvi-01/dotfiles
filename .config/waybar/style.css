@@ -72,7 +72,6 @@ window#waybar {
 }
 #custom-weather,
 #custom-audio_idle_inhibitor,
-#custom-spotify,
 #clock,
 #battery,
 #cpu,
@@ -82,7 +81,6 @@ window#waybar {
 #backlight,
 #network,
 #pulseaudio,
-#custom-media,
 #tray,
 #mode,
 #idle_inhibitor,
@@ -275,19 +273,18 @@ tooltip {
     font-weight: bolder;
 }
 
+#custom-track,
+#custom-player,
 #custom-media {
-    color: #66cc99;
+	padding: 0 10px;
+    border-radius: 15px;
+    background-color: @green;
+    color: @black;
+    box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
     font-weight: bolder;
-}
-
-#custom-media.custom-spotify {
-    /*background-color: #66cc99;*/
-    font-weight: bolder;
-	font-size: 50px;
-}
-
-#custom-media.custom-vlc {
-    background-color: #ffa000;
 }
 
 #temperature {
