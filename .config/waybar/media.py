@@ -4,6 +4,8 @@ import gi
 gi.require_version("Playerctl", "2.0")
 from gi.repository import Playerctl, GLib
 import sys
+import threading
+import asyncio
 import json
 import logging
 import argparse
@@ -12,6 +14,48 @@ import subprocess
 import json
 
 logger = logging.getLogger(__name__)
+
+switching = False
+
+
+async def run_playerctl(player_manager):
+    # Define the command
+    command = "playerctl metadata --player playerctld --follow"
+
+    # Using create_subprocess_shell to run the command
+    process = await asyncio.create_subprocess_shell(
+        command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+
+    # Ensure the process was started successfully
+    if process.stdout is None:
+        # print("Failed to capture stdout.")
+        return
+
+    logger.info("Listening for metadata changes...")
+
+    try:
+        # TODO: call the player_changed only once per update, not on every new line (is it even possible?)
+
+        while True:
+            line = await process.stdout.readline()
+            if not line:
+                break  # EOF reached
+            decoded_line = line.decode()
+            if decoded_line and not switching:
+                player_manager.player_changed()
+    except asyncio.CancelledError:
+        logger.error("Listener was cancelled.")
+    finally:
+        # Optionally, terminate the subprocess if it's still running
+        if process.returncode is None:
+            process.terminate()
+            await process.wait()
+
+    # Optionally, handle stderr
+    stderr = await process.stderr.read()
+    if stderr:
+        logger.error(f"Error: {stderr.decode().strip()}")
 
 
 def get_players():
@@ -114,6 +158,48 @@ class Players:
         self.paused_players = UniqueStack()
         self.stopped_players = UniqueStack()
 
+    def get_player(self, name):
+        for player in self.playing_players.set:
+            if player.props.player_name == name:
+                return player
+        for player in self.paused_players.set:
+            if player.props.player_name == name:
+                return player
+        for player in self.stopped_players.set:
+            if player.props.player_name == name:
+                return player
+        logger.error(f"get_player(): Player {name} not found")
+        return None
+
+    def add_player_to_top(self, player):
+        if player == self.top():
+            logger.debug(f"Player {player.props.player_name} is already at the top")
+            return
+
+        player_name = getattr(player.props, "player_name", "Unknown")
+        player_status = getattr(player.props, "status", "Unknown")
+        logger.debug(
+            f"Attempting to add player '{player_name}' with status '{player_status}'."
+        )
+        # Remove player from all stacks first to maintain uniqueness across all states
+        for stack_name, stack in [
+            ("playing_players", self.playing_players),
+            ("paused_players", self.paused_players),
+            ("stopped_players", self.stopped_players),
+        ]:
+            try:
+                stack.remove(player)
+                logger.info(
+                    f"Removed player '{player_name}' from '{stack_name}' stack before adding to new stack."
+                )
+            except ValueError:
+                logger.debug(
+                    f"Player '{player_name}' not found in '{stack_name}' stack. No removal necessary."
+                )
+
+        self.playing_players.push(player)
+        logger.info(f"Added player '{player_name}' to the top of the stack")
+
     def add_player(self, player):
         player_name = getattr(player.props, "player_name", "Unknown")
         player_status = getattr(player.props, "status", "Unknown")
@@ -187,6 +273,22 @@ class Players:
         player_status = getattr(player.props, "status", "Unknown")
         logger.debug(f"Updating player '{player_name}' to status '{player_status}'.")
 
+        # Remove player from all stacks first to maintain uniqueness across all states
+        for stack_name, stack in [
+            ("playing_players", self.playing_players),
+            ("paused_players", self.paused_players),
+            ("stopped_players", self.stopped_players),
+        ]:
+            try:
+                stack.remove(player)
+                logger.info(
+                    f"Removed player '{player_name}' from '{stack_name}' stack before adding to new stack."
+                )
+            except ValueError:
+                logger.debug(
+                    f"Player '{player_name}' not found in '{stack_name}' stack. No removal necessary."
+                )
+
         # Add to the new status stack
         try:
             if player_status == "Playing":
@@ -214,21 +316,21 @@ class Players:
             )
 
         # Remove from the other stacks
-        for stack_name, stack in [
-            ("playing_players", self.playing_players),
-            ("paused_players", self.paused_players),
-            ("stopped_players", self.stopped_players),
-        ]:
-            if stack_name.lower() != f"{player_status.lower()}_players":
-                try:
-                    stack.remove(player)
-                    logger.info(
-                        f"Removed player '{player_name}' from '{stack_name}' stack during update."
-                    )
-                except ValueError:
-                    logger.debug(
-                        f"Player '{player_name}' not found in '{stack_name}' stack during update."
-                    )
+        # for stack_name, stack in [
+        #     ("playing_players", self.playing_players),
+        #     ("paused_players", self.paused_players),
+        #     ("stopped_players", self.stopped_players),
+        # ]:
+        #     if stack_name.lower() != f"{player_status.lower()}_players":
+        #         try:
+        #             stack.remove(player)
+        #             logger.info(
+        #                 f"Removed player '{player_name}' from '{stack_name}' stack during update."
+        #             )
+        #         except ValueError:
+        #             logger.debug(
+        #                 f"Player '{player_name}' not found in '{stack_name}' stack during update."
+        #             )
 
         self.set_as_active(self.top())
 
@@ -247,6 +349,8 @@ class Players:
 
     # set a player as the active playerctl player
     def set_as_active(self, player):
+        global switching
+        switching = True
         logger.debug(f"Setting active player: {player.props.player_name}")
         active_player = get_active_player()
         if active_player == None:
@@ -268,6 +372,7 @@ class Players:
             logger.debug(
                 f"Done searching, set active player: {active_player}, originally searching for {player.props.player_name}"
             )
+        switching = False
 
 
 class PlayerManager:
@@ -298,6 +403,23 @@ class PlayerManager:
         # initialize the already active players if there are any
         for player in self.manager.props.player_names:
             self.init_player(player)
+
+    # the current active player has changed, so we have to find the current active player in the players and set it to the top
+    # even though it might not be playing
+    def player_changed(self):
+        logger.debug("The currently active player has changed")
+        current_active_player = get_active_player()
+        if current_active_player == None:
+            logger.error("No active players found to switch to. WTF")
+            return None
+        active_player = self.players.get_player(current_active_player)
+        if active_player == None:
+            logger.error(f"No players found with name: {current_active_player}")
+            return None
+
+        # put this player on the top
+        self.players.add_player_to_top(active_player)
+        self.on_metadata_changed(active_player)
 
     # initialize a player
     def init_player(self, player):
@@ -387,25 +509,33 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def start_playerctl(player):
+    asyncio.run(run_playerctl(player))
+
+
 def main():
     arguments = parse_arguments()
 
     if arguments.enable_logging:
-        import sys
-
         logging.basicConfig(
             stream=sys.stdout,
             level=logging.DEBUG,
             format="%(asctime)s %(name)s %(levelname)s:%(lineno)d %(message)s",
         )
 
-    if arguments.player_info:
-        pass
-
     logger.setLevel("DEBUG")
 
     logger.info("Creating player manager")
     player = PlayerManager()
+
+    # Start the run_playerctl coroutine in a separate daemon thread
+    playerctl_thread = threading.Thread(
+        target=start_playerctl, args=(player,), daemon=True
+    )
+    playerctl_thread.start()
+    logger.debug("Started run_playerctl in a separate thread.")
+
+    # Run the GLib main loop
     player.run()
 
 

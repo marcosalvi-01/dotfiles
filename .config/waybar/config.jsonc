@@ -19,8 +19,10 @@
 		"format": "{}",
 		"return-type": "json",
 		"on-click": "playerctl play-pause",
-		"on-scroll-up": "playerctl next",
-		"on-scroll-down": "playerctl previous",
+		"on-scroll-up": "playerctld shift",
+		"on-scroll-down": "playerctld unshift",
+		//"on-scroll-up": "playerctl next",
+		//"on-scroll-down": "playerctl previous",
 		"max-length": 25
 	},
 	"custom/weather": {
