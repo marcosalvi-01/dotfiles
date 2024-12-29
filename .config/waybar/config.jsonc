@@ -45,7 +45,7 @@
 		"format-icons": {
 			"1": "<span font-weight='normal'></span>",
 			"2": "<span font-weight='normal'></span>",
-			"3": "2",
+			"3": "<span font-weight='normal'></span>",
 			"4": "3",
 			"5": "4",
 			"6": "5",
@@ -94,7 +94,7 @@
 		"on-click": "kitty --class system_monitor -e btop"
 	},
 	"memory": {
-		"format": "<span font-weight='normal' rise='1500'>󰇖</span> {}%",
+		"format": "<span font-weight='normal' rise='1500'></span> {}%",
 		"interval": 1,
 		"on-click": "kitty --class system_monitor -e btop",
 		"max-lenght": 35
