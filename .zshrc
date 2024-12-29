@@ -159,6 +159,18 @@ fzf-history-widget() {
 zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
 
+# Bind Home key to move to the beginning of the line in vi insert mode
+bindkey -M viins '^[[1~' beginning-of-line
+
+# Bind End key to move to the end of the line in vi insert mode
+bindkey -M viins '^[[4~' end-of-line
+
+# Bind Home key to move to the beginning of the line in vi command mode
+bindkey -M vicmd '^[[1~' beginning-of-line
+
+# Bind End key to move to the end of the line in vi command mode
+bindkey -M vicmd '^[[4~' end-of-line
+
 # SDKMAN (lazy-loaded)
 export SDKMAN_DIR="$HOME/.sdkman"
 if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
