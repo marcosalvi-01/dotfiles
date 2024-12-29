@@ -171,4 +171,3 @@ fi
 
 # Load p10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-

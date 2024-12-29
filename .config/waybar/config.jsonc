@@ -20,10 +20,10 @@
 		"format": "<span font-weight='normal'> {1}</span> {0} {2}",
 		"return-type": "json",
 		"on-click": "playerctl play-pause",
-		"on-scroll-up": "playerctl next",
-		"on-scroll-down": "playerctl previous",
-		"on-click-backward": "playerctld shift",
-		"on-click-forward": "playerctld unshift"
+		"on-scroll-up": "playerctld shift",
+		"on-scroll-down": "playerctld unshift",
+		"on-click-backward": "playerctl next",
+		"on-click-forward": "playerctl previous"
 	},
 	"custom/player": {
 		"exec": "/usr/bin/python3 ~/.config/waybar/media.py --player-info 2> /dev/null",
