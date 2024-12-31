@@ -1,0 +1,6 @@
+return {
+  loading = "",
+  apple = "",
+  preferences = "",
+
+}
