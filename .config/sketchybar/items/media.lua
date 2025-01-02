@@ -1,6 +1,9 @@
 local colors = require("colors")
 local appIcons = require("app_icons")
 
+-- Global media object to track multiple players and their states
+GlobalMedia = {}
+
 local function truncate(str, n)
 	if #str <= n then
 		return str -- No truncation needed
@@ -37,13 +40,23 @@ local media = sbar.add("item", {
 })
 
 media:subscribe("media_change", function(env)
+	-- Update or create a new player entry in the GlobalMedia table
+	local playerName = env.INFO.app
+	GlobalMedia[playerName] = {
+		state = env.INFO.state,
+		title = env.INFO.title,
+		artist = env.INFO.artist,
+	}
+
 	-- Resolve the app key using the mapping table
-	local icon = appIcons[env.INFO.app] or ""
+	local icon = appIcons[playerName] or ""
 	if icon == "" then
 		media:set({
 			drawing = false,
 		})
+		return
 	end
+
 	icon = icon .. " " .. (states[env.INFO.state] or "")
 
 	media:set({
@@ -54,3 +67,29 @@ media:subscribe("media_change", function(env)
 		},
 	})
 end)
+
+media:subscribe("mouse.clicked", function()
+	-- Handle the current player (assuming a single focused player for simplicity)
+	local currentPlayer = nil
+	for player, data in pairs(GlobalMedia) do
+		if data.state == "playing" or data.state == "paused" then
+			currentPlayer = player
+			break
+		end
+	end
+
+	if not currentPlayer then
+		return -- No active player to control
+	end
+
+	local currentState = GlobalMedia[currentPlayer].state
+
+	if currentState == "playing" then
+		sbar.exec("osascript -e 'tell application \"" .. currentPlayer .. "\" to pause'")
+		GlobalMedia[currentPlayer].state = "paused"
+	elseif currentState == "paused" then
+		sbar.exec("osascript -e 'tell application \"" .. currentPlayer .. "\" to play'")
+		GlobalMedia[currentPlayer].state = "playing"
+	end
+end)
+

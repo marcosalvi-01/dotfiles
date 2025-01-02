@@ -10,7 +10,7 @@ local LIST_APPS = "aerospace list-windows --workspace %s | awk -F'|' '{gsub(/^ *
 local spaces = {}
 
 local function getIconForApp(appName)
-	return app_icons[appName] or "?"
+	return app_icons[appName] or "󰘔"
 end
 
 local function updateSpaceIcons(spaceId, workspaceName)
