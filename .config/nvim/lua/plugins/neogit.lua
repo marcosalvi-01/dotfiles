@@ -4,7 +4,6 @@ return {
 		"nvim-lua/plenary.nvim", -- required
 		"sindrets/diffview.nvim", -- optional - Diff integration
 
-		-- Only one of these is needed.
 		"nvim-telescope/telescope.nvim", -- optional
 	},
 	config = function()
@@ -17,12 +16,28 @@ return {
 			},
 			graph_style = "kitty",
 		})
-		vim.keymap.set(
-			"n",
-			"<leader>ng",
-			"<cmd>Neogit kind=replace<cr>",
-			{ desc = "Open [N]eo[G]it floating window (Neogit)" }
-		)
+		vim.keymap.set("n", "<leader>ng", "<cmd>Neogit kind=replace<cr>", { desc = "Open [N]eo[G]it window (Neogit)" })
+
+		require("diffview").setup({
+			keymaps = {
+				view = {
+					{
+						"n",
+						"q",
+						"<cmd>tabc<CR>",
+						{ desc = "Close the diff" },
+					},
+				},
+				file_panel = {
+					{
+						"n",
+						"q",
+						"<cmd>tabc<CR>",
+						{ desc = "Close the panel" },
+					},
+				},
+			},
+		})
 
 		return true
 	end,
