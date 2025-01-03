@@ -18,12 +18,12 @@ end
 
 local colors = {
 	background = "#282828", -- Gruvbox fg1
-	foreground = "#ddc7a1", -- Gruvbox fg2
+	foreground = "#d4be98", -- Gruvbox fg2
 	taupe = "#504945", -- Gruvbox color2
 	neutral_gray = "#32302f", -- Gruvbox color3
 	beige = "#a89984", -- Gruvbox color4
 	blue_green = "#7daea3", -- Gruvbox color5
-	greenish = "#a9b665", -- Gruvbox color6
+	greenish = "#8ec07c", -- Gruvbox color6
 	yellowish = "#d8a657", -- Gruvbox color7
 	pinkish = "#d3869b", -- Gruvbox color8
 	reddish = "#ea6962", -- Gruvbox color9
@@ -31,14 +31,14 @@ local colors = {
 
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.background, bg = colors.yellowish, gui = "bold" },
+		a = { fg = colors.background, bg = colors.greenish, gui = "bold" },
 		b = { fg = colors.foreground, bg = colors.background, gui = "bold" },
 		c = { fg = colors.foreground, bg = nil, gui = "bold" },
 	},
-	insert = { a = { fg = colors.background, bg = colors.greenish, gui = "bold" } },
-	visual = { a = { fg = colors.background, bg = colors.reddish, gui = "bold" } },
+	insert = { a = { fg = colors.background, bg = colors.blue_green, gui = "bold" } },
+	visual = { a = { fg = colors.background, bg = colors.yellowish, gui = "bold" } },
 	replace = { a = { fg = colors.background, bg = colors.pinkish, gui = "bold" } },
-	command = { a = { fg = colors.background, bg = colors.blue_green, gui = "bold" } },
+	command = { a = { fg = colors.background, bg = colors.reddish, gui = "bold" } },
 	inactive = {
 		a = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
 		b = { fg = colors.foreground, bg = colors.background, gui = "bold" },

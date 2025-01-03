@@ -4,16 +4,16 @@
 	"height": 50,
 	"spacing": 2, // Gaps between modules
 	"margin-bottom": -11,
-	"modules-left": ["hyprland/workspaces", "custom/audio_idle_inhibitor"],
-	"modules-right": [
+	"modules-left": ["hyprland/workspaces"],
+	"modules-center": [
 		"custom/track",
 		//"custom/player",
 		"cpu",
 		"memory",
-		"network",
-		"pulseaudio"
+		"pulseaudio",
+		"network"
 	],
-	"modules-center": ["clock#date", "clock#time", "custom/weather"],
+	"modules-right": ["clock#date", "clock#time", "custom/weather"],
 
 	"custom/track": {
 		"exec": "/usr/bin/python3 ~/.config/waybar/media.py 2> /dev/null",
@@ -69,7 +69,7 @@
 	},
 	"clock#date": {
 		"interval": 60,
-		"format": "<span font-weight='normal' rise='1500'></span> {:%d %b, %Y}",
+		"format": "<span font-weight='normal' rise='1500'></span> {:%a %d %b, %Y}",
 		"tooltip-format": "<tt><small>{calendar}</small></tt>",
 		"calendar": {
 			"mode": "month",

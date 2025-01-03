@@ -49,7 +49,7 @@ window#waybar {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.377);
     padding-left: 20px;
     padding-bottom: 3px;
-    background: @green2;
+    background: @green;
     background-size: 300% 300%;
     color: @black;
     font-weight: bolder;
@@ -145,7 +145,7 @@ window#waybar {
 }
 
 tooltip {
-  background: #1d1d1d;
+  background: @black;
   border: 2px solid #d4be98;
   font-family: JetBrainsMonoNL Nerd Font Mono, Material Design Icons;
   font-size: 20px;
