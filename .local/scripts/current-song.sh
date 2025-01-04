@@ -7,6 +7,14 @@ if ! command -v playerctl &> /dev/null; then
     exit 1
 fi
 
+# Check playback status
+status=$(playerctl status 2>/dev/null)
+
+# Exit silently if nothing is playing
+if [ "$status" != "Playing" ]; then
+    exit 0
+fi
+
 # Get the current player name
 player=$(playerctl -l 2>/dev/null | head -n 1)
 
@@ -29,7 +37,7 @@ get_icon() {
             echo "󰕼"  # VLC icon
             ;;
         *)
-            echo ""  # Generic music icon
+            echo ""  # Generic music icon
             ;;
     esac
 }
@@ -38,8 +46,8 @@ get_icon() {
 song=$(playerctl metadata title 2>/dev/null)
 artist=$(playerctl metadata artist 2>/dev/null)
 
-# Check if there's any media playing
-if [ $? -eq 0 ] && [ -n "$song" ]; then
+# Output only if there's a song playing
+if [ -n "$song" ]; then
     icon=$(get_icon "$player")
     
     # Format output based on whether artist exists
@@ -48,6 +56,4 @@ if [ $? -eq 0 ] && [ -n "$song" ]; then
     else
         echo "$icon  $song"
     fi
-else
-    echo "No media is currently playing"
 fi
