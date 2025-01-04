@@ -1,0 +1,138 @@
+{
+  "bar.customModules.updates.pollingInterval": 1440000,
+  "theme.bar.menus.monochrome": false,
+  "theme.bar.menus.opacity": 100,
+  "menus.media.displayTime": true,
+  "menus.media.displayTimeTooltip": true,
+  "theme.font.name": "JetBrainsMono Nerd Font",
+  "theme.font.label": "JetBrainsMono Nerd Font",
+  "theme.font.size": "1.1rem",
+  "theme.font.weight": 700,
+  "menus.transitionTime": 200,
+  "scalingPriority": "gdk",
+  "theme.bar.floating": true,
+  "theme.bar.buttons.enableBorders": false,
+  "theme.bar.border_radius": "0.4em",
+  "bar.workspaces.show_icons": false,
+  "bar.workspaces.show_numbered": true,
+  "bar.workspaces.workspaceMask": true,
+  "bar.workspaces.showWsIcons": false,
+  "bar.workspaces.showApplicationIcons": false,
+  "bar.workspaces.numbered_active_indicator": "underline",
+  "bar.network.label": false,
+  "bar.network.showWifiInfo": false,
+  "bar.bluetooth.label": true,
+  "bar.battery.label": true,
+  "menus.clock.time.military": true,
+  "menus.clock.weather.location": "Rome",
+  "menus.clock.weather.unit": "metric",
+  "menus.dashboard.stats.enable_gpu": false,
+  "theme.bar.buttons.modules.hyprsunset.enableBorder": false,
+  "theme.matugen_settings.mode": "dark",
+  "menus.transition": "crossfade",
+  "wallpaper.enable": true,
+  "theme.font.style": "normal",
+  "theme.bar.dropdownGap": "2.5em",
+  "bar.workspaces.monitorSpecific": true,
+  "bar.windowtitle.custom_title": true,
+  "bar.windowtitle.label": false,
+  "bar.windowtitle.icon": true,
+  "bar.clock.format": "%a %d %b, %Y  %H:%M:%S ",
+  "bar.clock.icon": "",
+  "bar.media.show_active_only": true,
+  "bar.notifications.hideCountWhenZero": true,
+  "menus.dashboard.shortcuts.enabled": true,
+  "menus.dashboard.directories.enabled": false,
+  "theme.bar.transparent": true,
+  "bar.layouts": {
+    "0": {
+      "left": [
+        "dashboard",
+        "workspaces"
+      ],
+      "middle": [
+        "media",
+        "cpu",
+        "ram",
+        "volume",
+        "network"
+      ],
+      "right": [
+        "clock",
+        "weather",
+        "hyprsunset",
+        "notifications"
+      ]
+    },
+    "1": {
+      "left": [
+        "dashboard",
+        "workspaces"
+      ],
+      "middle": [
+        "media",
+        "cpu",
+        "ram",
+        "volume",
+        "network"
+      ],
+      "right": [
+        "clock",
+        "weather",
+        "hyprsunset",
+        "notifications"
+      ]
+    },
+    "2": {
+      "left": [
+        "dashboard",
+        "workspaces"
+      ],
+      "middle": [
+        "media",
+        "cpu",
+        "ram",
+        "volume",
+        "network"
+      ],
+      "right": [
+        "clock",
+        "weather",
+        "hyprsunset",
+        "notifications"
+      ]
+    }
+  },
+  "theme.notification.opacity": 100,
+  "theme.bar.menus.menu.media.card.tint": 70,
+  "bar.customModules.hyprsunset.temperature": "4500k",
+  "bar.customModules.hyprsunset.label": false,
+  "theme.bar.menus.card_radius": "0.8em",
+  "theme.bar.menus.buttons.radius": "0.8em",
+  "theme.bar.menus.tooltip.radius": "0.4em",
+  "theme.bar.menus.popover.radius": "0.8em",
+  "theme.bar.menus.border.radius": "0.7em",
+  "theme.bar.buttons.radius": "1em",
+  "theme.bar.buttons.spacing": "0.3em",
+  "theme.bar.buttons.workspaces.enableBorder": false,
+  "bar.customModules.weather.unit": "metric",
+  "bar.volume.icon": "󰋋",
+  "theme.bar.buttons.y_margins": "0em",
+  "theme.bar.outer_spacing": "0em",
+  "bar.media.format": "{title: - }{artist}",
+  "bar.media.middleClick": "playerctl play-pause",
+  "bar.media.scrollUp": "playerctld shift",
+  "bar.media.scrollDown": "playerctld unshift",
+  "menus.clock.weather.key": "/home/marco/.config/hyprpanel/weather-api-key.json",
+  "bar.customModules.cpu.leftClick": "kitty --class system_monitor -e btop",
+  "bar.customModules.ram.leftClick": "kitty --class system_monitor -e btop",
+  "bar.volume.rightClick": "pavucontrol",
+  "bar.launcher.autoDetectIcon": true,
+  "menus.dashboard.shortcuts.left.shortcut1.command": "google-chrome-stable",
+  "menus.dashboard.shortcuts.left.shortcut1.icon": "",
+  "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Google Chrome",
+  "menus.dashboard.shortcuts.left.shortcut3.command": "vesktop",
+  "menus.dashboard.shortcuts.left.shortcut4.command": "ulauncher-toggle",
+  "bar.network.truncation_size": 8,
+  "menus.dashboard.shortcuts.right.shortcut3.command": "hyprshot -m region"
+}
