@@ -34,6 +34,9 @@ return {
 	config = function()
 		local detail = false
 		require("oil").setup({
+			preview_win = {
+				preview_method = "load",
+			},
 			watch_for_changes = true,
 			keymaps = {
 				["g?"] = "actions.show_help",
@@ -74,7 +77,7 @@ return {
 			use_default_keymaps = false,
 			view_options = {
 				show_hidden = false,
-				is_always_hidden = function (name, bufnr)
+				is_always_hidden = function(name, bufnr)
 					return name == ".."
 				end,
 				is_hidden_file = function(name)
@@ -88,7 +91,7 @@ return {
 
 					local ignored = {
 						".git",
-						"../"
+						"../",
 					}
 
 					return vim.tbl_contains(ignored_files, name) or vim.tbl_contains(ignored, name)
