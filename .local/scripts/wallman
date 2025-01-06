@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Configuration
-WALLPAPER_DIR="$HOME/.config/images"
+WALLPAPER_DIR="$HOME/.config/images/gruvbox/"
 TMP_DIR="/tmp/wallpaper-manager"
 TRACK_FILE="$TMP_DIR/cycle.txt"
 CURRENT_FILE="$TMP_DIR/current"
@@ -21,6 +21,7 @@ Commands:
     set <name>           Set specific wallpaper by name
     random, -r          Set random wallpaper (with cycle memory)
     next               Set next wallpaper in alphabetical order
+    prev               Set previous wallpaper in alphabetical order
     list, -l           List all available wallpapers
     current            Show current wallpaper
     cycle-status       Show used/unused wallpapers in current cycle
@@ -38,6 +39,7 @@ Options:
 Examples:
     $(basename "$0") set wallpaper.jpg
     $(basename "$0") next
+    $(basename "$0") prev
     $(basename "$0") random
     $(basename "$0") -m DP-1 set wallpaper.jpg
 EOF
@@ -66,26 +68,19 @@ get_unused_wallpapers() {
 get_next_wallpaper() {
     local current_wall
     local all_walls
-    local next_wall
     local position=1
     
-    # Get current wallpaper from stored file
     [[ -f "$CURRENT_FILE" ]] && current_wall=$(cat "$CURRENT_FILE")
-    
-    # Get all wallpapers sorted alphabetically
     all_walls=($(get_wallpapers | sort))
     total=${#all_walls[@]}
     
-    # If no current wallpaper, return first one
     if [[ -z "$current_wall" ]]; then
         echo "${all_walls[0]}|1|$total"
         return
     fi
-    
-    # Find current wallpaper in list and get next one
+
     for i in "${!all_walls[@]}"; do
         if [[ "${all_walls[$i]}" == "$current_wall" ]]; then
-            # If current is last, wrap around to first
             if [[ $((i + 1)) -eq ${#all_walls[@]} ]]; then
                 echo "${all_walls[0]}|1|$total"
             else
@@ -94,9 +89,35 @@ get_next_wallpaper() {
             return
         fi
     done
-    
-    # If current wallpaper not found in list, return first one
     echo "${all_walls[0]}|1|$total"
+}
+
+# Function to get previous wallpaper and its position
+get_prev_wallpaper() {
+    local current_wall
+    local all_walls
+    local position=1
+    
+    [[ -f "$CURRENT_FILE" ]] && current_wall=$(cat "$CURRENT_FILE")
+    all_walls=($(get_wallpapers | sort))
+    total=${#all_walls[@]}
+    
+    if [[ -z "$current_wall" ]]; then
+        echo "${all_walls[-1]}|$total|$total"
+        return
+    fi
+
+    for i in "${!all_walls[@]}"; do
+        if [[ "${all_walls[$i]}" == "$current_wall" ]]; then
+            if [[ $i -eq 0 ]]; then
+                echo "${all_walls[-1]}|$total|$total"
+            else
+                echo "${all_walls[$((i - 1))]}|$i|$total"
+            fi
+            return
+        fi
+    done
+    echo "${all_walls[-1]}|$total|$total"
 }
 
 # Function to mark wallpaper as used
@@ -118,7 +139,6 @@ set_wallpaper() {
     local wall="$1"
     local monitor="$2"
 
-    # Store current wallpaper
     echo "$wall" > "$CURRENT_FILE"
 
     hyprctl hyprpaper unload all
@@ -127,7 +147,6 @@ set_wallpaper() {
     if [[ -n "$monitor" ]]; then
         hyprctl hyprpaper wallpaper "$monitor","$wall"
     else
-        # Set for all monitors
         for mon in $(hyprctl monitors -j | jq -r '.[].name'); do
             hyprctl hyprpaper wallpaper "$mon","$wall"
         done
@@ -211,6 +230,17 @@ case $1 in
             exit 1
         fi
         ;;
+    prev)
+        IFS='|' read -r wall position total <<< "$(get_prev_wallpaper)"
+        if [[ -n "$wall" ]]; then
+            set_wallpaper "$wall" "$MONITOR"
+            [[ $FORCE -eq 0 ]] && mark_as_used "$wall"
+            echo "Set wallpaper to: $(basename "$wall") ($position/$total)"
+        else
+            echo "Error: No wallpapers found"
+            exit 1
+        fi
+        ;;
     random|-r)
         if [[ $NO_CYCLE -eq 1 ]]; then
             wallpapers=($(get_wallpapers))
@@ -259,3 +289,4 @@ case $1 in
         exit 1
         ;;
 esac
+
