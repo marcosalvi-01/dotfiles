@@ -55,7 +55,7 @@ get_unused_wallpapers() {
     local all_wallpapers
     local used_wallpapers
     all_wallpapers=$(get_wallpapers)
-    
+
     if [[ -f "$TRACK_FILE" ]]; then
         used_wallpapers=$(cat "$TRACK_FILE")
         echo "$all_wallpapers" | grep -vFf "$TRACK_FILE" || echo "$all_wallpapers"
@@ -69,11 +69,11 @@ get_next_wallpaper() {
     local current_wall
     local all_walls
     local position=1
-    
+
     [[ -f "$CURRENT_FILE" ]] && current_wall=$(cat "$CURRENT_FILE")
     all_walls=($(get_wallpapers | sort))
     total=${#all_walls[@]}
-    
+
     if [[ -z "$current_wall" ]]; then
         echo "${all_walls[0]}|1|$total"
         return
@@ -97,11 +97,11 @@ get_prev_wallpaper() {
     local current_wall
     local all_walls
     local position=1
-    
+
     [[ -f "$CURRENT_FILE" ]] && current_wall=$(cat "$CURRENT_FILE")
     all_walls=($(get_wallpapers | sort))
     total=${#all_walls[@]}
-    
+
     if [[ -z "$current_wall" ]]; then
         echo "${all_walls[-1]}|$total|$total"
         return

@@ -49,7 +49,7 @@ artist=$(playerctl metadata artist 2>/dev/null)
 # Output only if there's a song playing
 if [ -n "$song" ]; then
     icon=$(get_icon "$player")
-    
+
     # Format output based on whether artist exists
     if [ -n "$artist" ]; then
         echo "$icon  $song - $artist"

@@ -24,7 +24,7 @@ return {
 				callback = function()
 					-- Fix floating windows borders
 					local bg_color = "#282828"
-					local fg_color = "#a89984"
+					local fg_color = "#d4be98"
 
 					-- Make the popups bordered and have no background
 					vim.api.nvim_set_hl(0, "NormalFloat", {})

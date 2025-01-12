@@ -40,6 +40,7 @@ return { -- Autoformat
 			markdown = { "prettier" },
 			jsonc = { "biome" },
 			python = { "black" },
+			go = { "goimports", "gofumpt" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
