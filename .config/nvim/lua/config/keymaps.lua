@@ -5,12 +5,13 @@ local function create_prefix_mappings(prefix_from, prefix_to, mappings)
 		local modes = mapping.modes or default_modes
 		local from = mapping.double and prefix_from .. prefix_from or prefix_from
 		local to = mapping.double and prefix_to .. prefix_to or prefix_to
-		-- If there's a suffix, append it to both from and to
 		if mapping.suffix then
 			from = from .. mapping.suffix
 			to = to .. mapping.suffix
 		end
-		vim.keymap.set(modes, from, to, mapping.opts or {})
+		vim.keymap.set(modes, from, function()
+			vim.cmd.norm(to)
+		end, mapping.opts or {})
 	end
 end
 
@@ -31,6 +32,7 @@ local backspace_to_g_mappings = {
 	{ suffix = "v" },
 	{ suffix = "cc" },
 	{ suffix = "cip" },
+	{ suffix = "c%" },
 	{ suffix = "x" },
 	{ suffix = "i" },
 	{ suffix = "r" },
@@ -38,7 +40,6 @@ local backspace_to_g_mappings = {
 }
 vim.keymap.set({ "n", "v" }, "<BS>", "g")
 vim.keymap.set({ "n", "v" }, "<DEL>", "G")
-vim.keymap.set({ "n" }, "<DEL><DEL>", "ggVG")
 create_prefix_mappings("<BS>", "g", backspace_to_g_mappings)
 
 -- Clear search with esc
@@ -49,12 +50,12 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show [E]rror" })
 vim.keymap.set("n", "ge", vim.diagnostic.goto_next, { desc = "[G]o to next [E]rror" })
 vim.keymap.set("n", "gE", vim.diagnostic.goto_prev, { desc = "[G]o to next [E]rror" })
-vim.keymap.set("n", "<leader>gE", vim.cmd.cprev, { desc = "[G]o to previous [E]rror in the Quickfix list" })
-vim.keymap.set("n", "<leader>ge", vim.cmd.cnext, { desc = "[G]o to next [E]rror in the Quickfix list" })
 vim.keymap.set("n", "<BS>e", vim.diagnostic.goto_next, { desc = "[G]o to next [E]rror" })
 vim.keymap.set("n", "<BS>E", vim.diagnostic.goto_prev, { desc = "[G]o to next [E]rror" })
-vim.keymap.set("n", "<leader><BS>E", vim.cmd.cprev, { desc = "[G]o to previous [E]rror in the Quickfix list" })
-vim.keymap.set("n", "<leader><BS>e", vim.cmd.cnext, { desc = "[G]o to next [E]rror in the Quickfix list" })
+-- vim.keymap.set("n", "<leader>gE", vim.cmd.cprev, { desc = "[G]o to previous [E]rror in the Quickfix list" })
+-- vim.keymap.set("n", "<leader>ge", vim.cmd.cnext, { desc = "[G]o to next [E]rror in the Quickfix list" })
+-- vim.keymap.set("n", "<leader><BS>E", vim.cmd.cprev, { desc = "[G]o to previous [E]rror in the Quickfix list" })
+-- vim.keymap.set("n", "<leader><BS>e", vim.cmd.cnext, { desc = "[G]o to next [E]rror in the Quickfix list" })
 
 -- Remap arrows
 vim.keymap.set({ "n", "v" }, "<Left>", "h")
@@ -64,10 +65,6 @@ vim.keymap.set({ "n", "v" }, "<Down>", "gj")
 
 -- Go handle error
 vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return err<CR>}<Esc>k$b", { desc = "[H]andle [E]rror" })
-
--- Move lines
--- vim.keymap.set("v", "<S-Down>", ":m '>+1<CR>gv=gv", { desc = "Move selected line down one line" })
--- vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv", { desc = "Move selected line up one line" })
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving the cursor" })
 
@@ -117,3 +114,41 @@ vim.keymap.set("n", "<leader>osw", "<cmd>set wrap<cr>", { desc = "([O]ptions) [S
 
 vim.keymap.set("n", "<Enter>", "o<Esc>", { desc = "Add new line under cursor and move to it in normal mode" })
 vim.keymap.set("n", "<S-CR>", "m`O<Esc>``", { desc = "Add new line before the current one" })
+
+-- Invert current word
+vim.keymap.set("n", "!", function()
+	-- Define base pairs
+	local base_pairs = {
+		["true"] = "false",
+		["True"] = "False",
+		["yes"] = "no",
+		["on"] = "off",
+		["enable"] = "disable",
+		["enabled"] = "disabled",
+		["vero"] = "falso",
+	}
+
+	-- Create complete inversions table with both directions
+	local inversions = {}
+	for word, inverse in pairs(base_pairs) do
+		inversions[word] = inverse
+		inversions[inverse] = word
+	end
+
+	-- Get the word under cursor
+	local word = vim.fn.expand("<cword>")
+
+	-- Check if word exists in our inversions table
+	if inversions[word:lower()] then
+		-- Get the inverted word
+		local inverted = inversions[word:lower()]
+
+		-- Preserve the original case
+		if word:sub(1, 1):match("%u") then
+			inverted = inverted:sub(1, 1):upper() .. inverted:sub(2)
+		end
+
+		-- Replace the word under cursor
+		vim.cmd("normal! ciw" .. inverted)
+	end
+end, { desc = "[!]Invert current word" })
