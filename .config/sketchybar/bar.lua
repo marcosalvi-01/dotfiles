@@ -10,4 +10,5 @@ sbar.bar({
 	padding_left = 10,
 	topmost = "window",
 	notch_width = "300",
+	display = "main",
 })

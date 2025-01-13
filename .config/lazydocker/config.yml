@@ -1,0 +1,7 @@
+gui:
+  showBottomLine: false
+  returnImmediately: true
+  expandFocusedSidePanel: true
+  containerStatusHealthStyle: "icon"
+  logs:
+    timestamps: true
