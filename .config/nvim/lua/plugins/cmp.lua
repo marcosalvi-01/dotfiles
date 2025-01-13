@@ -14,16 +14,26 @@ return { -- Autocompletion
 				end
 				return "make install_jsregexp"
 			end)(),
+			config = function()
+				local ls = require("luasnip")
+
+				vim.keymap.set({ "i", "s" }, "<Tab>", function()
+					ls.jump(1)
+				end, { silent = true })
+				vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+					ls.jump(-1)
+				end, { silent = true })
+			end,
 			dependencies = {
 				-- `friendly-snippets` contains a variety of premade snippets.
 				--    See the README about individual language/framework/plugin snippets:
 				--    https://github.com/rafamadriz/friendly-snippets
-				-- {
-				--   'rafamadriz/friendly-snippets',
-				--   config = function()
-				--     require('luasnip.loaders.from_vscode').lazy_load()
-				--   end,
-				-- },
+				{
+					"rafamadriz/friendly-snippets",
+					config = function()
+						require("luasnip.loaders.from_vscode").lazy_load()
+					end,
+				},
 			},
 		},
 		"saadparwaiz1/cmp_luasnip",
@@ -40,15 +50,36 @@ return { -- Autocompletion
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 		luasnip.config.setup({})
-
+		cmp.setup.cmdline({ "/", "?" }, {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources = {
+				{ name = "buffer" },
+			},
+		})
 		cmp.setup({
+			preselect = cmp.PreselectMode.None,
+			completion = {
+				completeopt = "menu,menuone,preview",
+			},
+			sorting = {
+				priority_weight = 1.0,
+				comparators = {
+					cmp.config.compare.kind,
+					cmp.config.compare.locality,
+					cmp.config.compare.recently_used,
+					cmp.config.compare.score,
+					cmp.config.compare.offset,
+					cmp.config.compare.exact,
+					cmp.config.compare.scopes,
+				},
+			},
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
 			},
 			view = {
-				entries = { name = "custom", selection_order = "near_cursor" },
+				entries = { name = "custom", selection_order = "top_down" },
 			},
 			formatting = {
 				expandable_indicator = false,
@@ -56,9 +87,9 @@ return { -- Autocompletion
 				format = require("lspkind").cmp_format({
 					mode = "symbol_text",
 					menu = {
-						buffer = "[Buffer]",
+						buffer = "[Buf]",
 						nvim_lsp = "[LSP]",
-						luasnip = "[LuaSnip]",
+						luasnip = "[Snip]",
 						nvim_lua = "[Lua]",
 						latex_symbols = "[Latex]",
 					},
@@ -77,9 +108,9 @@ return { -- Autocompletion
 			-- No, but seriously. Please read `:help ins-completion`, it is really good!
 			mapping = cmp.mapping.preset.insert({
 				-- Select the [n]ext item
-				["<C-n>"] = cmp.mapping.select_next_item(),
+				["<Down>"] = cmp.mapping.select_next_item(),
 				-- Select the [p]revious item
-				["<C-p>"] = cmp.mapping.select_prev_item(),
+				["<Up>"] = cmp.mapping.select_prev_item(),
 
 				-- Scroll the documentation window [b]ack / [f]orward
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -92,7 +123,7 @@ return { -- Autocompletion
 
 				-- If you prefer more traditional completion keymaps,
 				-- you can uncomment the following lines
-				--['<CR>'] = cmp.mapping.confirm { select = true },
+				["<CR>"] = cmp.mapping.confirm({ select = true }),
 				--['<Tab>'] = cmp.mapping.select_next_item(),
 				--['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
@@ -110,9 +141,10 @@ return { -- Autocompletion
 					-- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
 					group_index = 0,
 				},
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-				{ name = "path" },
+				{ name = "nvim_lsp", priority = 8 },
+				{ name = "luasnip", priority = 7 },
+				{ name = "buffer", priority = 6 },
+				{ name = "spell", keyword_length = 3, priority = 5, keyword_pattern = [[\w\+]] },
 			},
 		})
 
@@ -124,7 +156,6 @@ return { -- Autocompletion
 		})
 
 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-		cmp.event:on("confirmation_done", cmp_autopairs.on_confirm_done()
-)
+		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 	end,
 }

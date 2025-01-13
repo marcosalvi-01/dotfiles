@@ -2,7 +2,7 @@ return {
 	"leath-dub/snipe.nvim",
 	keys = {
 		{
-			"<leader><leader>",
+			"<leader>u<leader>",
 			function()
 				require("snipe").open_buffer_menu()
 			end,
@@ -24,5 +24,8 @@ return {
 			dictionary = "neiatsrch.,-dvjw",
 		},
 		sort = "default",
+		navigate = {
+			open_vsplit = "<C-s>"
+		}
 	},
 }

@@ -41,6 +41,7 @@ return { -- Autoformat
 			jsonc = { "biome" },
 			python = { "black" },
 			yaml = { "prettier" },
+			go = { "goimports", "gofumpt" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--

@@ -11,8 +11,8 @@ path=(
     /snap/bin
     /opt/nvim-linux64/bin
     /usr/local/go/bin
-	$HOME/.local/scripts
-	$HOME/.local/bin
+    $HOME/.local/scripts
+    $HOME/.local/bin
     $HOME/Library/Python/3.9/bin
     $path
 )
@@ -43,11 +43,11 @@ zinit wait"0a" lucid for \
     zsh-users/zsh-completions \
     atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
-	zsh-users/zsh-history-substring-search
+    zsh-users/zsh-history-substring-search
 
 # History substring search (prefix only)
-bindkey "^[[A" history-substring-search-up   
-bindkey "^[[B" history-substring-search-down  
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_PREFIXED=1
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=#83a598,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=#ea6962,bold'
@@ -97,7 +97,7 @@ alias fortune='clear && fortune | cowsay -f stegosaurus | lolcat'
 
 # Fortune widget with ctrl+f
 fortune_widget() {
-	fortune
+    fortune
     zle reset-prompt
 }
 zle -N fortune_widget
@@ -110,14 +110,14 @@ export MANWIDTH=999
 
 # Fzf preview theme
 export FZF_DEFAULT_OPTS='
-  --color=fg:-1,fg+:-1,bg:-1,bg+:#262626
-  --color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b
-  --color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598
-  --color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae
-  --color=query:#d4be98
-  --border-label="" --preview-window="border-rounded" --prompt="❯ "
-  --marker="❯" --pointer="❯" --separator="─" --scrollbar="│"
-  --info="right"'
+--color=fg:-1,fg+:-1,bg:-1,bg+:#262626
+--color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b
+--color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598
+--color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae
+--color=query:#d4be98
+--border-label="" --preview-window="border-rounded" --prompt="❯ "
+--marker="❯" --pointer="❯" --separator="─" --scrollbar="│"
+--info="right"'
 
 
 # Fzf history search
@@ -126,12 +126,12 @@ COLOR_TIMESTAMP="\033[33m"    # Yellow for timestamp
 COLOR_RESET="\033[0m"
 fzf-history-widget() {
     local selected raw_line
-    
+
     # Use awk to colorize line number and timestamp
     # History line format: N YYYY-MM-DD HH:MM:SS command...
     selected="$(
         history -i 0 \
-        | awk -v cnum="$COLOR_LINE_NUM" -v ctime="$COLOR_TIMESTAMP" -v cre="$COLOR_RESET" '
+            | awk -v cnum="$COLOR_LINE_NUM" -v ctime="$COLOR_TIMESTAMP" -v cre="$COLOR_RESET" '
           {
             line_num = $1
             date = $2
@@ -143,13 +143,13 @@ fzf-history-widget() {
             printf("%s%s%s %s%s %s%s%s\n", cnum, line_num, cre, ctime, date, time, cre, cmd)
           }
         ' \
-        | fzf --tac --ansi --height 50% --reverse --border --prompt='history ❯ '
+            | fzf --tac --ansi --height 50% --reverse --border --prompt='history ❯ '
     )"
 
     if [[ -n "$selected" ]]; then
         # Strip ANSI escape codes before extracting the command fields
         raw_line=$(echo "$selected" | sed 's/\x1b\[[0-9;]*m//g')
-        
+
         # Now extract just the command, removing the first three fields
         # Fields after stripping ANSI codes: N YYYY-MM-DD HH:MM:SS command...
         LBUFFER=$(echo "$raw_line" | awk '{ $1=""; $2=""; $3=""; sub(/^ +/, ""); print }')

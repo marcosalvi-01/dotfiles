@@ -17,6 +17,7 @@ return {
 			graph_style = "kitty",
 		})
 		vim.keymap.set("n", "<leader>ng", "<cmd>Neogit kind=replace<cr>", { desc = "Open [N]eo[G]it window (Neogit)" })
+		vim.keymap.set("n", "<leader>n<BS>", "<cmd>Neogit kind=replace<cr>", { desc = "Open [N]eo[G]it window (Neogit)" })
 
 		require("diffview").setup({
 			keymaps = {
