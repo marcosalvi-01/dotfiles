@@ -14,6 +14,7 @@ path=(
     $HOME/.local/scripts
     $HOME/.local/bin
     $HOME/Library/Python/3.9/bin
+	$HOME/.spicetify
     $path
 )
 
@@ -80,7 +81,7 @@ zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' popup-min-size 80 20					# apply to all command
 zstyle ':fzf-tab:complete:diff:*' popup-min-size 80 12	# only apply to 'diff'
 zstyle ':fzf-tab:*' redraw-prompt true
-zstyle ':fzf-tab:*' fzf-flags --color=fg:-1,fg+:-1,bg:-1,bg+:#262626 --color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b --color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598 --color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae --color=query:#d4be98 --border-label="" --preview-window="border-rounded" --prompt="❯ " --marker="❯" --pointer="❯" --separator="─" --scrollbar="│" --info="right"
+zstyle ':fzf-tab:*' fzf-flags --color=fg:-1,fg+:-1,bg:-1,bg+:#262626 --color=hl:#689d6a,hl+:#8ec07c,info:#d4be98,marker:#d3869b --color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598 --color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae --color=query:#d4be98 --border-label="" --preview-window="border-rounded" --prompt=" " --marker="" --pointer="" --separator="─" --scrollbar="│" --info="right"
 
 # Aliases
 alias l='eza --icons=always -l --git'
@@ -115,8 +116,8 @@ export FZF_DEFAULT_OPTS='
 --color=prompt:#83a598,spinner:#83a598,pointer:#8ec07c,header:#83a598
 --color=gutter:-1,border:#ddc7a1,preview-fg:#d4be98,label:#aeaeae
 --color=query:#d4be98
---border-label="" --preview-window="border-rounded" --prompt="❯ "
---marker="❯" --pointer="❯" --separator="─" --scrollbar="│"
+--border-label="" --preview-window="border-rounded" --prompt=" "
+--marker="" --pointer="" --separator="─" --scrollbar="│"
 --info="right"'
 
 
@@ -143,7 +144,7 @@ fzf-history-widget() {
             printf("%s%s%s %s%s %s%s%s\n", cnum, line_num, cre, ctime, date, time, cre, cmd)
           }
         ' \
-            | fzf --tac --ansi --height 50% --reverse --border --prompt='history ❯ '
+            | fzf --tac --ansi --height 50% --reverse --border --prompt='history  '
     )"
 
     if [[ -n "$selected" ]]; then
