@@ -10,7 +10,14 @@ background-blur-radius = 60
 macos-titlebar-style = hidden
 font-family = JetBrainsMono NFM SemiBold 
 font-family-bold = JetBrainsMono NFM SemiBold
-keybind = clear
 confirm-close-surface = false
 quit-after-last-window-closed=true
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
 
+keybind = clear
+keybind = unconsumed:ctrl+a=reload_config
+keybind = super+plus=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
+keybind = ctrl+v=paste_from_clipboard
