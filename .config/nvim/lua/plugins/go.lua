@@ -26,7 +26,6 @@ return {
 		vim.keymap.set("n", "<leader><BS>fs", ":GoFillStruct<CR>", { desc = "[G]o [F]ill [S]truct" })
 		vim.keymap.set("n", "<leader><BS>fw", ":GoFillSwitch<CR>", { desc = "[G]o [F]ill s[W]itch" })
 	end,
-	event = { "CmdlineEnter" },
 	ft = { "go", "gomod" },
 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 }
