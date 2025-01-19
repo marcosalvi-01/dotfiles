@@ -1,8 +1,9 @@
 return {
-	dir = "~/spine",
+	-- dir = "~/spine",
+	"marcosalvi-01/spine",
 	keys = {
 		{
-			"<leader><leader>",
+			"<BS>",
 			function()
 				require("spine").Open()
 			end,
@@ -10,7 +11,7 @@ return {
 		},
 	},
 	config = function()
-		vim.keymap.set("n", "<leader><leader>", function()
+		vim.keymap.set("n", "<BS>", function()
 			require("spine").Open()
 		end)
 	end,

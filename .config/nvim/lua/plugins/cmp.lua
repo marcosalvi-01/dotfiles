@@ -14,16 +14,22 @@ return { -- Autocompletion
 				end
 				return "make install_jsregexp"
 			end)(),
-			-- config = function()
-			-- 	local ls = require("luasnip")
-			--
-			-- 	vim.keymap.set({ "i", "s" }, "<Tab>", function()
-			-- 		ls.jump(1)
-			-- 	end, { silent = true })
-			-- 	vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-			-- 		ls.jump(-1)
-			-- 	end, { silent = true })
-			-- end,
+			config = function()
+				local ls = require("luasnip")
+
+				-- move to the next input if possible else do tab
+				vim.keymap.set({ "i", "s" }, "<Tab>", function()
+					if ls.locally_jumpable() then
+						ls.jump(1)
+					else
+						-- Insert a literal tab character
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", true)
+					end
+				end, { silent = true })
+				vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+					ls.jump(-1)
+				end, { silent = true })
+			end,
 			dependencies = {
 				-- `friendly-snippets` contains a variety of premade snippets.
 				--    See the README about individual language/framework/plugin snippets:

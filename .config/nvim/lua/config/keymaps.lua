@@ -1,47 +1,3 @@
-local function create_prefix_mappings(prefix_from, prefix_to, mappings)
-	-- Default modes if not specified in mappings
-	local default_modes = { "n", "v" }
-	for _, mapping in ipairs(mappings) do
-		local modes = mapping.modes or default_modes
-		local from = mapping.double and prefix_from .. prefix_from or prefix_from
-		local to = mapping.double and prefix_to .. prefix_to or prefix_to
-		if mapping.suffix then
-			from = from .. mapping.suffix
-			to = to .. mapping.suffix
-		end
-		vim.keymap.set(modes, from, function()
-			vim.cmd.norm(to)
-		end, mapping.opts or {})
-	end
-end
-
--- Define your mappings
-local backspace_to_g_mappings = {
-	{ double = true },
-	{ suffix = "e" },
-	{ suffix = "E" },
-	{ suffix = "f" },
-	{ suffix = "F" },
-	{ suffix = "t" },
-	{ suffix = "T" },
-	{ suffix = "d" },
-	{ suffix = "D" },
-	{ suffix = "u" },
-	{ suffix = "U" },
-	{ suffix = "~" },
-	{ suffix = "v" },
-	{ suffix = "cc" },
-	{ suffix = "cip" },
-	{ suffix = "c%" },
-	{ suffix = "x" },
-	{ suffix = "i" },
-	{ suffix = "r" },
-	{ suffix = "gI" },
-}
-vim.keymap.set({ "n", "v" }, "<BS>", "g")
-vim.keymap.set({ "n", "v" }, "<DEL>", "G")
-create_prefix_mappings("<BS>", "g", backspace_to_g_mappings)
-
 -- Clear search with esc
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
@@ -50,8 +6,6 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show [E]rror" })
 vim.keymap.set("n", "ge", vim.diagnostic.goto_next, { desc = "[G]o to next [E]rror" })
 vim.keymap.set("n", "gE", vim.diagnostic.goto_prev, { desc = "[G]o to next [E]rror" })
-vim.keymap.set("n", "<BS>e", vim.diagnostic.goto_next, { desc = "[G]o to next [E]rror" })
-vim.keymap.set("n", "<BS>E", vim.diagnostic.goto_prev, { desc = "[G]o to next [E]rror" })
 -- vim.keymap.set("n", "<leader>gE", vim.cmd.cprev, { desc = "[G]o to previous [E]rror in the Quickfix list" })
 -- vim.keymap.set("n", "<leader>ge", vim.cmd.cnext, { desc = "[G]o to next [E]rror in the Quickfix list" })
 -- vim.keymap.set("n", "<leader><BS>E", vim.cmd.cprev, { desc = "[G]o to previous [E]rror in the Quickfix list" })
