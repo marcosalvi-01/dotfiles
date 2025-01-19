@@ -1,6 +1,7 @@
 return {
 	-- dir = "~/spine",
 	"marcosalvi-01/spine",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
 	keys = {
 		{
 			"<BS>",
