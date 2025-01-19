@@ -92,9 +92,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias vim='nvim'
-alias xx='exit'
-alias pipes='pipes.sh -t 3'
+alias ld='lazydocker'
+alias pipes='pipes.sh -t 1 -f 100 -r 4000 -R -s 15 -p 4'
 alias fortune='clear && fortune | cowsay -f stegosaurus | lolcat'
+alias .='nvim .'
 
 # Fortune widget with ctrl+f
 fortune_widget() {

@@ -40,7 +40,7 @@ return {
 				map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage entire buffer (Gitsigns)" })
 				map("n", "<leader>hu", gitsigns.undo_stage_hunk, { desc = "Undo stage hunk (Gitsigns)" })
 				map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset entire buffer (Gitsigns)" })
-				map("n", "<leader>hP", gitsigns.preview_hunk, { desc = "Preview current hunk (Gitsigns)" })
+				map("n", "<leader>hP", gitsigns.preview_hunk_inline, { desc = "Preview current hunk (Gitsigns)" })
 				map("n", "<leader>hb", function()
 					gitsigns.blame_line({ full = true })
 				end, { desc = "Blame current line with full details (Gitsigns)" })

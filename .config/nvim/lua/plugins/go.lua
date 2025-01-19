@@ -22,11 +22,10 @@ return {
 		vim.keymap.set("n", "<leader><BS>c", ":GoCmt<CR>", { desc = "[G]o add [C]omment" })
 		vim.keymap.set("n", "<leader><BS>mt", ":GoModTidy<CR>", { desc = "[G]o [M]od [T]idy" })
 		vim.keymap.set("n", "<leader><BS>fp", ":GoFixPlurals<CR>", { desc = "[G]o [F]ix [P]lurals" })
-		vim.keymap.set("n", "<leader><BS>e", ":GoIfErr<CR>", { desc = "[G]o add if [E]rr" })
+		vim.keymap.set("n", "<leader><BS>e", ":GoIfErr<CR>k", { desc = "[G]o add if [E]rr" })
 		vim.keymap.set("n", "<leader><BS>fs", ":GoFillStruct<CR>", { desc = "[G]o [F]ill [S]truct" })
 		vim.keymap.set("n", "<leader><BS>fw", ":GoFillSwitch<CR>", { desc = "[G]o [F]ill s[W]itch" })
 	end,
-	event = { "CmdlineEnter" },
 	ft = { "go", "gomod" },
 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 }
