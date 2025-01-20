@@ -89,8 +89,6 @@ vim.keymap.set("n", "H", "~")
 
 vim.keymap.set("n", "vv", "viw")
 
-vim.keymap.set("n", "s", "i<CR><Esc>")
-
 vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")
 
