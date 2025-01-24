@@ -39,11 +39,9 @@ vim.keymap.set("n", "N", "Nzz")
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
 
-vim.keymap.set("n", "H", "~")
+vim.keymap.set({ "n", "v" }, "H", "~")
 
 vim.keymap.set("n", "vv", "viw")
-
-vim.keymap.set("n", "s", "i<CR><Esc>")
 
 vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")

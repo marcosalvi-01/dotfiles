@@ -128,6 +128,12 @@ return {
 			telescope_builtin.diagnostics,
 			{ desc = "[S]earch [D]iagnostics (Telescope)" }
 		)
+		vim.keymap.set("n", "<leader>si", function()
+			require("telescope.builtin").find_files({
+				prompt_title = "Search Directories",
+				find_command = { "fd", "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
+			})
+		end, { desc = "[S]earch [D]irectories Recursively (Telescope)" })
 		vim.keymap.set(
 			"n",
 			"<leader>sb",
