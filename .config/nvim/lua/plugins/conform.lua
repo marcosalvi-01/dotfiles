@@ -42,6 +42,7 @@ return { -- Autoformat
 			python = { "black" },
 			yaml = { "prettier" },
 			go = { "goimports", "gofumpt" },
+			xml = { "xmlformatter" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
