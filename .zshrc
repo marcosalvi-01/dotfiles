@@ -10,7 +10,7 @@ path=(
     /opt/homebrew/opt/postgresql@17/bin
     /snap/bin
     /opt/nvim-linux64/bin
-    /usr/local/go/bin
+    $HOME/go/bin
     $HOME/.local/scripts
     $HOME/.local/bin
     $HOME/Library/Python/3.9/bin
