@@ -29,17 +29,23 @@ return {
 		layout_strategies.horizontal_fused = function(picker, max_columns, max_lines, layout_config)
 			local layout = layout_strategies.horizontal(picker, max_columns, max_lines, layout_config)
 			layout.results.title = layout.prompt.title
-			layout.preview.title = ""
 			layout.results.height = layout.results.height + 1
-			layout.results.borderchars = { "─", "│", "─", "│", "╭", "┬", "┤", "├" }
-			layout.preview.borderchars = { "─", "│", "─", " ", "─", "╮", "╯", "─" }
-			layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "┴", "╰" }
+			if layout.preview ~= nil then
+				layout.preview.title = ""
+				layout.preview.borderchars = { "─", "│", "─", "│", "┬", "╮", "╯", "┴" }
+				layout.results.width = layout.results.width + 1
+				layout.prompt.width = layout.prompt.width + 1
+				-- layout.results.borderchars = { "─", "│", "─", "│", "╭", "┬", "│", "│" }
+				-- layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "┴", "╰" }
+				layout.results.borderchars = { "─", "│", "─", "│", "╭", "╮", "│", "│" }
+				layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
+			end
 			return layout
 		end
 
 		require("telescope").setup({
 			defaults = {
-				-- layout_strategy = "horizontal_fused",
+				layout_strategy = "horizontal_fused",
 				mappings = {
 					i = {
 						-- Open in vertical slit
