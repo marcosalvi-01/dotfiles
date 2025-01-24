@@ -106,3 +106,5 @@ vim.keymap.set("n", "!", function()
 		vim.cmd("normal! ciw" .. inverted)
 	end
 end, { desc = "[!]Invert current word" })
+
+vim.keymap.set("n", "<leader>sw", "*")
