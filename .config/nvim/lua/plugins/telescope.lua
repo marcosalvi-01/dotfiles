@@ -9,10 +9,9 @@ local telescope_builtin = require("telescope.builtin")
 return {
 	"nvim-telescope/telescope.nvim",
 	event = "VimEnter",
-	-- branch = "0.1.x",
+	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"MunifTanjim/nui.nvim",
 		{ "nvim-telescope/telescope-ui-select.nvim" },
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		{
@@ -42,6 +41,8 @@ return {
 		end
 		telescope.setup({
 			defaults = {
+				selection_caret = " ",
+				prompt_prefix = " ",
 				preview = {
 					hide_on_startup = true, -- hide previewer when picker starts
 				},
