@@ -28,7 +28,7 @@ return {
 			local layout = layout_strategies.horizontal(picker, max_columns, max_lines, layout_config)
 			layout.results.title = layout.prompt.title
 			layout.results.height = layout.results.height + 1
-			if layout.preview ~= nil then
+			if layout.preview ~= nil and layout.preview ~= false and layout.preview ~= true then
 				layout.preview.title = ""
 				layout.preview.borderchars = { "─", "│", "─", "│", "┬", "╮", "╯", "┴" }
 				layout.results.width = layout.results.width + 1
