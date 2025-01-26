@@ -1,19 +1,34 @@
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
+<<<<<<< HEAD
 font-size = 24
+=======
+font-size = 18
+>>>>>>> main
 theme = gruvbox
 background = 1d1d1d
 foreground = d4be98
 background-opacity = 0.8
+<<<<<<< HEAD
 background-blur-radius = 40
 macos-titlebar-style = hidden
+=======
+background-blur-radius = 60
+macos-titlebar-style = hidden
+window-decoration=false
+>>>>>>> main
 font-family = JetBrainsMono NFM SemiBold 
 font-family-bold = JetBrainsMono NFM SemiBold
 confirm-close-surface = false
 quit-after-last-window-closed=true
+<<<<<<< HEAD
 window-padding-x = 10
 window-padding-y = 10
+=======
+#window-padding-x = 10
+#window-padding-y = 10
+>>>>>>> main
 window-padding-balance = true
 
 keybind = clear

@@ -17,16 +17,16 @@ local function get_buf_name()
 end
 
 local colors = {
-	background = "#282828",
-	foreground = "#d4be98",
-	taupe = "#504945",
-	neutral_gray = "#32302f",
-	beige = "#a89984",
-	blue_green = "#7daea3",
-	greenish = "#8ec07c",
-	yellowish = "#d8a657",
-	pinkish = "#d3869b",
-	reddish = "#ea6962",
+	background = "#282828", -- Gruvbox fg1
+	foreground = "#ddc7a1", -- Gruvbox fg2
+	taupe = "#504945", -- Gruvbox color2
+	neutral_gray = "#32302f", -- Gruvbox color3
+	beige = "#a89984", -- Gruvbox color4
+	blue_green = "#7daea3", -- Gruvbox color5
+	greenish = "#8ec07c", -- Gruvbox color6
+	yellowish = "#d8a657", -- Gruvbox color7
+	pinkish = "#d3869b", -- Gruvbox color8
+	reddish = "#ea6962", -- Gruvbox color9
 }
 
 local bubbles_theme = {
