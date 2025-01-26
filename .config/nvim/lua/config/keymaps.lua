@@ -43,8 +43,8 @@ vim.keymap.set({ "n", "v" }, "H", "~")
 
 vim.keymap.set("n", "vv", "viw")
 
-vim.keymap.set("v", "p", '"_dp')
-vim.keymap.set("v", "P", '"_dP')
+vim.keymap.set("v", "P", '"_dp')
+vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")
 
 -- using ctrl + h because kitty seems to interpret ctrl + backspace as that, don't know w
@@ -107,3 +107,5 @@ vim.keymap.set("n", "!", function()
 end, { desc = "[!]Invert current word" })
 
 vim.keymap.set("n", "<leader>sw", "*")
+
+vim.keymap.set("n", "<leader>v", "gv")

@@ -32,6 +32,8 @@ return {
 					vim.api.nvim_set_hl(0, "FloatTitle", { fg = fg_color, bg = nil })
 					vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = fg_color })
 					vim.api.nvim_set_hl(0, "Pmenu", { bg = nil })
+					vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#504945" })
+					vim.api.nvim_set_hl(0, "PmenuThumb", { bg = "#a89984" })
 					vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { fg = "#504945" })
 				end,
 			})
