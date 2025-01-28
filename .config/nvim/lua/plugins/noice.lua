@@ -24,6 +24,11 @@ return {
 				inc_rename = false, -- enables an input dialog for inc-rename.nvim
 				lsp_doc_border = true, -- add a border to hover docs and signature help
 			},
+			commands = {
+				history = {
+					view = "confirm",
+				},
+			},
 		})
 
 		vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", { link = "FloatBorder" })

@@ -97,7 +97,7 @@ return {
 		vim.keymap.set("n", "<leader>gf", telescope_builtin.git_files, { desc = "Search [G]it [F]iles (Telescope)" })
 		vim.keymap.set("n", "<leader>sR", telescope_builtin.resume, { desc = "[S]earch [R]esume (Telescope)" })
 		vim.keymap.set("n", "<leader>sr", telescope_builtin.registers, { desc = "[S]earch [R]egisters (Telescope)" })
-		vim.keymap.set("n", "<leader>sm", telescope_builtin.man_pages, { desc = "[S] Find [M]an pages (Telescope)" })
+		vim.keymap.set("n", "<leader>sm", telescope_builtin.marks, { desc = "[S]earch [M]arks (Telescope)" })
 		vim.keymap.set("n", "*", function()
 			local word = vim.fn.expand("<cword>")
 			telescope_builtin.current_buffer_fuzzy_find({

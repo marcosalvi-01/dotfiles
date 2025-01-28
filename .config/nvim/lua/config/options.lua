@@ -63,6 +63,8 @@ vim.opt.termguicolors = true
 --vim.opt.timeoutlen = 200
 
 -- Hide the tilde empty lines
-vim.opt.fillchars = {eob = " "}
+vim.opt.fillchars = { eob = " " }
 
 vim.opt.conceallevel = 2
+
+vim.opt.cmdheight = 0
