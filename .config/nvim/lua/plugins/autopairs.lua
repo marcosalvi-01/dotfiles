@@ -3,7 +3,6 @@ return {
 	event = "InsertEnter",
 	config = true,
 	dependencies = {
-		-- "hrsh7th/nvim-cmp",
 		"nvim-treesitter/nvim-treesitter",
 	},
 	opts = {

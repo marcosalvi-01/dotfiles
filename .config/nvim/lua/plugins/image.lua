@@ -16,7 +16,6 @@ return {
 			"norg",
 			"html",
 			"css",
-			"oil",
 		},
 		config = function()
 			require("image").setup({

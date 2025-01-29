@@ -2,7 +2,6 @@ return {
 	"declancm/cinnamon.nvim",
 	config = function()
 		require("cinnamon").setup({
-			-- disabled = false,
 			keymaps = {
 				basic = true,
 				extra = false,
@@ -42,5 +41,13 @@ return {
 				vim.cmd.normal("zz")
 			end)
 		end, { desc = "[G]o to next [E]ntry in the Quickfix list" })
+
+		-- Disable scrolling for help buffers
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "oil",
+			callback = function()
+				vim.b.cinnamon_disable = true
+			end,
+		})
 	end,
 }
