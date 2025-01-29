@@ -12,7 +12,7 @@ vim.keymap.set("n", "<leader><BS>E", function()
 end, { desc = "[G]o to previous [E]ntry in the Quickfix list" })
 vim.keymap.set("n", "<leader><BS>e", function()
 	vim.cmd.cnext()
-	vim.cmd.normal("zz")
+	-- vim.cmd.normal("zz")
 end, { desc = "[G]o to next [E]ntry in the Quickfix list" })
 
 -- Remap arrows
@@ -22,15 +22,22 @@ vim.keymap.set({ "n", "v" }, "<Up>", "gk")
 vim.keymap.set({ "n", "v" }, "<Down>", "gj")
 
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving the cursor" })
+vim.keymap.set("n", "S", "i<CR><Esc>", { desc = "[S]plit lines" })
 
 vim.keymap.set("n", ",", ";")
 vim.keymap.set("n", ";", ",")
 
-vim.keymap.set("n", "<Home>", "_")
+vim.keymap.set("n", "<Home>", "0")
 vim.keymap.set("n", "<End>", "$")
 
-vim.keymap.set("n", "<PageUp>", "<C-u>zz")
-vim.keymap.set("n", "<PageDown>", "<C-d>zz")
+-- vim.keymap.set("n", "<PageUp>", "<C-u>zz")
+-- vim.keymap.set("n", "<PageDown>", "<C-d>zz")
+vim.keymap.set("n", "<PageUp>", function()
+	require("cinnamon").scroll("<C-u>zz")
+end)
+vim.keymap.set("n", "<PageDown>", function()
+	require("cinnamon").scroll("<C-d>zz")
+end)
 
 vim.keymap.set("n", "Q", "`", { remap = true })
 
@@ -53,12 +60,10 @@ vim.keymap.set("i", "<C-H>", "<C-w>", { desc = "Delete word in insert mode" })
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
-vim.keymap.set(
-	"n",
-	"<leader>w",
-	"<cmd>silent! wa<cr><cmd>echo 'All buffer changes written'<cr>",
-	{ desc = "[W]rite all buffer" }
-)
+vim.keymap.set("n", "<leader>w", function()
+	vim.cmd("silent! wa")
+	print("All buffer changes written")
+end, { desc = "[W]rite all buffer" })
 
 vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
 
@@ -110,3 +115,21 @@ end, { desc = "[!]Invert current word" })
 vim.keymap.set("n", "<leader>sw", "*")
 
 vim.keymap.set("n", "<leader>v", "gv")
+
+vim.keymap.set({ "n", "v" }, "M", function()
+	local marks = {}
+	for i = string.byte("a"), string.byte("z") do
+		local mark = string.char(i)
+		-- Get position of the mark
+		local pos = vim.api.nvim_buf_get_mark(0, mark)
+		-- Check if mark is on current line
+		if pos[1] == vim.fn.line(".") then
+			table.insert(marks, mark)
+		end
+	end
+
+	-- If we found any marks, delete them
+	if #marks > 0 then
+		vim.cmd("delmarks " .. table.concat(marks))
+	end
+end)
