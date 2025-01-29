@@ -34,6 +34,8 @@ return {
 				layout.preview.borderchars = { "─", "│", "─", "│", "┬", "╮", "╯", "┴" }
 				layout.results.width = layout.results.width + 1
 				layout.prompt.width = layout.prompt.width + 1
+				layout.results.borderchars = { "─", "│", "─", "│", "╭", "┬", "│", "│" }
+				layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
 			else
 				layout.results.borderchars = { "─", "│", "─", "│", "╭", "╮", "│", "│" }
 				layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
@@ -45,7 +47,7 @@ return {
 				selection_caret = " ",
 				prompt_prefix = " ",
 				preview = {
-					hide_on_startup = true, -- hide previewer when picker starts
+					hide_on_startup = false, -- hide previewer when picker starts
 				},
 				layout_strategy = "horizontal_fused",
 				mappings = {
