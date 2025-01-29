@@ -9,8 +9,9 @@ local telescope_builtin = require("telescope.builtin")
 return {
 	"nvim-telescope/telescope.nvim",
 	event = "VimEnter",
-	branch = "0.1.x",
+	-- branch = "0.1.x",
 	dependencies = {
+		"MunifTanjim/nui.nvim",
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-ui-select.nvim" },
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
@@ -33,6 +34,8 @@ return {
 				layout.preview.borderchars = { "─", "│", "─", "│", "┬", "╮", "╯", "┴" }
 				layout.results.width = layout.results.width + 1
 				layout.prompt.width = layout.prompt.width + 1
+				layout.results.borderchars = { "─", "│", "─", "│", "╭", "┬", "│", "│" }
+				layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
 			else
 				layout.results.borderchars = { "─", "│", "─", "│", "╭", "╮", "│", "│" }
 				layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
@@ -44,7 +47,7 @@ return {
 				selection_caret = " ",
 				prompt_prefix = " ",
 				preview = {
-					hide_on_startup = true, -- hide previewer when picker starts
+					hide_on_startup = false, -- hide previewer when picker starts
 				},
 				layout_strategy = "horizontal_fused",
 				mappings = {
