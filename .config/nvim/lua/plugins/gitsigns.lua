@@ -10,7 +10,6 @@ return {
 				vim.keymap.set(mode, l, r, opts)
 			end
 
-			-- Navigation
 			map("n", "<leader>hn", function()
 				if vim.wo.diff then
 					vim.cmd.normal({ "]c", bang = true })
@@ -27,7 +26,6 @@ return {
 				end
 			end, { desc = "Go to previous hunk (Gitsigns)" })
 
-			-- Actions
 			map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage/Undo current hunk (Gitsigns)" })
 			map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset current hunk (Gitsigns)" })
 			map("v", "<leader>hs", function()
