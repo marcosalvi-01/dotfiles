@@ -29,20 +29,21 @@ return {
 			require("cinnamon").scroll("<C-i>zz")
 		end)
 
+		-- Quickfix navigation (with cycles)
 		vim.keymap.set("n", "<leader><BS>E", function()
 			require("cinnamon").scroll(function()
-				vim.cmd.cprev()
+				vim.cmd("try | cprevious | catch | clast | catch")
 				vim.cmd.normal("zz")
 			end)
 		end, { desc = "[G]o to previous [E]ntry in the Quickfix list" })
 		vim.keymap.set("n", "<leader><BS>e", function()
 			require("cinnamon").scroll(function()
-				vim.cmd.cnext()
+				vim.cmd("try | cnext | catch | cfirst | catch")
 				vim.cmd.normal("zz")
 			end)
 		end, { desc = "[G]o to next [E]ntry in the Quickfix list" })
 
-		-- Disable scrolling for help buffers
+		-- Disable scrolling for oil
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "oil",
 			callback = function()
