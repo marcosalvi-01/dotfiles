@@ -128,6 +128,8 @@ end, { desc = "[!]Invert current word" })
 
 vim.keymap.set("n", "<leader>sw", "*")
 
+vim.keymap.set("n", "<leader>v", "gv", { desc = "Reselect last [V]isual selection" })
+
 vim.keymap.set("n", "<leader>v", "gv")
 
 vim.keymap.set({ "n", "v" }, "M", function()
@@ -147,3 +149,12 @@ vim.keymap.set({ "n", "v" }, "M", function()
 		vim.cmd("delmarks " .. table.concat(marks))
 	end
 end)
+
+vim.keymap.set("v", "<leader>sed", function()
+	-- get the selected text
+	local lines = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() }))
+	-- exit visual mode
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
+	-- open the %s command
+	return vim.fn.feedkeys(":%s/" .. vim.fn.escape(lines, "/\\") .. "/", "n")
+end, { desc = "Search and replace selection" })

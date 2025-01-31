@@ -24,9 +24,24 @@ return {
 		},
 
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer", "dadbod" },
+			default = {
+				"lazydev",
+				"lsp",
+				"path",
+				"snippets",
+				"buffer",
+				"dadbod",
+			},
 			providers = {
-				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+				dadbod = {
+					name = "Dadbod",
+					module = "vim_dadbod_completion.blink",
+				},
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					score_offset = 100,
+				},
 			},
 		},
 		completion = {

@@ -6,7 +6,6 @@ window {
   font-family: "JetBrainsMono Nerd Font Mono";
   font-size: 13px;
   margin: 0px;
-  /* Use gruvbox background and border values */
   background-color: #282828;
   border: 2px solid #d4be98;
   border-radius: 20px;
@@ -18,7 +17,6 @@ window {
   padding-left: 20px;
   padding-right: 15px;
   border: none;
-  /* Use gruvbox text and background colors */
   color: #ddc7a1;
   font-weight: bold;
   font-size: 15px;
@@ -34,7 +32,6 @@ window {
 #input:focus {
   border: none;
   outline: none;
-  /* For a gruvbox-inspired focus, we add a shadow similar to gruvbox's hover/focus */
   box-shadow: 0 0 0 2px #a9b665;
 }
 
@@ -42,9 +39,12 @@ window {
   margin: 20px;
   margin-top: 0px;
   border: none;
-  color: #ddc7a1; /* Using the gruvbox foreground color */
+  color: #ddc7a1;
   background-color: #282828;
   border-radius: 8px;
+  /* Add padding to prevent text from touching borders */
+  max-width: 100%;
+  padding: 0 5px;
 }
 
 #inner-box * {
@@ -52,10 +52,11 @@ window {
 }
 
 #scroll {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   border: none;
   border-radius: 8px;
+  padding: 0 5px;
 }
 
 #text {
@@ -64,11 +65,10 @@ window {
   padding: 0px;
   background: transparent;
   color: #ddc7a1;
-}
-
-#text:selected {
-  color: #ddc7a1;
-  font-weight: bold;
+  /* Ensure text wraps if needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #img {
@@ -84,8 +84,21 @@ window {
   background-color: transparent;
   min-height: 32px;
   font-weight: bold;
-  /* Prevent overflow by limiting the max width */
-  max-width: 100%;
+  width: 100%; /* Ensure the entry takes full width */
+  word-wrap: break-word; /* Allow long text to wrap */
+  overflow-wrap: break-word; /* Ensure breaking at words */
+  white-space: normal; /* Allow multi-line text */
+}
+
+#text {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background: transparent;
+  color: #ddc7a1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 #entry:selected {
@@ -94,11 +107,12 @@ window {
   border: none;
   padding-left: 10px;
   border-radius: 80px;
-  /* Gruvbox selected entry background */
   background-color: #504945;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
-/* Scrollbar styling */
 scrollbar {
   background-color: #282828;
   border: none;
@@ -112,4 +126,3 @@ scrollbar slider {
 scrollbar slider:hover {
   background-color: #a89984;
 }
-
