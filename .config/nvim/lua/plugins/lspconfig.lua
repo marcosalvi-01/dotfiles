@@ -29,6 +29,8 @@ return {
 
 				-- Find references for the word under your cursor.
 				map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+				map("<leader>go", require("telescope.builtin").lsp_outgoing_calls, "[G]oto [O]utgoing calls")
+				map("<leader>gi", require("telescope.builtin").lsp_incoming_calls, "[G]oto [I]ncoming calls")
 
 				-- Jump to the implementation of the word under your cursor.
 				--  Useful when your language has ways of declaring types without an actual implementation.
