@@ -1,12 +1,21 @@
 return {
 	"ray-x/go.nvim",
 	dependencies = { -- optional packages
-		"ray-x/guihua.lua",
 		"neovim/nvim-lspconfig",
 		"nvim-treesitter/nvim-treesitter",
 	},
 	config = function()
-		require("go").setup()
+		-- set the capabilities (fix lsp with blink)
+		local capabilities = require("blink-cmp").get_lsp_capabilities()
+		require("go").setup({
+			lsp_cfg = {
+				capabilities = capabilities,
+			},
+			lsp_keymaps = false,
+			lsp_inlay_hints = {
+				other_hints_prefix = " ",
+			},
+		})
 
 		-- Keymaps
 		vim.keymap.set("n", "<leader>gat", ":GoAddTag<CR>", { desc = "Go [A]dd [T]ag to struct" })
@@ -17,6 +26,14 @@ return {
 		vim.keymap.set("n", "<leader>ge", ":GoIfErr<CR>k", { desc = "[G]o add if [E]rr" })
 		vim.keymap.set("n", "<leader>gfs", ":GoFillStruct<CR>", { desc = "[G]o [F]ill [S]truct" })
 		vim.keymap.set("n", "<leader>gfw", ":GoFillSwitch<CR>", { desc = "[G]o [F]ill s[W]itch" })
+
+		-- clean imports when saving a file
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			pattern = "*.go",
+			callback = function()
+				vim.cmd("GoImports")
+			end,
+		})
 	end,
 	ft = { "go", "gomod" },
 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries

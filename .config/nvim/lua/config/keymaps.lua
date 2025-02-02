@@ -158,3 +158,19 @@ vim.keymap.set("v", "<leader>sed", function()
 	-- open the %s command
 	return vim.fn.feedkeys(":%s/" .. vim.fn.escape(lines, "/\\") .. "/", "n")
 end, { desc = "Search and replace selection" })
+
+-- toggle inlay hints
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(event)
+		local bufnr = event.buf
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		-- Check that the LSP client supports inlay hints
+		if client and client.supports_method("textDocument/inlayHint") then
+			vim.keymap.set("n", "<leader>ih", function()
+				local currently_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+				vim.lsp.inlay_hint.enable(not currently_enabled, { bufnr = bufnr })
+				vim.notify("Inlay hints " .. (not currently_enabled and "enabled" or "disabled"))
+			end, { buffer = bufnr, desc = "Toggle [I]nlay [H]ints" })
+		end
+	end,
+})
