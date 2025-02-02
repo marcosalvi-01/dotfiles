@@ -4,23 +4,27 @@
 
 [manager]
 # Using lualine’s foreground color for cwd
-cwd = { fg = "#ddc7a1" }
+cwd = { fg = "#7daea3" }
 
 # Hovered – use a combination of background and “greenish” mode color.
-hovered         = { fg = "#282828", bg = "#8ec07c" }
+hovered         = { fg = "#282828", bg = "#8ec07c", bold = true }
 preview_hovered = { underline = true }
 
 # Find – use lualine’s yellowish for keyword and reddish for position
-find_keyword  = { fg = "#d8a657", italic = true }
-find_position = { fg = "#ea6962", bg = "reset", italic = true }
+find_keyword  = { fg = "#d8a657", italic = true, bold = true}
+find_position = { fg = "#d3869b", bg = "reset", italic = true, bold = true }
 
 # Marker – using yellowish for selection and reddish for cut.
 marker_selected = { fg = "#d8a657", bg = "#d8a657" }
 marker_copied   = { fg = "#d8a657", bg = "#d8a657" }
 marker_cut      = { fg = "#ea6962", bg = "#ea6962" }
 
+count_copied   = { fg = "#282828", bg = "#8ec07c", bold = true }
+count_cut      = { fg = "#282828", bg = "#ea6962",  bold = true }
+count_selected = { fg = "#282828", bg = "#d8a657",  bold = true }
+
 # Tab – reusing the original, which already fits with the lualine taupe and background
-tab_active   = { fg = "#282828", bg = "#504945" }
+tab_active   = { fg = "#ddc7a1", bg = "#45403d" }
 tab_inactive = { fg = "#a89984", bg = "#3c3836" }
 tab_width    = 1
 
@@ -60,16 +64,16 @@ permissions_s = { fg = "#665c54" }
 
 [mode]
 # “normal” mode now uses the “greenish” color as background similar to lualine’s normal.a
-normal_main = { fg = "#282828", bg = "#689d6a", bold = true }
-normal_alt  = { fg = "#282828", bg = "#8ec07c", bold = true }
+normal_main = { fg = "#282828", bg = "#8ec07c", bold = true }
+normal_alt  = { fg = "#ddc7a1", bg = "#504945", bold = true }
 
 # “select” mode – we use the lualine visual color (yellowish)
-select_main = { fg = "#282828", bg = "#b68242", bold = true }
-select_alt  = { fg = "#282828", bg = "#d8a657", bold = true }
+select_main = { fg = "#282828", bg = "#d8a657", bold = true }
+select_alt  = { fg = "#ddc7a1", bg = "#504945", bold = true }
 
 # “unset” mode – use the lualine replace color (pinkish)
-unset_main  = { fg = "#282828", bg = "#c07080", bold = true }
-unset_alt   = { fg = "#282828", bg = "#d3869b", bold = true }
+unset_main  = { fg = "#282828", bg = "#d3869b", bold = true }
+unset_alt   = { fg = "#ddc7a1", bg = "#504945", bold = true }
 
 # : }}}
 
@@ -78,8 +82,8 @@ unset_alt   = { fg = "#282828", bg = "#d3869b", bold = true }
 
 [input]
 # Use lualine’s beige for input border
-border   = { fg = "#a89984" }
-title    = {}
+border   = { fg = "#ddc7a1" }
+title    = { fg = "#7daea3" }
 value    = {}
 selected = { reversed = true }
 
@@ -90,7 +94,7 @@ selected = { reversed = true }
 
 [select]
 # Using taupe for border, active uses a hint of blue_green
-border   = { fg = "#504945" }
+border   = { fg = "#ddc7a1" }
 active   = { fg = "#7daea3" }
 inactive = {}
 
@@ -157,7 +161,7 @@ rules = [
     { mime = "application/x-rar",           fg = "#ea6962" },
 
     # Fallback – use beige for files and greenish for directories
-    { name = "*", fg = "#a89984" },
+    { name = "*", fg = "#ddc7a1" },
     { name = "*/", fg = "#8ec07c" }
 ]
 
