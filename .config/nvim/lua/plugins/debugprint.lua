@@ -25,7 +25,7 @@ return {
 			},
 		},
 		display_counter = false,
-		display_snipped = false,
+		display_snippet = false,
 		print_tag = "",
 	},
 }

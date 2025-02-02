@@ -19,7 +19,7 @@ vim.keymap.set("n", "S", "i<CR><Esc>", { desc = "[S]plit lines" })
 vim.keymap.set("n", ",", ";")
 vim.keymap.set("n", ";", ",")
 
-vim.keymap.set("n", "<Home>", "0")
+vim.keymap.set("n", "<Home>", "_")
 vim.keymap.set("n", "<End>", "$")
 
 vim.keymap.set("n", "Q", "`", { remap = true })
