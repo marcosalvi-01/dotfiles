@@ -2,6 +2,14 @@
 on   = "!"
 run  = 'shell "$SHELL" --block'
 desc = "Open shell here"
+[[manager.prepend_keymap]]
+on = ["q"]
+run = "quit --no-cwd-file"
+desc = "Quit yazi"
+[[manager.prepend_keymap]]
+on = ["Q"]
+run = "quit"
+desc = "Quit yazi and cd into dir"
 
 [[input.prepend_keymap]]
 on   = "<Esc>"
