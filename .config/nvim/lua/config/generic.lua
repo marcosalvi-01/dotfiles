@@ -17,6 +17,10 @@ vim.filetype.add({ extension = { cwl = "cwl" } })
 -- Register cwl files as yaml for syntax highlighting
 vim.treesitter.language.register("yaml", { "yaml", "cwl" })
 
+-- Configure .http files
+vim.filetype.add({ extension = { http = "http" } })
+vim.treesitter.language.register("http", { "http", "http" })
+
 vim.opt.pumblend = 0
 
 -- Set custom indentation rules for .cwl files
