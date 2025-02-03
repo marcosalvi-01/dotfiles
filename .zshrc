@@ -14,7 +14,7 @@ path=(
     $HOME/.local/scripts
     $HOME/.local/bin
     $HOME/Library/Python/3.9/bin
-	$HOME/.spicetify
+    $HOME/.spicetify
     $path
 )
 
@@ -96,6 +96,7 @@ alias ld='lazydocker'
 alias pipes='pipes.sh -t 1 -f 100 -r 4000 -R -s 15 -p 4'
 alias fortune='clear && fortune | cowsay -f stegosaurus | lolcat'
 alias .='nvim .'
+alias kssh="kitty +kitten ssh"
 
 # Fortune widget with ctrl+f
 fortune_widget() {
@@ -104,6 +105,16 @@ fortune_widget() {
 }
 zle -N fortune_widget
 bindkey '^F' fortune_widget
+
+# y for yazi to cd into dir
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
 
 export EDITOR="nvim"
 export XDG_CONFIG_HOME=~/.config/

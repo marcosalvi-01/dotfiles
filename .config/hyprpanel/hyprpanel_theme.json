@@ -352,7 +352,7 @@
   "theme.osd.icon_container": "#7daea3",
   "theme.osd.bar_container": "#282828",
   "theme.notification.close_button.label": "#282828",
-  "theme.notification.close_button.background": "#7daea3",
+  "theme.notification.close_button.background": "#ea6962",
   "theme.notification.labelicon": "#7daea3",
   "theme.notification.text": "#d4be98",
   "theme.notification.time": "#a89984",

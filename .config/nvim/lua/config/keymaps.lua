@@ -19,7 +19,7 @@ vim.keymap.set("n", "S", "i<CR><Esc>", { desc = "[S]plit lines" })
 vim.keymap.set("n", ",", ";")
 vim.keymap.set("n", ";", ",")
 
-vim.keymap.set("n", "<Home>", "0")
+vim.keymap.set("n", "<Home>", "_")
 vim.keymap.set("n", "<End>", "$")
 
 vim.keymap.set("n", "Q", "`", { remap = true })
@@ -70,7 +70,7 @@ vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")
 
 -- using ctrl + h because kitty seems to interpret ctrl + backspace as that, don't know w
-vim.keymap.set("i", "<C-H>", "<C-w>", { desc = "Delete word in insert mode" })
+vim.keymap.set({ "i", "c" }, "<C-H>", "<C-w>", { desc = "Delete word in insert mode" })
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
@@ -156,3 +156,19 @@ vim.keymap.set("v", "<leader>sed", function()
 	-- open the %s command
 	return vim.fn.feedkeys(":%s/" .. vim.fn.escape(lines, "/\\") .. "/", "n")
 end, { desc = "Search and replace selection" })
+
+-- toggle inlay hints
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(event)
+		local bufnr = event.buf
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		-- Check that the LSP client supports inlay hints
+		if client and client.supports_method("textDocument/inlayHint") then
+			vim.keymap.set("n", "<leader>ih", function()
+				local currently_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+				vim.lsp.inlay_hint.enable(not currently_enabled, { bufnr = bufnr })
+				vim.notify("Inlay hints " .. (not currently_enabled and "enabled" or "disabled"))
+			end, { buffer = bufnr, desc = "Toggle [I]nlay [H]ints" })
+		end
+	end,
+})

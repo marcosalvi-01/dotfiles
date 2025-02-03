@@ -51,16 +51,13 @@
         "workspaces"
       ],
       "middle": [
-        "media",
-        "cpu",
-        "ram",
-        "volume",
-        "network"
+        "media"
       ],
       "right": [
         "clock",
         "weather",
-        "hyprsunset",
+        "volume",
+        "network",
         "notifications"
       ]
     },
@@ -70,16 +67,13 @@
         "workspaces"
       ],
       "middle": [
-        "media",
-        "cpu",
-        "ram",
-        "volume",
-        "network"
+        "media"
       ],
       "right": [
         "clock",
         "weather",
-        "hyprsunset",
+        "volume",
+        "network",
         "notifications"
       ]
     },
@@ -89,16 +83,13 @@
         "workspaces"
       ],
       "middle": [
-        "media",
-        "cpu",
-        "ram",
-        "volume",
-        "network"
+        "media"
       ],
       "right": [
         "clock",
         "weather",
-        "hyprsunset",
+        "volume",
+        "network",
         "notifications"
       ]
     }
@@ -119,7 +110,7 @@
   "bar.volume.icon": "󰋋",
   "theme.bar.buttons.y_margins": "0em",
   "theme.bar.outer_spacing": "0em",
-  "bar.media.format": "{title}",
+  "bar.media.format": "{artist: - }{title}",
   "bar.media.middleClick": "playerctl play-pause",
   "bar.media.scrollUp": "playerctld shift",
   "bar.media.scrollDown": "playerctld unshift",
@@ -135,12 +126,14 @@
   "menus.dashboard.shortcuts.left.shortcut4.command": "ulauncher-toggle",
   "bar.network.truncation_size": 8,
   "menus.dashboard.shortcuts.right.shortcut3.command": "hyprshot -m region",
-  "bar.media.truncation_size": 24,
+  "bar.media.truncation_size": 30,
   "notifications.timeout": 4000,
   "notifications.autoDismiss": true,
   "menus.dashboard.powermenu.avatar.image": "/home/marco/.config/images/smile_big.jpg",
   "bar.launcher.scrollDown": "~/.local/scripts/wallman prev",
   "bar.launcher.scrollUp": "~/.local/scripts/wallman next",
   "bar.workspaces.showAllActive": true,
-  "bar.workspaces.workspaces": 0
+  "bar.workspaces.workspaces": 0,
+  "bar.volume.label": false
 }
+
