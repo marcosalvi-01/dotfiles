@@ -1,20 +1,16 @@
-local layout_strategies = require("telescope.pickers.layout_strategies")
-local telescope = require("telescope")
-local telescope_actions = require("telescope.actions")
-local telescope_actions_layout = require("telescope.actions.layout")
-local telescope_actions_state = require("telescope.actions.state")
-local telescope_themes = require("telescope.themes")
-local telescope_builtin = require("telescope.builtin")
-
 return {
+	-- Plugin Information and Dependencies
 	"nvim-telescope/telescope.nvim",
 	event = "VimEnter",
-	-- branch = "0.1.x",
 	dependencies = {
-		"MunifTanjim/nui.nvim",
+		-- UI and Core Dependencies
 		"nvim-lua/plenary.nvim",
+
+		-- Optional UI Extensions
 		{ "nvim-telescope/telescope-ui-select.nvim" },
 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+
+		-- Native FZF Sorter (Performance Optimization)
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make",
@@ -23,12 +19,25 @@ return {
 			end,
 		},
 	},
+
+	-- Configuration Function
 	config = function()
-		-- horizontal_fused layout strategy
+		local telescope = require("telescope")
+		local telescope_actions = require("telescope.actions")
+		local telescope_actions_layout = require("telescope.actions.layout")
+		local telescope_actions_state = require("telescope.actions.state")
+		local telescope_themes = require("telescope.themes")
+		local telescope_builtin = require("telescope.builtin")
+		local layout_strategies = require("telescope.pickers.layout_strategies")
+
+		-- Custom Layout Strategy: Horizontal Fused
 		layout_strategies.horizontal_fused = function(picker, max_columns, max_lines, layout_config)
 			local layout = layout_strategies.horizontal(picker, max_columns, max_lines, layout_config)
+
+			-- Customize Layout Appearance
 			layout.results.title = layout.prompt.title
 			layout.results.height = layout.results.height + 1
+
 			if layout.preview ~= nil and layout.preview ~= false and layout.preview ~= true then
 				layout.preview.title = ""
 				layout.preview.borderchars = { "─", "│", "─", "│", "┬", "╮", "╯", "┴" }
@@ -40,23 +49,35 @@ return {
 				layout.results.borderchars = { "─", "│", "─", "│", "╭", "╮", "│", "│" }
 				layout.prompt.borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
 			end
+
 			return layout
 		end
+
+		-- Telescope Setup
 		telescope.setup({
+			-- Default Configuration
 			defaults = {
-				selection_caret = " ",
-				prompt_prefix = " ",
+				selection_caret = " ",
+				prompt_prefix = " ",
 				preview = {
 					hide_on_startup = false, -- hide previewer when picker starts
 				},
 				layout_strategy = "horizontal_fused",
+
+				-- Input Mode Mappings
 				mappings = {
 					i = {
-						-- Open in vertical slit
+						-- Window and Navigation Mappings
 						["<c-s>"] = "select_vertical",
-						-- Clear the prompt
 						["<c-u>"] = false,
-						-- Close the telescope window with <BS> if the prompt is empty
+						["<Esc>"] = telescope_actions.close,
+						["<C-p>"] = telescope_actions_layout.toggle_preview,
+
+						-- Scrolling Mappings
+						["<PageUp>"] = telescope_actions.preview_scrolling_up,
+						["<PageDown>"] = telescope_actions.preview_scrolling_down,
+
+						-- Prompt and Buffer Management
 						["<bs>"] = function(bufnr)
 							local prompt = telescope_actions_state.get_current_line()
 							if prompt == "" then
@@ -69,19 +90,20 @@ return {
 								)
 							end
 						end,
+
+						-- Word/Text Navigation
 						["<C-H>"] = function()
 							vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>", true, true, true), "i", false)
 						end,
+
+						-- Additional Actions
 						["<c-enter>"] = "to_fuzzy_refine",
-						["<Esc>"] = telescope_actions.close,
-						["<C-p>"] = telescope_actions_layout.toggle_preview,
-						["<PageUp>"] = telescope_actions.preview_scrolling_up,
-						["<PageDown>"] = telescope_actions.preview_scrolling_down,
 					},
 				},
 			},
+
+			-- Telescope Extensions Configuration
 			extensions = {
-				-- set telescope as the default picker in nvim
 				["ui-select"] = {
 					telescope_themes.get_dropdown(),
 				},
@@ -90,17 +112,19 @@ return {
 			},
 		})
 
-		-- Enable Telescope extensions if they are installed
+		-- Load Optional Extensions
 		pcall(telescope.load_extension, "fzf")
 		pcall(telescope.load_extension, "ui-select")
 
-		-- See `:help telescope.builtin`
+		-- General Search Keymaps
 		vim.keymap.set("n", "<leader>sh", telescope_builtin.help_tags, { desc = "[S]earch [H]elp (Telescope)" })
 		vim.keymap.set("n", "<leader>sk", telescope_builtin.keymaps, { desc = "[S]earch [K]eymaps (Telescope)" })
 		vim.keymap.set("n", "<leader>gf", telescope_builtin.git_files, { desc = "Search [G]it [F]iles (Telescope)" })
 		vim.keymap.set("n", "<leader>sR", telescope_builtin.resume, { desc = "[S]earch [R]esume (Telescope)" })
 		vim.keymap.set("n", "<leader>sr", telescope_builtin.registers, { desc = "[S]earch [R]egisters (Telescope)" })
 		vim.keymap.set("n", "<leader>sm", telescope_builtin.marks, { desc = "[S]earch [M]arks (Telescope)" })
+
+		-- Custom Word Search
 		vim.keymap.set("n", "*", function()
 			local word = vim.fn.expand("<cword>")
 			telescope_builtin.current_buffer_fuzzy_find({
@@ -114,11 +138,12 @@ return {
 						vim.cmd("/" .. word)
 						telescope_actions.select_default(prompt_bufnr)
 					end)
-
 					return true
 				end,
 			})
 		end, { desc = "[*] Search current word (Exact)" })
+
+		-- More Specific Search Functions
 		vim.keymap.set(
 			"n",
 			"<leader>sg",
@@ -132,11 +157,13 @@ return {
 			{ desc = "[S]earch [D]iagnostics (Telescope)" }
 		)
 		vim.keymap.set("n", "<leader>si", function()
-			require("telescope.builtin").find_files({
+			telescope_builtin.find_files({
 				prompt_title = "Search Directories",
 				find_command = { "fd", "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
 			})
 		end, { desc = "[S]earch [D]irectories Recursively (Telescope)" })
+
+		-- Buffer and File Search
 		vim.keymap.set(
 			"n",
 			"<leader>sb",
@@ -149,18 +176,31 @@ return {
 			telescope_builtin.current_buffer_fuzzy_find,
 			{ desc = "[\\] Fuzzily search in current buffer (Telescope)" }
 		)
-
 		vim.keymap.set("n", "<leader>sf", function()
-			require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--hidden", "-g", "!.git" } })
+			telescope_builtin.find_files({ find_command = { "rg", "--files", "--hidden", "-g", "!.git" } })
 		end, { desc = "[S]earch [F]iles (Telescope)" })
 
+		-- Configuration and Plugin Search
 		vim.keymap.set("n", "<leader>sn", function()
 			telescope_builtin.find_files({ cwd = vim.fn.stdpath("config") })
 		end, { desc = "[S]earch [N]eovim files (Telescope)" })
-
 		vim.keymap.set("n", "<leader>sp", function()
-			---@diagnostic disable-next-line: param-type-mismatch
 			telescope_builtin.find_files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
 		end, { desc = "[S]earch [P]lugin files (Telescope)" })
+
+		-- LSP-Related Navigation Keymaps
+		vim.keymap.set("n", "gd", telescope_builtin.lsp_definitions, { desc = "[G]oto [D]efinition" })
+		vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { desc = "[G]oto [R]eferences" })
+		vim.keymap.set("n", "<leader>go", telescope_builtin.lsp_outgoing_calls, { desc = "[G]oto [O]utgoing calls" })
+		vim.keymap.set("n", "<leader>gi", telescope_builtin.lsp_incoming_calls, { desc = "[G]oto [I]ncoming calls" })
+		vim.keymap.set("n", "gI", telescope_builtin.lsp_implementations, { desc = "[G]oto [I]mplementation" })
+		vim.keymap.set("n", "gD", telescope_builtin.lsp_type_definitions, { desc = "Type [D]efinition" })
+		vim.keymap.set("n", "<leader>ds", telescope_builtin.lsp_document_symbols, { desc = "[D]ocument [S]ymbols" })
+		vim.keymap.set(
+			"n",
+			"<leader>ss",
+			telescope_builtin.lsp_dynamic_workspace_symbols,
+			{ desc = "[W]orkspace [S]ymbols" }
+		)
 	end,
 }

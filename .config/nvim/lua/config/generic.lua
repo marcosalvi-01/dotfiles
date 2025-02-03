@@ -40,3 +40,13 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.filetype.add({
 	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
+
+-- change icons for diagnostic sings (on the left of the line number)
+vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+-- disable diagnostic signs on the left of the line number
+vim.diagnostic.config({
+	signs = false,
+})
