@@ -32,8 +32,5 @@ return { -- Collection of various small independent plugins/modules
 
 		-- gS for toggling split join args
 		require("mini.splitjoin").setup()
-
-		-- f and t jump multiple lines and cool stuff
-		require("mini.jump").setup()
 	end,
 }
