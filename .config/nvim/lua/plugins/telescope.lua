@@ -57,8 +57,8 @@ return {
 		telescope.setup({
 			-- Default Configuration
 			defaults = {
-				selection_caret = " ",
-				prompt_prefix = " ",
+				selection_caret = " ",
+				prompt_prefix = " ",
 				preview = {
 					hide_on_startup = false, -- hide previewer when picker starts
 				},
