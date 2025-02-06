@@ -65,6 +65,7 @@ return {
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 				globalstatus = true,
+				always_show_tabline = false,
 			},
 			sections = {
 				lualine_a = {
@@ -105,7 +106,6 @@ return {
 							hint = { fg = colors.beige, gui = "bold" },
 						},
 					},
-					-- sow when recording a macro
 					{
 						show_macro_recording,
 						color = { fg = colors.reddish, gui = "bold" },
@@ -139,6 +139,25 @@ return {
 				lualine_x = {},
 				lualine_y = {},
 				lualine_z = { "location" },
+			},
+			tabline = {
+				lualine_a = {
+					{
+						"tabs",
+						mode = 2, -- Show tab name + number
+						max_length = vim.o.columns,
+						tabs_color = {
+							active = { fg = colors.background, bg = colors.greenish, gui = "bold" },
+							inactive = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
+						},
+						separator = { left = "", right = "" },
+					},
+				},
+				lualine_b = {},
+				lualine_c = {},
+				lualine_x = {},
+				lualine_y = {},
+				lualine_z = {},
 			},
 			extensions = { "man", "mason", "lazy", "quickfix" },
 		})
