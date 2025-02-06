@@ -6,18 +6,18 @@ return {
 		mc.setup()
 		local set = vim.keymap.set
 		-- Add or skip cursor above/below the main cursor.
-		-- set({ "n", "v" }, "<M-up>", function()
-		-- 	mc.lineAddCursor(-1)
-		-- end, { desc = "Add a new cursor one line above the current cursor [multicursor]" })
-		-- set({ "n", "v" }, "<M-down>", function()
-		-- 	mc.lineAddCursor(1)
-		-- end, { desc = "Add a new cursor one line below the current cursor [multicursor]" })
-		-- set({ "n", "v" }, "<leader><M-up>", function()
-		-- 	mc.lineSkipCursor(-1)
-		-- end, { desc = "Skip adding a cursor and move the selection up one line [multicursor]" })
-		-- set({ "n", "v" }, "<leader><M-down>", function()
-		-- 	mc.lineSkipCursor(1)
-		-- end, { desc = "Skip adding a cursor and move the selection down one line [multicursor]" })
+		set({ "n", "v" }, "<M-up>", function()
+			mc.lineAddCursor(-1)
+		end, { desc = "Add a new cursor one line above the current cursor [multicursor]" })
+		set({ "n", "v" }, "<M-down>", function()
+			mc.lineAddCursor(1)
+		end, { desc = "Add a new cursor one line below the current cursor [multicursor]" })
+		set({ "n", "v" }, "<leader><M-up>", function()
+			mc.lineSkipCursor(-1)
+		end, { desc = "Skip adding a cursor and move the selection up one line [multicursor]" })
+		set({ "n", "v" }, "<leader><M-down>", function()
+			mc.lineSkipCursor(1)
+		end, { desc = "Skip adding a cursor and move the selection down one line [multicursor]" })
 		-- Add all matches in the document
 		set(
 			{ "n", "v" },
@@ -43,10 +43,12 @@ return {
 		-- Add and remove cursors with control + left click.
 		set("n", "<c-leftmouse>", mc.handleMouse, { desc = "Toggle cursor at mouse click position [multicursor]" })
 		-- Easy way to add and remove cursors using the main cursor.
-		set({ "n", "v" }, "<c-q>", function()
-			mc.toggleCursor()
-			mc.enableCursors()
-		end, { desc = "Toggle cursor at current position and enable all cursors [multicursor]" })
+		set(
+			{ "n", "v" },
+			"<c-q>",
+			mc.toggleCursor,
+			{ desc = "Toggle cursor at current position and enable all cursors [multicursor]" }
+		)
 		-- Clone every cursor and disable the originals.
 		set(
 			{ "n", "v" },
