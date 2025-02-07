@@ -1,3 +1,12 @@
+local function show_macro_recording()
+	local recording_register = vim.fn.reg_recording()
+	if recording_register == "" then
+		return ""
+	else
+		return "󰑊 @" .. recording_register
+	end
+end
+
 -- Declare a global function to retrieve the current directory
 local function get_buf_name()
 	local dir = require("oil").get_current_dir()
@@ -56,13 +65,18 @@ return {
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 				globalstatus = true,
+				always_show_tabline = false,
 			},
 			sections = {
 				lualine_a = {
-					{ "mode", separator = { left = "", right = "" }, right_padding = 2 },
+					{
+						"mode",
+						separator = { left = "", right = "" },
+						right_padding = 2,
+					},
 					{
 						"branch",
-						icon = "󰘬", -- Branch icon
+						icon = "󰘬",
 						color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
 						separator = { left = "", right = "" },
 					},
@@ -92,6 +106,10 @@ return {
 							hint = { fg = colors.beige, gui = "bold" },
 						},
 					},
+					{
+						show_macro_recording,
+						color = { fg = colors.reddish, gui = "bold" },
+					},
 				},
 				lualine_x = {
 					{
@@ -101,7 +119,7 @@ return {
 					},
 					{
 						"fileformat",
-						symbols = { unix = "LF", dos = "CRLF", mac = "CR" },
+						symbols = { unix = "", dos = "", mac = "" },
 						color = { fg = colors.beige, bg = colors.background, gui = "bold" },
 						separator = { left = "" },
 					},
@@ -122,7 +140,25 @@ return {
 				lualine_y = {},
 				lualine_z = { "location" },
 			},
-			tabline = {},
+			tabline = {
+				lualine_a = {
+					{
+						"tabs",
+						mode = 2, -- Show tab name + number
+						max_length = vim.o.columns,
+						tabs_color = {
+							active = { fg = colors.background, bg = colors.greenish, gui = "bold" },
+							inactive = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
+						},
+						separator = { left = "", right = "" },
+					},
+				},
+				lualine_b = {},
+				lualine_c = {},
+				lualine_x = {},
+				lualine_y = {},
+				lualine_z = {},
+			},
 			extensions = { "man", "mason", "lazy", "quickfix" },
 		})
 	end,

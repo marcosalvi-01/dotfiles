@@ -8,10 +8,15 @@ return {
 		require("noice").setup({
 			lsp = {
 				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-					-- ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+				-- override = {
+				-- 	["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+				-- 	["vim.lsp.util.stylize_markdown"] = false,
+				-- 	-- ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+				-- },
+
+				-- disable noice signature help (using blink-cmp's)
+				signature = {
+					enabled = false,
 				},
 			},
 			-- you can enable a preset for easier configuration

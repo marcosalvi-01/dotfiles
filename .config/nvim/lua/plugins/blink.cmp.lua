@@ -24,6 +24,15 @@ return {
 		},
 
 		sources = {
+			min_keyword_length = function(ctx)
+				-- only applies when typing a command, doesn't apply to arguments
+				if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
+					return 2
+				elseif vim.bo.filetype == "markdown" then
+					return 2
+				end
+				return 0
+			end,
 			default = {
 				"lazydev",
 				"lsp",
@@ -41,6 +50,39 @@ return {
 					name = "LazyDev",
 					module = "lazydev.integrations.blink",
 					score_offset = 100,
+				},
+				buffer = {
+					-- keep case of first char
+					transform_items = function(a, items)
+						local keyword = a.get_keyword()
+						local correct, case
+						if keyword:match("^%l") then
+							correct = "^%u%l+$"
+							case = string.lower
+						elseif keyword:match("^%u") then
+							correct = "^%l+$"
+							case = string.upper
+						else
+							return items
+						end
+
+						-- avoid duplicates from the corrections
+						local seen = {}
+						local out = {}
+						for _, item in ipairs(items) do
+							local raw = item.insertText
+							if raw:match(correct) then
+								local text = case(raw:sub(1, 1)) .. raw:sub(2)
+								item.insertText = text
+								item.label = text
+							end
+							if not seen[item.insertText] then
+								seen[item.insertText] = true
+								table.insert(out, item)
+							end
+						end
+						return out
+					end,
 				},
 			},
 		},
@@ -74,6 +116,7 @@ return {
 			ghost_text = { enabled = true },
 		},
 		signature = {
+			enabled = true,
 			window = {
 				border = "rounded",
 				show_documentation = false,

@@ -5,7 +5,10 @@ vim.api.nvim_buf_set_keymap(
 	"<cmd>lua require('kulala').run()<cr>",
 	{ noremap = true, silent = true, desc = "Execute the request" }
 )
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 vim.api.nvim_buf_set_keymap(
 	0,
 	"n",
@@ -13,7 +16,10 @@ vim.api.nvim_buf_set_keymap(
 	"<cmd>lua require('kulala').inspect()<cr>",
 	{ noremap = true, silent = true, desc = "Inspect the current request" }
 )
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 vim.api.nvim_buf_set_keymap(
 	0,
 	"n",
