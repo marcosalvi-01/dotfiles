@@ -46,6 +46,7 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     vim.bo.commentstring = "-- %s"
   end
+})
 
 -- change icons for diagnostic sings (on the left of the line number)
 vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
