@@ -17,9 +17,7 @@ return {
 	keys = {
 		{
 			"<leader>db",
-			function()
-				vim.cmd.DBUI()
-			end,
+			":DBUIToggle<CR>",
 			mode = "",
 			desc = "Open [D][B]UI (dadbod)",
 		},
