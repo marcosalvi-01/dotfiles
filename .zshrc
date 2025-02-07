@@ -10,7 +10,7 @@ path=(
     /opt/homebrew/opt/postgresql@17/bin
     /snap/bin
     /opt/nvim-linux64/bin
-    /usr/local/go/bin
+    $HOME/go/bin
     $HOME/.local/scripts
     $HOME/.local/bin
     $HOME/Library/Python/3.9/bin
@@ -115,6 +115,21 @@ function y() {
     fi
     rm -f -- "$tmp"
 }
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select () {
+	case $KEYMAP in
+	vicmd) echo -ne '\e[1 q';; # block
+	viins|main) echo -ne '\e[6 q';; # beam
+	esac
+}
+zle -N zle-keymap-select
+zle-line-init() {
+	echo -ne "\e[6 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
 export EDITOR="nvim"
 export XDG_CONFIG_HOME=~/.config/
