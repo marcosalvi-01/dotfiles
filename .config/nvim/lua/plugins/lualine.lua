@@ -17,7 +17,7 @@ local function get_buf_name()
 		local buf_name = vim.api.nvim_buf_get_name(0)
 		local file_name = vim.fn.fnamemodify(buf_name, ":t")
 		-- Check if the buffer is modified and add an icon if it is
-		if vim.bo.modified then
+		if vim.bo.modified and file_name ~= "" then
 			return file_name .. " ●"
 		else
 			return file_name

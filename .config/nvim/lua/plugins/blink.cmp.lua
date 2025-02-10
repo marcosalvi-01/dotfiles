@@ -120,6 +120,8 @@ return {
 			window = {
 				border = "rounded",
 				show_documentation = false,
+				-- TODO need this because of a weird bug, 
+				treesitter_highlighting = false,
 			},
 		},
 	},
