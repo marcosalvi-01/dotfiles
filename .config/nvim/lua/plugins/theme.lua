@@ -36,6 +36,7 @@ return {
 					vim.api.nvim_set_hl(0, "PmenuThumb", { bg = "#a89984" })
 					vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { fg = "#504945" })
 					vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#a89984" })
+					vim.api.nvim_set_hl(0, "SnacksPickerBorder", { fg = fg_color })
 					vim.api.nvim_set_hl(0, "DebugPrintLine", { fg = "#d8a657" })
 				end,
 			})

@@ -23,7 +23,7 @@ return {
 					{
 						box = "horizontal",
 						border = "rounded",
-						title = "{title} {live}",
+						title = "{title}",
 						{
 							box = "vertical",
 							{ win = "list", border = "none" },
@@ -39,8 +39,10 @@ return {
 						["<Esc>"] = { "close", mode = { "n", "i" } },
 						["<C-s>"] = { "edit_vsplit", mode = { "i", "n" }, desc = "Vertical Split" },
 						["<C-p>"] = { "toggle_preview", mode = "i" },
+						["<C-right>"] = { "focus_preview", mode = "i" },
 						["<PageUp>"] = { "preview_scroll_up", mode = "i" },
 						["<PageDown>"] = { "preview_scroll_down", mode = "i" },
+						["<C-u>"] = { "clear_input", mode = "i" },
 						["<C-H>"] = {
 							function()
 								vim.api.nvim_feedkeys(
@@ -52,6 +54,22 @@ return {
 							mode = { "i" },
 						},
 					},
+					b = {
+						minipairs_disable = true,
+					},
+				},
+				preview = {
+					keys = {
+						["<C-left>"] = "focus_input",
+						["<C-p>"] = "toggle_preview",
+					},
+				},
+				actions = {
+					clear_input = function(p)
+						vim.api.nvim_win_call(p.input.win.win, function()
+							vim.cmd('normal! "_cc')
+						end)
+					end,
 				},
 			},
 		},
@@ -60,9 +78,18 @@ return {
 		{
 			"<leader>sf",
 			function()
-				Snacks.picker.smart()
+				require("snacks").picker.files({
+					hidden = true,
+				})
 			end,
 			desc = "Smart Find Files",
+		},
+		{
+			"<leader>sp",
+			function()
+				Snacks.picker.files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
+			end,
+			desc = "Find Config File",
 		},
 		{
 			"<leader>sn",
@@ -90,23 +117,27 @@ return {
 			function()
 				Snacks.picker.lines({
 					layout = {
+						reverse = false,
 						layout = {
-							backdrop = false,
 							row = 1,
 							width = 0.4,
 							min_width = 80,
 							height = 0.4,
-							border = "rounded",
+							border = "none",
 							box = "vertical",
-							title = "{title} {live} {flags}",
+							title = "{title}",
 							title_pos = "center",
 							{
-								win = "input",
-								height = 1,
-								border = "bottom",
+								box = "vertical",
+								border = "rounded",
+								{
+									win = "input",
+									height = 1,
+									border = "bottom",
+								},
+								{ win = "list", border = "none" },
+								{ win = "preview", title = "{preview}", border = "none" },
 							},
-							{ win = "list", border = "none" },
-							{ win = "preview", title = "{preview}", border = "none" },
 						},
 					},
 				})
@@ -248,9 +279,14 @@ return {
 		{
 			"<leader>si",
 			function()
-				Snacks.picker.files({
-					args = { "-t", "d" },
-					cwd = vim.fn.getcwd(),
+				Snacks.picker({
+					finder = "proc",
+					cmd = "fd",
+					args = { "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
+					transform = function(item)
+						item.file = item.text
+						item.dir = true
+					end,
 				})
 			end,
 			{ desc = "Search subdirectories by name" },
@@ -258,7 +294,70 @@ return {
 		{
 			"<leader>se",
 			function()
-				Snacks.picker.explorer()
+				Snacks.picker.explorer({
+					hidden = true,
+					auto_close = true,
+					layout = {
+						reverse = false,
+						layout = {
+							row = 1,
+							width = 0.2,
+							min_width = 60,
+							height = 1,
+							border = "none",
+							box = "vertical",
+							-- title = "{title}",
+							-- title_pos = "center",
+							position = "left",
+							{
+								box = "vertical",
+								{
+									win = "input",
+									height = 1,
+									border = "hpad",
+								},
+								{ win = "list", border = "none" },
+							},
+						},
+					},
+					win = {
+						input = {
+							keys = {
+								["<C-down>"] = { "focus_list", mode = "i" },
+							},
+						},
+						list = {
+							keys = {
+								["<BS>"] = "explorer_up",
+								["<right>"] = "confirm",
+								["<left>"] = "explorer_close", -- close directory
+								["a"] = "explorer_add",
+								["d"] = "explorer_del",
+								["r"] = "explorer_rename",
+								["c"] = "explorer_copy",
+								["m"] = "explorer_move",
+								["o"] = "explorer_open", -- open with system application
+								["p"] = "toggle_preview",
+								["y"] = "explorer_yank",
+								["u"] = "explorer_update",
+								["<c-c>"] = "tcd",
+								["."] = "explorer_focus",
+								["I"] = "toggle_ignored",
+								["H"] = "toggle_hidden",
+								["Z"] = "explorer_close_all",
+								["]g"] = "explorer_git_next",
+								["[g"] = "explorer_git_prev",
+								["]d"] = "explorer_diagnostic_next",
+								["[d"] = "explorer_diagnostic_prev",
+								["]w"] = "explorer_warn_next",
+								["[w"] = "explorer_warn_prev",
+								["]e"] = "explorer_error_next",
+								["[e"] = "explorer_error_prev",
+								["<C-up>"] = "focus_input",
+							},
+						},
+					},
+				})
 			end,
 			{ desc = "Open explorer" },
 		},
