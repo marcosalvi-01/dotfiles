@@ -23,7 +23,7 @@ return {
 					{
 						box = "horizontal",
 						border = "rounded",
-						title = "{title} {live}",
+						title = "{title}",
 						{
 							box = "vertical",
 							{ win = "list", border = "none" },
@@ -39,8 +39,10 @@ return {
 						["<Esc>"] = { "close", mode = { "n", "i" } },
 						["<C-s>"] = { "edit_vsplit", mode = { "i", "n" }, desc = "Vertical Split" },
 						["<C-p>"] = { "toggle_preview", mode = "i" },
+						["<C-right>"] = { "focus_preview", mode = "i" },
 						["<PageUp>"] = { "preview_scroll_up", mode = "i" },
 						["<PageDown>"] = { "preview_scroll_down", mode = "i" },
+						["<C-u>"] = { "clear_input", mode = "i" },
 						["<C-H>"] = {
 							function()
 								vim.api.nvim_feedkeys(
@@ -52,7 +54,23 @@ return {
 							mode = { "i" },
 						},
 					},
+					b = {
+						minipairs_disable = true,
+					},
 				},
+				preview = {
+					keys = {
+						["<C-left>"] = "focus_input",
+						["<C-p>"] = "toggle_preview",
+					},
+				},
+			},
+			actions = {
+				clear_input = function(p)
+					vim.api.nvim_win_call(p.input.win.win, function()
+						vim.cmd('normal! "_cc')
+					end)
+				end,
 			},
 		},
 	},
@@ -60,7 +78,9 @@ return {
 		{
 			"<leader>sf",
 			function()
-				Snacks.picker.smart()
+				require("snacks").picker.files({
+					hidden = true,
+				})
 			end,
 			desc = "Smart Find Files",
 		},
@@ -90,23 +110,27 @@ return {
 			function()
 				Snacks.picker.lines({
 					layout = {
+						reverse = false,
 						layout = {
-							backdrop = false,
 							row = 1,
 							width = 0.4,
 							min_width = 80,
 							height = 0.4,
-							border = "rounded",
+							border = "none",
 							box = "vertical",
-							title = "{title} {live} {flags}",
+							title = "{title}",
 							title_pos = "center",
 							{
-								win = "input",
-								height = 1,
-								border = "bottom",
+								box = "vertical",
+								border = "rounded",
+								{
+									win = "input",
+									height = 1,
+									border = "bottom",
+								},
+								{ win = "list", border = "none" },
+								{ win = "preview", title = "{preview}", border = "none" },
 							},
-							{ win = "list", border = "none" },
-							{ win = "preview", title = "{preview}", border = "none" },
 						},
 					},
 				})
@@ -248,9 +272,14 @@ return {
 		{
 			"<leader>si",
 			function()
-				Snacks.picker.files({
-					args = { "-t", "d" },
-					cwd = vim.fn.getcwd(),
+				Snacks.picker({
+					finder = "proc",
+					cmd = "fd",
+					args = { "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
+					transform = function(item)
+						item.file = item.text
+						item.dir = true
+					end,
 				})
 			end,
 			{ desc = "Search subdirectories by name" },

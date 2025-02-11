@@ -81,7 +81,7 @@ end, { desc = "[W]rite all buffer" })
 
 vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
 
-vim.keymap.set("n", "<leader>nl", "<cmd>Noice telescope<cr>", { desc = "Open [N]oice [L]ogs" })
+vim.keymap.set("n", "<leader>nl", "<cmd>Noice pick<cr>", { desc = "Open [N]oice [L]ogs" })
 
 vim.keymap.set("n", "<leader>osw", "<cmd>set wrap<cr>", { desc = "([O]ptions) [S]et [W]rap" })
 

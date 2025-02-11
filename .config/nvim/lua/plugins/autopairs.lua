@@ -4,5 +4,10 @@ return {
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 	},
-	opts = {},
+	opts = {
+		disable_filetype = {
+			"TelescopePrompt",
+			"snacks_picker_input",
+		},
+	},
 }
