@@ -16,12 +16,16 @@ return {
 	config = function()
 		require("neogit").setup({
 			signs = {
-				-- { CLOSED, OPENED }
 				hunk = { "", "" },
 				item = { "", "" },
 				section = { "", "" },
 			},
 			graph_style = "kitty",
+			mappings = {
+				status = {
+					["<c-l>"] = "RefreshBuffer",
+				},
+			},
 		})
 
 		require("diffview").setup({
