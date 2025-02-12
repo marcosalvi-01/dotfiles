@@ -11,9 +11,8 @@ return {
 			desc = "Open Snipe buffer menu",
 		},
 	},
-	config = function()
-		vim.keymap.set("n", "<BS>", function()
-			require("spine").Open()
-		end)
-	end,
+	opts = {
+		characters = "neiatsrchd0123456789",
+		reverse_sort = false,
+	},
 }
