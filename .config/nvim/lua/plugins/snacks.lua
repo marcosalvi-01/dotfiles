@@ -1,8 +1,26 @@
+function printTableOneLine(tbl)
+	local result = {}
+	for key, value in pairs(tbl) do
+		local formattedValue
+		if type(value) == "table" then
+			formattedValue = "{...}" -- Indicating nested table
+		elseif type(value) == "string" then
+			formattedValue = string.format("%q", value) -- Quote strings
+		else
+			formattedValue = tostring(value)
+		end
+		table.insert(result, tostring(key) .. "=" .. formattedValue)
+	end
+	print("{" .. table.concat(result, ", ") .. "}")
+end
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
 	opts = {
+		image = {
+			force = true,
+		},
 		indent = {
 			enabled = true,
 			animate = {
@@ -11,6 +29,56 @@ return {
 		},
 		quickfile = { enabled = true },
 		picker = {
+			sources = {
+				dirs = {
+					finder = "proc",
+					cmd = "fd",
+					args = { "--type", "d", "--hidden", "--exclude", ".git" },
+					transform = function(item)
+						item.file = item.text
+						item.dir = true
+					end,
+				},
+				multigrep = {
+					finder = "grep",
+					regex = true,
+					format = "file",
+					show_empty = true,
+					live = true,
+					supports_live = true,
+					hidden = true,
+					win = {
+						input = {
+							keys = {
+								["<C-d>"] = { "refine_dir", mode = "i" },
+							},
+						},
+					},
+					actions = {
+						-- custom action to grep only inside a specific dir
+						refine_dir = function(p)
+							p:close()
+							Snacks.picker({
+								finder = "proc",
+								cmd = "fd",
+								args = { "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
+								transform = function(item)
+									item.file = item.text
+									item.dir = true
+								end,
+								confirm = function(picker, item)
+									picker:close()
+									if item then
+										Snacks.picker.multigrep({
+											cwd = vim.fs.joinpath(vim.fn.getcwd(), item.file),
+										})
+									end
+								end,
+							})
+						end,
+					},
+				},
+			},
 			prompt = " ",
 			ui_select = true,
 			layout = {
@@ -56,12 +124,6 @@ return {
 					},
 					b = {
 						minipairs_disable = true,
-					},
-				},
-				preview = {
-					keys = {
-						["<C-left>"] = "focus_input",
-						["<C-p>"] = "toggle_preview",
 					},
 				},
 				actions = {
@@ -160,9 +222,38 @@ return {
 		{
 			"<leader>sg",
 			function()
-				Snacks.picker.grep({
-					hidden = true,
-				})
+				-- Snacks.picker.sources.multigrep = {
+				-- 	finder = "grep",
+				-- 	hidden = true,
+				-- 	-- win = {
+				-- 	-- 	input = {
+				-- 	-- 		keys = {
+				-- 	-- 			["<C-d>"] = { "refine_dir", mode = "i" },
+				-- 	-- 		},
+				-- 	-- 	},
+				-- 	-- },
+				-- 	actions = {
+				-- 		refine_dir = function(p)
+				-- 			p:close()
+				-- 			Snacks.picker({
+				-- 				finder = "proc",
+				-- 				cmd = "fd",
+				-- 				args = { "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
+				-- 				transform = function(item)
+				-- 					item.file = item.text
+				-- 					item.dir = true
+				-- 				end,
+				-- 				confirm = function(picker, item)
+				-- 					picker:close()
+				-- 					if item then
+				-- 						Snacks.picker.multigrep()
+				-- 					end
+				-- 				end,
+				-- 			})
+				-- 		end,
+				-- 	},
+				-- }
+				Snacks.picker.multigrep()
 			end,
 			desc = "Grep",
 		},
@@ -292,15 +383,7 @@ return {
 		{
 			"<leader>si",
 			function()
-				Snacks.picker({
-					finder = "proc",
-					cmd = "fd",
-					args = { "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
-					transform = function(item)
-						item.file = item.text
-						item.dir = true
-					end,
-				})
+				Snacks.picker.dirs()
 			end,
 			{ desc = "Search subdirectories by name" },
 		},
