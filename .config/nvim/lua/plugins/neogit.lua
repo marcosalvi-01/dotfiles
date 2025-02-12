@@ -3,19 +3,10 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim", -- required
 		"sindrets/diffview.nvim", -- optional - Diff integration
-
-		-- "nvim-telescope/telescope.nvim", -- optional
 	},
 	keys = {
 		{
-			"<leader>ng",
-			function()
-				vim.cmd("Neogit kind=replace")
-			end,
-			desc = "Open [N]eo[G]it window (Neogit)",
-		},
-		{
-			"<leader>n<BS>",
+			"<leader><BS>",
 			function()
 				vim.cmd("Neogit kind=replace")
 			end,
@@ -26,7 +17,7 @@ return {
 		require("neogit").setup({
 			signs = {
 				-- { CLOSED, OPENED }
-				hunk = { "", "" },
+				hunk = { "", "" },
 				item = { "", "" },
 				section = { "", "" },
 			},
