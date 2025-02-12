@@ -64,6 +64,19 @@ return {
 						["<C-p>"] = "toggle_preview",
 					},
 				},
+				actions = {
+					clear_input = function(p)
+						vim.api.nvim_win_call(p.input.win.win, function()
+							vim.cmd('normal! "_cc')
+						end)
+					end,
+				},
+				preview = {
+					keys = {
+						["<C-left>"] = "focus_input",
+						["<C-p>"] = "toggle_preview",
+					},
+				},
 			},
 			actions = {
 				clear_input = function(p)
@@ -83,6 +96,13 @@ return {
 				})
 			end,
 			desc = "Smart Find Files",
+		},
+		{
+			"<leader>sp",
+			function()
+				Snacks.picker.files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
+			end,
+			desc = "Find Config File",
 		},
 		{
 			"<leader>sn",
@@ -287,7 +307,70 @@ return {
 		{
 			"<leader>se",
 			function()
-				Snacks.picker.explorer()
+				Snacks.picker.explorer({
+					hidden = true,
+					auto_close = true,
+					layout = {
+						reverse = false,
+						layout = {
+							row = 1,
+							width = 0.2,
+							min_width = 60,
+							height = 1,
+							border = "none",
+							box = "vertical",
+							-- title = "{title}",
+							-- title_pos = "center",
+							position = "left",
+							{
+								box = "vertical",
+								{
+									win = "input",
+									height = 1,
+									border = "hpad",
+								},
+								{ win = "list", border = "none" },
+							},
+						},
+					},
+					win = {
+						input = {
+							keys = {
+								["<C-down>"] = { "focus_list", mode = "i" },
+							},
+						},
+						list = {
+							keys = {
+								["<BS>"] = "explorer_up",
+								["<right>"] = "confirm",
+								["<left>"] = "explorer_close", -- close directory
+								["a"] = "explorer_add",
+								["d"] = "explorer_del",
+								["r"] = "explorer_rename",
+								["c"] = "explorer_copy",
+								["m"] = "explorer_move",
+								["o"] = "explorer_open", -- open with system application
+								["p"] = "toggle_preview",
+								["y"] = "explorer_yank",
+								["u"] = "explorer_update",
+								["<c-c>"] = "tcd",
+								["."] = "explorer_focus",
+								["I"] = "toggle_ignored",
+								["H"] = "toggle_hidden",
+								["Z"] = "explorer_close_all",
+								["]g"] = "explorer_git_next",
+								["[g"] = "explorer_git_prev",
+								["]d"] = "explorer_diagnostic_next",
+								["[d"] = "explorer_diagnostic_prev",
+								["]w"] = "explorer_warn_next",
+								["[w"] = "explorer_warn_prev",
+								["]e"] = "explorer_error_next",
+								["[e"] = "explorer_error_prev",
+								["<C-up>"] = "focus_input",
+							},
+						},
+					},
+				})
 			end,
 			{ desc = "Open explorer" },
 		},
