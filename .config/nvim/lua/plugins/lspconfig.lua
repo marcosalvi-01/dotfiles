@@ -1,143 +1,207 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		-- Automatically install LSPs and related tools to stdpath for Neovim
 		{
 			"williamboman/mason.nvim",
-			opts = {
-				ui = {
-					border = "rounded",
-				},
-			},
-			-- config = true,
+			opts = { ui = { border = "rounded" } },
 		},
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-
+		{
+			"b0o/SchemaStore.nvim",
+			lazy = true,
+			version = false, -- last release is way too old
+		},
 		{ "j-hui/fidget.nvim", opts = {} },
 	},
 	config = function()
+		-- Set up LSP keymaps and highlighting when a buffer attaches to an LSP
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
-				vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
-				vim.lsp.handlers["textDocument/signatureHelp"] =
-					vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
-
-				local map = function(keys, func, desc, mode)
-					mode = mode or "n"
-					vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+				-- Configure LSP UI elements to use rounded borders
+				local handlers = {
+					["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+					["textDocument/signatureHelp"] = vim.lsp.with(
+						vim.lsp.handlers.signature_help,
+						{ border = "rounded" }
+					),
+				}
+				for method, handler in pairs(handlers) do
+					vim.lsp.handlers[method] = handler
 				end
 
-				map("<leader>cn", vim.lsp.buf.rename, "[C]hange [N]ame")
-
-				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-
-				-- WARN: This is not Goto Definition, this is Goto Declaration.
-				--  For example, in C this would take you to the header.
-				map("<leader>D", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-
-				-- The following two autocommands are used to highlight references of the
-				-- word under your cursor when your cursor rests there for a little while.
-				--    See `:help CursorHold` for information about when this is executed
-				--
-				-- When you move your cursor, the highlights will be cleared (the second autocommand).
+				-- Fix semantic tokens for gopls
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
+				if client and client.name == "gopls" and not client.server_capabilities.semanticTokensProvider then
+					local semantic = client.config.capabilities.textDocument.semanticTokens
+					if semantic then
+						client.server_capabilities.semanticTokensProvider = {
+							full = true,
+							legend = {
+								tokenModifiers = semantic.tokenModifiers,
+								tokenTypes = semantic.tokenTypes,
+							},
+							range = true,
+						}
+					end
+				end
+
+				-- Set up buffer-local keymaps
+				local function map(keys, func, desc, mode)
+					vim.keymap.set(mode or "n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+				end
+
+				map("<leader>cn", vim.lsp.buf.rename, "Rename symbol")
+				map("<leader>ca", vim.lsp.buf.code_action, "Code action", { "n", "x" })
+				map("<leader>D", vim.lsp.buf.declaration, "Go to declaration")
+
+				-- Set up document highlight on cursor hold
 				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-					local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+					local highlight_group = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+
+					-- Highlight references when cursor is held
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
-						group = highlight_augroup,
+						group = highlight_group,
 						callback = vim.lsp.buf.document_highlight,
 					})
 
+					-- Clear highlights when cursor moves
 					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 						buffer = event.buf,
-						group = highlight_augroup,
+						group = highlight_group,
 						callback = vim.lsp.buf.clear_references,
 					})
 
+					-- Clean up highlights when LSP detaches
 					vim.api.nvim_create_autocmd("LspDetach", {
 						group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
-						callback = function(event2)
+						callback = function(e)
 							vim.lsp.buf.clear_references()
-							vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
+							vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = e.buf })
 						end,
 					})
 				end
 			end,
 		})
 
-		-- LSP servers and clients are able to communicate to each other what features they support.
-		--  By default, Neovim doesn't support everything that is in the LSP specification.
-		--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-		--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-		-- local capabilities = vim.lsp.protocol.make_client_capabilities()
-		-- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-		-- Enable the following language servers
-		--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-		--
-		--  Add any additional override configuration in the following tables. Available keys are:
-		--  - cmd (table): Override the default command used to start the server
-		--  - filetypes (table): Override the default list of associated filetypes for the server
-		--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-		--  - settings (table): Override the default settings passed when initializing the server.
-		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+		-- Configure language servers
 		local servers = {
+			-- JSON Query Language
 			jq = {},
-			-- clangd = {},
-			-- pyright = {},
-			-- rust_analyzer = {},
-			-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 
+			-- Lua Language Server with custom settings
 			lua_ls = {
-				-- cmd = {...},
-				-- filetypes = { ...},
-				-- capabilities = {},
 				settings = {
 					Lua = {
-						completion = {
-							callSnippet = "Replace",
-						},
-						-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+						completion = { callSnippet = "Replace" },
 						diagnostics = { disable = { "missing-fields" } },
 					},
 				},
 			},
+
+			-- Go Language Server with enhanced features
+			gopls = {
+				settings = {
+					gopls = {
+						gofumpt = true,
+						codelenses = {
+							gc_details = false,
+							generate = true,
+							regenerate_cgo = true,
+							run_govulncheck = true,
+							test = true,
+							tidy = true,
+							upgrade_dependency = true,
+							vendor = true,
+						},
+						hints = {
+							assignVariableTypes = true,
+							compositeLiteralFields = true,
+							compositeLiteralTypes = true,
+							constantValues = true,
+							functionTypeParameters = true,
+							parameterNames = false,
+							rangeVariableTypes = true,
+						},
+						analyses = {
+							nilness = true,
+							unusedparams = true,
+							unusedwrite = true,
+							useany = true,
+						},
+						usePlaceholders = true,
+						completeUnimported = true,
+						staticcheck = true,
+						directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+						semanticTokens = true,
+					},
+				},
+			},
+
+			hadolint = {},
+			yamlls = {
+				-- Have to add this for yamlls to understand that we support line folding
+				capabilities = {
+					textDocument = {
+						foldingRange = {
+							dynamicRegistration = false,
+							lineFoldingOnly = true,
+						},
+					},
+				},
+				-- lazy-load schemastore when needed
+				on_new_config = function(new_config)
+					new_config.settings.yaml.schemas = vim.tbl_deep_extend(
+						"force",
+						new_config.settings.yaml.schemas or {},
+						require("schemastore").yaml.schemas()
+					)
+				end,
+				settings = {
+					redhat = { telemetry = { enabled = false } },
+					yaml = {
+						keyOrdering = false,
+						format = {
+							enable = true,
+						},
+						validate = true,
+						schemaStore = {
+							-- Must disable built-in schemaStore support to use
+							-- schemas from SchemaStore.nvim plugin
+							enable = false,
+							-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+							url = "",
+						},
+					},
+				},
+			},
+			bashls = {},
+			shellcheck = {},
 		}
 
-		-- require("mason").setup({
-		-- 	ui = {
-		-- 		border = "rounded",
-		-- 	},
-		-- })
-
-		-- You can add other tools here that you want Mason to install
-		-- for you, so that they are available from within Neovim.
-		local ensure_installed = vim.tbl_keys(servers or {})
-		vim.list_extend(ensure_installed, {
-			"stylua", -- Used to format Lua code
-		})
+		-- Install additional formatting tools
+		local ensure_installed = vim.tbl_keys(servers)
+		vim.list_extend(ensure_installed, { "stylua" })
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+		-- Set up LSP servers through mason-lspconfig
 		require("mason-lspconfig").setup({
 			handlers = {
 				function(server_name)
 					local server = servers[server_name] or {}
-					-- This handles overriding only values explicitly passed
-					-- by the server configuration above. Useful when disabling
-					-- certain features of an LSP (for example, turning off formatting for ts_ls)
-					-- server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+					server.capabilities = require("blink-cmp").get_lsp_capabilities()
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
 		})
 
+		-- Configure custom LSP servers not managed by mason
 		local lspconfig = require("lspconfig")
 		local configs = require("lspconfig.configs")
 
+		-- CWL Language Server
 		if not configs.cwl_lsp then
 			configs.cwl_lsp = {
 				default_config = {
@@ -149,7 +213,7 @@ return {
 		end
 		lspconfig.cwl_lsp.setup({})
 
-		-- set the nixlsp to be nil (not installed by mason)
+		-- Nix Language Server
 		if not configs.nix_lsp then
 			configs.nix_lsp = {
 				default_config = {

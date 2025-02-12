@@ -1,7 +1,20 @@
 return { -- Collection of various small independent plugins/modules
 	"echasnovski/mini.nvim",
 	config = function()
-		require("mini.ai").setup()
+		local ai = require("mini.ai")
+		ai.setup({
+			n_lines = 500,
+			custom_textobjects = {
+				d = { "%f[%d]%d+" }, -- digits
+				c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+				e = { -- Word with case
+					{ "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
+					"^().*()$",
+				},
+				u = ai.gen_spec.function_call(), -- u for "Usage"
+				U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
+			},
+		})
 
 		require("mini.surround").setup()
 
