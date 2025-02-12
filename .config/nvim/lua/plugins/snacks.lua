@@ -1,18 +1,3 @@
-function printTableOneLine(tbl)
-	local result = {}
-	for key, value in pairs(tbl) do
-		local formattedValue
-		if type(value) == "table" then
-			formattedValue = "{...}" -- Indicating nested table
-		elseif type(value) == "string" then
-			formattedValue = string.format("%q", value) -- Quote strings
-		else
-			formattedValue = tostring(value)
-		end
-		table.insert(result, tostring(key) .. "=" .. formattedValue)
-	end
-	print("{" .. table.concat(result, ", ") .. "}")
-end
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -29,7 +14,10 @@ return {
 		},
 		quickfile = { enabled = true },
 		picker = {
+			-- needed for the custom refine_dir action
+			auto_close = false,
 			sources = {
+				-- custom picker for dirs
 				dirs = {
 					finder = "proc",
 					cmd = "fd",
@@ -38,45 +26,6 @@ return {
 						item.file = item.text
 						item.dir = true
 					end,
-				},
-				multigrep = {
-					finder = "grep",
-					regex = true,
-					format = "file",
-					show_empty = true,
-					live = true,
-					supports_live = true,
-					hidden = true,
-					win = {
-						input = {
-							keys = {
-								["<C-d>"] = { "refine_dir", mode = "i" },
-							},
-						},
-					},
-					actions = {
-						-- custom action to grep only inside a specific dir
-						refine_dir = function(p)
-							p:close()
-							Snacks.picker({
-								finder = "proc",
-								cmd = "fd",
-								args = { "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
-								transform = function(item)
-									item.file = item.text
-									item.dir = true
-								end,
-								confirm = function(picker, item)
-									picker:close()
-									if item then
-										Snacks.picker.multigrep({
-											cwd = vim.fs.joinpath(vim.fn.getcwd(), item.file),
-										})
-									end
-								end,
-							})
-						end,
-					},
 				},
 			},
 			prompt = " ",
@@ -111,6 +60,7 @@ return {
 						["<PageUp>"] = { "preview_scroll_up", mode = "i" },
 						["<PageDown>"] = { "preview_scroll_down", mode = "i" },
 						["<C-u>"] = { "clear_input", mode = "i" },
+						["<C-i>"] = { "toggle_ignored", mode = "i" },
 						["<C-H>"] = {
 							function()
 								vim.api.nvim_feedkeys(
@@ -121,17 +71,11 @@ return {
 							end,
 							mode = { "i" },
 						},
+						["<C-d>"] = { "refine_dir", mode = "i" },
 					},
 					b = {
 						minipairs_disable = true,
 					},
-				},
-				actions = {
-					clear_input = function(p)
-						vim.api.nvim_win_call(p.input.win.win, function()
-							vim.cmd('normal! "_cc')
-						end)
-					end,
 				},
 				preview = {
 					keys = {
@@ -145,6 +89,29 @@ return {
 					vim.api.nvim_win_call(p.input.win.win, function()
 						vim.cmd('normal! "_cc')
 					end)
+				end,
+				refine_dir = function(p)
+					p:toggle()
+					local newDir = nil
+					Snacks.picker.dirs({
+						confirm = function(picker, item)
+							newDir = vim.fs.joinpath(vim.fn.getcwd(), item.file)
+							picker:close()
+							if item then
+								p:set_cwd(newDir)
+								p:find()
+								p:focus()
+								-- TODO: for some reason this does not put the cursor at the end of the line!
+								vim.cmd("normal! A")
+							end
+						end,
+						on_close = function()
+							if not newDir then
+								p:close()
+							end
+						end,
+						title = "Refine Dir",
+					})
 				end,
 			},
 		},
@@ -222,38 +189,9 @@ return {
 		{
 			"<leader>sg",
 			function()
-				-- Snacks.picker.sources.multigrep = {
-				-- 	finder = "grep",
-				-- 	hidden = true,
-				-- 	-- win = {
-				-- 	-- 	input = {
-				-- 	-- 		keys = {
-				-- 	-- 			["<C-d>"] = { "refine_dir", mode = "i" },
-				-- 	-- 		},
-				-- 	-- 	},
-				-- 	-- },
-				-- 	actions = {
-				-- 		refine_dir = function(p)
-				-- 			p:close()
-				-- 			Snacks.picker({
-				-- 				finder = "proc",
-				-- 				cmd = "fd",
-				-- 				args = { "--type", "d", "--hidden", "--follow", "--color=never", "--exclude", ".git" },
-				-- 				transform = function(item)
-				-- 					item.file = item.text
-				-- 					item.dir = true
-				-- 				end,
-				-- 				confirm = function(picker, item)
-				-- 					picker:close()
-				-- 					if item then
-				-- 						Snacks.picker.multigrep()
-				-- 					end
-				-- 				end,
-				-- 			})
-				-- 		end,
-				-- 	},
-				-- }
-				Snacks.picker.multigrep()
+				Snacks.picker.grep({
+					hidden = true,
+				})
 			end,
 			desc = "Grep",
 		},

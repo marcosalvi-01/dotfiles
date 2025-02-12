@@ -8,14 +8,7 @@ return {
 	},
 	keys = {
 		{
-			"<leader>ng",
-			function()
-				vim.cmd("Neogit kind=replace")
-			end,
-			desc = "Open [N]eo[G]it window (Neogit)",
-		},
-		{
-			"<leader>n<BS>",
+			"<leader><BS>",
 			function()
 				vim.cmd("Neogit kind=replace")
 			end,
