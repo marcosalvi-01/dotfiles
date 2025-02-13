@@ -36,6 +36,7 @@ return {
 					box = "horizontal",
 					width = 0.8,
 					min_width = 120,
+					min_height = 10,
 					height = 0.8,
 					{
 						box = "horizontal",
@@ -72,6 +73,7 @@ return {
 							mode = { "i" },
 						},
 						["<C-d>"] = { "refine_dir", mode = "i" },
+						["<BS>"] = { "backspace", mode = "i" },
 					},
 					b = {
 						minipairs_disable = true,
@@ -85,6 +87,15 @@ return {
 				},
 			},
 			actions = {
+				-- close the popup if the filter is empty or backspace
+				backspace = function(p)
+					local filter = p:filter()
+					if filter.pattern == "" and filter.search == "" then
+						p:close()
+					else
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<bs>", true, true, true), "n", false)
+					end
+				end,
 				clear_input = function(p)
 					vim.api.nvim_win_call(p.input.win.win, function()
 						vim.cmd('normal! "_cc')
@@ -102,7 +113,9 @@ return {
 								p:find()
 								p:focus()
 								-- TODO: for some reason this does not put the cursor at the end of the line!
-								vim.cmd("normal! A")
+								vim.api.nvim_win_call(p.input.win.win, function()
+									vim.cmd("normal! A")
+								end)
 							end
 						end,
 						on_close = function()
@@ -124,35 +137,35 @@ return {
 					hidden = true,
 				})
 			end,
-			desc = "Smart Find Files",
+			desc = "Snacks [S]earch [F]iles",
 		},
 		{
 			"<leader>sp",
 			function()
 				Snacks.picker.files({ cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy") })
 			end,
-			desc = "Find Config File",
+			desc = "Snacks [S]earch [P]lugins",
 		},
 		{
 			"<leader>sn",
 			function()
 				Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
 			end,
-			desc = "Find Config File",
+			desc = "Snacks [S]earch Co[N]fig",
 		},
 		{
 			"<leader>gb",
 			function()
 				Snacks.picker.git_branches()
 			end,
-			desc = "Git Branches",
+			desc = "Snacks [G]it [B]ranches",
 		},
 		{
 			"<leader>gl",
 			function()
 				Snacks.picker.git_log()
 			end,
-			desc = "Git Log",
+			desc = "Snacks [G]it [L]og",
 		},
 		{
 			"\\",
@@ -184,7 +197,7 @@ return {
 					},
 				})
 			end,
-			desc = "Buffer Lines",
+			desc = "Snacks Search Lines In Buffer",
 		},
 		{
 			"<leader>sg",
@@ -193,7 +206,7 @@ return {
 					hidden = true,
 				})
 			end,
-			desc = "Grep",
+			desc = "Snacks [S]earch [G]rep",
 		},
 		{
 			"<leader>sw",
@@ -202,7 +215,7 @@ return {
 					hidden = true,
 				})
 			end,
-			desc = "Visual selection or word",
+			desc = "Snacks [S]earch [W]ord",
 			mode = { "n", "x" },
 		},
 		{
@@ -210,84 +223,70 @@ return {
 			function()
 				Snacks.picker.diagnostics()
 			end,
-			desc = "Diagnostics",
+			desc = "Snacks [S]earch [D]iagnostics",
 		},
 		{
 			"<leader>sD",
 			function()
 				Snacks.picker.diagnostics_buffer()
 			end,
-			desc = "Buffer Diagnostics",
+			desc = "Snacks [S]earch Buffer [D]iagnostics",
 		},
 		{
 			"<leader>sh",
 			function()
 				Snacks.picker.help()
 			end,
-			desc = "Help Pages",
-		},
-		{
-			"<leader>sH",
-			function()
-				Snacks.picker.highlights()
-			end,
-			desc = "Highlights",
+			desc = "Snacks [S]earch [H]elp",
 		},
 		{
 			"<leader>sk",
 			function()
 				Snacks.picker.keymaps()
 			end,
-			desc = "Keymaps",
+			desc = "Snacks [S]earch [K]eymaps",
 		},
 		{
 			"<leader>sm",
 			function()
 				Snacks.picker.marks()
 			end,
-			desc = "Marks",
+			desc = "Snacks [S]earch [M]arks",
 		},
 		{
 			"<leader>sM",
 			function()
 				Snacks.picker.man()
 			end,
-			desc = "Man Pages",
+			desc = "Snacks [S]earch [M]an Pages",
 		},
 		{
 			"<leader>sq",
 			function()
 				Snacks.picker.qflist()
 			end,
-			desc = "Quickfix List",
+			desc = "Snacks [S]earch [Q]uickfix",
 		},
 		{
 			"<leader>sr",
 			function()
 				Snacks.picker.resume()
 			end,
-			desc = "Resume",
-		},
-		{
-			"<leader>su",
-			function()
-				Snacks.picker.undo()
-			end,
-			desc = "Undo History",
+			desc = "Snacks [S]earch [R]esume",
 		},
 		{
 			"gd",
 			function()
 				Snacks.picker.lsp_definitions()
 			end,
-			desc = "Goto Definition",
+			desc = "Snacks [G]oto [D]efinition",
 		},
 		{
 			"gD",
 			function()
 				Snacks.picker.lsp_type_definitions()
 			end,
-			desc = "Goto Declaration",
+			desc = "Snacks [G]oto Type [D]efinition",
 		},
 		{
 			"gr",
@@ -295,35 +294,35 @@ return {
 				Snacks.picker.lsp_references()
 			end,
 			nowait = true,
-			desc = "References",
+			desc = "Snacks [G]oto [R]eferences",
 		},
 		{
 			"gI",
 			function()
 				Snacks.picker.lsp_implementations()
 			end,
-			desc = "Goto Implementation",
+			desc = "Snacks [G]oto [I]mplementation",
 		},
 		{
 			"<leader>ss",
 			function()
 				Snacks.picker.lsp_symbols()
 			end,
-			desc = "LSP Symbols",
+			desc = "Snacks [S]earch [S]ymbols",
 		},
 		{
 			"<leader>sS",
 			function()
 				Snacks.picker.lsp_workspace_symbols()
 			end,
-			desc = "LSP Workspace Symbols",
+			desc = "Snacks [S]earch Workspace [S]ymbols",
 		},
 		{
 			"<leader>si",
 			function()
 				Snacks.picker.dirs()
 			end,
-			{ desc = "Search subdirectories by name" },
+			desc = "Snacks [S]earch D[I]rectories",
 		},
 		{
 			"<leader>se",
@@ -340,8 +339,6 @@ return {
 							height = 1,
 							border = "none",
 							box = "vertical",
-							-- title = "{title}",
-							-- title_pos = "center",
 							position = "left",
 							{
 								box = "vertical",
@@ -364,13 +361,13 @@ return {
 							keys = {
 								["<BS>"] = "explorer_up",
 								["<right>"] = "confirm",
-								["<left>"] = "explorer_close", -- close directory
+								["<left>"] = "explorer_close",
 								["a"] = "explorer_add",
 								["d"] = "explorer_del",
 								["r"] = "explorer_rename",
 								["c"] = "explorer_copy",
 								["m"] = "explorer_move",
-								["o"] = "explorer_open", -- open with system application
+								["o"] = "explorer_open",
 								["p"] = "toggle_preview",
 								["y"] = "explorer_yank",
 								["u"] = "explorer_update",
@@ -393,14 +390,14 @@ return {
 					},
 				})
 			end,
-			{ desc = "Open explorer" },
+			desc = "Snacks [S]earch [E]xplorer",
 		},
 		{
 			"<leader>ss",
 			function()
 				Snacks.picker.spelling()
 			end,
-			{ desc = "Spelling" },
+			desc = "Snacks [S]earch [S]pelling",
 		},
 	},
 }

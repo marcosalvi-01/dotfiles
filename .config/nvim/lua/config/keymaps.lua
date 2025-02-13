@@ -128,8 +128,6 @@ end, { desc = "[!]Invert current word" })
 
 vim.keymap.set("n", "<leader>sw", "*")
 
-vim.keymap.set("n", "<leader>v", "gv", { desc = "Reselect last [V]isual selection" })
-
 vim.keymap.set({ "n", "v" }, "M", function()
 	local marks = {}
 	for i = string.byte("a"), string.byte("z") do
@@ -172,3 +170,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 	end,
 })
+
+vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return , err<CR>}<Esc>k0f,i", { desc = "Go [H]andle [E]rror" })
+
+-- vim.keymap.set("n", "<leader>at", "")
