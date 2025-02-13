@@ -1,6 +1,7 @@
 return {
 	"saghen/blink.cmp",
 	dependencies = "rafamadriz/friendly-snippets",
+	event = "InsertEnter",
 	version = "*",
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
@@ -121,6 +122,8 @@ return {
 			window = {
 				border = "rounded",
 				show_documentation = false,
+				-- TODO need this because of a weird bug,
+				treesitter_highlighting = false,
 			},
 		},
 	},
