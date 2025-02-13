@@ -2,6 +2,11 @@ return {
 	"declancm/cinnamon.nvim",
 	config = function()
 		require("cinnamon").setup({
+			options = {
+				max_delta = {
+					time = 1000,
+				},
+			},
 			keymaps = {
 				basic = true,
 				extra = false,
