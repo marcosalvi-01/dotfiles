@@ -21,6 +21,15 @@ vim.treesitter.language.register("yaml", { "yaml", "cwl" })
 vim.filetype.add({ extension = { http = "http" } })
 vim.treesitter.language.register("http", { "http", "http" })
 
+-- Autocmd to disable diagnostics for .env files
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = { ".env", "*.env" },
+	group = vim.api.nvim_create_augroup("__env", { clear = true }),
+	callback = function()
+		vim.diagnostic.enable(false)
+	end,
+})
+
 vim.opt.pumblend = 0
 
 -- Set custom indentation rules for .cwl files
