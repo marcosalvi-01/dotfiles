@@ -130,10 +130,12 @@
   "notifications.timeout": 4000,
   "notifications.autoDismiss": true,
   "menus.dashboard.powermenu.avatar.image": "/home/marco/.config/images/smile_big.jpg",
-  "bar.launcher.scrollDown": "~/.local/scripts/wallman prev",
-  "bar.launcher.scrollUp": "~/.local/scripts/wallman next",
+  "bar.launcher.scrollDown": "~/.local/bin/wallman prev",
+  "bar.launcher.scrollUp": "~/.local/bin/wallman next",
   "bar.workspaces.showAllActive": true,
   "bar.workspaces.workspaces": 0,
-  "bar.volume.label": false
+  "bar.volume.label": false,
+  "bar.workspaces.applicationIconMap": {
+    "vesktop": "󰙯"
+  }
 }
-
