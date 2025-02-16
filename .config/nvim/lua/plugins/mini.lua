@@ -1,6 +1,9 @@
 return { -- Collection of various small independent plugins/modules
 	"echasnovski/mini.nvim",
 	config = function()
+		require("mini.icons").setup()
+		MiniIcons.mock_nvim_web_devicons()
+
 		local ai = require("mini.ai")
 		ai.setup({
 			n_lines = 500,

@@ -76,7 +76,7 @@ vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
 vim.keymap.set("n", "<leader>w", function()
 	vim.cmd("silent! wa")
-	print("All buffer changes written")
+	vim.notify("All buffer changes written")
 end, { desc = "[W]rite all buffer" })
 
 vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })

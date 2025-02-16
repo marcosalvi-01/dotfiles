@@ -21,7 +21,8 @@ vim.opt.expandtab = false
 -- Linewrap
 vim.opt.wrap = false
 vim.opt.linebreak = true
-vim.opt.sidescrolloff = 30
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 6
 
 -- Undo
 vim.opt.swapfile = false
@@ -46,9 +47,6 @@ vim.opt.inccommand = "split"
 
 -- Show which line your cursor is on
 vim.opt.cursorline = false
-
--- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 2
 
 -- Folding
 vim.opt.foldmethod = "expr"

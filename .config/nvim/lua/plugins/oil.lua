@@ -28,9 +28,6 @@ end
 
 return {
 	"stevearc/oil.nvim",
-	---@module 'oil'
-	---@type oil.SetupOpts
-	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
 		local detail = false
 		require("oil").setup({
@@ -108,6 +105,7 @@ return {
 			pattern = { "oil://*" },
 			callback = function()
 				require("oil").discard_all_changes()
+				vim.notify("Discarded all unsaved oil changes")
 			end,
 		})
 	end,
