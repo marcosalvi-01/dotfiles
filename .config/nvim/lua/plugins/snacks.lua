@@ -397,5 +397,11 @@ return {
 			end,
 			desc = "Snacks [S]earch [S]pelling",
 		},
+		{
+			"<leader>hg",
+			function()
+				Snacks.picker.highlights()
+			end,
+		},
 	},
 }

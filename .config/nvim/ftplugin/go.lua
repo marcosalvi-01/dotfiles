@@ -76,11 +76,9 @@ local function add_json_tags_to_go_struct()
 end
 
 -- Map the function to <leader>jt in normal mode (adjust the keymap as needed).
-vim.keymap.set(
-	"n",
-	"<leader>jt",
-	function ()
-		add_json_tags_to_go_struct()
-	end,
-	{ noremap = true, silent = true }
-)
+vim.keymap.set("n", "<leader>jt", function()
+	add_json_tags_to_go_struct()
+end, { noremap = true, silent = true })
+
+local currently_enabled = vim.lsp.inlay_hint.is_enabled()
+vim.lsp.inlay_hint.enable(not currently_enabled)
