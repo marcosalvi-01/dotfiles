@@ -12,8 +12,7 @@ vim.api.nvim_buf_set_keymap(
 	"<cmd>lua require('kulala').inspect()<cr>",
 	{ noremap = true, silent = true, desc = "Inspect the current request" }
 )
-vim.api.nvim_buf_set_keymap(
-	0,
+vim.keymap.set(
 	"n",
 	"<leader>t",
 	"<cmd>lua require('kulala').toggle_view()<cr>",
