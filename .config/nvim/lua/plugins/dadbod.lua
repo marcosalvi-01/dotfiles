@@ -19,7 +19,6 @@ return {
 			"<leader>db",
 			":DBUIToggle<CR>",
 			mode = "",
-			desc = "Open [D][B]UI (dadbod)",
 		},
 	},
 }

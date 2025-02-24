@@ -16,6 +16,7 @@ return {
 				else
 					gitsigns.nav_hunk("next")
 				end
+				vim.cmd("normal! zz")
 			end, { desc = "Go to next hunk (Gitsigns)" })
 
 			map("n", "<leader>hp", function()
@@ -24,6 +25,7 @@ return {
 				else
 					gitsigns.nav_hunk("prev")
 				end
+				vim.cmd("normal! zz")
 			end, { desc = "Go to previous hunk (Gitsigns)" })
 
 			map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage/Undo current hunk (Gitsigns)" })
