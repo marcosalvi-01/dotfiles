@@ -2,6 +2,7 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
+	---@type snacks.Config
 	opts = {
 		image = {},
 		indent = {
@@ -24,6 +25,32 @@ return {
 						item.file = item.text
 						item.dir = true
 					end,
+				},
+				select = {
+					layout = {
+						reverse = false,
+						layout = {
+							row = 1,
+							width = 0.4,
+							min_width = 80,
+							height = 0.4,
+							border = "none",
+							box = "vertical",
+							title = "{title}",
+							title_pos = "center",
+							{
+								box = "vertical",
+								border = "rounded",
+								{
+									win = "input",
+									height = 1,
+									border = "bottom",
+								},
+								{ win = "list", border = "none" },
+								{ win = "preview", title = "{preview}", border = "none" },
+							},
+						},
+					},
 				},
 			},
 			prompt = " ",
