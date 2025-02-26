@@ -101,7 +101,7 @@ return {
 		})
 
 		-- Discard all changes when leaving the oil buffer
-		vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" }, {
+		vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
 			pattern = { "oil://*" },
 			callback = function()
 				require("oil").discard_all_changes()
