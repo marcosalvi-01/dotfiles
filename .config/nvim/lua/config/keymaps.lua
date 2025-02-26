@@ -174,4 +174,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return , err<CR>}<Esc>k0f,i", { desc = "Go [H]andle [E]rror" })
 
--- vim.keymap.set("n", "<leader>at", "")
+vim.keymap.set("x", "g/", "<Esc>/\\%V", { desc = "Search inside current visual selection" })
