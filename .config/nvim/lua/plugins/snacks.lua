@@ -172,11 +172,11 @@ return {
 			desc = "Snacks [S]earch [P]lugins",
 		},
 		{
-			"<leader>sn",
+			"<leader>sc",
 			function()
 				Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
 			end,
-			desc = "Snacks [S]earch Co[N]fig",
+			desc = "Snacks [S]earch [C]onfig",
 		},
 		{
 			"<leader>gb",
