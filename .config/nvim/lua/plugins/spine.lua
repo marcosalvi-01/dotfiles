@@ -3,7 +3,7 @@ return {
 	"marcosalvi-01/spine",
 	keys = {
 		{
-			"<BS>",
+			"<leader><BS>",
 			function()
 				require("spine").Open()
 			end,

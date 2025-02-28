@@ -2,7 +2,6 @@
 -- vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfixlist" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show [E]rror" })
 vim.keymap.set("n", "ge", vim.diagnostic.goto_next, { desc = "[G]o to next [E]rror" })
 vim.keymap.set("n", "gE", vim.diagnostic.goto_prev, { desc = "[G]o to next [E]rror" })
@@ -74,16 +73,18 @@ vim.keymap.set({ "i", "c" }, "<C-H>", "<C-w>", { desc = "Delete word in insert m
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
-vim.keymap.set("n", "<leader>w", function()
+vim.keymap.set("n", "<bs>", function()
 	vim.cmd("silent! wa")
 	vim.notify("All buffer changes written")
 end, { desc = "[W]rite all buffer" })
 
 vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
 
-vim.keymap.set("n", "<leader>nl", "<cmd>Noice pick<cr>", { desc = "Open [N]oice [L]ogs" })
+vim.keymap.set("n", "<leader>sl", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice [L]ogs" })
 
-vim.keymap.set("n", "<leader>osw", "<cmd>set wrap<cr>", { desc = "([O]ptions) [S]et [W]rap" })
+vim.keymap.set("n", "<leader>tw", function()
+	vim.opt.wrap = not vim.opt.wrap:get()
+end, { desc = "[T]oggle [W]rap" })
 
 vim.keymap.set("n", "<Enter>", "o<Esc>", { desc = "Add new line under cursor and move to it in normal mode" })
 vim.keymap.set("n", "<S-CR>", "m`O<Esc>``", { desc = "Add new line before the current one" })
