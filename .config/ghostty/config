@@ -22,3 +22,6 @@ keybind = unconsumed:ctrl+a=reload_config
 keybind = super+plus=increase_font_size:1
 keybind = super+minus=decrease_font_size:1
 keybind = ctrl+v=paste_from_clipboard
+
+custom-shader = ghostty-shaders/in-game-crt.glsl
+#custom-shader = ghostty-shaders/inside-the-matrix.glsl
