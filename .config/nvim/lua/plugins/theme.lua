@@ -39,7 +39,6 @@ return {
 					vim.api.nvim_set_hl(0, "SnacksPickerBorder", { fg = fg_color })
 					vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { link = "Visual" })
 					vim.api.nvim_set_hl(0, "DebugPrintLine", { fg = "#d8a657", bg = "#45403d" })
-					print(': theme.lua:41 (after vim.api.nvim_set_hl(0, DebugPrintLine,  …)')
 					vim.api.nvim_set_hl(0, "MiniHipatternsTodo", {
 						bg = "#d3869b",
 						bold = true,
