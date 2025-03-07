@@ -105,7 +105,7 @@ return {
 			pattern = { "oil://*" },
 			callback = function()
 				require("oil").discard_all_changes()
-				vim.notify("Discarded all unsaved oil changes")
+				-- vim.notify("Discarded all unsaved oil changes")
 			end,
 		})
 	end,

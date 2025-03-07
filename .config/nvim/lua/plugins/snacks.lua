@@ -429,6 +429,14 @@ return {
 			function()
 				Snacks.picker.highlights()
 			end,
+			desc = "Snacks [H]i[G]hlights",
+		},
+		{
+			"<leader>sb",
+			function()
+				Snacks.picker.buffers()
+			end,
+			desc = "Snacks [S]earch open [B]uffers",
 		},
 	},
 }
