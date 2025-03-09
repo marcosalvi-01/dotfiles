@@ -80,7 +80,7 @@ end, { desc = "[W]rite all buffer" })
 
 vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
 
-vim.keymap.set("n", "<leader>sl", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice [L]ogs" })
+vim.keymap.set("n", "<leader>l", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice [L]ogs" })
 
 vim.keymap.set("n", "<leader>tw", function()
 	vim.opt.wrap = not vim.opt.wrap:get()
@@ -126,8 +126,6 @@ vim.keymap.set("n", "!", function()
 		vim.cmd("normal! ciw" .. inverted)
 	end
 end, { desc = "[!]Invert current word" })
-
-vim.keymap.set("n", "<leader>sw", "*")
 
 vim.keymap.set({ "n", "v" }, "M", function()
 	local marks = {}
