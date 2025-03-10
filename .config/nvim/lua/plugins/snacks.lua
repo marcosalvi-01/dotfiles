@@ -236,12 +236,41 @@ return {
 		{
 			"<leader>sw",
 			function()
-				Snacks.picker.grep_word({
-					hidden = true,
+				Snacks.picker.lines({
+					search = function(picker)
+						return picker:word()
+					end,
+					finder = "grep",
+					regex = false,
+					format = "file",
+					layout = {
+						reverse = false,
+						layout = {
+							row = 1,
+							width = 0.4,
+							min_width = 80,
+							height = 0.4,
+							border = "none",
+							box = "vertical",
+							title = "{title}",
+							title_pos = "center",
+							{
+								box = "vertical",
+								border = "rounded",
+								{
+									win = "input",
+									height = 1,
+									border = "bottom",
+								},
+								{ win = "list", border = "none" },
+								{ win = "preview", title = "{preview}", border = "none" },
+							},
+						},
+					},
 				})
 			end,
 			desc = "Snacks [S]earch [W]ord",
-			mode = { "n", "x" },
+			mode = "n",
 		},
 		{
 			"<leader>sd",
@@ -329,18 +358,18 @@ return {
 			desc = "Snacks [G]oto [I]mplementation",
 		},
 		{
-			"<leader>ss",
+			"<leader>sl",
 			function()
 				Snacks.picker.lsp_symbols()
 			end,
-			desc = "Snacks [S]earch [S]ymbols",
+			desc = "Snacks [S]earch [L]sp symbols",
 		},
 		{
-			"<leader>sS",
+			"<leader>sL",
 			function()
 				Snacks.picker.lsp_workspace_symbols()
 			end,
-			desc = "Snacks [S]earch Workspace [S]ymbols",
+			desc = "Snacks [S]earch Workspace [L]sp symbols",
 		},
 		{
 			"<leader>si",
