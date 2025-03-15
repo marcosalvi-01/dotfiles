@@ -179,7 +179,20 @@ return {
 			},
 			bashls = {},
 			shellcheck = {},
-			harper_ls = {},
+			harper_ls = {
+				settings = {
+					["harper-ls"] = {
+						linters = {
+							SentenceCapitalization = false,
+						},
+						markdown = {
+							IgnoreLinkTitle = false,
+						},
+						diagnosticSeverity = "hint",
+						isolateEnglish = false,
+					},
+				},
+			},
 		}
 
 		-- Install additional formatting tools

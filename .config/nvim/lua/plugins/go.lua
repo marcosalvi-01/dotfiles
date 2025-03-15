@@ -15,6 +15,7 @@ return {}
 -- 			lsp_keymaps = false,
 -- 			lsp_inlay_hints = {
 -- 				other_hints_prefix = " ",
+-- 				show_parameter_hints = false,
 -- 			},
 -- 			diagnostic = {},
 -- 		})
@@ -30,12 +31,12 @@ return {}
 -- 		vim.keymap.set("n", "<leader>gfw", ":GoFillSwitch<CR>", { desc = "[G]o [F]ill s[W]itch" })
 --
 -- 		-- clean imports when saving a file
--- 		-- vim.api.nvim_create_autocmd("BufWritePre", {
--- 		-- 	pattern = "*.go",
--- 		-- 	callback = function()
--- 		-- 		vim.cmd("GoImports")
--- 		-- 	end,
--- 		-- })
+-- 		vim.api.nvim_create_autocmd("BufWritePre", {
+-- 			pattern = "*.go",
+-- 			callback = function()
+-- 				vim.cmd("GoImports")
+-- 			end,
+-- 		})
 -- 	end,
 -- 	ft = { "go", "gomod" },
 -- 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
