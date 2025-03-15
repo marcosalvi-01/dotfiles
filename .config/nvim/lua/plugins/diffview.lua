@@ -1,0 +1,85 @@
+local function get_default_branch_name()
+	local res = vim.system({ "git", "rev-parse", "--verify", "main" }, { capture_output = true }):wait()
+	return res.code == 0 and "main" or "master"
+end
+
+return {
+	"sindrets/diffview.nvim",
+	opts = {
+		show_help_hints = false,
+		enhanced_diff_hl = false,
+		keymaps = {
+			view = {
+				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+			},
+			file_panel = {
+				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the panel" } },
+				{
+					"n",
+					"t",
+					function()
+						require("diffview.actions").listing_style()
+					end,
+					{ desc = "Toggle file panel listing style" },
+				},
+			},
+			file_history_panel = {
+				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the panel" } },
+			},
+		},
+		file_panel = {
+			listing_style = "list", -- One of 'list' or 'tree'
+			win_config = {
+				position = "left",
+				width = 30,
+			},
+		},
+		file_history_panel = {
+			win_config = {
+				position = "bottom",
+				height = 8,
+			},
+		},
+	},
+	keys = {
+		{
+			"<leader>hd",
+			function()
+				local pos = vim.api.nvim_win_get_cursor(0)
+				local line = pos[1]
+				local col = pos[2]
+				vim.cmd("DiffviewOpen")
+				vim.cmd("DiffviewToggleFiles")
+				vim.api.nvim_win_set_cursor(0, { line, col })
+			end,
+			desc = "Git Diff this file [Diffview]",
+		},
+		{
+			"<leader>hl",
+			mode = "v",
+			"<Esc><Cmd>'<,'>DiffviewFileHistory --follow<CR>",
+			desc = "Visual selection history [Diffview]",
+		},
+		{
+			"<leader>hl",
+			"<cmd>. DiffviewFileHistory --follow<CR>",
+			desc = "Line history [Diffview]",
+		},
+		-- Diff against local master branch
+		{
+			"<leader>hm",
+			function()
+				vim.cmd("DiffviewOpen " .. get_default_branch_name())
+			end,
+			desc = "Diff against master [Diffview]",
+		},
+		-- Diff against remote master branch
+		{
+			"<leader>hM",
+			function()
+				vim.cmd("DiffviewOpen HEAD..origin/" .. get_default_branch_name())
+			end,
+			desc = "Diff against origin/master [Diffview]",
+		},
+	},
+}

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check if a directory path is provided
 if [ $# -ne 1 ]; then

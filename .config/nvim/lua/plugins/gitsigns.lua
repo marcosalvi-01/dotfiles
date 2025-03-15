@@ -48,7 +48,7 @@ return {
 				gitsigns.toggle_current_line_blame,
 				{ desc = "Toggle blame for current line (Gitsigns)" }
 			)
-			map("n", "<leader>hd", gitsigns.diffthis, { desc = "Diff current file (Gitsigns)" })
+			-- map("n", "<leader>hd", gitsigns.diffthis, { desc = "Diff current file (Gitsigns)" })
 			map("n", "<leader>hD", function()
 				gitsigns.diffthis("~")
 			end, { desc = "Diff current file against index (Gitsigns)" })

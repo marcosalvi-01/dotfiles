@@ -140,7 +140,6 @@ return {
 					},
 				},
 			},
-
 			hadolint = {},
 			yamlls = {
 				-- Have to add this for yamlls to understand that we support line folding
@@ -180,6 +179,7 @@ return {
 			},
 			bashls = {},
 			shellcheck = {},
+			harper_ls = {},
 		}
 
 		-- Install additional formatting tools
@@ -225,5 +225,41 @@ return {
 			}
 		end
 		lspconfig.nix_lsp.setup({})
+
+		-- -------HARPER LSP KEYMAP-------
+		-- Store visibility state
+		local diagnostics_visible = false
+
+		-- Toggle keybinding
+		vim.keymap.set("n", "<leader>th", function()
+			-- Toggle the state
+			diagnostics_visible = not diagnostics_visible
+
+			-- Refresh diagnostics display
+			vim.diagnostic.reset()
+			vim.cmd("e") -- Refresh buffer to trigger diagnostics update
+
+			-- Provide feedback
+			local state = diagnostics_visible and "enabled" or "disabled"
+			vim.notify("Harper diagnostics " .. state, vim.log.levels.INFO)
+		end, { desc = "Toggle Harper LSP diagnostics" })
+
+		-- Filter function for diagnostics
+		local function filter_diagnostics(diagnostic)
+			-- Always show non-Harper diagnostics
+			if diagnostic.source ~= "Harper" then
+				return true
+			end
+
+			-- Only show Harper diagnostics if enabled
+			return diagnostics_visible
+		end
+
+		-- Override the diagnostics handler
+		vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(function(_, result, ctx, config)
+			-- Filter diagnostics before processing
+			result.diagnostics = vim.tbl_filter(filter_diagnostics, result.diagnostics)
+			vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+		end, {})
 	end,
 }
