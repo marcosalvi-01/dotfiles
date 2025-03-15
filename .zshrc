@@ -199,8 +199,8 @@ bindkey -M viins '^[[3~' delete-char
 bindkey -M vicmd '^[[3~' delete-char
 
 # delete word with ctrl + backspace
-bindkey -M viins '^H' backward-delete-word
-bindkey -M vicmd '^H' backward-delete-word
+bindkey -M viins '^H' vi-backward-kill-word
+bindkey -M vicmd '^H' vi-backward-kill-word
 # delete forward word with ctrl + del
 bindkey -M viins '^[[3;5~' delete-word
 bindkey -M vicmd '^[[3;5~' delete-word

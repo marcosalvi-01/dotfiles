@@ -35,6 +35,7 @@ return {
 			xml = { "xmlformatter" },
 			css = { "prettier" },
 			http = { "kulala" },
+			kotlin = { "kfmt" },
 		},
 		nixpkgs_fmt = {
 			command = "nixpkgs-fmt",
