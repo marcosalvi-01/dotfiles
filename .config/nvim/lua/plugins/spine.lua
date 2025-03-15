@@ -8,7 +8,7 @@ return {
 			function()
 				require("spine").open()
 			end,
-			desc = "Open Snipe buffer menu",
+			desc = "Open Spine buffer menu",
 		},
 		{
 			"<leader><cr>",
