@@ -189,7 +189,7 @@ return {
 							IgnoreLinkTitle = false,
 						},
 						diagnosticSeverity = "hint",
-						isolateEnglish = false,
+						isolateEnglish = true,
 					},
 				},
 			},
