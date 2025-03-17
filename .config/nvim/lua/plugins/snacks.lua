@@ -13,8 +13,35 @@ return {
 		},
 		quickfile = { enabled = true },
 		picker = {
+			matcher = {
+				frecency = true,
+			},
 			-- needed for the custom refine_dir action
 			auto_close = false,
+			layouts = {
+				main_preview = {
+					preview = "main",
+					reverse = false,
+					layout = {
+						row = 0,
+						width = 0.4,
+						min_width = 80,
+						height = 0.4,
+						max_height = 10,
+						title = "{title}",
+						title_pos = "center",
+						box = "vertical",
+						border = "rounded",
+						{
+							win = "input",
+							height = 1,
+							border = "bottom",
+						},
+						{ win = "list", border = "none" },
+						{ win = "preview", title = "{preview}", border = "none" },
+					},
+				},
+			},
 			sources = {
 				-- custom picker for dirs
 				dirs = {
@@ -34,21 +61,17 @@ return {
 							width = 0.4,
 							min_width = 80,
 							height = 0.4,
-							border = "none",
+							border = "rounded",
 							box = "vertical",
 							title = "{title}",
 							title_pos = "center",
 							{
-								box = "vertical",
-								border = "rounded",
-								{
-									win = "input",
-									height = 1,
-									border = "bottom",
-								},
-								{ win = "list", border = "none" },
-								{ win = "preview", title = "{preview}", border = "none" },
+								win = "input",
+								height = 1,
+								border = "bottom",
 							},
+							{ win = "list", border = "none" },
+							{ win = "preview", title = "{preview}", border = "none" },
 						},
 					},
 				},
@@ -196,30 +219,7 @@ return {
 			"\\",
 			function()
 				Snacks.picker.lines({
-					layout = {
-						reverse = false,
-						layout = {
-							row = 1,
-							width = 0.4,
-							min_width = 80,
-							height = 0.4,
-							border = "none",
-							box = "vertical",
-							title = "{title}",
-							title_pos = "center",
-							{
-								box = "vertical",
-								border = "rounded",
-								{
-									win = "input",
-									height = 1,
-									border = "bottom",
-								},
-								{ win = "list", border = "none" },
-								{ win = "preview", title = "{preview}", border = "none" },
-							},
-						},
-					},
+					layout = "main_preview",
 				})
 			end,
 			desc = "Snacks Search Lines In Buffer",
@@ -243,30 +243,7 @@ return {
 					finder = "grep",
 					regex = false,
 					format = "file",
-					layout = {
-						reverse = false,
-						layout = {
-							row = 1,
-							width = 0.4,
-							min_width = 80,
-							height = 0.4,
-							border = "none",
-							box = "vertical",
-							title = "{title}",
-							title_pos = "center",
-							{
-								box = "vertical",
-								border = "rounded",
-								{
-									win = "input",
-									height = 1,
-									border = "bottom",
-								},
-								{ win = "list", border = "none" },
-								{ win = "preview", title = "{preview}", border = "none" },
-							},
-						},
-					},
+					layout = "main_preview",
 				})
 			end,
 			desc = "Snacks [S]earch [W]ord",
@@ -275,14 +252,18 @@ return {
 		{
 			"<leader>sd",
 			function()
-				Snacks.picker.diagnostics()
+				Snacks.picker.diagnostics({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [S]earch [D]iagnostics",
 		},
 		{
 			"<leader>sD",
 			function()
-				Snacks.picker.diagnostics_buffer()
+				Snacks.picker.diagnostics_buffer({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [S]earch Buffer [D]iagnostics",
 		},
@@ -317,7 +298,9 @@ return {
 		{
 			"<leader>sq",
 			function()
-				Snacks.picker.qflist()
+				Snacks.picker.qflist({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [S]earch [Q]uickfix",
 		},
@@ -331,21 +314,27 @@ return {
 		{
 			"gd",
 			function()
-				Snacks.picker.lsp_definitions()
+				Snacks.picker.lsp_definitions({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [G]oto [D]efinition",
 		},
 		{
 			"gD",
 			function()
-				Snacks.picker.lsp_type_definitions()
+				Snacks.picker.lsp_type_definitions({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [G]oto Type [D]efinition",
 		},
 		{
 			"gr",
 			function()
-				Snacks.picker.lsp_references()
+				Snacks.picker.lsp_references({
+					layout = "main_preview",
+				})
 			end,
 			nowait = true,
 			desc = "Snacks [G]oto [R]eferences",
@@ -353,21 +342,27 @@ return {
 		{
 			"gI",
 			function()
-				Snacks.picker.lsp_implementations()
+				Snacks.picker.lsp_implementations({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [G]oto [I]mplementation",
 		},
 		{
 			"<leader>sl",
 			function()
-				Snacks.picker.lsp_symbols()
+				Snacks.picker.lsp_symbols({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [S]earch [L]sp symbols",
 		},
 		{
 			"<leader>sL",
 			function()
-				Snacks.picker.lsp_workspace_symbols()
+				Snacks.picker.lsp_workspace_symbols({
+					layout = "main_preview",
+				})
 			end,
 			desc = "Snacks [S]earch Workspace [L]sp symbols",
 		},
@@ -384,37 +379,43 @@ return {
 				Snacks.picker.explorer({
 					hidden = true,
 					auto_close = true,
+					on_show = function(picker)
+						picker:action("toggle_preview")
+					end,
 					layout = {
+						preview = "main",
 						reverse = false,
 						layout = {
 							row = 1,
 							width = 0.2,
 							min_width = 60,
 							height = 1,
-							border = "none",
+							border = "rounded",
 							box = "vertical",
 							position = "left",
+							title = "{title}",
 							{
-								box = "vertical",
-								{
-									win = "input",
-									height = 1,
-									border = "hpad",
-								},
-								{ win = "list", border = "none" },
+								win = "input",
+								height = 1,
+								border = "hpad",
 							},
+							{ win = "list", border = "top" },
+							{ win = "preview", title = "{preview}", border = "none" },
 						},
 					},
 					win = {
 						input = {
 							keys = {
 								["<C-down>"] = { "focus_list", mode = "i" },
+								["<C-right>"] = { "confirm", mode = "i" },
+								["<C-p>"] = { "toggle_preview", mode = "i" },
 							},
 						},
 						list = {
 							keys = {
 								["<BS>"] = "explorer_up",
 								["<right>"] = "confirm",
+								["<c-right>"] = "confirm",
 								["<left>"] = "explorer_close",
 								["a"] = "explorer_add",
 								["d"] = "explorer_del",
@@ -439,6 +440,7 @@ return {
 								["]e"] = "explorer_error_next",
 								["[e"] = "explorer_error_prev",
 								["<C-up>"] = "focus_input",
+								["<C-p>"] = "toggle_preview",
 							},
 						},
 					},
