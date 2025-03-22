@@ -110,6 +110,8 @@ return {
 						["<PageDown>"] = { "preview_scroll_down", mode = "i" },
 						["<C-u>"] = { "clear_input", mode = "i" },
 						["<C-i>"] = { "toggle_ignored", mode = "i" },
+						["<C-h>"] = { "toggle_hidden", mode = "i" },
+						-- ctrl + backspace
 						["<C-H>"] = {
 							function()
 								vim.api.nvim_feedkeys(
@@ -135,7 +137,7 @@ return {
 				},
 			},
 			actions = {
-				-- close the popup if the filter is empty or backspace
+				-- close the popup if the filter is empty on backspace
 				backspace = function(p)
 					local filter = p:filter()
 					if filter.pattern == "" and filter.search == "" then
@@ -162,7 +164,7 @@ return {
 								p:focus()
 								-- TODO: for some reason this does not put the cursor at the end of the line!
 								vim.api.nvim_win_call(p.input.win.win, function()
-									vim.cmd("normal! A")
+									vim.cmd("normal A")
 								end)
 							end
 						end,
