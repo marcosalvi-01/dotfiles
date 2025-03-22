@@ -22,31 +22,43 @@ return {
 				group = grpid,
 				pattern = "gruvbox-material",
 				callback = function()
+					local hl = vim.api.nvim_set_hl
+
 					-- Fix floating windows borders
 					local bg_color = "#282828"
 					local fg_color = "#d4be98"
 
 					-- Make the popups bordered and have no background
-					vim.api.nvim_set_hl(0, "NormalFloat", {})
-					vim.api.nvim_set_hl(0, "FloatBorder", { fg = fg_color })
-					vim.api.nvim_set_hl(0, "FloatTitle", { fg = fg_color, bg = nil })
-					vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = fg_color })
-					vim.api.nvim_set_hl(0, "Pmenu", { bg = nil })
-					vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#504945" })
-					vim.api.nvim_set_hl(0, "PmenuThumb", { bg = "#a89984" })
-					vim.api.nvim_set_hl(0, "BlinkCmpGhostText", { fg = "#504945" })
-					vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#ea6962" })
-					vim.api.nvim_set_hl(0, "SnacksPickerBorder", { fg = fg_color })
-					vim.api.nvim_set_hl(0, "SnacksPickerListCursorLine", { link = "Visual" })
-					vim.api.nvim_set_hl(0, "DebugPrintLine", { fg = "#d8a657", bg = "#45403d" })
-					vim.api.nvim_set_hl(0, "DiffText", { bg = "#355F59", ctermbg = 109, ctermfg = 235 })
-					vim.api.nvim_set_hl(0, "MiniHipatternsTodo", {
+					hl(0, "NormalFloat", {})
+					hl(0, "FloatBorder", { fg = fg_color })
+					hl(0, "FloatTitle", { fg = fg_color, bg = nil })
+					hl(0, "TelescopeBorder", { fg = fg_color })
+					hl(0, "Pmenu", { bg = nil })
+					hl(0, "PmenuSel", { bg = "#504945" })
+					hl(0, "PmenuThumb", { bg = "#a89984" })
+					hl(0, "BlinkCmpGhostText", { fg = "#504945" })
+					hl(0, "SnacksIndentScope", { fg = "#ea6962" })
+					hl(0, "SnacksPickerBorder", { fg = fg_color })
+					hl(0, "SnacksPickerListCursorLine", { link = "Visual" })
+					hl(0, "DebugPrintLine", { fg = "#d8a657", bg = "#45403d" })
+					hl(0, "DiffText", { bg = "#355F59", ctermbg = 109, ctermfg = 235 })
+					hl(0, "EnhancedGFDim", { link = "Comment" })
+					hl(0, "EnhancedGFHighlight", { link = "Fg" })
+					hl(0, "EnhancedGFNextKey", { bg = "#d8a657", fg = bg_color, bold = true })
+					hl(0, "EnhancedGFFutureKeys", { bg = "#d8a657", fg = bg_color, bold = true })
+					hl(0, "MultiCursorCursor", { link = "Cursor" })
+					hl(0, "MultiCursorVisual", { link = "Visual" })
+					hl(0, "MultiCursorSign", { link = "SignColumn" })
+					hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
+					hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
+					hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+					hl(0, "MiniHipatternsTodo", {
 						bg = "#d3869b",
 						bold = true,
 						cterm = { bold = true },
 						ctermbg = 167,
 						ctermfg = 235,
-						fg = "#282828",
+						fg = bg_color,
 					})
 				end,
 			})

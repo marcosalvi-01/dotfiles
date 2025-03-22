@@ -1,57 +1,8 @@
 return {
 	"jake-stewart/multicursor.nvim",
 	branch = "1.0",
-	config = function()
-		local mc = require("multicursor-nvim")
-		mc.setup()
-
-		-- Customize how cursors look.
-		local hl = vim.api.nvim_set_hl
-		hl(0, "MultiCursorCursor", { link = "Cursor" })
-		hl(0, "MultiCursorVisual", { link = "Visual" })
-		hl(0, "MultiCursorSign", { link = "SignColumn" })
-		hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
-		hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
-		hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
-	end,
+	opts = {},
 	keys = {
-		-- Add or skip cursor above/below the main cursor
-		{
-			"<M-up>",
-			function()
-				require("multicursor-nvim").lineAddCursor(-1)
-			end,
-			mode = { "n", "v" },
-			desc = "Add a new cursor one line above the current cursor [multicursor]",
-		},
-
-		{
-			"<M-down>",
-			function()
-				require("multicursor-nvim").lineAddCursor(1)
-			end,
-			mode = { "n", "v" },
-			desc = "Add a new cursor one line below the current cursor [multicursor]",
-		},
-
-		{
-			"<leader><M-up>",
-			function()
-				require("multicursor-nvim").lineSkipCursor(-1)
-			end,
-			mode = { "n", "v" },
-			desc = "Skip adding a cursor and move the selection up one line [multicursor]",
-		},
-
-		{
-			"<leader><M-down>",
-			function()
-				require("multicursor-nvim").lineSkipCursor(1)
-			end,
-			mode = { "n", "v" },
-			desc = "Skip adding a cursor and move the selection down one line [multicursor]",
-		},
-
 		-- Add all matches in the document
 		{
 			"<leader>A",
@@ -60,43 +11,6 @@ return {
 			end,
 			mode = { "n", "v" },
 			desc = "Add cursors at all matching locations in the document [multicursor]",
-		},
-
-		-- Add cursors with motions
-		{
-			"<M-right>",
-			function()
-				require("multicursor-nvim").addCursor("w")
-			end,
-			mode = "n",
-			desc = "Add a cursor at the next word [multicursor]",
-		},
-
-		{
-			"<M-left>",
-			function()
-				require("multicursor-nvim").addCursor("b")
-			end,
-			mode = "n",
-			desc = "Add a cursor at the previous word [multicursor]",
-		},
-
-		{
-			"<leader><M-right>",
-			function()
-				require("multicursor-nvim").skipCursor("w")
-			end,
-			mode = "n",
-			desc = "Skip adding a cursor and move to the next word [multicursor]",
-		},
-
-		{
-			"<leader><M-left>",
-			function()
-				require("multicursor-nvim").skipCursor("b")
-			end,
-			mode = "n",
-			desc = "Skip adding a cursor and move to the previous word [multicursor]",
 		},
 
 		-- Delete the main cursor
