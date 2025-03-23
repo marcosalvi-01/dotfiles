@@ -110,6 +110,8 @@ string.rtrim = function(s)
 	return s:gsub("%s+$", "")
 end
 
-vim.keymap.set("n", "<leader>gt", function()
-	add_json_tags_to_go_struct()
-end, { noremap = true, silent = true, desc = "Add json tags to struct [Go]" })
+-- vim.keymap.set("n", "<leader>gt", function()
+-- 	add_json_tags_to_go_struct()
+-- end, { noremap = true, silent = true, desc = "Add json tags to struct [Go]" })
+
+-- vim.keymap.set("n", "<leader>he", "oif err != nil {<CR>return , err<CR>}<Esc>k0f,i", { desc = "Go [H]andle [E]rror" })
