@@ -8,12 +8,39 @@ return {
 	opts = {
 		show_help_hints = false,
 		enhanced_diff_hl = false,
+		hooks = {
+			-- make "diff" buffers non-modifiable
+			diff_buf_read = function()
+				local fname = vim.fn.expand("%:h")
+				if fname:match("diffview") then
+					vim.opt_local.modifiable = false
+				end
+			end,
+		},
 		keymaps = {
 			view = {
 				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+				{ "n", "<esc>", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+				{
+					"n",
+					"<leader>e",
+					function()
+						require("diffview.actions").toggle_files()
+					end,
+					{ desc = "Toggle the file panel" },
+				},
 			},
 			file_panel = {
 				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the panel" } },
+				{ "n", "<esc>", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+				{
+					"n",
+					"<leader>e",
+					function()
+						require("diffview.actions").toggle_files()
+					end,
+					{ desc = "Toggle the file panel" },
+				},
 				{
 					"n",
 					"t",
@@ -25,6 +52,15 @@ return {
 			},
 			file_history_panel = {
 				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the panel" } },
+				{ "n", "<esc>", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+				{
+					"n",
+					"<leader>e",
+					function()
+						require("diffview.actions").toggle_files()
+					end,
+					{ desc = "Toggle the file panel" },
+				},
 			},
 		},
 		file_panel = {
@@ -50,6 +86,7 @@ return {
 				local col = pos[2]
 				vim.cmd("DiffviewOpen")
 				vim.cmd("DiffviewToggleFiles")
+				vim.cmd("sleep 100m")
 				vim.api.nvim_win_set_cursor(0, { line, col })
 			end,
 			desc = "Git Diff this file [Diffview]",
@@ -64,6 +101,11 @@ return {
 			"<leader>hl",
 			"<cmd>. DiffviewFileHistory --follow<CR>",
 			desc = "Line history [Diffview]",
+		},
+		{
+			"<leader>hf",
+			"<cmd>DiffviewFileHistory --follow %<CR>",
+			desc = "File history [Diffview]",
 		},
 		-- Diff against local master branch
 		{
