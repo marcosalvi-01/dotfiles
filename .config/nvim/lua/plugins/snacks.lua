@@ -110,18 +110,9 @@ return {
 						["<PageDown>"] = { "preview_scroll_down", mode = "i" },
 						["<C-u>"] = { "clear_input", mode = "i" },
 						["<C-i>"] = { "toggle_ignored", mode = "i" },
-						["<C-h>"] = { "toggle_hidden", mode = "i" },
+						-- ["<C-h>"] = { "toggle_hidden", mode = "i" },
 						-- ctrl + backspace
-						["<C-H>"] = {
-							function()
-								vim.api.nvim_feedkeys(
-									vim.api.nvim_replace_termcodes("<C-w>", true, true, true),
-									"i",
-									false
-								)
-							end,
-							mode = { "i" },
-						},
+						["<C-H>"] = { "delete_word", mode = { "i" } },
 						["<C-d>"] = { "refine_dir", mode = "i" },
 						["<BS>"] = { "backspace", mode = "i" },
 					},
@@ -145,6 +136,9 @@ return {
 					else
 						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<bs>", true, true, true), "n", false)
 					end
+				end,
+				delete_word = function(p)
+					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>", true, true, true), "i", false)
 				end,
 				clear_input = function(p)
 					vim.api.nvim_win_call(p.input.win.win, function()

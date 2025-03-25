@@ -8,15 +8,15 @@ return {
 	opts = {
 		show_help_hints = false,
 		enhanced_diff_hl = false,
-		hooks = {
-			-- make "diff" buffers non-modifiable
-			diff_buf_read = function()
-				local fname = vim.fn.expand("%:h")
-				if fname:match("diffview") then
-					vim.opt_local.modifiable = false
-				end
-			end,
-		},
+		-- hooks = {
+		-- 	-- make "diff" buffers non-modifiable
+		-- 	diff_buf_read = function()
+		-- 		local fname = vim.fn.expand("%:h")
+		-- 		if fname:match("diffview") then
+		-- 			vim.opt_local.modifiable = false
+		-- 		end
+		-- 	end,
+		-- },
 		keymaps = {
 			view = {
 				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the diff" } },

@@ -19,3 +19,7 @@ vim.api.nvim_buf_set_keymap(
 	"<cmd>lua require('kulala').toggle_view()<cr>",
 	{ noremap = true, silent = true, desc = "Toggle between body and headers" }
 )
+
+vim.bo.commentstring = "# %s"
+
+vim.opt.conceallevel = 0
