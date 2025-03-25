@@ -40,6 +40,8 @@ return {
 					hl(0, "SnacksIndentScope", { fg = "#ea6962" })
 					hl(0, "SnacksPickerBorder", { fg = fg_color })
 					hl(0, "SnacksPickerListCursorLine", { link = "Visual" })
+					hl(0, "SnacksPickerToggleIgnored", { link = "Title" })
+					hl(0, "SnacksPickerToggleHidden", { link = "Title" })
 					hl(0, "DebugPrintLine", { fg = "#d8a657", bg = "#45403d" })
 					hl(0, "DiffText", { bg = "#355F59", ctermbg = 109, ctermfg = 235 })
 					hl(0, "PathfinderDim", { link = "Comment" })

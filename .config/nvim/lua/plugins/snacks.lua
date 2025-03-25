@@ -109,10 +109,9 @@ return {
 						["<PageUp>"] = { "preview_scroll_up", mode = "i" },
 						["<PageDown>"] = { "preview_scroll_down", mode = "i" },
 						["<C-u>"] = { "clear_input", mode = "i" },
-						["<C-i>"] = { "toggle_ignored", mode = "i" },
-						-- ["<C-h>"] = { "toggle_hidden", mode = "i" },
-						-- ctrl + backspace
-						["<C-H>"] = { "delete_word", mode = { "i" } },
+						-- for some reason ctr+i does something else and this does not override it...
+						-- ["<C-i>"] = { "toggle_hidden_and_ignored", mode = "i" },
+						["<C-h>"] = { "toggle_hidden_and_ignored", mode = { "i" } },
 						["<C-d>"] = { "refine_dir", mode = "i" },
 						["<BS>"] = { "backspace", mode = "i" },
 					},
@@ -136,6 +135,10 @@ return {
 					else
 						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<bs>", true, true, true), "n", false)
 					end
+				end,
+				toggle_hidden_and_ignored = function(p)
+					p:action("toggle_hidden")
+					p:action("toggle_ignored")
 				end,
 				delete_word = function(p)
 					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>", true, true, true), "i", false)
@@ -179,6 +182,7 @@ return {
 			function()
 				require("snacks").picker.files({
 					hidden = true,
+					ignored = true,
 				})
 			end,
 			desc = "Snacks [S]earch [F]iles",
@@ -225,6 +229,7 @@ return {
 			function()
 				Snacks.picker.grep({
 					hidden = true,
+					ignored = true,
 				})
 			end,
 			desc = "Snacks [S]earch [G]rep",
@@ -374,6 +379,7 @@ return {
 			function()
 				Snacks.picker.explorer({
 					hidden = true,
+					ignored = true,
 					auto_close = true,
 					on_show = function(picker)
 						picker:action("toggle_preview")
