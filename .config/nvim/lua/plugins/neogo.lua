@@ -27,7 +27,7 @@ return {
 					popup_input = true, -- prompt for additional configs
 				})
 			end,
-			{ buffer = true, desc = "[G]o Modify [T]ags Execude [Neogo]" },
+			{ buffer = true, desc = "[G]o Modify [T]ags Execute [Neogo]" },
 			ft = "go",
 		},
 		{
@@ -51,7 +51,7 @@ return {
 			function()
 				require("neogo").goenum.generate()
 			end,
-			{ buffer = true, desc = "[G]o Modify [T]ags Execude [Neogo]" },
+			{ buffer = true, desc = "[G]o generate [E]num [Neogo]" },
 			ft = "go",
 		},
 	},
