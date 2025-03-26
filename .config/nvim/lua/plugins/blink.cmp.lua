@@ -122,7 +122,7 @@ return {
 			window = {
 				border = "rounded",
 				show_documentation = false,
-				-- TODO need this because of a weird bug,
+				-- TODO need this because of a weird bug, last check 25/3/25
 				treesitter_highlighting = false,
 			},
 		},
