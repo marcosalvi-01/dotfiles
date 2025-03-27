@@ -7,7 +7,7 @@ return {
 	opts = {
 		symbols = { -- customize the symbols that appear in the git status columns
 			index = {
-				["!"] = "!",
+				["!"] = "",
 				["?"] = "?",
 				["A"] = "┃",
 				["C"] = "┃",
@@ -19,7 +19,7 @@ return {
 				[" "] = " ",
 			},
 			working_tree = {
-				["!"] = "!",
+				["!"] = "",
 				["?"] = "?",
 				["A"] = "┃",
 				["C"] = "┃",
