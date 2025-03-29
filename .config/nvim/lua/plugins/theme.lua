@@ -33,27 +33,57 @@ return {
 					hl(0, "FloatBorder", { fg = fg_color })
 					hl(0, "FloatTitle", { fg = fg_color, bg = nil })
 					hl(0, "TelescopeBorder", { fg = fg_color })
+
+					-- scroll bars
 					hl(0, "Pmenu", { bg = nil })
 					hl(0, "PmenuSel", { bg = "#504945" })
 					hl(0, "PmenuThumb", { bg = "#a89984" })
+
+					-- autocmpletion ghost text
 					hl(0, "BlinkCmpGhostText", { fg = "#504945" })
+
+					-- snacks
 					hl(0, "SnacksIndentScope", { fg = "#ea6962" })
 					hl(0, "SnacksPickerBorder", { fg = fg_color })
 					hl(0, "SnacksPickerListCursorLine", { link = "Visual" })
 					hl(0, "SnacksPickerToggleIgnored", { link = "Title" })
 					hl(0, "SnacksPickerToggleHidden", { link = "Title" })
+
+					-- debug linen
 					hl(0, "DebugPrintLine", { fg = "#d8a657", bg = "#45403d" })
+
+					-- diffview
 					hl(0, "DiffText", { bg = "#355F59", ctermbg = 109, ctermfg = 235 })
+
+					-- pathfinder (gf)
 					hl(0, "PathfinderDim", { link = "Comment" })
 					hl(0, "PathfinderHighlight", { link = "Fg" })
 					hl(0, "PathfinderNextKey", { bg = "#d8a657", fg = bg_color, bold = true })
 					hl(0, "PathfinderFutureKeys", { bg = "#d8a657", fg = bg_color, bold = true })
+
+					-- diagnostic underline not curly
+					hl(0, "DiagnosticUnderlineWarn", { sp = "#D8A657", cterm = { underline = true }, underline = true })
+					hl(0, "DiagnosticUnderlineHint", { cterm = { underline = true }, sp = "#A9B665", underline = true })
+					hl(0, "DiagnosticUnderlineInfo", { cterm = { underline = true }, sp = "#7DAEA3", underline = true })
+					hl(
+						0,
+						"DiagnosticUnderlineError",
+						{ cterm = { underline = true }, sp = "#EA6962", underline = true }
+					)
+					hl(0, "LspDiagnosticUnderlineWarn", { link = "DiagnosticUnderlineWarn" })
+					hl(0, "LspDiagnosticUnderlineHint", { link = "DiagnosticUnderlineHint" })
+					hl(0, "LspDiagnosticUnderlineInfo", { link = "DiagnosticUnderlineInfo" })
+					hl(0, "LspDiagnosticUnderlineError", { link = "DiagnosticUnderlineError" })
+
+					-- multicursor stuff
 					hl(0, "MultiCursorCursor", { link = "Cursor" })
 					hl(0, "MultiCursorVisual", { link = "Visual" })
 					hl(0, "MultiCursorSign", { link = "SignColumn" })
 					hl(0, "MultiCursorDisabledCursor", { link = "Visual" })
 					hl(0, "MultiCursorDisabledVisual", { link = "Visual" })
 					hl(0, "MultiCursorDisabledSign", { link = "SignColumn" })
+
+					-- todo pink
 					hl(0, "MiniHipatternsTodo", {
 						bg = "#d3869b",
 						bold = true,
