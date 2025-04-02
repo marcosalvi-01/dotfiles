@@ -1,11 +1,3 @@
--- Clear search with esc
--- vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
--- Diagnostic keymaps
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show [E]rror" })
-vim.keymap.set("n", "ge", vim.diagnostic.goto_next, { desc = "[G]o to next [E]rror" })
-vim.keymap.set("n", "gE", vim.diagnostic.goto_prev, { desc = "[G]o to next [E]rror" })
-
 -- Remap arrows
 vim.keymap.set({ "n", "v" }, "<Left>", "h")
 vim.keymap.set({ "n", "v" }, "<Right>", "l")
