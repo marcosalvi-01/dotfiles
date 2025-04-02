@@ -140,7 +140,7 @@ return {
 					p:action("toggle_hidden")
 					p:action("toggle_ignored")
 				end,
-				delete_word = function(p)
+				delete_word = function()
 					vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>", true, true, true), "i", false)
 				end,
 				clear_input = function(p)

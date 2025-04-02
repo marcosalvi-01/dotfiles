@@ -49,20 +49,22 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = false
 
 -- Folding
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = -1
+vim.o.foldenable = true
+vim.o.foldlevel = 99
+vim.o.foldmethod = "expr"
+vim.o.foldtext = ""
+vim.opt.foldcolumn = "0"
+
+vim.opt.statuscolumn = "%s%=%{v:relnum?v:relnum:v:lnum} "
 
 vim.opt.updatetime = 50
 
 vim.opt.termguicolors = true
 
---vim.opt.timeoutlen = 200
-
--- Hide the tilde empty lines
-vim.opt.fillchars = { eob = " " }
-
+-- Hide the tilde empty lines and fold chars
+vim.opt.fillchars:append({ fold = "·", eob = " " })
 vim.opt.conceallevel = 2
 
 vim.opt.cmdheight = 0
+
+vim.opt.pumblend = 0
