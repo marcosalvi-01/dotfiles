@@ -50,7 +50,7 @@ return {
 					hl(0, "SnacksPickerToggleHidden", { link = "Title" })
 
 					-- debug linen
-					hl(0, "DebugPrintLine", { fg = "#d8a657", bg = "#45403d" })
+					hl(0, "DebugPrintLine", { fg = "#d8a657", bg = "#363629" })
 
 					-- diffview
 					hl(0, "DiffText", { bg = "#355F59", ctermbg = 109, ctermfg = 235 })
@@ -92,6 +92,14 @@ return {
 						ctermfg = 235,
 						fg = bg_color,
 					})
+
+					-- folded lines
+					hl(0, "Folded", { fg = nil, bg = "#292929" })
+
+					-- lsp current word highlight
+					hl(0, "LspReferenceText", { bg = "#292929", bold = true })
+					hl(0, "LspReferenceRead", { link = "LspReferenceText" })
+					hl(0, "LspReferenceWrite", { link = "LspReferenceText" })
 				end,
 			})
 
