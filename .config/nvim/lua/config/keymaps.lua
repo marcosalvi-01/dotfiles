@@ -93,6 +93,8 @@ vim.keymap.set("n", "!", function()
 		["enable"] = "disable",
 		["enabled"] = "disabled",
 		["vero"] = "falso",
+		["&&"] = "||",
+		["!="] = "==",
 	}
 
 	-- Create complete inversions table with both directions
