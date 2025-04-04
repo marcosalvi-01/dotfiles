@@ -82,7 +82,7 @@ end, { desc = "[T]oggle [W]rap" })
 vim.keymap.set("n", "<Enter>", 'o<Esc>"_cc<Esc>', { desc = "Add new line under cursor and move to it in normal mode" })
 vim.keymap.set("n", "<S-CR>", 'm`O<Esc>"_cc<Esc>``', { desc = "Add new line before the current one" })
 
--- Invert current word
+-- Invert current word or operator
 vim.keymap.set("n", "!", function()
 	-- Define base pairs
 	local base_pairs = {
@@ -94,9 +94,9 @@ vim.keymap.set("n", "!", function()
 		["enabled"] = "disabled",
 		["vero"] = "falso",
 		["&&"] = "||",
+		["and"] = "or",
 		["!="] = "==",
 	}
-
 	-- Create complete inversions table with both directions
 	local inversions = {}
 	for word, inverse in pairs(base_pairs) do
@@ -104,23 +104,27 @@ vim.keymap.set("n", "!", function()
 		inversions[inverse] = word
 	end
 
-	-- Get the word under cursor
-	local word = vim.fn.expand("<cword>")
+	-- Yank the current word (this also works for operators)
+	vim.cmd('normal! "iyiw')
+
+	-- Get the yanked text
+	local word = vim.fn.getreg("i")
 
 	-- Check if word exists in our inversions table
-	if inversions[word:lower()] then
+	if inversions[word] then
+		-- Replace the word under cursor with its inversion
+		vim.cmd('normal! "_ciw' .. inversions[word])
+	elseif inversions[word:lower()] then
 		-- Get the inverted word
 		local inverted = inversions[word:lower()]
-
 		-- Preserve the original case
 		if word:sub(1, 1):match("%u") then
 			inverted = inverted:sub(1, 1):upper() .. inverted:sub(2)
 		end
-
 		-- Replace the word under cursor
-		vim.cmd("normal! ciw" .. inverted)
+		vim.cmd('normal! "_ciw' .. inverted)
 	end
-end, { desc = "[!]Invert current word" })
+end, { desc = "[!]Invert current word or operator" })
 
 vim.keymap.set({ "n", "v" }, "M", function()
 	local marks = {}
