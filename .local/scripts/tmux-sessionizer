@@ -1,41 +1,58 @@
-#!/usr/bin/env bash
-
+#!/bin/sh
 # Function to guess if something is a git URL
 is_git_url() {
-    local input="$1"
-    [[ "$input" =~ ^(git@|https://|http://|ssh://).+\.git$ ]]
+    input=$1
+    case "$input" in
+        git@*.git|http://*.git|https://*.git|ssh://*.git)
+            return 0 ;;
+        *)
+            return 1 ;;
+    esac
 }
 
-if [[ $# -eq 1 ]]; then
-    selected=${1/#\~/$HOME}
+# If exactly one argument is provided, use it (with tilde expansion)
+if [ "$#" -eq 1 ]; then
+    case "$1" in
+        ~*)
+            # Replace a leading tilde with $HOME
+            selected="$HOME${1#\~}" ;;
+        *)
+            selected="$1" ;;
+    esac
     query=""
 else
-    # Define known directories in the form: path:icon label
-    known_dirs=(
-        "$HOME/dotfiles: dotfiles"
-        "$HOME/note: note"
-        "$HOME: home"
-        "$HOME/Downloads: downloads"
-        "$HOME/Desktop:󰇄 desktop"
-        "$HOME/Music: music"
-        "$HOME/Documents:󰈙 documents"
-        "$HOME/Pictures: pictures"
-    )
+    # Define known directories as newline-separated entries: path:icon label
+    known_dirs="$HOME/dotfiles: dotfiles
+    $HOME/note: note
+    $HOME: home
+    $HOME/Downloads: downloads
+    $HOME/Desktop:󰇄 desktop
+    $HOME/Music: music
+    $HOME/Documents:󰈙 documents
+    $HOME/Pictures: pictures"
 
     fzf_output=$(
         (
             # Print known directories that exist
-            for entry in "${known_dirs[@]}"; do
-                dir="${entry%%:*}"
-                if [[ -d "$dir" ]]; then
-                    echo "$entry"
+            echo "$known_dirs" | while IFS= read -r entry; do
+                dir=${entry%%:*}
+                if [ -d "$dir" ]; then
+                    printf "%s\n" "$entry"
                 fi
             done
 
-            # Print top-level directories in home (excluding hidden)
-            find ~ -mindepth 1 -maxdepth 1 -type d -not -name ".*" | while read -r dir; do
-                display_dir="${dir/#$HOME/\~}"
-                echo "$dir:$display_dir"
+            # Print top-level directories in HOME (excluding hidden)
+            for dir in "$HOME"/*; do
+                if [ -d "$dir" ]; then
+                    case "$dir" in
+                        "$HOME"/*)
+                            home_prefix=$HOME
+                            display_dir="~${dir#"$home_prefix"}" ;;
+                        *)
+                            display_dir="$dir" ;;
+                    esac
+                    printf "%s:%s\n" "$dir" "$display_dir"
+                fi
             done
         ) | awk -F: '!seen[$1]++' | fzf \
             --print-query \
@@ -45,25 +62,30 @@ else
     )
 
     # Read the query (typed text) and the selected line
-    query=$(echo "$fzf_output" | sed -n '1p')
-    displayed=$(echo "$fzf_output" | sed -n '2p')
+    query=$(printf "%s\n" "$fzf_output" | sed -n '1p')
+    displayed=$(printf "%s\n" "$fzf_output" | sed -n '2p')
 
-    if [[ -z "$displayed" ]]; then
+    if [ -z "$displayed" ]; then
         # No selection from fzf
-        if [[ -n "$query" ]]; then
+        if [ -n "$query" ]; then
             # Check if query is a git URL
             if is_git_url "$query"; then
                 repo_name=$(basename "$query")
-                repo_name="${repo_name%.git}"
+                repo_name=${repo_name%.git}
                 if git clone "$query" "$HOME/$repo_name"; then
                     selected="$HOME/$repo_name"
                 else
-                    echo "Failed to clone repository. Exiting."
+                    printf "Failed to clone repository. Exiting.\n"
                     exit 1
                 fi
             else
                 # Create a new directory under HOME
-                selected=${query/#\~/$HOME}
+                case "$query" in
+                    ~*)
+                        selected="$HOME${query#\~}" ;;
+                    *)
+                        selected="$query" ;;
+                esac
                 selected="$HOME/$selected"
                 mkdir -p "$selected"
             fi
@@ -73,21 +95,21 @@ else
         fi
     else
         # Extract the real directory from before the colon
-        selected=$(echo "$displayed" | cut -d: -f1)
+        selected=$(printf "%s\n" "$displayed" | cut -d: -f1)
     fi
 fi
 
 selected_name=$(basename "$selected" | tr ".,: " "____")
 
 switch_to() {
-    if [[ -z "$TMUX" ]]; then
+    if [ -z "$TMUX" ]; then
         tmux attach-session -t "$selected_name"
     else
         tmux switch-client -t "$selected_name"
     fi
 }
 
-if tmux has-session -t="$selected_name" 2>/dev/null; then
+if tmux has-session -t "$selected_name" 2>/dev/null; then
     switch_to
 else
     tmux new-session -ds "$selected_name" -c "$selected"

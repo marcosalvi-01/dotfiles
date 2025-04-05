@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 tmux new-window -d
 tmux rename-window nvim
