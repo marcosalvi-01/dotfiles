@@ -20,18 +20,6 @@ return {
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
-				-- Configure LSP UI elements to use rounded borders
-				local handlers = {
-					["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-					["textDocument/signatureHelp"] = vim.lsp.with(
-						vim.lsp.handlers.signature_help,
-						{ border = "rounded" }
-					),
-				}
-				for method, handler in pairs(handlers) do
-					vim.lsp.handlers[method] = handler
-				end
-
 				-- Fix semantic tokens for gopls
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client.name == "gopls" and not client.server_capabilities.semanticTokensProvider then
@@ -56,34 +44,6 @@ return {
 				map("<leader>cn", vim.lsp.buf.rename, "Rename symbol")
 				map("<leader>ca", vim.lsp.buf.code_action, "Code action", { "n", "x" })
 				map("<leader>D", vim.lsp.buf.declaration, "Go to declaration")
-
-				-- Set up document highlight on cursor hold
-				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-					local highlight_group = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
-
-					-- Highlight references when cursor is held
-					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-						buffer = event.buf,
-						group = highlight_group,
-						callback = vim.lsp.buf.document_highlight,
-					})
-
-					-- Clear highlights when cursor moves
-					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-						buffer = event.buf,
-						group = highlight_group,
-						callback = vim.lsp.buf.clear_references,
-					})
-
-					-- Clean up highlights when LSP detaches
-					vim.api.nvim_create_autocmd("LspDetach", {
-						group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
-						callback = function(e)
-							vim.lsp.buf.clear_references()
-							vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = e.buf })
-						end,
-					})
-				end
 			end,
 		})
 

@@ -97,9 +97,10 @@ return {
 					hl(0, "Folded", { fg = nil, bg = "#292929" })
 
 					-- lsp current word highlight
-					hl(0, "LspReferenceText", { bg = "#292929", bold = true })
-					hl(0, "LspReferenceRead", { link = "LspReferenceText" })
-					hl(0, "LspReferenceWrite", { link = "LspReferenceText" })
+					hl(0, "LspReferenceText", { link = "CurrentWord" })
+					hl(0, "LspReferenceRead", { link = "CurrentWord" })
+					hl(0, "LspReferenceWrite", { link = "CurrentWord" })
+					hl(0, "CurrentWord", { bg = "#292929", bold = true })
 				end,
 			})
 
