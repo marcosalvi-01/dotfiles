@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 # Function to guess if something is a git URL
 is_git_url() {
     input=$1
