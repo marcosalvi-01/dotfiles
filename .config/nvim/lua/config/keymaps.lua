@@ -205,3 +205,12 @@ function RunMakeAsync()
 		end
 	end)
 end
+
+-- Create a keymap (here using <leader>g in normal mode) to trigger the prompt
+vim.keymap.set("n", "<leader>G", function()
+	vim.ui.input({ prompt = "Just Google it: " }, function(input)
+		if input and input ~= "" then
+			vim.cmd("Google " .. input)
+		end
+	end)
+end, { noremap = true, silent = true, desc = "Just Google it" })
