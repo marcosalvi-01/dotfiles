@@ -26,6 +26,6 @@ return {
 		},
 		display_counter = false,
 		display_snippet = true,
-		print_tag = "",
+		print_tag = "DEBUGPRINT",
 	},
 }
