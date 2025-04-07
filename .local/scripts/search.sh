@@ -33,7 +33,6 @@ while true; do
     
     # ESC key (ASCII 27)
     if [ "$ascii" -eq 27 ]; then
-        echo -e "\nExiting."
         break
     fi
     
@@ -54,7 +53,6 @@ while true; do
             open_url "$url"
             exit 0
         else
-            echo "No search query provided. Exiting."
             break
         fi
     fi
