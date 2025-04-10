@@ -36,6 +36,8 @@ return {
 			css = { "prettier" },
 			http = { "kulala" },
 			kotlin = { "kfmt" },
+			html = { "prettier" },
+			scss = { "prettier" },
 		},
 		nixpkgs_fmt = {
 			command = "nixpkgs-fmt",

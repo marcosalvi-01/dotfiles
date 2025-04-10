@@ -77,6 +77,7 @@ vim.keymap.set("n", "<leader>l", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice
 
 vim.keymap.set("n", "<leader>tw", function()
 	vim.opt.wrap = not vim.opt.wrap:get()
+
 end, { desc = "[T]oggle [W]rap" })
 
 vim.keymap.set("n", "<Enter>", 'o<Esc>"_cc<Esc>', { desc = "Add new line under cursor and move to it in normal mode" })
@@ -177,7 +178,7 @@ local function smart_delete(key)
 	local line = vim.api.nvim_buf_get_lines(0, l - 1, l, true)[1] -- Get the content of the current line
 	return (line:match("^%s*$") and '"_' or "") .. key -- If the line is empty or contains only whitespace, use the black hole register
 end
-local keys = { "d", "x", "c", "s", "C", "S", "X" } -- Define a list of keys to apply the smart delete functionality
+local keys = { "d", "x", "c", "s", "C", "X" } -- Define a list of keys to apply the smart delete functionality
 -- Set keymaps for both normal and visual modes
 for _, key in pairs(keys) do
 	vim.keymap.set("n", key, function()
@@ -214,3 +215,29 @@ vim.keymap.set("n", "<leader>G", function()
 		end
 	end)
 end, { noremap = true, silent = true, desc = "Just Google it" })
+
+-- Keymap to yank all diagnostic messages from current line to clipboard
+vim.keymap.set("n", "<leader>ye", function()
+	-- Get current line number
+	local current_line = vim.fn.line(".")
+
+	-- Get all diagnostic messages for the current line
+	local diagnostics = vim.diagnostic.get(0, { lnum = current_line - 1 }) -- 0-indexed in the API
+
+	-- Extract all diagnostic messages
+	local messages = {}
+	for _, diag in ipairs(diagnostics) do
+		table.insert(messages, diag.message)
+	end
+
+	-- Join diagnostic messages with newlines
+	local diagnostic_text = table.concat(messages, "\n")
+
+	-- If there are diagnostics, copy them to the clipboard
+	if #messages > 0 then
+		vim.fn.setreg("+", diagnostic_text)
+		print("Yanked " .. #messages .. " diagnostic message(s) to clipboard")
+	else
+		print("No diagnostics found on current line")
+	end
+end, { desc = "Yank all diagnostics from current line to clipboard" })

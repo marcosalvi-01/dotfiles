@@ -77,6 +77,7 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*:*:make:*' tag-order targets # Configure make completion to prioritize targets and ignore files
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --icons=always --git --color=always $realpath'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 zstyle ':fzf-tab:*' popup-min-size 80 20					# apply to all command
@@ -98,6 +99,7 @@ alias pipes='pipes.sh -t 1 -f 100 -r 4000 -R -s 15 -p 4'
 alias fortune='clear && fortune | cowsay -f stegosaurus | lolcat'
 alias .='nvim .'
 alias kssh="kitty +kitten ssh"
+alias m='make'
 
 # Fortune widget with ctrl+f
 fortune_widget() {

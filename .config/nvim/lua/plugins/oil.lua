@@ -72,6 +72,10 @@ return {
 				},
 			},
 			use_default_keymaps = false,
+			-- 2. is_always_hidden: Parent directory entry (..) is always hidden
+			-- 3. is_hidden_file: Determines which files are considered "hidden"
+			--    - In git repos: Files are hidden if they are git-ignored OR in the explicit ignore list
+			--    - Outside git repos: Files are hidden if they start with a dot (.)
 			view_options = {
 				show_hidden = false,
 				is_always_hidden = function(name, bufnr)
