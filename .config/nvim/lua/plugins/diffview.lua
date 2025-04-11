@@ -103,6 +103,11 @@ return {
 			desc = "Line history [Diffview]",
 		},
 		{
+			"<leader>hb",
+			"<cmd>DiffviewFileHistory<CR>",
+			desc = "Branch history [Diffview]",
+		},
+		{
 			"<leader>hf",
 			"<cmd>DiffviewFileHistory --follow %<CR>",
 			desc = "File history [Diffview]",
