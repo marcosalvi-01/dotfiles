@@ -37,6 +37,7 @@ return {
 			http = { "kulala" },
 			kotlin = { "kfmt" },
 			html = { "prettier" },
+			htmlangular = { "prettier" },
 			scss = { "prettier" },
 		},
 		nixpkgs_fmt = {
