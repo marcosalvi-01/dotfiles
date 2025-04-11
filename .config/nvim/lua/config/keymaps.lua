@@ -10,7 +10,14 @@ vim.keymap.set("n", "S", "i<CR><Esc>", { desc = "[S]plit lines" })
 vim.keymap.set("n", ",", ";")
 vim.keymap.set("n", ";", ",")
 
-vim.keymap.set("n", "<Home>", "_")
+-- reset the horizontal scroll when doing Home
+vim.keymap.set("n", "<Home>", function()
+	local current_col = vim.fn.wincol()
+	if current_col > 1 then
+		vim.cmd("normal! 0")
+	end
+	vim.cmd("normal! _")
+end)
 vim.keymap.set("n", "<End>", "$")
 
 vim.keymap.set("n", "Q", "`", { remap = true })
@@ -77,7 +84,6 @@ vim.keymap.set("n", "<leader>l", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice
 
 vim.keymap.set("n", "<leader>tw", function()
 	vim.opt.wrap = not vim.opt.wrap:get()
-
 end, { desc = "[T]oggle [W]rap" })
 
 vim.keymap.set("n", "<Enter>", 'o<Esc>"_cc<Esc>', { desc = "Add new line under cursor and move to it in normal mode" })
