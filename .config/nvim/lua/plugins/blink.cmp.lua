@@ -141,8 +141,8 @@ return {
 			window = {
 				border = "rounded",
 				show_documentation = false,
-				-- TODO need this because of a weird bug, last check 25/3/25
-				treesitter_highlighting = false,
+				-- now this works, if getting an error when showing the signature, disable
+				treesitter_highlighting = true,
 			},
 		},
 	},
