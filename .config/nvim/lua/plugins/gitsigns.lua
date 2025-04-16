@@ -11,21 +11,17 @@ return {
 			end
 
 			map("n", "<leader>hn", function()
-				if vim.wo.diff then
-					vim.cmd.normal({ "]c", bang = true })
-				else
-					gitsigns.nav_hunk("next")
-				end
-				vim.cmd("normal! zz")
+				gitsigns.nav_hunk("next")
+				vim.defer_fn(function()
+					vim.cmd.normal("zz")
+				end, 10)
 			end, { desc = "Go to next hunk (Gitsigns)" })
 
 			map("n", "<leader>hp", function()
-				if vim.wo.diff then
-					vim.cmd.normal({ "[c", bang = true })
-				else
-					gitsigns.nav_hunk("prev")
-				end
-				vim.cmd("normal! zz")
+				gitsigns.nav_hunk("prev")
+				vim.defer_fn(function()
+					vim.cmd.normal("zz")
+				end, 10)
 			end, { desc = "Go to previous hunk (Gitsigns)" })
 
 			map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage/Undo current hunk (Gitsigns)" })
@@ -39,9 +35,6 @@ return {
 			map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage entire buffer (Gitsigns)" })
 			map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset entire buffer (Gitsigns)" })
 			map("n", "<leader>hP", gitsigns.preview_hunk_inline, { desc = "Preview current hunk (Gitsigns)" })
-			map("n", "<leader>hb", function()
-				gitsigns.blame_line({ full = true })
-			end, { desc = "Blame current line with full details (Gitsigns)" })
 			map(
 				"n",
 				"<leader>tb",

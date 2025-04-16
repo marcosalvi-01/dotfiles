@@ -101,11 +101,11 @@ return {
 			desc = "Split visual selection into multiple cursors using regex [multicursor]",
 		},
 
-		-- Append/insert for each line of visual selections
+		-- insert for each line of visual selections
 		{
 			"I",
 			function()
-				require("multicursor-nvim").insertVisual()
+				require("multicursor-nvim").addCursorOperator()
 			end,
 			mode = "v",
 			desc = "Insert text at the start of each line in visual selection [multicursor]",

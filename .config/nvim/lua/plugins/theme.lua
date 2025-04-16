@@ -61,6 +61,13 @@ return {
 					hl(0, "PathfinderNextKey", { bg = "#d8a657", fg = bg_color, bold = true })
 					hl(0, "PathfinderFutureKeys", { bg = "#d8a657", fg = bg_color, bold = true })
 
+					-- search highlight
+					hl(0, "Search", { bg = "#355F59", ctermbg = 142, ctermfg = 235 })
+					hl(0, "IncSearch", { bg = "#5B4D28", ctermbg = 142, ctermfg = 235 })
+
+					-- highlight yank
+					hl(0, "HighlightedyankRegion", {bg = "#EA6962", fg = bg_color})
+
 					-- diagnostic underline not curly
 					hl(0, "DiagnosticUnderlineWarn", { sp = "#D8A657", cterm = { underline = true }, underline = true })
 					hl(0, "DiagnosticUnderlineHint", { cterm = { underline = true }, sp = "#A9B665", underline = true })
