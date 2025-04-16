@@ -247,3 +247,6 @@ vim.keymap.set("n", "<leader>ye", function()
 		print("No diagnostics found on current line")
 	end
 end, { desc = "Yank all diagnostics from current line to clipboard" })
+
+-- insert p instead of paste while in substitute mode
+vim.keymap.set("s", "p", "p")
