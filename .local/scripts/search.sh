@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO: use fzf instead of handling manually
 
 # Function to open URL based on OS
 open_url() {
