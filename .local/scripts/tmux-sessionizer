@@ -3,22 +3,62 @@
 is_git_url() {
     input=$1
     case "$input" in
-        git@*.git|http://*.git|https://*.git|ssh://*.git)
+        git@*|http://*github.com/*|https://*github.com/*|http://*.git|https://*.git|ssh://*.git)
             return 0 ;;
         *)
             return 1 ;;
     esac
 }
 
-# If exactly one argument is provided, use it (with tilde expansion)
-if [ "$#" -eq 1 ]; then
+# Expand path with tilde replacement and handle relative paths
+expand_path() {
     case "$1" in
         ~*)
-            # Replace a leading tilde with $HOME
-            selected="$HOME${1#\~}" ;;
+            echo "$HOME${1#\~}" ;;
+        /*)
+            # Absolute path, keep as is
+            echo "$1" ;;
         *)
-            selected="$1" ;;
+            # Relative path, make it relative to $HOME not current dir
+            echo "$HOME/$1" ;;
     esac
+}
+
+# Process command line options
+no_switch=0
+while getopts "c" opt; do
+    case $opt in
+        c)
+            no_switch=1
+            ;;
+        *)
+            echo "Usage: $0 [-c] [directory]"
+            echo "  -c    Create session only, don't switch to it"
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+# If exactly one argument is provided, use it (with path expansion)
+if [ "$#" -eq 1 ]; then
+    # Check if it's a git URL first
+    if is_git_url "$1"; then
+        repo_name=$(basename "$1" .git)
+        if git clone "$1" "$HOME/$repo_name"; then
+            selected="$HOME/$repo_name"
+        else
+            printf "Failed to clone repository. Exiting.\n"
+            exit 1
+        fi
+    else
+        # Not a git URL, treat as a path
+        selected=$(expand_path "$1")
+        # Create directory if it doesn't exist
+        if [ ! -d "$selected" ]; then
+            mkdir -p "$selected"
+        fi
+    fi
     query=""
 else
     # Define known directories as newline-separated entries: path:icon label
@@ -40,7 +80,6 @@ else
                     printf "%s\n" "$entry"
                 fi
             done
-
             # Print top-level directories in HOME (excluding hidden)
             for dir in "$HOME"/*; do
                 if [ -d "$dir" ]; then
@@ -58,20 +97,17 @@ else
             --print-query \
             --delimiter=: \
             --with-nth=2 \
-            --preview 'eza --icons=always --color=always --oneline {1}'
+            --preview 'eza --icons=always --color=always --oneline {1} 2>/dev/null || ls -la {1}'
     )
-
     # Read the query (typed text) and the selected line
     query=$(printf "%s\n" "$fzf_output" | sed -n '1p')
     displayed=$(printf "%s\n" "$fzf_output" | sed -n '2p')
-
     if [ -z "$displayed" ]; then
         # No selection from fzf
         if [ -n "$query" ]; then
             # Check if query is a git URL
             if is_git_url "$query"; then
-                repo_name=$(basename "$query")
-                repo_name=${repo_name%.git}
+                repo_name=$(basename "$query" .git)
                 if git clone "$query" "$HOME/$repo_name"; then
                     selected="$HOME/$repo_name"
                 else
@@ -79,14 +115,8 @@ else
                     exit 1
                 fi
             else
-                # Create a new directory under HOME
-                case "$query" in
-                    ~*)
-                        selected="$HOME${query#\~}" ;;
-                    *)
-                        selected="$query" ;;
-                esac
-                selected="$HOME/$selected"
+                # Create a new directory
+                selected=$(expand_path "$query")
                 mkdir -p "$selected"
             fi
         else
@@ -97,6 +127,12 @@ else
         # Extract the real directory from before the colon
         selected=$(printf "%s\n" "$displayed" | cut -d: -f1)
     fi
+fi
+
+# Ensure directory exists before proceeding
+if [ ! -d "$selected" ]; then
+    echo "Error: Directory '$selected' does not exist or could not be created."
+    exit 1
 fi
 
 selected_name=$(basename "$selected" | tr ".,: " "____")
@@ -110,10 +146,16 @@ switch_to() {
 }
 
 if tmux has-session -t "$selected_name" 2>/dev/null; then
-    switch_to
+    if [ "$no_switch" -eq 0 ]; then
+        switch_to
+    else
+        echo "Session '$selected_name' already exists."
+    fi
 else
     tmux new-session -ds "$selected_name" -c "$selected"
     tmux send-keys -t "$selected_name" "ready-tmux" Enter
-    switch_to
+    echo "Created new session '$selected_name' for '$selected'."
+    if [ "$no_switch" -eq 0 ]; then
+        switch_to
+    fi
 fi
-

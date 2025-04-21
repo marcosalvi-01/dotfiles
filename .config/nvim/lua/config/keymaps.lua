@@ -250,3 +250,35 @@ end, { desc = "Yank all diagnostics from current line to clipboard" })
 
 -- insert p instead of paste while in substitute mode
 vim.keymap.set("s", "p", "p")
+
+-- <C-r> in insert mode to jump to end of current treesitter node
+vim.keymap.set("i", "<C-r>", function()
+	local node = vim.treesitter.get_node()
+	if node ~= nil then
+		local row, col = node:end_()
+		pcall(vim.api.nvim_win_set_cursor, 0, { row + 1, col })
+	end
+end, { desc = "Jump to end of current treesitter node" })
+
+-- All the ways to start a search, with a description
+local mark_search_keys = {
+	["/"] = "Search forward",
+	["?"] = "Search backward",
+	["*"] = "Search current word (forward)",
+	["#"] = "Search current word (backward)",
+	["£"] = "Search current word (backward)",
+	["g*"] = "Search current word (forward, not whole word)",
+	["g#"] = "Search current word (backward, not whole word)",
+	["g£"] = "Search current word (backward, not whole word)",
+}
+
+-- Before starting the search, set a mark `s`
+for key, desc in pairs(mark_search_keys) do
+	vim.keymap.set("n", key, "ms" .. key, { desc = desc })
+end
+
+-- Clear search highlight when jumping back to beginning
+vim.keymap.set("n", "'s", function()
+	vim.cmd("normal! `s")
+	vim.cmd.nohlsearch()
+end)
