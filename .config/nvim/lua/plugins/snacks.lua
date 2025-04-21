@@ -285,7 +285,11 @@ return {
 		{
 			"<leader>sm",
 			function()
-				Snacks.picker.marks()
+				Snacks.picker.marks({
+					layout = {
+						reverse = false,
+					},
+				})
 			end,
 			desc = "Snacks [S]earch [M]arks",
 		},
