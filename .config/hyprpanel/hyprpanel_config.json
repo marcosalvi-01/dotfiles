@@ -21,7 +21,7 @@
   "bar.workspaces.numbered_active_indicator": "underline",
   "bar.network.label": false,
   "bar.network.showWifiInfo": false,
-  "bar.bluetooth.label": true,
+  "bar.bluetooth.label": false,
   "bar.battery.label": true,
   "menus.clock.time.military": true,
   "menus.clock.weather.location": "Rome",
@@ -58,6 +58,7 @@
         "weather",
         "volume",
         "network",
+        "bluetooth",
         "notifications"
       ]
     },
@@ -74,6 +75,7 @@
         "weather",
         "volume",
         "network",
+        "bluetooth",
         "notifications"
       ]
     },
@@ -147,6 +149,7 @@
   "theme.osd.enableShadow": true,
   "theme.bar.menus.menu.power.scaling": 80,
   "theme.bar.enableShadow": false,
-  "bar.workspaces.reverse_scroll": true
+  "bar.workspaces.reverse_scroll": true,
+  "theme.bar.buttons.bluetooth.enableBorder": false
 }
 
