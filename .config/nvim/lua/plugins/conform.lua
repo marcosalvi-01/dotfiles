@@ -39,6 +39,7 @@ return {
 			html = { "prettier" },
 			htmlangular = { "prettier" },
 			scss = { "prettier" },
+			c = { "clang" },
 		},
 		nixpkgs_fmt = {
 			command = "nixpkgs-fmt",

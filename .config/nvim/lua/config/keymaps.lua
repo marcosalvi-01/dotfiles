@@ -1,10 +1,21 @@
 -- Remap arrows
 vim.keymap.set({ "n", "v" }, "<Left>", "h")
 vim.keymap.set({ "n", "v" }, "<Right>", "l")
-vim.keymap.set({ "n", "v" }, "<Up>", "gk")
-vim.keymap.set({ "n", "v" }, "<Down>", "gj")
+-- up and down using gX for when line wrapped and also add jump tag when using a count
+vim.keymap.set({ "n", "v" }, "<down>", function()
+	if vim.v.count > 0 then
+		return "m'" .. vim.v.count .. "gj"
+	end
+	return "gj"
+end, { expr = true })
+vim.keymap.set({ "n", "v" }, "<Up>", function()
+	if vim.v.count > 0 then
+		return "m'" .. vim.v.count .. "gk"
+	end
+	return "gk"
+end, { expr = true })
 
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving the cursor" })
+vim.keymap.set("n", "J", "mzJ`z:delmarks z<cr>", { desc = "Join lines without moving the cursor" })
 vim.keymap.set("n", "S", "i<CR><Esc>", { desc = "[S]plit lines" })
 
 vim.keymap.set("n", ",", ";")
@@ -176,7 +187,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-vim.keymap.set("x", "g/", "<Esc>/\\%V", { desc = "Search inside current visual selection" })
+vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search inside current visual selection" })
 
 -- SMART DELETE
 local function smart_delete(key)
@@ -282,3 +293,8 @@ vim.keymap.set("n", "'s", function()
 	vim.cmd("normal! `s")
 	vim.cmd.nohlsearch()
 end)
+
+-- comment and duplicate current line (works with count)
+vim.keymap.set("n", "ycc", function()
+	return "yy" .. vim.v.count1 .. "gcc']p"
+end, { remap = true, expr = true })
