@@ -2,7 +2,7 @@
 """
 tmux-spine: bookmark tmux sessions and jump to them quickly.
 
-🔎 2025-04-24  – v1.2  (debug-enabled)
+🔎 2025-04-24  – v1.3.1  (dynamic-popup-sizing-fixed)
 ------------------------------------------------
 * Esc key now closes instantly (Esc-delay 25 ms)
 * Jumps call `tmux-sessionizer <name>` first, fallback to `tmux`.
@@ -10,6 +10,7 @@ tmux-spine: bookmark tmux sessions and jump to them quickly.
     ‣ Enable with CLI flag  `--debug` **or** env var `TMUX_SPINE_DEBUG=1`.
     ‣ Detailed trace is written to  `$XDG_CACHE_HOME/tmux/spine.log`
       (falls back to `~/.cache/tmux/spine.log`).
+* NEW: dynamic popup sizing based on content
 
 Usage
 -----
@@ -74,10 +75,21 @@ STORE_FILE = pathlib.Path(
     )
 )
 
-POPUP_OPTS = os.getenv(
-    "TMUX_SPINE_POPUP_OPTS",
-    '-w 20% -h 30% -E -b rounded -T "#[align=centre fg=blue bold] Tmux Spine"',
+# Base popup options without dimensions
+POPUP_BASE_OPTS = os.getenv(
+    "TMUX_SPINE_POPUP_BASE_OPTS",
+    '-E -b rounded -T "#[align=centre fg=blue bold] Tmux Spine "',
 )
+
+# Min/max dimensions for the popup
+MIN_WIDTH = 20  # Minimum width in characters
+MIN_HEIGHT = 3  # Minimum height in rows
+MAX_WIDTH_PCT = 50  # Maximum width as percentage of terminal width
+MAX_HEIGHT_PCT = 60  # Maximum height as percentage of terminal height
+
+# Padding and buffer space for popup
+WIDTH_PADDING = 4  # Extra characters to add to width
+HEIGHT_PADDING = 3  # Extra lines to add to height (includes status line space)
 
 NORMAL_FG = 250  # light grey
 NORMAL_BG = 57  # deep purple
@@ -113,6 +125,14 @@ def all_live_session_ids() -> set[str]:
     ids = set(tmx("list-sessions -F '#{session_id}'").splitlines())
     log.debug("live session ids: %s", ids)
     return ids
+
+
+def get_terminal_size() -> Tuple[int, int]:
+    """Get terminal dimensions from tmux."""
+    width = int(tmx("display -p '#{client_width}'"))
+    height = int(tmx("display -p '#{client_height}'"))
+    log.debug("terminal size: %dx%d", width, height)
+    return width, height
 
 
 def jump_to_session(name: str, sid: str) -> None:
@@ -183,9 +203,52 @@ def cmd_list() -> None:
 # ───────────────────────────── popup command ────────────────────────────── #
 
 
+def calculate_popup_dimensions() -> Tuple[int, int]:
+    """Calculate appropriate dimensions for the popup based on content."""
+    rows = load_store()
+    live = all_live_session_ids()
+
+    # Calculate required width based on longest session name
+    if not rows:
+        content_width = len("No bookmarked sessions. Press Esc/q.")
+        content_height = 1
+    else:
+        # Measure longest content line (index char + session name + possible "(dead)" suffix)
+        content_width = max(
+            len(
+                f"{INDEX_CHARS[idx] if idx < len(INDEX_CHARS) else '?'} {name}{' (dead)' if sid not in live else ''}"
+            )
+            for idx, (name, sid) in enumerate(rows)
+        )
+        content_height = len(rows)
+
+    # Add padding for borders, status line and visual comfort
+    width = content_width + WIDTH_PADDING
+    height = content_height + HEIGHT_PADDING
+
+    # Apply minimum dimensions
+    width = max(width, MIN_WIDTH)
+    height = max(height, MIN_HEIGHT)
+
+    # Get terminal dimensions and apply maximum constraints
+    term_width, term_height = get_terminal_size()
+    max_width = term_width * MAX_WIDTH_PCT // 100
+    max_height = term_height * MAX_HEIGHT_PCT // 100
+
+    width = min(width, max_width)
+    height = min(height, max_height)
+
+    log.debug("calculated popup dimensions: %dx%d", width, height)
+    return width, height
+
+
 def launch_popup() -> None:
+    """Launch popup with dynamically calculated dimensions."""
+    width, height = calculate_popup_dimensions()
+    popup_opts = f"{POPUP_BASE_OPTS} -w {width} -h {height}"
+
     tmx(
-        f"display-popup {POPUP_OPTS} {shlex.quote(sys.argv[0])} __inpopup"
+        f"display-popup {popup_opts} {shlex.quote(sys.argv[0])} __inpopup"
         + (" --debug" if DEBUG_ENABLED else "")
     )
 
@@ -223,13 +286,19 @@ def curses_main(stdscr):
 
     def redraw():
         stdscr.erase()
-        _, w = stdscr.getmaxyx()
+        h, w = stdscr.getmaxyx()
+        log.debug("curses window size: %dx%d", w, h)
+
         if not rows:
             stdscr.addstr(0, 0, "No bookmarked sessions. Press Esc/q.")
             stdscr.refresh()
             return
 
-        for idx, (name, sid) in enumerate(rows):
+        # Only display as many rows as will fit in the window
+        visible_rows = min(len(rows), h)
+
+        for idx in range(visible_rows):
+            name, sid = rows[idx]
             mark = INDEX_CHARS[idx] if idx < len(INDEX_CHARS) else "?"
             index_text = f"{mark}"
             rest_text = f" {name}" + (" (dead)" if sid not in live else "")
@@ -260,7 +329,7 @@ def curses_main(stdscr):
 
         stdscr.refresh()
 
-    stdscr.refresh()
+    # Initial draw
     redraw()
 
     while True:
