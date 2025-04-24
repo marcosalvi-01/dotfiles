@@ -42,7 +42,7 @@
   "quicker.nvim": { "branch": "master", "commit": "1798be71cdcb15fb84fa8054148a56e17fd391dc" },
   "scrollEOF.nvim": { "branch": "master", "commit": "a186f695b500e9f0b569102a4a5e8a255cd0d198" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
-  "spine": { "branch": "refactor", "commit": "5cf6b9b2176034cffc23d7b26d10e709d0e1585b" },
+  "spine": { "branch": "master", "commit": "5874d11f09e241731ca78c8f36f24d75258eb126" },
   "spring-boot.nvim": { "branch": "main", "commit": "218c0c26c14d99feca778e4d13f5ec3e8b1b60f0" },
   "tmux.nvim": { "branch": "main", "commit": "2c1c3be0ef287073cef963f2aefa31a15c8b9cd8" },
   "treewalker.nvim": { "branch": "main", "commit": "34bf0a6044e0b5e3d93b7012ae7bdf457de91ba1" },

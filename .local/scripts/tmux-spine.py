@@ -162,7 +162,7 @@ def kill_session(name: str) -> None:
 
 def show_status(msg: str) -> None:
     """Display a message in the tmux status line."""
-    tmx(f"display-message {shlex.quote(msg)}")
+    tmx(f"display-message -d 1000 {shlex.quote(msg)}")
 
 
 # ───────────────────────────── data storage ─────────────────────────────── #
@@ -196,6 +196,16 @@ def save_store(names: List[str]) -> None:
         log.error("Failed to save store file '%s': %s", STORE_FILE, e)
 
 
+# ────────────────────────── session formatting ──────────────────────────── #
+
+
+def format_session_line(idx: int, name: str, is_live: bool) -> str:
+    """Format session line for display with index character and live/dead status."""
+    mark = INDEX_CHARS[idx]
+    dead_marker = "  ( dead)" if not is_live else ""
+    return f"{mark} {name}{dead_marker}"
+
+
 # ───────────────────────────── add command ──────────────────────────────── #
 
 
@@ -209,9 +219,9 @@ def cmd_add() -> None:
 
     names = load_store()
     names = [n for n in names if n != current_name]
-    names.insert(0, current_name)
+    names.append(current_name)
     save_store(names)
-    show_status(f"★ Bookmarked session: {current_name}")
+    show_status(f"[Tmux Spine] Session added to the list.")
 
 
 # ───────────────────────────── list command ─────────────────────────────── #
@@ -229,9 +239,7 @@ def cmd_list() -> None:
         if idx >= len(INDEX_CHARS):
             print(f"? {name} (no index char available)")
             continue
-        mark = INDEX_CHARS[idx]
-        dead = " (dead)" if name not in live_names else ""
-        print(f"{mark} {name}{dead}")
+        print(format_session_line(idx, name, name in live_names))
 
 
 # ───────────────────────────── popup command ────────────────────────────── #
@@ -246,11 +254,10 @@ def calculate_popup_dimensions() -> Tuple[int, int]:
         content_width = len("No bookmarked sessions. Press Esc/q.")
         content_height = 1
     else:
-
         max_line_len = 0
         limited_names = names[: len(INDEX_CHARS)]
         for idx, name in enumerate(limited_names):
-            line = f"{INDEX_CHARS[idx]} {name}{' (dead)' if name not in live_names else ''}"
+            line = format_session_line(idx, name, name in live_names)
             max_line_len = max(max_line_len, len(line))
         content_width = max_line_len
         content_height = len(limited_names)
@@ -302,6 +309,64 @@ except AttributeError:
     KEY_SHIFT_DOWN = 526
 
 
+def render_session_line(stdscr, idx, name, is_live, is_cursor, row, w):
+    """Render a session line in the popup with appropriate colors and formatting."""
+    mark = INDEX_CHARS[idx]
+
+    index_pair = curses.color_pair(4 if is_cursor else 3) | curses.A_BOLD
+
+    base_text_pair = curses.color_pair(2 if is_cursor else 1)
+    dead_text_pair = curses.color_pair(6 if is_cursor else 5)
+
+    try:
+        stdscr.addstr(row, 0, mark, index_pair)
+    except curses.error:
+        pass
+
+    display_name = f"  {name}"
+    dead_marker = "  ( dead)"
+    full_text = display_name + (dead_marker if not is_live else "")
+
+    text_start_col = len(mark)
+    available_width = w - text_start_col
+
+    name_part_len = min(len(display_name), available_width)
+    if name_part_len > 0:
+        try:
+            stdscr.addstr(
+                row,
+                text_start_col,
+                display_name[:name_part_len],
+                base_text_pair | (curses.A_BOLD if is_cursor else 0),
+            )
+        except curses.error:
+            pass
+
+    if not is_live:
+        dead_start_col = text_start_col + name_part_len
+        available_width_for_dead = w - dead_start_col
+        dead_part_len = min(len(dead_marker), available_width_for_dead)
+        if dead_part_len > 0:
+            try:
+                stdscr.addstr(
+                    row,
+                    dead_start_col,
+                    dead_marker[:dead_part_len],
+                    dead_text_pair | (curses.A_BOLD if is_cursor else 0),
+                )
+            except curses.error:
+                pass
+
+    if is_cursor:
+        fill_start_col = text_start_col + min(len(full_text), available_width)
+        fill_len = w - fill_start_col
+        if fill_len > 0:
+            try:
+                stdscr.addstr(row, fill_start_col, " " * fill_len, base_text_pair)
+            except curses.error:
+                pass
+
+
 def curses_main(stdscr):
     """Main function for the curses-based popup interface."""
     curses.set_escdelay(25)
@@ -340,74 +405,14 @@ def curses_main(stdscr):
             if not names:
                 stdscr.addstr(0, 0, "No bookmarked sessions. Press Esc/q.")
             else:
-
                 display_count = min(len(names), h, len(INDEX_CHARS))
 
                 for idx in range(display_count):
                     name = names[idx]
-                    mark = INDEX_CHARS[idx]
                     is_live = name in live_names
                     is_cursor = idx == cursor
 
-                    index_pair = (
-                        curses.color_pair(4 if is_cursor else 3) | curses.A_BOLD
-                    )
-
-                    base_text_pair = curses.color_pair(2 if is_cursor else 1)
-                    dead_text_pair = curses.color_pair(6 if is_cursor else 5)
-
-                    try:
-                        stdscr.addstr(idx, 0, mark, index_pair)
-                    except curses.error:
-                        pass
-
-                    display_name = f" {name}"
-                    dead_marker = " (dead)"
-                    full_text = display_name + (dead_marker if not is_live else "")
-
-                    text_start_col = len(mark)
-                    available_width = w - text_start_col
-
-                    name_part_len = min(len(display_name), available_width)
-                    if name_part_len > 0:
-                        try:
-                            stdscr.addstr(
-                                idx,
-                                text_start_col,
-                                display_name[:name_part_len],
-                                base_text_pair | (curses.A_BOLD if is_cursor else 0),
-                            )
-                        except curses.error:
-                            pass
-
-                    if not is_live:
-                        dead_start_col = text_start_col + name_part_len
-                        available_width_for_dead = w - dead_start_col
-                        dead_part_len = min(len(dead_marker), available_width_for_dead)
-                        if dead_part_len > 0:
-                            try:
-                                stdscr.addstr(
-                                    idx,
-                                    dead_start_col,
-                                    dead_marker[:dead_part_len],
-                                    dead_text_pair
-                                    | (curses.A_BOLD if is_cursor else 0),
-                                )
-                            except curses.error:
-                                pass
-
-                    if is_cursor:
-                        fill_start_col = text_start_col + min(
-                            len(full_text), available_width
-                        )
-                        fill_len = w - fill_start_col
-                        if fill_len > 0:
-                            try:
-                                stdscr.addstr(
-                                    idx, fill_start_col, " " * fill_len, base_text_pair
-                                )
-                            except curses.error:
-                                pass
+                    render_session_line(stdscr, idx, name, is_live, is_cursor, idx, w)
 
             stdscr.refresh()
             needs_redraw = False
@@ -424,7 +429,6 @@ def curses_main(stdscr):
             return
 
         if not names:
-
             continue
 
         num_items = min(len(names), len(INDEX_CHARS))
