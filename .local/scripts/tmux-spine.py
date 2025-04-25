@@ -41,17 +41,19 @@ log.debug("\n————— New run ————— (%s)", " ".join(sys.argv))
 
 INDEX_CHARS = list(os.getenv("TMUX_SPINE_CHARS", "neiatsrchd0123456789"))
 
+CONFIG_BASE = pathlib.Path(
+    os.getenv("XDG_CONFIG_HOME", os.path.expanduser("~/.config")), "tmux", "spine"
+)
+
 STORE_FILE = pathlib.Path(
     os.getenv(
         "TMUX_SPINE_FILE",
-        os.path.join(
-            os.getenv("XDG_CONFIG_HOME", os.path.expanduser("~/.config")),
-            "tmux",
-            "spine",
-            "sessions",
-        ),
+        os.path.join(CONFIG_BASE, "sessions"),
     )
 )
+
+# File to store the all-sessions order
+ALL_SESSIONS_ORDER_FILE = pathlib.Path(os.path.join(CONFIG_BASE, "all_sessions_order"))
 
 # Base popup options without dimensions
 POPUP_BASE_OPTS = os.getenv(
@@ -106,6 +108,7 @@ def current_session() -> str:
 def all_live_session_names() -> Set[str]:
     """Return a set of names of all currently running tmux sessions."""
     names = set(tmx("list-sessions -F '#S'").splitlines())
+    names = {name for name in names if not (name.startswith("_"))}
     log.debug("live session names: %s", names)
     return names
 
@@ -196,14 +199,53 @@ def save_store(names: List[str]) -> None:
         log.error("Failed to save store file '%s': %s", STORE_FILE, e)
 
 
+def load_all_sessions_order() -> List[str]:
+    """Load the custom order for all sessions."""
+    if not ALL_SESSIONS_ORDER_FILE.exists():
+        log.debug("all-sessions order file missing – returning empty list")
+        return []
+    try:
+        names = ALL_SESSIONS_ORDER_FILE.read_text().splitlines()
+        names = [n for n in names if n.strip()]
+        log.debug("loaded all-sessions order (names): %s", names)
+        return names
+    except Exception as e:
+        log.error(
+            "Failed to load all-sessions order file '%s': %s",
+            ALL_SESSIONS_ORDER_FILE,
+            e,
+        )
+        return []
+
+
+def save_all_sessions_order(names: List[str]) -> None:
+    """Save the custom order for all sessions."""
+    try:
+        ALL_SESSIONS_ORDER_FILE.parent.mkdir(parents=True, exist_ok=True)
+        names_to_save = names[: len(INDEX_CHARS)]
+        with ALL_SESSIONS_ORDER_FILE.open("w") as fh:
+            for name in names_to_save:
+                fh.write(f"{name}\n")
+        log.debug("saved all-sessions order (%d names)", len(names_to_save))
+    except Exception as e:
+        log.error(
+            "Failed to save all-sessions order file '%s': %s",
+            ALL_SESSIONS_ORDER_FILE,
+            e,
+        )
+
+
 # ────────────────────────── session formatting ──────────────────────────── #
 
 
-def format_session_line(idx: int, name: str, is_live: bool) -> str:
+def format_session_line(
+    idx: int, name: str, is_live: bool, current_name: str | None = None
+) -> str:
     """Format session line for display with index character and live/dead status."""
     mark = INDEX_CHARS[idx]
-    dead_marker = "  ( dead)" if not is_live else ""
-    return f"{mark} {name}{dead_marker}"
+    dead_marker = "   dead" if not is_live else ""
+    current_marker = "   active" if current_name and name == current_name else ""
+    return f"{mark} {name}{dead_marker}{current_marker}"
 
 
 # ───────────────────────────── add command ──────────────────────────────── #
@@ -245,19 +287,36 @@ def cmd_list() -> None:
 # ───────────────────────────── popup command ────────────────────────────── #
 
 
-def calculate_popup_dimensions() -> Tuple[int, int]:
+def calculate_popup_dimensions(use_all_sessions: bool = False) -> Tuple[int, int]:
     """Calculate appropriate dimensions for the popup based on content."""
-    names = load_store()
-    live_names = all_live_session_names()
+    if use_all_sessions:
+        # Get sessions in custom order or default sort
+        live_names = all_live_session_names()
+        custom_order = load_all_sessions_order()
 
-    if not names:
-        content_width = len("No bookmarked sessions. Press Esc/q.")
+        # Filter custom order to only include live sessions
+        ordered_names = [name for name in custom_order if name in live_names]
+
+        # Add any live sessions that aren't in the custom order
+        missing_names = sorted(list(live_names - set(ordered_names)))
+        names_list = ordered_names + missing_names
+
+        extra_text = "No active sessions. Press Esc/q."
+    else:
+        names_list = load_store()
+        extra_text = "No bookmarked sessions. Press Esc/q."
+
+    live_names = all_live_session_names()
+    current_name = current_session()
+
+    if not names_list:
+        content_width = len(extra_text)
         content_height = 1
     else:
         max_line_len = 0
-        limited_names = names[: len(INDEX_CHARS)]
+        limited_names = names_list[: len(INDEX_CHARS)]
         for idx, name in enumerate(limited_names):
-            line = format_session_line(idx, name, name in live_names)
+            line = format_session_line(idx, name, name in live_names, current_name)
             max_line_len = max(max_line_len, len(line))
         content_width = max_line_len
         content_height = len(limited_names)
@@ -282,14 +341,15 @@ def calculate_popup_dimensions() -> Tuple[int, int]:
     return width, height
 
 
-def launch_popup() -> None:
+def launch_popup(use_all_sessions: bool = False) -> None:
     """Launch popup with dynamically calculated dimensions."""
-    width, height = calculate_popup_dimensions()
+    width, height = calculate_popup_dimensions(use_all_sessions)
     popup_opts = f"{POPUP_BASE_OPTS} -w {width} -h {height}"
 
     script_path_arg = shlex.quote(sys.argv[0])
     debug_arg = " --debug" if DEBUG_ENABLED else ""
-    popup_cmd = f"display-popup {popup_opts} {script_path_arg} __inpopup{debug_arg}"
+    all_sessions_arg = " --all" if use_all_sessions else ""
+    popup_cmd = f"display-popup {popup_opts} {script_path_arg} __inpopup{debug_arg}{all_sessions_arg}"
 
     tmx(popup_cmd)
 
@@ -309,7 +369,9 @@ except AttributeError:
     KEY_SHIFT_DOWN = 526
 
 
-def render_session_line(stdscr, idx, name, is_live, is_cursor, row, w):
+def render_session_line(
+    stdscr, idx, name, is_live, is_cursor, row, w, is_current=False
+):
     """Render a session line in the popup with appropriate colors and formatting."""
     mark = INDEX_CHARS[idx]
 
@@ -317,6 +379,7 @@ def render_session_line(stdscr, idx, name, is_live, is_cursor, row, w):
 
     base_text_pair = curses.color_pair(2 if is_cursor else 1)
     dead_text_pair = curses.color_pair(6 if is_cursor else 5)
+    current_text_pair = curses.color_pair(8 if is_cursor else 7)
 
     try:
         stdscr.addstr(row, 0, mark, index_pair)
@@ -324,12 +387,22 @@ def render_session_line(stdscr, idx, name, is_live, is_cursor, row, w):
         pass
 
     display_name = f"  {name}"
-    dead_marker = "  ( dead)"
-    full_text = display_name + (dead_marker if not is_live else "")
+    dead_marker = "   dead"
+    current_marker = "   active"
+
+    # Determine what parts to display
+    parts = [display_name]
+    if not is_live:
+        parts.append(dead_marker)
+    if is_current:
+        parts.append(current_marker)
+
+    full_text = "".join(parts)
 
     text_start_col = len(mark)
     available_width = w - text_start_col
 
+    # Display name part
     name_part_len = min(len(display_name), available_width)
     if name_part_len > 0:
         try:
@@ -342,33 +415,54 @@ def render_session_line(stdscr, idx, name, is_live, is_cursor, row, w):
         except curses.error:
             pass
 
-    if not is_live:
-        dead_start_col = text_start_col + name_part_len
-        available_width_for_dead = w - dead_start_col
-        dead_part_len = min(len(dead_marker), available_width_for_dead)
+    current_col = text_start_col + name_part_len
+    remaining_width = w - current_col
+
+    # Display dead marker if needed
+    if not is_live and remaining_width > 0:
+        dead_part_len = min(len(dead_marker), remaining_width)
         if dead_part_len > 0:
             try:
                 stdscr.addstr(
                     row,
-                    dead_start_col,
+                    current_col,
                     dead_marker[:dead_part_len],
                     dead_text_pair | (curses.A_BOLD if is_cursor else 0),
                 )
+                current_col += dead_part_len
+                remaining_width -= dead_part_len
             except curses.error:
                 pass
 
-    if is_cursor:
-        fill_start_col = text_start_col + min(len(full_text), available_width)
-        fill_len = w - fill_start_col
-        if fill_len > 0:
+    # Display current marker if needed
+    if is_current and remaining_width > 0:
+        current_part_len = min(len(current_marker), remaining_width)
+        if current_part_len > 0:
             try:
-                stdscr.addstr(row, fill_start_col, " " * fill_len, base_text_pair)
+                stdscr.addstr(
+                    row,
+                    current_col,
+                    current_marker[:current_part_len],
+                    current_text_pair | (curses.A_BOLD if is_cursor else 0),
+                )
+                current_col += current_part_len
+                remaining_width -= current_part_len
+            except curses.error:
+                pass
+
+    # Fill remaining space on cursor line
+    if is_cursor:
+        if remaining_width > 0:
+            try:
+                stdscr.addstr(row, current_col, " " * remaining_width, base_text_pair)
             except curses.error:
                 pass
 
 
 def curses_main(stdscr):
     """Main function for the curses-based popup interface."""
+    use_all_sessions = "--all" in sys.argv
+
     curses.set_escdelay(25)
     curses.curs_set(0)
     stdscr.keypad(True)
@@ -380,6 +474,7 @@ def curses_main(stdscr):
     HILITE_FG, HILITE_BG = -1, 0
     INDEX_FG, INDEX_BG = 11, -1
     DEAD_FG = 242
+    CURRENT_FG = 10
 
     curses.init_pair(1, NORMAL_FG, NORMAL_BG)
     curses.init_pair(2, HILITE_FG, HILITE_BG)
@@ -387,23 +482,65 @@ def curses_main(stdscr):
     curses.init_pair(4, INDEX_FG, HILITE_BG)
     curses.init_pair(5, DEAD_FG, NORMAL_BG)
     curses.init_pair(6, DEAD_FG, HILITE_BG)
+    curses.init_pair(7, CURRENT_FG, NORMAL_BG)
+    curses.init_pair(8, CURRENT_FG, HILITE_BG)
 
     stdscr.bkgd(" ", curses.color_pair(1))
 
-    names = load_store()
+    # Get live sessions
+    live_names = all_live_session_names()
+
+    # Get session list based on mode
+    if use_all_sessions:
+        # Get sessions in custom order or default sort
+        custom_order = load_all_sessions_order()
+
+        # Filter custom order to only include live sessions
+        ordered_names = [name for name in custom_order if name in live_names]
+
+        # Add any live sessions that aren't in the custom order
+        missing_names = sorted(list(live_names - set(ordered_names)))
+        names = ordered_names + missing_names
+
+        no_sessions_message = "No active sessions. Press Esc/q."
+    else:
+        names = load_store()
+        no_sessions_message = "No bookmarked sessions. Press Esc/q."
+
     cursor = 0
     needs_redraw = True
+    current_name = current_session()  # Get the current session name
+
+    log.debug(
+        "Running popup with %s sessions. Use all sessions: %s",
+        len(names),
+        use_all_sessions,
+    )
 
     while True:
         if needs_redraw:
             live_names = all_live_session_names()
+
+            # If using all sessions mode, refresh the list to include any new sessions
+            if use_all_sessions:
+                custom_order = load_all_sessions_order()
+
+                # Keep only sessions that still exist
+                ordered_names = [name for name in custom_order if name in live_names]
+
+                # Add any new sessions that aren't in our custom order
+                missing_names = sorted(list(live_names - set(ordered_names)))
+                names = ordered_names + missing_names
+
+                current_name = current_session()  # Refresh current name on redraw
+
             log.debug("Redrawing popup. Live names: %s", live_names)
             stdscr.erase()
             h, w = stdscr.getmaxyx()
             log.debug("curses window size: %dx%d", w, h)
 
             if not names:
-                stdscr.addstr(0, 0, "No bookmarked sessions. Press Esc/q.")
+                stdscr.addstr(0, 0, no_sessions_message)
             else:
                 display_count = min(len(names), h, len(INDEX_CHARS))
 
@@ -411,8 +548,11 @@ def curses_main(stdscr):
                     name = names[idx]
                     is_live = name in live_names
                     is_cursor = idx == cursor
+                    is_current = name == current_name
 
-                    render_session_line(stdscr, idx, name, is_live, is_cursor, idx, w)
+                    render_session_line(
+                        stdscr, idx, name, is_live, is_cursor, idx, w, is_current
+                    )
 
             stdscr.refresh()
             needs_redraw = False
@@ -436,14 +576,15 @@ def curses_main(stdscr):
         if 0 <= key <= 255 and chr(key) in INDEX_CHARS[:num_items]:
             try:
                 i = INDEX_CHARS.index(chr(key))
-                name_to_jump = names[i]
-                log.debug(
-                    "Index char '%s' pressed, jumping to session %s",
-                    chr(key),
-                    name_to_jump,
-                )
-                jump_to_session(name_to_jump)
-                return
+                if i < len(names):
+                    name_to_jump = names[i]
+                    log.debug(
+                        "Index char '%s' pressed, jumping to session %s",
+                        chr(key),
+                        name_to_jump,
+                    )
+                    jump_to_session(name_to_jump)
+                    return
             except IndexError:
                 log.warning("Index char maps to out-of-bounds name index.")
             except ValueError:
@@ -458,14 +599,33 @@ def curses_main(stdscr):
             needs_redraw = True
 
         elif key == KEY_SHIFT_UP and cursor > 0:
+            # Reorder in both modes
             names[cursor - 1], names[cursor] = names[cursor], names[cursor - 1]
             cursor -= 1
-            save_store(names)
+
+            # Save the appropriate store based on mode
+            if use_all_sessions:
+                # In all-sessions mode, save custom order
+                save_all_sessions_order(names)
+            else:
+                # In bookmarked mode, save bookmarks
+                save_store(names)
+
             needs_redraw = True
+
         elif key == KEY_SHIFT_DOWN and cursor < num_items - 1:
+            # Reorder in both modes
             names[cursor + 1], names[cursor] = names[cursor], names[cursor + 1]
             cursor += 1
-            save_store(names)
+
+            # Save the appropriate store based on mode
+            if use_all_sessions:
+                # In all-sessions mode, save custom order
+                save_all_sessions_order(names)
+            else:
+                # In bookmarked mode, save bookmarks
+                save_store(names)
+
             needs_redraw = True
 
         elif key in KEY_ENTER:
@@ -479,20 +639,49 @@ def curses_main(stdscr):
 
         elif key == KEY_CTRL_D:
             if 0 <= cursor < len(names):
-                name_to_delete = names.pop(cursor)
-                log.debug("Ctrl+D pressed, removing bookmark for %s", name_to_delete)
+                name_to_delete = names[cursor]
 
-                current_live_names = all_live_session_names()
-                if name_to_delete in current_live_names:
-                    log.info("Session %s is live, killing it.", name_to_delete)
-                    kill_session(name_to_delete)
-                else:
-                    log.debug(
-                        "Session %s was not live, only removing bookmark.",
+                if use_all_sessions:
+                    # In all-sessions mode, Ctrl+D just kills the session
+                    log.info(
+                        "Ctrl+D pressed in all-sessions mode, killing session %s",
                         name_to_delete,
                     )
+                    kill_session(name_to_delete)
 
-                save_store(names)
+                    # Also remove from custom order if it exists there
+                    custom_order = load_all_sessions_order()
+                    if name_to_delete in custom_order:
+                        custom_order.remove(name_to_delete)
+                        save_all_sessions_order(custom_order)
+
+                    # Refresh list of live sessions
+                    live_names = all_live_session_names()
+
+                    # Rebuild names list with updated order
+                    ordered_names = [
+                        name for name in custom_order if name in live_names
+                    ]
+                    missing_names = sorted(list(live_names - set(ordered_names)))
+                    names = ordered_names + missing_names
+                else:
+                    # In bookmarked mode, remove from list and optionally kill
+                    log.debug(
+                        "Ctrl+D pressed, removing bookmark for %s", name_to_delete
+                    )
+                    names.pop(cursor)
+
+                    current_live_names = all_live_session_names()
+                    if name_to_delete in current_live_names:
+                        log.info("Session %s is live, killing it.", name_to_delete)
+                        kill_session(name_to_delete)
+                    else:
+                        log.debug(
+                            "Session %s was not live, only removing bookmark.",
+                            name_to_delete,
+                        )
+
+                    save_store(names)
 
                 num_items = min(len(names), len(INDEX_CHARS))
                 if not names:
@@ -522,7 +711,7 @@ def cmd_popup_inside() -> None:
 
 def main():
     if len(sys.argv) < 2 or sys.argv[1] in ["-h", "--help"]:
-        print("Usage: tmux-spine {add|popup|list} [--debug]", file=sys.stderr)
+        print("Usage: tmux-spine {add|popup|list} [options]", file=sys.stderr)
         print("\nCommands:", file=sys.stderr)
         print("  add      Bookmark the current session", file=sys.stderr)
         print(
@@ -531,6 +720,10 @@ def main():
         print("  list     List bookmarked sessions to stdout", file=sys.stderr)
 
         print("\nOptions:", file=sys.stderr)
+        print(
+            "  --all    Show all live sessions instead of bookmarked ones (with popup)",
+            file=sys.stderr,
+        )
         print(
             "  --debug  Enable debug logging to ~/.cache/tmux/spine.log",
             file=sys.stderr,
@@ -544,7 +737,8 @@ def main():
         if cmd == "add":
             cmd_add()
         elif cmd == "popup":
-            launch_popup()
+            use_all_sessions = "--all" in sys.argv
+            launch_popup(use_all_sessions)
         elif cmd == "__inpopup":
             cmd_popup_inside()
         elif cmd == "list":
