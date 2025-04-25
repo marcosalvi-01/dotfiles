@@ -67,7 +67,7 @@ MAX_HEIGHT_PCT = 60
 
 # Padding and buffer space for popup
 WIDTH_PADDING = 4
-HEIGHT_PADDING = 3
+HEIGHT_PADDING = 2
 
 # ───────────────────────────── tmux helpers ─────────────────────────────── #
 
