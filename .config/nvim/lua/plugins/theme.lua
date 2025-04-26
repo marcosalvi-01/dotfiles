@@ -66,7 +66,7 @@ return {
 					hl(0, "IncSearch", { bg = "#5B4D28", ctermbg = 142, ctermfg = 235 })
 
 					-- highlight yank
-					hl(0, "HighlightedyankRegion", {bg = "#EA6962", fg = bg_color})
+					hl(0, "HighlightedyankRegion", { bg = "#EA6962", fg = bg_color })
 
 					-- diagnostic underline not curly
 					hl(0, "DiagnosticUnderlineWarn", { sp = "#D8A657", cterm = { underline = true }, underline = true })
@@ -108,6 +108,11 @@ return {
 					hl(0, "LspReferenceRead", { link = "CurrentWord" })
 					hl(0, "LspReferenceWrite", { link = "CurrentWord" })
 					hl(0, "CurrentWord", { bg = "#292929", bold = true })
+
+					-- noice
+					hl(0, "NoiceCmdlinePopupBorder", { link = "FloatBorder" })
+					hl(0, "NoiceCmdlinePopupTitle", { link = "Title" })
+					hl(0, "NoiceCmdlinePopupBorderSearch", { link = "FloatBorder" })
 				end,
 			})
 

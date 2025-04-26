@@ -33,43 +33,6 @@ vim.keymap.set("n", "<End>", "$")
 
 vim.keymap.set("n", "Q", "`", { remap = true })
 
--- MOVED TO CINNAMON FOR ANIMATIONS
--- vim.keymap.set("n", "<leader><BS>E", function()
--- 	vim.cmd.cprev()
--- 	vim.cmd.normal("zz")
--- end, { desc = "[G]o to previous [E]ntry in the Quickfix list" })
--- vim.keymap.set("n", "<leader><BS>e", function()
--- 	vim.cmd.cnext()
--- 	vim.cmd.normal("zz")
--- end, { desc = "[G]o to next [E]ntry in the Quickfix list" })
-
--- vim.keymap.set("n", "<PageUp>", "<C-u>zz")
--- vim.keymap.set("n", "<PageDown>", "<C-d>zz")
--- vim.keymap.set("n", "<PageUp>", function()
--- 	require("cinnamon").scroll("<C-u>zz")
--- end)
--- vim.keymap.set("n", "<PageDown>", function()
--- 	require("cinnamon").scroll("<C-d>zz")
--- end)
-
--- vim.keymap.set("n", "n", "nzz")
--- vim.keymap.set("n", "N", "Nzz")
--- vim.keymap.set("n", "n", function()
--- 	require("cinnamon").scroll("nzz")
--- end)
--- vim.keymap.set("n", "N", function()
--- 	require("cinnamon").scroll("Nzz")
--- end)
-
--- vim.keymap.set("n", "<C-o>", "<C-o>zz")
--- vim.keymap.set("n", "<C-i>", "<C-i>zz")
--- vim.keymap.set("n", "<C-o>", function()
--- 	require("cinnamon").scroll("<C-o>zz")
--- end)
--- vim.keymap.set("n", "<C-i>", function()
--- 	require("cinnamon").scroll("<C-i>zz")
--- end)
-
 vim.keymap.set({ "n", "v" }, "H", "~")
 
 vim.keymap.set("n", "vv", "viw")
@@ -77,10 +40,6 @@ vim.keymap.set("n", "vv", "viw")
 vim.keymap.set("v", "P", '"_dp')
 vim.keymap.set("v", "p", '"_dP')
 vim.keymap.set("v", "<leader>p", "p")
-
--- using ctrl + h because kitty seems to interpret ctrl + backspace as that, don't know w
--- now done in kitty
--- vim.keymap.set({ "i", "c" }, "<C-H>", "<C-w>", { desc = "Delete word in insert mode" })
 
 vim.keymap.set("n", "ZF", "ZQ", { desc = "Quit without saving" })
 
