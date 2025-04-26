@@ -158,7 +158,7 @@
     "Europe/Rome"
   ],
   "theme.bar.buttons.modules.worldclock.enableBorder": false,
-  "bar.customModules.worldclock.format": "%I:%M:%S",
+  "bar.customModules.worldclock.format": "%H:%M:%S",
   "bar.customModules.worldclock.icon": "󰥔",
   "theme.bar.buttons.clock.spacing": "0.6em"
 }
