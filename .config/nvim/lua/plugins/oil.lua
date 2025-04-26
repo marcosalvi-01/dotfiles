@@ -100,7 +100,7 @@ return {
 			},
 			-- Enable oil-git-status
 			win_options = {
-				signcolumn = "yes:1",
+				signcolumn = "yes:2",
 			},
 		})
 
