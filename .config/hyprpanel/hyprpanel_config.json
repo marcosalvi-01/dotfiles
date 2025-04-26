@@ -20,7 +20,7 @@
   "bar.workspaces.showApplicationIcons": true,
   "bar.workspaces.numbered_active_indicator": "underline",
   "bar.network.label": false,
-  "bar.network.showWifiInfo": false,
+  "bar.network.showWifiInfo": true,
   "bar.bluetooth.label": false,
   "bar.battery.label": true,
   "menus.clock.time.military": true,
@@ -37,7 +37,7 @@
   "bar.windowtitle.custom_title": true,
   "bar.windowtitle.label": false,
   "bar.windowtitle.icon": true,
-  "bar.clock.format": "%a %d %b, %Y | 󰥔 %H:%M:%S ",
+  "bar.clock.format": "%a %d %b, %Y",
   "bar.clock.icon": "",
   "bar.media.show_active_only": true,
   "bar.notifications.hideCountWhenZero": true,
@@ -55,6 +55,7 @@
       ],
       "right": [
         "clock",
+        "worldclock",
         "weather",
         "volume",
         "network",
@@ -72,6 +73,7 @@
       ],
       "right": [
         "clock",
+        "worldclock",
         "weather",
         "volume",
         "network",
@@ -89,6 +91,7 @@
       ],
       "right": [
         "clock",
+        "worldclock",
         "weather",
         "volume",
         "network",
@@ -150,6 +153,12 @@
   "theme.bar.menus.menu.power.scaling": 80,
   "theme.bar.enableShadow": false,
   "bar.workspaces.reverse_scroll": true,
-  "theme.bar.buttons.bluetooth.enableBorder": false
+  "theme.bar.buttons.bluetooth.enableBorder": false,
+  "bar.customModules.worldclock.tz": [
+    "Europe/Rome"
+  ],
+  "theme.bar.buttons.modules.worldclock.enableBorder": false,
+  "bar.customModules.worldclock.format": "%H:%M:%S",
+  "bar.customModules.worldclock.icon": "󰥔",
+  "theme.bar.buttons.clock.spacing": "0.6em"
 }
-

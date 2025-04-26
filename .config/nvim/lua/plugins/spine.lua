@@ -1,7 +1,5 @@
 return {
-	-- dir = "~/spine",
 	"marcosalvi-01/spine",
-	branch = "refactor",
 	keys = {
 		{
 			"<leader><BS>",
