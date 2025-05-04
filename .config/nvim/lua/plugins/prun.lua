@@ -33,6 +33,7 @@ return {
 	},
 	opts = {
 		tmux_pane = 1,
-		default_pre = "tmux display-popup -b rounded -w 70% -h 70% -T '#[align=centre] %s ' 'tmux-shell-popup %s %p 0' & clear",
+		-- [sh] means that the command will be run in a temporary shell, not in the tux window
+		default_pre = "[sh] tmux-shell-popup -b rounded -w 70% -h 70% -T '%s' %s %w 0",
 	},
 }
