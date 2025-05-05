@@ -166,22 +166,22 @@ vim.keymap.set("n", "dd", function()
 end, { noremap = true, expr = true, desc = "Smart delete" })
 
 -- Set a keymap in normal mode to run the make command
-vim.keymap.set("n", "<leader>m", function()
-	RunMakeAsync()
-end, { noremap = true, silent = true, desc = "Run [M]ake in the current working directory" })
-
--- Run the 'make' command asynchronously in the current working directory
-function RunMakeAsync()
-	vim.notify("Running make...", vim.log.levels.INFO)
-
-	vim.system({ "make" }, {}, function(out)
-		if out.code == 0 then
-			vim.notify("Make finished successfully", vim.log.levels.INFO)
-		else
-			vim.notify("Make finished with errors (exit code " .. out.code .. ")", vim.log.levels.ERROR)
-		end
-	end)
-end
+-- vim.keymap.set("n", "<leader>m", function()
+-- 	RunMakeAsync()
+-- end, { noremap = true, silent = true, desc = "Run [M]ake in the current working directory" })
+--
+-- -- Run the 'make' command asynchronously in the current working directory
+-- function RunMakeAsync()
+-- 	vim.notify("Running make...", vim.log.levels.INFO)
+--
+-- 	vim.system({ "make" }, {}, function(out)
+-- 		if out.code == 0 then
+-- 			vim.notify("Make finished successfully", vim.log.levels.INFO)
+-- 		else
+-- 			vim.notify("Make finished with errors (exit code " .. out.code .. ")", vim.log.levels.ERROR)
+-- 		end
+-- 	end)
+-- end
 
 -- Create a keymap (here using <leader>g in normal mode) to trigger the prompt
 vim.keymap.set("n", "<leader>G", function()
