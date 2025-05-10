@@ -136,7 +136,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local bufnr = event.buf
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 		-- Check that the LSP client supports inlay hints
-		if client and client.supports_method("textDocument/inlayHint") then
+		if client and client.server_capabilities.inlayHintProvider then
 			vim.keymap.set("n", "<leader>ih", function()
 				local currently_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
 				vim.lsp.inlay_hint.enable(not currently_enabled, { bufnr = bufnr })
@@ -257,3 +257,7 @@ end)
 vim.keymap.set("n", "ycc", function()
 	return "yy" .. vim.v.count1 .. "gcc']p"
 end, { remap = true, expr = true })
+
+-- vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+-- vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
+-- vim.keymap.set("n", "<leader>D", vim.lsp.buf.declaration, { desc = "Go to declaration" })
