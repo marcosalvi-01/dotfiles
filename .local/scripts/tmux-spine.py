@@ -359,11 +359,13 @@ KEY_CTRL_D = 4
 KEY_ESC = 27
 KEY_UP = {curses.KEY_UP, ord("k")}
 KEY_DOWN = {curses.KEY_DOWN, ord("j")}
+KEY_RIGHT = curses.KEY_RIGHT
+KEY_LEFT = curses.KEY_LEFT
 # Try to get correct Shift+Up/Down codes if available
 try:
     KEY_SHIFT_UP = curses.KEY_SR
     KEY_SHIFT_DOWN = curses.KEY_SF
-except AttributeError:
+except:
     log.warning("curses.KEY_SR/SF not available, Shift+Up/Down might not work.")
     KEY_SHIFT_UP = 567
     KEY_SHIFT_DOWN = 526
@@ -598,7 +600,7 @@ def curses_main(stdscr):
             cursor = (cursor + 1) % num_items
             needs_redraw = True
 
-        elif key == KEY_SHIFT_UP and cursor > 0:
+        elif (key == KEY_SHIFT_UP or key == KEY_LEFT) and cursor > 0:
             # Reorder in both modes
             names[cursor - 1], names[cursor] = names[cursor], names[cursor - 1]
             cursor -= 1
@@ -613,7 +615,7 @@ def curses_main(stdscr):
 
             needs_redraw = True
 
-        elif key == KEY_SHIFT_DOWN and cursor < num_items - 1:
+        elif (key == KEY_SHIFT_DOWN or key == KEY_RIGHT) and cursor < num_items - 1:
             # Reorder in both modes
             names[cursor + 1], names[cursor] = names[cursor], names[cursor + 1]
             cursor += 1
