@@ -34,7 +34,7 @@ return {
 			go = { "goimports", "gofumpt" },
 			xml = { "xmlformatter" },
 			css = { "prettier" },
-			http = { "kulala" },
+			http = { "kulala-fmt" },
 			kotlin = { "kfmt" },
 			html = { "prettier" },
 			htmlangular = { "prettier" },
