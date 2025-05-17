@@ -9,6 +9,7 @@ return {
 				"dirbuf",
 				"dirvish",
 				"fugitive",
+				"help",
 				"oil",
 				"NeogitStatus",
 				"gitcommit",
@@ -27,8 +28,5 @@ return {
 		vim.keymap.set({ "n", "v" }, "<c-p>", function()
 			illuminate.goto_prev_reference()
 		end, { desc = "test" })
-		-- vim.keymap.set("n", "vv", function()
-		-- 	illuminate.textobj_select()
-		-- end)
 	end,
 }

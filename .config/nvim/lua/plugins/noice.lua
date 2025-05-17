@@ -3,8 +3,6 @@ return {
 	event = "VeryLazy",
 	dependencies = {
 		"MunifTanjim/nui.nvim",
-		-- if disabled noice will use the mini.notify backend
-		-- "rcarriga/nvim-notify",
 	},
 	opts = {
 		lsp = {

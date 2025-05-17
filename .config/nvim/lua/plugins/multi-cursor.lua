@@ -148,24 +148,5 @@ return {
 			mode = "v",
 			desc = "Rotate visual selection contents backward [multicursor]",
 		},
-
-		-- Jumplist support
-		{
-			"<c-i>",
-			function()
-				require("multicursor-nvim").jumpForward()
-			end,
-			mode = { "v", "n" },
-			desc = "Jump forward in cursor history [multicursor]",
-		},
-
-		{
-			"<c-o>",
-			function()
-				require("multicursor-nvim").jumpBackward()
-			end,
-			mode = { "v", "n" },
-			desc = "Jump backward in cursor history [multicursor]",
-		},
 	},
 }

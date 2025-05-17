@@ -208,15 +208,8 @@ bindkey -M vicmd '^H' vi-backward-kill-word
 bindkey -M viins '^[[3;5~' delete-word
 bindkey -M vicmd '^[[3;5~' delete-word
 
-# SDKMAN (lazy-loaded)
-export SDKMAN_DIR="$HOME/.sdkman"
-if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
-    function sdk() {
-        unfunction sdk
-        source "$HOME/.sdkman/bin/sdkman-init.sh"
-        sdk "$@"
-    }
-fi
+# SDKMAN
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Load p10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

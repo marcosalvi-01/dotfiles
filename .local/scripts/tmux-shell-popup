@@ -58,10 +58,10 @@ if ! tmux has-session -t "$SESSION" 2>/dev/null; then
     echo "'tmux-sessionizer' not installed" >&2; exit 127; }
     tmux-sessionizer -c "$SESSION" || {
     tmux has-session -t "$SESSION" 2>/dev/null || exit 1; }
-fi
 
-# wait for tmux-sessionizer to create the windows
-sleep 0.1
+    # wait for tmux-sessionizer to create the windows
+    sleep 0.5
+fi
 
 # --- verify window / pane indices -------------------------------------------
 tmux list-windows -t "$SESSION" -F '#{window_index}' | grep -qx "$WINDOW_INDEX" ||
