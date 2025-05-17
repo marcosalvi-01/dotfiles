@@ -1,7 +1,7 @@
 return {
 	"saghen/blink.cmp",
 	dependencies = "rafamadriz/friendly-snippets",
-	event = "InsertEnter",
+	event = "VeryLazy",
 	version = "*",
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
@@ -22,6 +22,11 @@ return {
 			completion = {
 				menu = { auto_show = true },
 				ghost_text = { enabled = true },
+			},
+			keymap = {
+				preset = "inherit",
+				["<Up>"] = { "select_prev", "fallback" },
+				["<Down>"] = { "select_next", "fallback" },
 			},
 		},
 

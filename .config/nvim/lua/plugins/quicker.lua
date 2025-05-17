@@ -22,11 +22,9 @@ return {
 		},
 		borders = {
 			vert = "│",
-			-- Strong headers separate results from different files
 			strong_header = "─",
 			strong_cross = "┼",
 			strong_end = "┤",
-			-- Soft headers separate results within the same file
 			soft_header = "┈",
 			soft_cross = "┼",
 			soft_end = "┤",
@@ -38,15 +36,6 @@ return {
 			function()
 				require("quicker").toggle({ focus = true })
 				if vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].quickfix == 1 then
-					vim.cmd("Refresh")
-				end
-			end,
-		},
-		{
-			"<leader>l",
-			function()
-				require("quicker").toggle({ focus = true, loclist = true })
-				if vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].loclist == 1 then
 					vim.cmd("Refresh")
 				end
 			end,

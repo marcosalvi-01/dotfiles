@@ -6,9 +6,12 @@ return {
 		},
 		opts = {
 			ensure_installed = {
+				-- LSPs
 				"lua_ls",
 				"gopls",
 				"pyright",
+
+				-- Tools
 				"jq",
 				"kulala-fmt",
 				"stylua",
@@ -28,6 +31,9 @@ return {
 		dependencies = {
 			"mason-org/mason.nvim",
 			"neovim/nvim-lspconfig",
+		},
+		opts = {
+			automatic_installation = true,
 		},
 	},
 	{

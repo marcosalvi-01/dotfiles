@@ -19,7 +19,7 @@ return {
 				enable = true,
 				keymaps = {
 					init_selection = "<leader>v",
-					node_incremental = "<leader>v",
+					node_incremental = "v",
 					scope_incremental = "<leader>i",
 					node_decremental = "<leader>V",
 				},

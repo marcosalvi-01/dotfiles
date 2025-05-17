@@ -1,6 +1,6 @@
 return {
 	"folke/snacks.nvim",
-	priority = 1000,
+	priority = 900,
 	lazy = false,
 	---@type snacks.Config
 	opts = {
@@ -200,20 +200,6 @@ return {
 				Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
 			end,
 			desc = "Snacks [S]earch [C]onfig",
-		},
-		{
-			"<leader>gb",
-			function()
-				Snacks.picker.git_branches()
-			end,
-			desc = "Snacks [G]it [B]ranches",
-		},
-		{
-			"<leader>gl",
-			function()
-				Snacks.picker.git_log()
-			end,
-			desc = "Snacks [G]it [L]og",
 		},
 		{
 			"\\",

@@ -1,3 +1,4 @@
+-- Helper functions
 local function show_macro_recording()
 	local recording_register = vim.fn.reg_recording()
 	if recording_register == "" then
@@ -7,7 +8,7 @@ local function show_macro_recording()
 	end
 end
 
--- Declare a global function to retrieve the current directory
+-- Function to retrieve the current directory or buffer name
 local function get_buf_name()
 	local dir = require("oil").get_current_dir()
 	if dir then
@@ -25,33 +26,23 @@ local function get_buf_name()
 	end
 end
 
-local colors = {
-	background = "#282828", -- Gruvbox fg1
-	foreground = "#ddc7a1", -- Gruvbox fg2
-	taupe = "#504945", -- Gruvbox color2
-	neutral_gray = "#32302f", -- Gruvbox color3
-	beige = "#a89984", -- Gruvbox color4
-	blue_green = "#7daea3", -- Gruvbox color5
-	greenish = "#8ec07c", -- Gruvbox color6
-	yellowish = "#d8a657", -- Gruvbox color7
-	pinkish = "#d3869b", -- Gruvbox color8
-	reddish = "#ea6962", -- Gruvbox color9
-}
+local colors = require("utils.palette")
 
+-- Define lualine theme based on our unified colors
 local bubbles_theme = {
 	normal = {
-		a = { fg = colors.background, bg = colors.greenish, gui = "bold" },
-		b = { fg = colors.foreground, bg = colors.background, gui = "bold" },
-		c = { fg = colors.foreground, bg = nil, gui = "bold" },
+		a = { fg = colors.bg.base, bg = colors.accent.green, gui = "bold" },
+		b = { fg = colors.fg.bright, bg = colors.bg.base, gui = "bold" },
+		c = { fg = colors.fg.bright, bg = nil, gui = "bold" },
 	},
-	insert = { a = { fg = colors.background, bg = colors.blue_green, gui = "bold" } },
-	visual = { a = { fg = colors.background, bg = colors.yellowish, gui = "bold" } },
-	replace = { a = { fg = colors.background, bg = colors.pinkish, gui = "bold" } },
-	command = { a = { fg = colors.background, bg = colors.reddish, gui = "bold" } },
+	insert = { a = { fg = colors.bg.base, bg = colors.accent.blue, gui = "bold" } },
+	visual = { a = { fg = colors.bg.base, bg = colors.accent.yellow, gui = "bold" } },
+	replace = { a = { fg = colors.bg.base, bg = colors.accent.purple, gui = "bold" } },
+	command = { a = { fg = colors.bg.base, bg = colors.accent.red, gui = "bold" } },
 	inactive = {
-		a = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
-		b = { fg = colors.foreground, bg = colors.background, gui = "bold" },
-		c = { fg = colors.foreground, bg = nil, gui = "bold" },
+		a = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
+		b = { fg = colors.fg.bright, bg = colors.bg.base, gui = "bold" },
+		c = { fg = colors.fg.bright, bg = nil, gui = "bold" },
 	},
 }
 
@@ -76,7 +67,7 @@ return {
 					{
 						"branch",
 						icon = "󰘬",
-						color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
+						color = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
 						separator = { left = "", right = "" },
 					},
 				},
@@ -86,9 +77,9 @@ return {
 						"diff",
 						symbols = { added = "+", modified = "~", removed = "-" },
 						diff_color = {
-							added = { fg = colors.greenish, gui = "bold" },
-							modified = { fg = colors.yellowish, gui = "bold" },
-							removed = { fg = colors.reddish, gui = "bold" },
+							added = { fg = colors.accent.green, gui = "bold" },
+							modified = { fg = colors.accent.yellow, gui = "bold" },
+							removed = { fg = colors.accent.red, gui = "bold" },
 						},
 						separator = { left = "", right = "" },
 					},
@@ -99,33 +90,39 @@ return {
 						sources = { "nvim_diagnostic" },
 						symbols = { error = " ", warn = " ", info = " ", hint = " " },
 						diagnostics_color = {
-							error = { fg = colors.reddish, gui = "bold" },
-							warn = { fg = colors.yellowish, gui = "bold" },
-							info = { fg = colors.blue_green, gui = "bold" },
-							hint = { fg = colors.beige, gui = "bold" },
+							error = { fg = colors.accent.red, gui = "bold" },
+							warn = { fg = colors.accent.yellow, gui = "bold" },
+							info = { fg = colors.accent.blue, gui = "bold" },
+							hint = { fg = colors.accent.gray, gui = "bold" },
 						},
 					},
 					{
 						show_macro_recording,
-						color = { fg = colors.reddish, gui = "bold" },
+						color = { fg = colors.accent.red, gui = "bold" },
 					},
 				},
 				lualine_x = {
 					{
 						"encoding",
-						color = { fg = colors.beige, bg = colors.background, gui = "bold" },
+						color = { fg = colors.accent.gray, bg = colors.bg.base, gui = "bold" },
 						separator = { left = "" },
 					},
 					{
 						"fileformat",
 						symbols = { unix = "", dos = "", mac = "" },
-						color = { fg = colors.beige, bg = colors.background, gui = "bold" },
+						color = { fg = colors.accent.gray, bg = colors.bg.base, gui = "bold" },
 						separator = { left = "" },
 					},
 				},
 				lualine_y = {
-					{ "filetype", color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" } },
-					{ "progress", color = { fg = colors.foreground, bg = colors.taupe, gui = "bold" } },
+					{
+						"filetype",
+						color = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
+					},
+					{
+						"progress",
+						color = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
+					},
 				},
 				lualine_z = {
 					{ "location", separator = { left = "", right = "" }, left_padding = 2 },
@@ -146,8 +143,8 @@ return {
 						mode = 2, -- Show tab name + number
 						max_length = vim.o.columns,
 						tabs_color = {
-							active = { fg = colors.background, bg = colors.greenish, gui = "bold" },
-							inactive = { fg = colors.foreground, bg = colors.taupe, gui = "bold" },
+							active = { fg = colors.bg.base, bg = colors.accent.green, gui = "bold" },
+							inactive = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
 						},
 						separator = { left = "", right = "" },
 					},
