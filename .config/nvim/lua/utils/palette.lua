@@ -6,10 +6,7 @@ local colors = {
 		selection = "#504945", -- Gruvbox color2 (taupe) for selections
 		neutral = "#32302f", -- Gruvbox color3, neutral gray
 	},
-	fg = {
-		base = "#d4be98", -- Base foreground color from gruvbox-material
-		bright = "#ddc7a1", -- Slightly brighter foreground (Gruvbox fg2)
-	},
+	fg = "#d4be98", -- Base foreground color from gruvbox-material
 	-- Accent colors
 	accent = {
 		gray = "#a89984", -- Gruvbox color4, beige/gray
