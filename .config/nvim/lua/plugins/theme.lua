@@ -22,9 +22,9 @@ return {
 
 				-- Floating windows and borders
 				hl(0, "NormalFloat", {})
-				hl(0, "FloatBorder", { fg = colors.fg.base })
-				hl(0, "FloatTitle", { fg = colors.fg.base, bg = nil })
-				hl(0, "TelescopeBorder", { fg = colors.fg.base })
+				hl(0, "FloatBorder", { fg = colors.fg })
+				hl(0, "FloatTitle", { fg = colors.fg, bg = nil })
+				hl(0, "TelescopeBorder", { fg = colors.fg })
 
 				-- Scrollbars and menus
 				hl(0, "Pmenu", { bg = nil })
@@ -34,15 +34,11 @@ return {
 
 				-- Snacks plugin
 				hl(0, "SnacksIndentScope", { fg = colors.accent.red })
-				hl(0, "SnacksPickerBorder", { fg = colors.fg.base })
+				hl(0, "SnacksPickerBorder", { fg = colors.fg })
 				hl(0, "SnacksPickerListCursorLine", { link = "Visual" })
 				hl(0, "SnacksPickerToggleIgnored", { link = "Title" })
 				hl(0, "SnacksPickerToggleHidden", { link = "Title" })
-				hl(0, "SnacksPickerMatch", {
-					bold = true,
-					fg = colors.accent.green,
-					bg = colors.accent.teal,
-				})
+				hl(0, "SnacksPickerMatch", { bold = true, fg = colors.accent.green, bg = colors.accent.teal })
 
 				-- Debug line
 				hl(0, "DebugPrintLine", { bg = "#363629", italic = true })
@@ -53,24 +49,13 @@ return {
 				-- Pathfinder (gf) plugin
 				hl(0, "PathfinderDim", { link = "Comment" })
 				hl(0, "PathfinderHighlight", { link = "Fg" })
-				hl(0, "PathfinderNextKey", {
-					bg = colors.accent.yellow,
-					fg = colors.bg.base,
-					bold = true,
-				})
-				hl(0, "PathfinderFutureKeys", {
-					bg = colors.accent.yellow,
-					fg = colors.bg.base,
-					bold = true,
-				})
+				hl(0, "PathfinderNextKey", { bg = colors.accent.yellow, fg = colors.bg.base, bold = true })
+				hl(0, "PathfinderFutureKeys", { bg = colors.accent.yellow, fg = colors.bg.base, bold = true })
 
 				-- Search highlighting
 				hl(0, "Search", { bg = colors.accent.teal })
 				hl(0, "IncSearch", { bg = colors.accent.orange })
-				hl(0, "HighlightedyankRegion", {
-					bg = colors.accent.red,
-					fg = colors.bg.base,
-				})
+				hl(0, "HighlightedyankRegion", { bg = colors.accent.red, fg = colors.bg.base })
 
 				-- Diagnostics
 				local diagnostic_groups = {
@@ -81,13 +66,8 @@ return {
 				}
 
 				for _, diag in ipairs(diagnostic_groups) do
-					hl(0, "DiagnosticUnderline" .. diag.name, {
-						sp = diag.color,
-						underline = true,
-					})
-					hl(0, "LspDiagnosticUnderline" .. diag.name, {
-						link = "DiagnosticUnderline" .. diag.name,
-					})
+					hl(0, "DiagnosticUnderline" .. diag.name, { sp = diag.color, underline = true })
+					hl(0, "LspDiagnosticUnderline" .. diag.name, { link = "DiagnosticUnderline" .. diag.name })
 				end
 
 				-- Multi-cursor plugin
@@ -103,11 +83,7 @@ return {
 				end
 
 				-- Todo highlighting
-				hl(0, "MiniHipatternsTodo", {
-					bg = colors.accent.purple,
-					bold = true,
-					fg = colors.bg.base,
-				})
+				hl(0, "MiniHipatternsTodo", { bg = colors.accent.purple, bold = true, fg = colors.bg.base })
 
 				-- Folded lines
 				hl(0, "Folded", { fg = nil, bg = colors.bg.light })

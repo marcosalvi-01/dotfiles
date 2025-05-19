@@ -1,7 +1,15 @@
 return {
-	"nvim-treesitter/nvim-treesitter",
-	config = function()
-		require("nvim-treesitter.configs").setup({
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		main = "nvim-treesitter.configs", -- Sets main module to use for opts
+		opts = {
 			-- Core functionality
 			highlight = {
 				enable = true,
@@ -39,6 +47,17 @@ return {
 			sync_install = false, -- Install parsers asynchronously
 			auto_install = true, -- Automatically install missing parsers
 			ignore_install = { "javascript" },
-		})
-	end,
+			textobjects = {
+				swap = {
+					enable = true,
+					swap_next = {
+						["<m-right>"] = "@parameter.inner",
+					},
+					swap_previous = {
+						["<m-left>"] = "@parameter.inner",
+					},
+				},
+			},
+		},
+	},
 }

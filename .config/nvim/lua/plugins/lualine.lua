@@ -32,17 +32,17 @@ local colors = require("utils.palette")
 local bubbles_theme = {
 	normal = {
 		a = { fg = colors.bg.base, bg = colors.accent.green, gui = "bold" },
-		b = { fg = colors.fg.bright, bg = colors.bg.base, gui = "bold" },
-		c = { fg = colors.fg.bright, bg = nil, gui = "bold" },
+		b = { fg = colors.fg, bg = colors.bg.base, gui = "bold" },
+		c = { fg = colors.fg, bg = nil, gui = "bold" },
 	},
 	insert = { a = { fg = colors.bg.base, bg = colors.accent.blue, gui = "bold" } },
 	visual = { a = { fg = colors.bg.base, bg = colors.accent.yellow, gui = "bold" } },
 	replace = { a = { fg = colors.bg.base, bg = colors.accent.purple, gui = "bold" } },
 	command = { a = { fg = colors.bg.base, bg = colors.accent.red, gui = "bold" } },
 	inactive = {
-		a = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
-		b = { fg = colors.fg.bright, bg = colors.bg.base, gui = "bold" },
-		c = { fg = colors.fg.bright, bg = nil, gui = "bold" },
+		a = { fg = colors.fg, bg = colors.bg.selection, gui = "bold" },
+		b = { fg = colors.fg, bg = colors.bg.base, gui = "bold" },
+		c = { fg = colors.fg, bg = nil, gui = "bold" },
 	},
 }
 
@@ -67,7 +67,7 @@ return {
 					{
 						"branch",
 						icon = "󰘬",
-						color = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
+						color = { fg = colors.fg, bg = colors.bg.selection, gui = "bold" },
 						separator = { left = "", right = "" },
 					},
 				},
@@ -117,11 +117,11 @@ return {
 				lualine_y = {
 					{
 						"filetype",
-						color = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
+						color = { fg = colors.fg, bg = colors.bg.selection, gui = "bold" },
 					},
 					{
 						"progress",
-						color = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
+						color = { fg = colors.fg, bg = colors.bg.selection, gui = "bold" },
 					},
 				},
 				lualine_z = {
@@ -144,7 +144,7 @@ return {
 						max_length = vim.o.columns,
 						tabs_color = {
 							active = { fg = colors.bg.base, bg = colors.accent.green, gui = "bold" },
-							inactive = { fg = colors.fg.bright, bg = colors.bg.selection, gui = "bold" },
+							inactive = { fg = colors.fg, bg = colors.bg.selection, gui = "bold" },
 						},
 						separator = { left = "", right = "" },
 					},
