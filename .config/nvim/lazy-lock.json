@@ -37,7 +37,7 @@
   "oil.nvim": { "branch": "master", "commit": "685cdb4ffa74473d75a1b97451f8654ceeab0f4a" },
   "pathfinder.nvim": { "branch": "main", "commit": "201c9bae660c175e4fc9fbe8f299c05a774f195a" },
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
-  "prun": { "branch": "master", "commit": "2570e8334aab94346e7c0d586a4accce799c2d9e" },
+  "prun": { "branch": "master", "commit": "ad014c6a15b83eacc0d39a94c052b40df38f8f93" },
   "quicker.nvim": { "branch": "master", "commit": "51d3926f183c2d98fbc237cc237ae0926839af3a" },
   "scrollEOF.nvim": { "branch": "master", "commit": "9dd748a45c61acb7d70c4990cd770c3531700596" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
