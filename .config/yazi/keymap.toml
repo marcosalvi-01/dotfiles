@@ -10,6 +10,22 @@ desc = "Quit yazi"
 on = ["Q"]
 run = "quit"
 desc = "Quit yazi and cd into dir"
+[[manager.prepend_keymap]]
+on  = "<c-y>"
+run = "plugin copy-file-to-clipboard"
+desc = "Copy file contents to clipboard"
+[[manager.prepend_keymap]]
+on  = "_"
+run = "plugin back-cwd"
+desc = "Return to initial directory"
+[[manager.prepend_keymap]]
+on   = [ "c", "m" ]
+run  = "plugin chmod"
+desc = "Chmod on selected files"
+[[manager.prepend_keymap]]
+on   = "<Right>"
+run  = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
 
 [[input.prepend_keymap]]
 on   = "<Esc>"
