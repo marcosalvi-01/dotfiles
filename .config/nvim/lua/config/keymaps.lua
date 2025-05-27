@@ -48,7 +48,7 @@ vim.keymap.set("n", "<bs>", function()
 	vim.notify("All buffer changes written")
 end, { desc = "[W]rite all buffer" })
 
-vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
+vim.keymap.set("n", "<leader>-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
 
 vim.keymap.set("n", "<leader>l", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice [L]ogs" })
 

@@ -4,6 +4,7 @@ return {
 		dependencies = {
 			"mason-org/mason.nvim",
 		},
+		cmd = "Mason",
 		opts = {
 			ensure_installed = {
 				-- LSPs
@@ -39,6 +40,7 @@ return {
 	},
 	{
 		"mason-org/mason.nvim",
+		cmd = "Mason",
 		opts = {
 			ui = {
 				border = "rounded",

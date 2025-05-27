@@ -40,6 +40,7 @@ return {
 			htmlangular = { "prettier" },
 			scss = { "prettier" },
 			c = { "clang" },
+			sql = { "sleek" },
 		},
 		nixpkgs_fmt = {
 			command = "nixpkgs-fmt",

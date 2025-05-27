@@ -1,5 +1,6 @@
 return {
 	"andrewferrier/debugprint.nvim",
+	event = "VeryLazy",
 	-- highlighting depends on mini.hipatterns
 	opts = {
 		keymaps = {

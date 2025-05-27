@@ -31,6 +31,7 @@ return {
 	config = function()
 		local detail = false
 		require("oil").setup({
+			default_file_explorer = true,
 			preview_win = {
 				preview_method = "load",
 			},
@@ -52,7 +53,7 @@ return {
 				["<C-p>"] = "actions.preview",
 				["<C-c>"] = "actions.close",
 				["<C-l>"] = "actions.refresh",
-				["-"] = "actions.parent",
+				["<leader>-"] = "actions.parent",
 				["_"] = "actions.open_cwd",
 				["`"] = "actions.cd",
 				-- ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory", mode = "n" },
