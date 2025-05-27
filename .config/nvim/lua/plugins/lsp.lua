@@ -10,6 +10,7 @@ return {
 				"lua_ls",
 				"gopls",
 				"pyright",
+				"jdtls",
 
 				-- Tools
 				"jq",

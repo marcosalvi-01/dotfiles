@@ -42,12 +42,5 @@ return {
 			end,
 			mode = { "n", "i" },
 		},
-		{
-			"<c-,>",
-			function()
-				require("clasp").wrap("prev")
-			end,
-			mode = { "n", "i" },
-		},
 	},
 }

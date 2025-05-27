@@ -43,6 +43,8 @@ return {
 				"query",
 				"vim",
 				"vimdoc",
+				"java",
+				"make",
 			},
 			sync_install = false, -- Install parsers asynchronously
 			auto_install = true, -- Automatically install missing parsers
