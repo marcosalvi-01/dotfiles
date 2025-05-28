@@ -8,7 +8,7 @@ return {
 		{
 			"<leader>n",
 			function()
-				vim.cmd("Neogit kind=replace")
+				vim.cmd("Neogit kind=tab")
 			end,
 			desc = "Open [N]eogit window (Neogit)",
 		},

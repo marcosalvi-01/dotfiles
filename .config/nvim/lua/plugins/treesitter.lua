@@ -53,10 +53,10 @@ return {
 				swap = {
 					enable = true,
 					swap_next = {
-						["<m-right>"] = "@parameter.inner",
+						["<m-up>"] = "@parameter.inner",
 					},
 					swap_previous = {
-						["<m-left>"] = "@parameter.inner",
+						["<m-down>"] = "@parameter.inner",
 					},
 				},
 			},

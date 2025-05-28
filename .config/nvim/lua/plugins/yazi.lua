@@ -4,6 +4,9 @@ return {
 	dependencies = {
 		"folke/snacks.nvim",
 	},
+	cmd = {
+		"Yazi",
+	},
 	keys = {
 		{
 			"<m-left>",
