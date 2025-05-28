@@ -4,6 +4,74 @@ return {
 	lazy = false,
 	---@type snacks.Config
 	opts = {
+		dashboard = {
+			width = 60,
+			sections = {
+				{ section = "header" },
+				{
+					section = "terminal",
+					cmd = [[
+fortune -n 250 -s | awk -v C="$(tput cols)" '
+  { lines[NR] = $0; if (length > max) max = length }
+  END {
+    ind = int((C - max) / 2); if (ind < 0) ind = 0
+    for (i = 1; i <= NR; i++)
+      printf("%*s%s\n", ind, "", lines[i])
+  }'
+
+				]],
+					hl = "file",
+					padding = 2,
+					height = 4,
+					ttl = 0,
+					width = 100,
+					indent = -20,
+				},
+				{ section = "keys", gap = 1, padding = 4 },
+				{ section = "startup", icon = "󱐋 " },
+			},
+			autokeys = "neiatsrc",
+			preset = {
+				keys = {
+					{
+						icon = " ",
+						key = "f",
+						desc = "Find File",
+						action = ":lua Snacks.picker.files({hidden = true, ignored = true})",
+					},
+					-- { icon = " ", key = "o", desc = "New File", action = ":ene | startinsert" },
+					{
+						icon = " ",
+						key = "g",
+						desc = "Find Text",
+						action = ":lua Snacks.picker.grep({hidden = true, ignored = true})",
+					},
+					{ icon = "󰘬 ", key = "n", desc = "Neogit", action = "<cmd>Neogit kind=tab<cr>" },
+					{
+						icon = "󰒲 ",
+						key = "l",
+						desc = "Lazy",
+						action = ":Lazy",
+						enabled = package.loaded.lazy ~= nil,
+					},
+					{
+						icon = "󰏗 ",
+						key = "m",
+						desc = "Mason",
+						action = ":Mason",
+						enabled = package.loaded.lazy ~= nil,
+					},
+					{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+				},
+				header = [[
+██╗   ██╗███████╗ ██████╗ ███╗   ██╗██╗███╗   ███╗
+██║   ██║██╔════╝██╔═══██╗████╗  ██║██║████╗ ████║
+██║   ██║█████╗  ██║   ██║██╔██╗ ██║██║██╔████╔██║
+╚██╗ ██╔╝██╔══╝  ██║   ██║██║╚██╗██║██║██║╚██╔╝██║
+ ╚████╔╝ ███████╗╚██████╔╝██║ ╚████║██║██║ ╚═╝ ██║
+  ╚═══╝  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝]],
+			},
+		},
 		image = {},
 		indent = {
 			enabled = true,

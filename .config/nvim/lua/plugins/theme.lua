@@ -39,6 +39,14 @@ return {
 				hl(0, "SnacksPickerToggleIgnored", { link = "Title" })
 				hl(0, "SnacksPickerToggleHidden", { link = "Title" })
 				hl(0, "SnacksPickerMatch", { bold = true, fg = colors.accent.green, bg = colors.accent.teal })
+				-- Dashboard
+				hl(0, "SnacksDashboardHeader", { bold = true, fg = colors.accent.blue })
+				hl(0, "SnacksDashboardFooter", { bold = true, fg = colors.accent.yellow })
+				hl(0, "SnacksDashboardSpecial", { bold = true, fg = colors.accent.red })
+				hl(0, "SnacksDashboardFile", { bold = true, fg = colors.accent.green })
+				hl(0, "SnacksDashboardDesc", { bold = true, fg = colors.accent.purple })
+				hl(0, "SnacksDashboardIcon", { bold = true, fg = colors.accent.purple })
+				hl(0, "SnacksDashboardKey", { bold = true, fg = colors.accent.yellow })
 
 				-- Debug line
 				hl(0, "DebugPrintLine", { bg = "#363629", italic = true })
