@@ -39,13 +39,14 @@ fortune -n 250 -s | awk -v C="$(tput cols)" '
 						desc = "Find File",
 						action = ":lua Snacks.picker.files({hidden = true, ignored = true})",
 					},
-					-- { icon = " ", key = "o", desc = "New File", action = ":ene | startinsert" },
 					{
 						icon = " ",
 						key = "g",
 						desc = "Find Text",
 						action = ":lua Snacks.picker.grep({hidden = true, ignored = true})",
 					},
+					{ icon = " ", key = "y", desc = "Yazi", action = "<cmd>Yazi<cr>" },
+					{ icon = " ", key = "o", desc = "Last Buffer", action = "<cmd>normal <c-o><c-o><cr>" },
 					{ icon = "󰘬 ", key = "n", desc = "Neogit", action = "<cmd>Neogit kind=tab<cr>" },
 					{
 						icon = "󰒲 ",

@@ -7,7 +7,7 @@
 cwd = { fg = "#7daea3" }
 
 # Hovered – use a combination of background and “greenish” mode color.
-hovered         = { fg = "#282828", bg = "#8ec07c", bold = true }
+hovered         = { fg = "#282828", bg = "#7daea3", bold = true }
 preview_hovered = { underline = true }
 
 # Find – use lualine’s yellowish for keyword and reddish for position
@@ -29,8 +29,9 @@ tab_inactive = { fg = "#a89984", bg = "#3c3836" }
 tab_width    = 1
 
 # Border – use taupe for border style
-border_symbol = "│"
-border_style  = { fg = "#504945" }
+# border_symbol = "│"
+border_symbol = "┃"
+border_style  = { fg = "#565656" }
 
 # Highlighting
 # syntect_theme = "~/.config/yazi/Gruvbox-Dark.tmTheme"
