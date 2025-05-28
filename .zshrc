@@ -96,8 +96,8 @@ alias ....='cd ../../..'
 alias vim='nvim'
 alias ld='lazydocker'
 alias pipes='pipes.sh -t 1 -f 100 -r 4000 -R -s 15 -p 4'
-alias fortune='clear && fortune | cowsay -f stegosaurus | lolcat'
-alias .='nvim .'
+# alias fortune='clear && fortune | cowsay -f stegosaurus | lolcat'
+alias .='nvim'
 alias kssh="kitty +kitten ssh"
 alias m='make'
 
@@ -108,6 +108,8 @@ fortune_widget() {
 }
 zle -N fortune_widget
 bindkey '^F' fortune_widget
+
+bindkey -s '^N' 'nvim\n'
 
 # y for yazi to cd into dir
 function y() {

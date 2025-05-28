@@ -13,6 +13,9 @@ return {
 			desc = "Open [N]eogit window (Neogit)",
 		},
 	},
+	cmd = {
+		"Neogit",
+	},
 	opts = {
 		signs = {
 			hunk = { "", "" },
