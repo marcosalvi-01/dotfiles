@@ -2,5 +2,5 @@
 
 tmux new-window -d
 tmux rename-window nvim
-nvim .
+nvim
 
