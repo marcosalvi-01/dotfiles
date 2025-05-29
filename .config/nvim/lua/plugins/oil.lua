@@ -28,6 +28,8 @@ end
 
 return {
 	"stevearc/oil.nvim",
+	cmd = "Oil",
+	event = "VeryLazy",
 	config = function()
 		local detail = false
 		require("oil").setup({

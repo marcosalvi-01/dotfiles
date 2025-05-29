@@ -155,7 +155,7 @@ return {
 				lualine_y = {},
 				lualine_z = {},
 			},
-			extensions = { "man", "mason", "lazy", "quickfix" },
+			extensions = { "man", "quickfix" },
 		})
 	end,
 }
