@@ -1,4 +1,5 @@
 return {
+	event = "VeryLazy",
 	"refractalize/oil-git-status.nvim",
 	dependencies = {
 		"stevearc/oil.nvim",

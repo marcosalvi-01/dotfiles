@@ -1,11 +1,13 @@
 return {
 	{
+		event = "VeryLazy",
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 		},
 	},
 	{
+		event = "VeryLazy",
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		main = "nvim-treesitter.configs", -- Sets main module to use for opts
