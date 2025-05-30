@@ -219,3 +219,4 @@ bindkey -M viins '^E' edit-command-line
 
 # Load p10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# eval "$(starship init zsh)"
