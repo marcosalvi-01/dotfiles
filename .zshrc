@@ -210,6 +210,10 @@ bindkey -M vicmd '^H' vi-backward-kill-word
 bindkey -M viins '^[[3;5~' delete-word
 bindkey -M vicmd '^[[3;5~' delete-word
 
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey -M viins '^E' edit-command-line
+
 # SDKMAN
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 

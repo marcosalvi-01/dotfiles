@@ -8,9 +8,7 @@ return {
 			width = 60,
 
 			sections = {
-				{
-					section = "header",
-				},
+				{ section = "header", padding = 4 },
 				{
 					section = "terminal",
 					cmd = [[
@@ -25,13 +23,15 @@ fortune -n 250 -s | awk -v C="$(tput cols)" '
 					hl = "file",
 					height = 4,
 					ttl = 0,
-					width = 100,
-					indent = -20,
-					padding = 9,
+					width = 80,
+					indent = -10,
+					padding = 5,
 				},
 				{
 					section = "terminal",
 					cmd = [[
+#!/bin/bash
+
 # Gruvbox color palette
 FG='\033[38;2;212;190;152m'     # fg: #d4be98 (base foreground)
 GRAY='\033[38;2;168;153;132m'   # accent.gray: #a89984
@@ -44,6 +44,32 @@ RESET='\033[0m'
 
 # Build the colorized output
 branch_info="${BLUE}󰘬 $(git branch --show-current)${RESET}"
+
+# Check for remote changes (commits to pull/push)
+current_branch=$(git branch --show-current)
+upstream_branch=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null)
+pull_indicator=""
+push_indicator=""
+
+if [ -n "$upstream_branch" ]; then
+    # Fetch remote updates silently
+    git fetch --quiet 2>/dev/null || true
+    
+    # Count commits behind (to pull)
+    commits_behind=$(git rev-list --count HEAD..@{upstream} 2>/dev/null || echo "0")
+    
+    if [ "$commits_behind" -gt 0 ]; then
+        pull_indicator=" ${GRAY}⇣ ${commits_behind}${RESET}"
+    fi
+    
+    # Count commits ahead (to push)
+    commits_ahead=$(git rev-list --count @{upstream}..HEAD 2>/dev/null || echo "0")
+    
+    if [ "$commits_ahead" -gt 0 ]; then
+        push_indicator=" ${PURPLE}⇡ ${commits_ahead}${RESET}"
+    fi
+fi
+
 git_stats=$(git status --porcelain | awk '
 BEGIN{m=0;a=0;d=0;r=0;u=0} 
 /^.M|^M./{m++} 
@@ -55,11 +81,17 @@ END{printf " %d  %d  %d  %d  %d", m,a,d,r,u}')
 
 # Parse the stats and colorize each part
 IFS=' ' read -r modified added deleted renamed untracked <<< "$git_stats"
-colorized_stats="${YELLOW} ${modified}${RESET} ${GREEN} ${added}${RESET} ${RED} ${deleted}${RESET} ${PURPLE} ${renamed}${RESET} ${GRAY} ${untracked}${RESET}"
-commit_msg="${FG}  $(git log --oneline -1 --pretty=format:'%s')${RESET}"
+colorized_stats="${YELLOW} ${modified}${RESET} ${GREEN} ${added}${RESET} ${RED} ${deleted}${RESET} ${PURPLE} ${renamed}${RESET} ${GRAY}? ${untracked}${RESET}"
 
-# Combine all parts
-output="${branch_info} ${FG}|${RESET} ${colorized_stats} ${FG}|${RESET} ${commit_msg}"
+commit_msg="${BLUE} '$(git log --oneline -1 --pretty=format:'%s')'${RESET}"
+
+# Combine all parts (including pull/push indicators if present)
+indicators="${pull_indicator}${push_indicator}"
+if [ -n "$indicators" ]; then
+    output="${branch_info}${indicators} ${FG}|${RESET} ${colorized_stats} ${FG}|${RESET} ${commit_msg}"
+else
+    output="${branch_info} ${FG}|${RESET} ${colorized_stats} ${FG}|${RESET} ${commit_msg}"
+fi
 
 # Calculate terminal width and center the output
 # Strip ANSI codes to get actual character length for proper centering
@@ -77,14 +109,20 @@ fi
 				]],
 					hl = "file",
 					ttl = 0,
+					width = 80,
+					indent = -10,
 					height = 3,
+				},
+				{
+					pane = 2,
+					padding = 1,
 				},
 				{
 					pane = 2,
 					section = "keys",
 					indent = 20,
 					gap = 1,
-					padding = 4,
+					padding = 2,
 				},
 				{
 					indent = 20,
@@ -125,16 +163,16 @@ fi
 						action = ":Mason",
 						enabled = package.loaded.lazy ~= nil,
 					},
-					{ icon = "󰑓 ", key = "r", desc = "Reload", action = ":lua Snacks.dashboard.update()" },
+					-- { icon = "󰑓 ", key = "r", desc = "Reload", action = ":lua Snacks.dashboard.update()" },
 					{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
 				},
 				header = [[
-██╗   ██╗███████╗ ██████╗ ███╗   ██╗██╗███╗   ███╗
-██║   ██║██╔════╝██╔═══██╗████╗  ██║██║████╗ ████║
-██║   ██║█████╗  ██║   ██║██╔██╗ ██║██║██╔████╔██║
-╚██╗ ██╔╝██╔══╝  ██║   ██║██║╚██╗██║██║██║╚██╔╝██║
- ╚████╔╝ ███████╗╚██████╔╝██║ ╚████║██║██║ ╚═╝ ██║
-  ╚═══╝  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝]],
+██╗   ██╗███████╗ ██████╗ ██╗   ███╗██╗███╗   ███╗
+██║   ██║╚═══╗██║██╔═══██╗██║  ████║██║████╗ ████║
+██║   ██║  █████║██║   ██║██║ ██╔██║██║██╔████╔██║
+╚██╗ ██╔╝  ╚═╗██║██║   ██║██╚██╔╝██║██║██║╚██╔╝██║
+ ╚████╔╝ ███████║╚██████╔╝████╔╝ ██║██║██║ ╚═╝ ██║
+  ╚═══╝  ╚══════╝ ╚═════╝ ╚═══╝  ╚═╝╚═╝╚═╝     ╚═╝]],
 			},
 		},
 		image = {},

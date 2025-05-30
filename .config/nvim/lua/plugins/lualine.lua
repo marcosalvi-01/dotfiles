@@ -75,7 +75,7 @@ return {
 					{ get_buf_name, separator = { right = "" } },
 					{
 						"diff",
-						symbols = { added = "+", modified = "~", removed = "-" },
+						symbols = { added = " ", modified = " ", removed = " " },
 						diff_color = {
 							added = { fg = colors.accent.green, gui = "bold" },
 							modified = { fg = colors.accent.yellow, gui = "bold" },
