@@ -265,3 +265,5 @@ vim.keymap.set("n", "<leader>D", vim.lsp.buf.declaration, { desc = "Go to declar
 vim.keymap.set("n", "<leader>tc", function()
 	vim.cmd("tabc")
 end, { desc = "Close current tab" })
+
+vim.keymap.set("n", "<leader>das", Snacks.dashboard.open, { desc = "Open snacks dashboard" })
