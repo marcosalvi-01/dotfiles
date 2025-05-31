@@ -18,6 +18,9 @@ return {
 				args = { "format", "$FILENAME" },
 				stdin = false,
 			},
+			nixpkgs_fmt = {
+				command = "nixpkgs-fmt",
+			},
 		},
 		notify_on_error = false,
 		format_on_save = false,
@@ -41,9 +44,6 @@ return {
 			scss = { "prettier" },
 			c = { "clang" },
 			sql = { "sleek" },
-		},
-		nixpkgs_fmt = {
-			command = "nixpkgs-fmt",
 		},
 	},
 }
