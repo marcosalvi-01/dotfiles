@@ -11,7 +11,7 @@ on = ["Q"]
 run = "quit"
 desc = "Quit yazi and cd into dir"
 [[manager.prepend_keymap]]
-on  = "<c-y>"
+on  = ["Y"]
 run = "plugin copy-file-to-clipboard"
 desc = "Copy file contents to clipboard"
 [[manager.prepend_keymap]]
