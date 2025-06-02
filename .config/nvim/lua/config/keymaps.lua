@@ -267,3 +267,7 @@ vim.keymap.set("n", "<leader>tc", function()
 end, { desc = "Close current tab" })
 
 vim.keymap.set("n", "<leader>das", Snacks.dashboard.open, { desc = "Open snacks dashboard" })
+
+vim.keymap.set({ "n", "v" }, "g.", function()
+	vim.cmd("normal! @@")
+end, { desc = "Replay last macro" })
