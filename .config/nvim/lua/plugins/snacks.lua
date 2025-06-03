@@ -8,78 +8,29 @@ return {
 			width = 60,
 
 			sections = {
-				{
-					section = "header",
-				},
+				{ section = "header", padding = 4 },
 				{
 					section = "terminal",
-					cmd = [[
-fortune -n 250 -s | awk -v C="$(tput cols)" '
-  { lines[NR] = $0; if (length > max) max = length }
-  END {
-    ind = int((C - max) / 2); if (ind < 0) ind = 0
-    for (i = 1; i <= NR; i++)
-      printf("%*s%s\n", ind, "", lines[i])
-  }'
-				]],
+					cmd = "fortune_dashboard.sh",
 					hl = "file",
 					height = 4,
 					ttl = 0,
 					width = 80,
 					indent = -10,
-					padding = 7,
+					padding = 5,
 				},
 				{
 					section = "terminal",
-					cmd = [[
-# Gruvbox color palette
-FG='\033[38;2;212;190;152m'     # fg: #d4be98 (base foreground)
-GRAY='\033[38;2;168;153;132m'   # accent.gray: #a89984
-BLUE='\033[38;2;125;174;163m'   # accent.blue: #7daea3
-GREEN='\033[38;2;142;192;124m'  # accent.green: #8ec07c
-YELLOW='\033[38;2;216;166;87m'  # accent.yellow: #d8a657
-PURPLE='\033[38;2;211;134;155m' # accent.purple: #d3869b
-RED='\033[38;2;234;105;98m'     # accent.red: #ea6962
-RESET='\033[0m'
-
-# Build the colorized output
-branch_info="${BLUE}󰘬 $(git branch --show-current)${RESET}"
-git_stats=$(git status --porcelain | awk '
-BEGIN{m=0;a=0;d=0;r=0;u=0} 
-/^.M|^M./{m++} 
-/^A.|^.A/{a++} 
-/^.D|^D./{d++} 
-/^R./{r++} 
-/^\?\?/{u++} 
-END{printf " %d  %d  %d  %d  %d", m,a,d,r,u}')
-
-# Parse the stats and colorize each part
-IFS=' ' read -r modified added deleted renamed untracked <<< "$git_stats"
-colorized_stats="${YELLOW} ${modified}${RESET} ${GREEN} ${added}${RESET} ${RED} ${deleted}${RESET} ${PURPLE} ${renamed}${RESET} ${GRAY}? ${untracked}${RESET}"
-commit_msg="${FG}  $(git log --oneline -1 --pretty=format:'%s')${RESET}"
-
-# Combine all parts
-output="${branch_info} ${FG}|${RESET} ${colorized_stats} ${FG}|${RESET} ${commit_msg}"
-
-# Calculate terminal width and center the output
-# Strip ANSI codes to get actual character length for proper centering
-clean_output=$(echo -e "$output" | sed 's/\x1b\[[0-9;]*m//g')
-output_length=${#clean_output}
-terminal_width=$(tput cols)
-
-# Center the output
-if [ $output_length -lt $terminal_width ]; then
-    padding=$(((terminal_width - output_length) / 2))
-    printf "%*s%s\n" "$padding" "" "$(echo -e "$output")"
-else
-    echo -e "$output"
-fi
-				]],
+					cmd = "git_status.sh",
 					hl = "file",
 					ttl = 0,
 					width = 80,
 					indent = -10,
 					height = 3,
+				},
+				{
+					pane = 2,
+					padding = 1,
 				},
 				{
 					pane = 2,
@@ -127,16 +78,16 @@ fi
 						action = ":Mason",
 						enabled = package.loaded.lazy ~= nil,
 					},
-					{ icon = "󰑓 ", key = "r", desc = "Reload", action = ":lua Snacks.dashboard.update()" },
+					-- { icon = "󰑓 ", key = "r", desc = "Reload", action = ":lua Snacks.dashboard.update()" },
 					{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
 				},
 				header = [[
-██╗   ██╗███████╗ ██████╗ ███╗   ██╗██╗███╗   ███╗
-██║   ██║██╔════╝██╔═══██╗████╗  ██║██║████╗ ████║
-██║   ██║█████╗  ██║   ██║██╔██╗ ██║██║██╔████╔██║
-╚██╗ ██╔╝██╔══╝  ██║   ██║██║╚██╗██║██║██║╚██╔╝██║
- ╚████╔╝ ███████╗╚██████╔╝██║ ╚████║██║██║ ╚═╝ ██║
-  ╚═══╝  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝]],
+██╗   ██╗███████╗ ██████╗ ██╗   ███╗██╗███╗   ███╗
+██║   ██║╚═══╗██║██╔═══██╗██║  ████║██║████╗ ████║
+██║   ██║  █████║██║   ██║██║ ██╔██║██║██╔████╔██║
+╚██╗ ██╔╝  ╚═╗██║██║   ██║██╚██╔╝██║██║██║╚██╔╝██║
+ ╚████╔╝ ███████║╚██████╔╝████╔╝ ██║██║██║ ╚═╝ ██║
+  ╚═══╝  ╚══════╝ ╚═════╝ ╚═══╝  ╚═╝╚═╝╚═╝     ╚═╝]],
 			},
 		},
 		image = {},

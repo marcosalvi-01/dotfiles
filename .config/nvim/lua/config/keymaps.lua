@@ -261,3 +261,13 @@ end, { remap = true, expr = true })
 vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 vim.keymap.set("n", "<leader>D", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+
+vim.keymap.set("n", "<leader>tc", function()
+	vim.cmd("tabc")
+end, { desc = "Close current tab" })
+
+vim.keymap.set("n", "<leader>das", Snacks.dashboard.open, { desc = "Open snacks dashboard" })
+
+vim.keymap.set({ "n", "v" }, "g.", function()
+	vim.cmd("normal! @@")
+end, { desc = "Replay last macro" })

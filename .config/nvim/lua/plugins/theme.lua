@@ -45,8 +45,8 @@ return {
 				hl(0, "SnacksDashboardSpecial", { bold = true, fg = colors.accent.red })
 				hl(0, "SnacksDashboardFile", { bold = true, fg = colors.accent.green })
 				hl(0, "SnacksDashboardDesc", { bold = true, fg = colors.accent.purple })
-				hl(0, "SnacksDashboardIcon", { bold = true, fg = colors.accent.purple })
-				hl(0, "SnacksDashboardKey", { bold = true, fg = colors.accent.yellow })
+				hl(0, "SnacksDashboardIcon", { bold = true, fg = colors.accent.yellow })
+				hl(0, "SnacksDashboardKey", { bold = true, fg = colors.accent.red })
 
 				-- Debug line
 				hl(0, "DebugPrintLine", { bg = "#363629", italic = true })

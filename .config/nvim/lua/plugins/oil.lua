@@ -33,7 +33,7 @@ return {
 	config = function()
 		local detail = false
 		require("oil").setup({
-			default_file_explorer = true,
+			default_file_explorer = false,
 			preview_win = {
 				preview_method = "load",
 			},
