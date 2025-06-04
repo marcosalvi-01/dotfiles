@@ -451,7 +451,7 @@ return {
 			desc = "Snacks [S]earch D[I]rectories",
 		},
 		{
-			"<leader>se",
+			"<leader>st",
 			function()
 				Snacks.picker.explorer({
 					hidden = true,

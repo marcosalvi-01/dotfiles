@@ -28,7 +28,7 @@ return {
 			return
 		end
 
-		local status, err = Command("chmod"):arg(value):args(urls):spawn():wait()
+		local status, err = Command("chmod"):arg(value):arg(urls):spawn():wait()
 		if not status or not status.success then
 			ya.notify({
 				title = "Chmod",
