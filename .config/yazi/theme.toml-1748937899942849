@@ -2,7 +2,7 @@
 
 # : Manager {{{
 
-[mgr]
+[manager]
 # Using lualine’s foreground color for cwd
 cwd = { fg = "#7daea3" }
 

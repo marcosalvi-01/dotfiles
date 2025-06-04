@@ -1,0 +1,13 @@
+{
+  "plugin": {
+    "body": [
+      "return {",
+      "\t\"${1:user/repo}\",",
+      "\topts = {",
+      "\t\t${2}",
+      "\t}",
+      "}"
+    ],
+    "prefix": "plugin"
+  }
+}

@@ -67,6 +67,11 @@ return {
 				"dadbod",
 			},
 			providers = {
+				snippets = {
+					opts = {
+						search_paths = { "~/.config/nvim/snips/" },
+					},
+				},
 				dadbod = {
 					name = "Dadbod",
 					module = "vim_dadbod_completion.blink",
