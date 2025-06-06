@@ -1,6 +1,17 @@
 return {
 	"saghen/blink.cmp",
-	dependencies = "rafamadriz/friendly-snippets",
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+
+		-- TODO: remove once https://github.com/samiulsami/cmp-go-deep is archived
+		{
+			"samiulsami/cmp-go-deep",
+			dependencies = {
+				"kkharji/sqlite.lua",
+				"saghen/blink.compat",
+			},
+		},
+	},
 	event = "VeryLazy",
 	version = "*",
 	---@module 'blink.cmp'
@@ -59,6 +70,8 @@ return {
 				return 0
 			end,
 			default = {
+				"go_deep", -- TODO: remove once https://github.com/samiulsami/cmp-go-deep is archived
+
 				"lazydev",
 				"lsp",
 				"path",
@@ -67,6 +80,22 @@ return {
 				"dadbod",
 			},
 			providers = {
+
+				-- TODO: remove once https://github.com/samiulsami/cmp-go-deep is archived
+				go_deep = {
+					name = "go_deep",
+					module = "blink.compat.source",
+					min_keyword_length = 3,
+					max_items = 5,
+					---@module "cmp_go_deep"
+					---@type cmp_go_deep.Options
+					opts = {
+						-- See below for configuration options
+						get_documentation_implementation = "hover",
+						get_package_name_implementation = "treesitter",
+					},
+				},
+
 				snippets = {
 					opts = {
 						search_paths = { "~/.config/nvim/snips/" },
