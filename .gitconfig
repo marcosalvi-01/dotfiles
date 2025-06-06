@@ -15,5 +15,5 @@
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [user]
-	email = 1marco.salvi@gmail.com
+	email = marco.salvi@ingv.it
 	name = Marco Salvi
