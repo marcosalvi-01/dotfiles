@@ -29,7 +29,7 @@ display_status() {
 
     # Parse the stats and colorize each part
     IFS=' ' read -r modified added deleted renamed untracked <<< "$git_stats"
-	colorized_stats="${YELLOW} ${modified}${RESET} ${GREEN} ${added}${RESET} ${RED} ${deleted}${RESET} ${PURPLE} ${renamed}${RESET} ${GRAY}? ${untracked}${RESET}"
+    colorized_stats="${YELLOW} ${modified}${RESET} ${GREEN} ${added}${RESET} ${RED} ${deleted}${RESET} ${PURPLE} ${renamed}${RESET} ${GRAY}? ${untracked}${RESET}"
 
     commit_msg="${BLUE} '$(git log --oneline -1 --pretty=format:'%s')'${RESET}"
 
@@ -47,12 +47,22 @@ display_status() {
     output_length=${#clean_output}
     terminal_width=$(tput cols)
 
+    # Calculate how many lines the output will occupy
+    lines_needed=$(((output_length + terminal_width - 1) / terminal_width))
+
+    # Clear all lines that might contain previous output
+    for ((i=1; i<lines_needed; i++)); do
+        printf "\033[A\033[K"  # Move up one line and clear it
+    done
+    printf "\r\033[K"  # Clear current line
+
     # Center the output
     if [ $output_length -lt $terminal_width ]; then
         padding=$(((terminal_width - output_length) / 2))
-        printf "\r%*s%s" "$padding" "" "$(echo -e "$output")"
+        printf "%*s%s" "$padding" "" "$(echo -e "$output")"
     else
-        printf "\r%s" "$(echo -e "$output")"
+        # Output is too long, print it and then handle truncation
+        printf "%s" "$(echo -e "$output")"
     fi
 }
 
