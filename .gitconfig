@@ -17,3 +17,5 @@
 [user]
 	email = marco.salvi@ingv.it
 	name = Marco Salvi
+[credential]
+	helper = osxkeychain

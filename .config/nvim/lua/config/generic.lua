@@ -28,13 +28,6 @@ vim.filetype.add({
 	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "sql",
-  callback = function()
-    vim.bo.commentstring = "-- %s"
-  end
-})
-
 -- change icons for diagnostic sings (on the left of the line number)
 vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn" })

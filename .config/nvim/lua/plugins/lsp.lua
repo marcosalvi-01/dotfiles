@@ -40,7 +40,8 @@ return {
 	},
 	{
 		"mason-org/mason.nvim",
-		cmd = "Mason",
+		event = "VeryLazy",
+		-- cmd = "Mason",
 		opts = {
 			ui = {
 				border = "rounded",
