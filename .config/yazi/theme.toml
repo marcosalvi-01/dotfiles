@@ -30,8 +30,8 @@ tab_width    = 1
 
 # Border – use taupe for border style
 # border_symbol = "│"
-border_symbol = "┃"
-border_style  = { fg = "#565656" }
+# border_symbol = "┃"
+border_style  = { fg = "#ddc7a1" }
 
 # Highlighting
 # syntect_theme = "~/.config/yazi/Gruvbox-Dark.tmTheme"

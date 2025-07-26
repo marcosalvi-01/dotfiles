@@ -11,6 +11,7 @@ return {
 				"lua_ls",
 				"gopls",
 				"pyright",
+				"jdtls",
 
 				-- Tools
 				"jq",
@@ -39,7 +40,8 @@ return {
 	},
 	{
 		"mason-org/mason.nvim",
-		cmd = "Mason",
+		event = "VeryLazy",
+		-- cmd = "Mason",
 		opts = {
 			ui = {
 				border = "rounded",
