@@ -8,22 +8,19 @@ local function show_macro_recording()
 	end
 end
 
--- Function to retrieve the current directory or buffer name
 local function get_buf_name()
-	local dir = require("oil").get_current_dir()
-	if dir then
-		return vim.fn.fnamemodify(dir, ":~")
-	else
-		-- Get the buffer name and strip the path to get only the file name
-		local buf_name = vim.api.nvim_buf_get_name(0)
-		local file_name = vim.fn.fnamemodify(buf_name, ":t")
-		-- Check if the buffer is modified and add an icon if it is
-		if vim.bo.modified then
-			return file_name .. " ●"
-		else
-			return file_name
-		end
+	local bufname = vim.api.nvim_buf_get_name(0)
+
+	-- If the buffer has no name (e.g. empty/new buffer), show cwd
+	if bufname == "" then
+		return vim.fn.fnamemodify(vim.loop.cwd(), ":~")
 	end
+
+	local filename = vim.fn.fnamemodify(bufname, ":t")
+	if vim.bo.modified then
+		return filename .. " ●"
+	end
+	return filename
 end
 
 local colors = require("utils.palette")
