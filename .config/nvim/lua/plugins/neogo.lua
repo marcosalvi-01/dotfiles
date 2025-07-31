@@ -2,7 +2,13 @@ return {
 	-- dir = "~/neogo",
 	"marcosalvi-01/neogo",
 	ft = "go",
-	opts = {},
+	opts = {
+		tools = {
+			iferr = {
+				message = 'fmt.Errorf("TODO: %w", err)',
+			},
+		},
+	},
 	keys = {
 		{
 			"<leader>he",

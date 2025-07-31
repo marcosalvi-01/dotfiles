@@ -111,6 +111,8 @@ alias kssh="kitty +kitten ssh"
 alias m='make'
 alias kulala_cli='~/.local/share/nvim/lazy/kulala.nvim/lua/cli/kulala_cli.lua'
 alias k='kubectl'
+alias eod='epos-opensource docker'
+alias eok='epos-opensource kubernetes'
 
 # Fortune widget with ctrl+f
 fortune_widget() {

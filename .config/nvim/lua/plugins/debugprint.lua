@@ -1,6 +1,11 @@
 return {
 	"andrewferrier/debugprint.nvim",
 	event = "VeryLazy",
+	dependencies = {
+		"echasnovski/mini.nvim",
+
+		"folke/snacks.nvim",
+	},
 	-- highlighting depends on mini.hipatterns
 	opts = {
 		keymaps = {
@@ -25,8 +30,20 @@ return {
 				variable_above = "<leader>dV",
 			},
 		},
+		picker = "snacks.picker",
 		display_counter = false,
 		display_snippet = true,
 		print_tag = "DEBUGPRINT",
+	},
+
+	keys = {
+		-- Add all matches in the document
+		{
+			"<leader>ds",
+			function()
+				vim.cmd("Debugprint search")
+			end,
+			desc = "Search debugprint statements [DEBUGPRINT]",
+		},
 	},
 }

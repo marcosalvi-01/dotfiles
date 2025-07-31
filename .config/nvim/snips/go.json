@@ -2,5 +2,13 @@
   "TODO": {
     "body": "panic(\"TODO\")",
     "prefix": "TODO"
+  },
+  "endpoint": {
+    "body": [
+      "func $1(w http.ResponseWriter, r *http.Request) {",
+      "\t$0",
+      "}"
+    ],
+    "prefix": "endpoint"
   }
 }

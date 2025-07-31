@@ -88,5 +88,13 @@ return {
 			mode = "v",
 			desc = "Rotate visual selection contents backward [multicursor]",
 		},
+
+		{
+			"<leader>a",
+			function()
+				require("multicursor-nvim").alignCursors()
+			end,
+			desc = "Align cursor columns [multicursor]",
+		},
 	},
 }

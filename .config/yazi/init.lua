@@ -8,3 +8,5 @@ require("back-cwd"):setup({
 })
 
 require("git"):setup()
+
+require("full-border"):setup()
