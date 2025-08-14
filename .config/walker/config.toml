@@ -8,7 +8,7 @@ hotreload_theme = true
 as_window = true
 timeout = 0
 disable_click_to_close = false
-force_keyboard_focus = false
+force_keyboard_focus = true
 
 [keys]
 accept_typeahead = ["tab"]

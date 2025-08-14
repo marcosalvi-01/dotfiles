@@ -78,3 +78,5 @@ vim.api.nvim_create_user_command("Google", function(o)
 	local url = ("https://www.google.com/search?q=%s"):format(escaped)
 	vim.ui.open(url)
 end, { nargs = 1, desc = "just google it" })
+
+vim.filetype.add({ extension = { templ = "templ" } })
