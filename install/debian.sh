@@ -12,7 +12,7 @@ DOTFILES_DIR="${REAL_HOME}/dotfiles"
 
 # Pin exact versions (include the "v" prefix used by releases)
 NEOVIM_VERSION="v0.11.3"
-YAZI_VERSION="v25.5.31"
+YAZI_VERSION="v0.2.5"
 EZA_VERSION="v0.23.0"
 
 APT_PACKAGES=(
@@ -132,7 +132,18 @@ install_neovim() {
 }
 
 install_yazi() {
-    say "Installing Yazi ${YAZI_VERSION} ..."
+    local debian_version
+    debian_version="$(get_debian_version)"
+
+    # For Debian 12, use an older version that's compatible with glibc 2.36
+    if [[ "$debian_version" -eq 12 ]] 2>/dev/null; then
+        local yazi_version="v0.2.5"
+        say "Installing Yazi ${yazi_version} (compatible with Debian 12) ..."
+    else
+        local yazi_version="$YAZI_VERSION"
+        say "Installing Yazi ${yazi_version} ..."
+    fi
+
     ensure_dirs
 
     local arch triple asset url tmp dest_dir root_dir
@@ -145,9 +156,22 @@ install_yazi() {
 
     asset="yazi-${triple}.zip"
     # use sxyazi/yazi (official releases)
-    url="https://github.com/sxyazi/yazi/releases/download/${YAZI_VERSION}/${asset}"
+    url="https://github.com/sxyazi/yazi/releases/download/${yazi_version}/${asset}"
     tmp="$(mktemp -d)"
-    curl -fL --retry 3 --retry-delay 2 "$url" -o "$tmp/yazi.zip"
+
+    # Try to download with error handling
+    if ! curl -fL --retry 3 --retry-delay 2 "$url" -o "$tmp/yazi.zip"; then
+        warn "Failed to download Yazi ${yazi_version}, trying to install via package manager..."
+        apt-get update -y
+        if apt-cache show yazi >/dev/null 2>&1; then
+            DEBIAN_FRONTEND=noninteractive apt-get install -y yazi
+            say "Yazi installed via apt"
+            return
+        else
+            die "Failed to install Yazi via download or package manager"
+        fi
+    fi
+
     unzip -q "$tmp/yazi.zip" -d "$tmp/extract"
 
     root_dir="$(find "$tmp/extract" -maxdepth 2 -type d -name "yazi-${triple}" | head -n1)"
@@ -161,7 +185,7 @@ install_yazi() {
     ln -sfn "${dest_dir}/ya"   "${BIN_DIR}/ya"
 
     rm -rf "$tmp"
-    say "Yazi ${YAZI_VERSION} installed; symlinked ${BIN_DIR}/yazi and ${BIN_DIR}/ya"
+    say "Yazi ${yazi_version} installed; symlinked ${BIN_DIR}/yazi and ${BIN_DIR}/ya"
 }
 
 install_eza() {
