@@ -32,7 +32,7 @@ OPT_DIR="${INSTALL_PREFIX}/opt"
 ### ──────────────────────────────
 say()  { printf "\n\033[1;36m==>\033[0m %s\n" "$*"; }
 warn() { printf "\033[1;33m[warn]\033[0m %s\n" "$*" >&2; }
-die()  { printf "\033[1;31m[err]\033[0m %s\n" "$*" >&2; exit 1; }
+die()  { printf "\n\033[1;31m[err]\033[0m %s\n" "$*" >&2; exit 1; }
 
 need_root() {
     if [[ $(id -u) -ne 0 ]]; then
@@ -43,8 +43,7 @@ need_root() {
 get_debian_version() {
     if [[ -f /etc/debian_version ]]; then
         local version
-        version="$(cat /etc/debian_version | cut -d. -f1)"
-        # Handle cases like "trixie/sid" or "13.0"
+        version="$(cut -d. -f1 < /etc/debian_version)"
         if [[ "$version" =~ ^[0-9]+$ ]]; then
             echo "$version"
         elif [[ "$version" == "trixie"* ]]; then
@@ -52,7 +51,6 @@ get_debian_version() {
         elif [[ "$version" == "bookworm"* ]]; then
             echo "12"
         else
-            # Try to get version from /etc/os-release as fallback
             if [[ -f /etc/os-release ]]; then
                 local version_id
                 version_id="$(grep '^VERSION_ID=' /etc/os-release | cut -d'"' -f2 | cut -d. -f1)"
@@ -64,6 +62,12 @@ get_debian_version() {
     else
         echo "unknown"
     fi
+}
+
+get_glibc_version() {
+    local v
+    v="$(ldd --version 2>/dev/null | head -n1 | grep -oE '[0-9]+\.[0-9]+' | tail -n1 || true)"
+    echo "${v:-0}"
 }
 
 ensure_apt_packages() {
@@ -109,7 +113,7 @@ install_neovim() {
     local arch asset url tmp tar_dir dest_dir
     arch="$(uname -m)"
     case "$arch" in
-        x86_64) asset="nvim-linux-x86_64.tar.gz" ;;   # <-- updated name
+        x86_64) asset="nvim-linux-x86_64.tar.gz" ;;
         aarch64|arm64) asset="nvim-linux-arm64.tar.gz" ;;
         *) die "Unsupported arch for Neovim: $arch" ;;
     esac
@@ -131,27 +135,29 @@ install_neovim() {
     say "Neovim ${NEOVIM_VERSION} installed; symlinked ${BIN_DIR}/nvim"
 }
 
-install_yazi() {
-    say "Installing Yazi ${YAZI_VERSION} ..."
-    ensure_dirs
+# Try to install a Yazi prebuilt archive for the given target triple.
+# Returns 0 on success; 1 on failure (without aborting the whole script).
+try_install_yazi_release() {
+    local triple="$1"
+    local asset="yazi-${triple}.zip"
+    local url="https://github.com/sxyazi/yazi/releases/download/${YAZI_VERSION}/${asset}"
+    local tmp root_dir dest_dir
 
-    local arch triple asset url tmp dest_dir root_dir
-    arch="$(uname -m)"
-    case "$arch" in
-        x86_64) triple="x86_64-unknown-linux-gnu" ;;
-        aarch64|arm64) triple="aarch64-unknown-linux-gnu" ;;
-        *) die "Unsupported arch for Yazi: $arch" ;;
-    esac
-
-    asset="yazi-${triple}.zip"
-    # use sxyazi/yazi (official releases)
-    url="https://github.com/sxyazi/yazi/releases/download/${YAZI_VERSION}/${asset}"
     tmp="$(mktemp -d)"
-    curl -fL --retry 3 --retry-delay 2 "$url" -o "$tmp/yazi.zip"
-    unzip -q "$tmp/yazi.zip" -d "$tmp/extract"
+    if ! curl -fL --retry 3 --retry-delay 2 "$url" -o "$tmp/yazi.zip"; then
+        rm -rf "$tmp"
+        return 1
+    fi
+    if ! unzip -q "$tmp/yazi.zip" -d "$tmp/extract"; then
+        rm -rf "$tmp"
+        return 1
+    fi
 
-    root_dir="$(find "$tmp/extract" -maxdepth 2 -type d -name "yazi-${triple}" | head -n1)"
-    [[ -n "$root_dir" ]] || die "Failed to locate extracted Yazi folder."
+    root_dir="$(find "$tmp/extract" -maxdepth 2 -type d -name "yazi-${triple}" | head -n1 || true)"
+    if [[ -z "$root_dir" ]]; then
+        rm -rf "$tmp"
+        return 1
+    fi
 
     dest_dir="${OPT_DIR}/yazi"
     rm -rf "$dest_dir"
@@ -160,8 +166,70 @@ install_yazi() {
     ln -sfn "${dest_dir}/yazi" "${BIN_DIR}/yazi"
     ln -sfn "${dest_dir}/ya"   "${BIN_DIR}/ya"
 
+    # Verify it actually runs (catches GLIBC mismatches).
+    if ! "${BIN_DIR}/yazi" --version >/dev/null 2>&1; then
+        rm -f "${BIN_DIR}/yazi" "${BIN_DIR}/ya"
+        rm -rf "$dest_dir" "$tmp"
+        return 1
+    fi
+
     rm -rf "$tmp"
-    say "Yazi ${YAZI_VERSION} installed; symlinked ${BIN_DIR}/yazi and ${BIN_DIR}/ya"
+    say "Yazi ${YAZI_VERSION} installed from prebuilt (${triple})."
+    return 0
+}
+
+install_yazi() {
+    say "Installing Yazi ${YAZI_VERSION} ..."
+    ensure_dirs
+
+    local arch triple_gnu triple_musl glibc_ver tried triples_tried
+    arch="$(uname -m)"
+    case "$arch" in
+        x86_64)
+            triple_gnu="x86_64-unknown-linux-gnu"
+            triple_musl="x86_64-unknown-linux-musl"
+            ;;
+        aarch64|arm64)
+            triple_gnu="aarch64-unknown-linux-gnu"
+            triple_musl="aarch64-unknown-linux-musl"
+            ;;
+        *)
+            warn "Unsupported arch for Yazi: $arch — skipping Yazi."
+            return 0
+            ;;
+    esac
+
+    glibc_ver="$(get_glibc_version)"
+    say "Detected glibc ${glibc_ver}"
+
+    tried=0
+    triples_tried=()
+
+    # Prefer GNU if glibc >= 2.39; otherwise MUSL.
+    if dpkg --compare-versions "$glibc_ver" ge "2.39"; then
+        triples_tried+=("$triple_gnu")
+        if try_install_yazi_release "$triple_gnu"; then
+            return 0
+        fi
+        tried=1
+        triples_tried+=("$triple_musl")
+        if try_install_yazi_release "$triple_musl"; then
+            return 0
+        fi
+    else
+        triples_tried+=("$triple_musl")
+        if try_install_yazi_release "$triple_musl"; then
+            return 0
+        fi
+        tried=1
+        triples_tried+=("$triple_gnu")
+        if try_install_yazi_release "$triple_gnu"; then
+            return 0
+        fi
+    fi
+
+    warn "Unable to install a prebuilt Yazi binary (tried: ${triples_tried[*]}). Skipping Yazi installation."
+    return 0
 }
 
 install_eza() {
@@ -191,9 +259,11 @@ install_eza() {
 
         tar -C "$tmp" -xzf "$tmp/eza.tar.gz"
 
-        # The eza binary should be directly in the archive
         if [[ -f "$tmp/eza" ]]; then
             cp "$tmp/eza" "${BIN_DIR}/eza"
+            chmod +x "${BIN_DIR}/eza"
+        elif [[ -f "$tmp/bin/eza" ]]; then
+            cp "$tmp/bin/eza" "${BIN_DIR}/eza"
             chmod +x "${BIN_DIR}/eza"
         else
             die "Failed to find eza binary in extracted archive."
