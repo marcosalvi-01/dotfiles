@@ -20,6 +20,7 @@ APT_PACKAGES=(
     zsh tmux stow fzf
     unzip xz-utils tar
     gcc fortune
+    build-essential
 )
 
 INSTALL_PREFIX="/usr/local"
