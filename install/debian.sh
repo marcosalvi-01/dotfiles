@@ -13,12 +13,13 @@ DOTFILES_DIR="${REAL_HOME}/dotfiles"
 # Pin exact versions (include the "v" prefix used by releases)
 NEOVIM_VERSION="v0.11.3"
 YAZI_VERSION="v25.5.31"
+EZA_VERSION="v0.23.0"
 
 APT_PACKAGES=(
     git curl wget ca-certificates
     zsh tmux stow fzf
     unzip xz-utils tar
-	gcc fortune
+    gcc fortune
 )
 
 INSTALL_PREFIX="/usr/local"
@@ -35,6 +36,32 @@ die()  { printf "\033[1;31m[err]\033[0m %s\n" "$*" >&2; exit 1; }
 need_root() {
     if [[ $(id -u) -ne 0 ]]; then
         die "Please run with sudo/root (e.g., sudo $0)"
+    fi
+}
+
+get_debian_version() {
+    if [[ -f /etc/debian_version ]]; then
+        local version
+        version="$(cat /etc/debian_version | cut -d. -f1)"
+        # Handle cases like "trixie/sid" or "13.0"
+        if [[ "$version" =~ ^[0-9]+$ ]]; then
+            echo "$version"
+        elif [[ "$version" == "trixie"* ]]; then
+            echo "13"
+        elif [[ "$version" == "bookworm"* ]]; then
+            echo "12"
+        else
+            # Try to get version from /etc/os-release as fallback
+            if [[ -f /etc/os-release ]]; then
+                local version_id
+                version_id="$(grep '^VERSION_ID=' /etc/os-release | cut -d'"' -f2 | cut -d. -f1)"
+                echo "${version_id:-unknown}"
+            else
+                echo "unknown"
+            fi
+        fi
+    else
+        echo "unknown"
     fi
 }
 
@@ -136,6 +163,46 @@ install_yazi() {
     say "Yazi ${YAZI_VERSION} installed; symlinked ${BIN_DIR}/yazi and ${BIN_DIR}/ya"
 }
 
+install_eza() {
+    local debian_version
+    debian_version="$(get_debian_version)"
+
+    if [[ "$debian_version" -ge 13 ]] 2>/dev/null; then
+        say "Installing eza from apt (Debian $debian_version) ..."
+        need_root
+        DEBIAN_FRONTEND=noninteractive apt-get install -y eza
+        say "eza installed via apt"
+    else
+        say "Installing eza ${EZA_VERSION} from GitHub releases (Debian $debian_version) ..."
+        ensure_dirs
+
+        local arch asset url tmp
+        arch="$(uname -m)"
+        case "$arch" in
+            x86_64) asset="eza_x86_64-unknown-linux-gnu.tar.gz" ;;
+            aarch64|arm64) asset="eza_aarch64-unknown-linux-gnu.tar.gz" ;;
+            *) die "Unsupported arch for eza: $arch" ;;
+        esac
+
+        url="https://github.com/eza-community/eza/releases/download/${EZA_VERSION}/${asset}"
+        tmp="$(mktemp -d)"
+        curl -fL --retry 3 --retry-delay 2 "$url" -o "$tmp/eza.tar.gz"
+
+        tar -C "$tmp" -xzf "$tmp/eza.tar.gz"
+
+        # The eza binary should be directly in the archive
+        if [[ -f "$tmp/eza" ]]; then
+            cp "$tmp/eza" "${BIN_DIR}/eza"
+            chmod +x "${BIN_DIR}/eza"
+        else
+            die "Failed to find eza binary in extracted archive."
+        fi
+
+        rm -rf "$tmp"
+        say "eza ${EZA_VERSION} installed to ${BIN_DIR}/eza"
+    fi
+}
+
 install_tpm() {
     say "Cloning Tmux Plugin Manager (TPM) ..."
     sudo -u "$REAL_USER" mkdir -p "${REAL_HOME}/.tmux/plugins"
@@ -160,9 +227,9 @@ main() {
     change_default_shell_to_zsh
     install_neovim
     install_yazi
+    install_eza
 
     say "Done! Start tmux and press prefix+I to install plugins."
 }
 
 main "$@"
-
