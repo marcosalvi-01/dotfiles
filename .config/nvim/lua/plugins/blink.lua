@@ -2,6 +2,16 @@ return {
 	"saghen/blink.cmp",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
+
+		-- Supermaven + Blink provider
+		{
+			"supermaven-inc/supermaven-nvim",
+			opts = {
+				disable_inline_completion = true,
+				disable_keymaps = true,
+			},
+		},
+		{ "Huijiro/blink-cmp-supermaven" },
 	},
 	event = "VeryLazy",
 	version = "*",
@@ -50,6 +60,7 @@ return {
 				end,
 			},
 		},
+
 		appearance = {
 			use_nvim_cmp_as_default = true,
 			nerd_font_variant = "mono",
@@ -65,7 +76,9 @@ return {
 				end
 				return 0
 			end,
+
 			default = {
+				"supermaven",
 				"lazydev",
 				"lsp",
 				"path",
@@ -73,6 +86,7 @@ return {
 				"buffer",
 				"dadbod",
 			},
+
 			providers = {
 				snippets = {
 					opts = {
@@ -102,16 +116,12 @@ return {
 						else
 							return items
 						end
-
-						-- avoid duplicates from the corrections
-						local seen = {}
-						local out = {}
+						local seen, out = {}, {}
 						for _, item in ipairs(items) do
 							local raw = item.insertText
 							if raw:match(correct) then
 								local text = case(raw:sub(1, 1)) .. raw:sub(2)
-								item.insertText = text
-								item.label = text
+								item.insertText, item.label = text, text
 							end
 							if not seen[item.insertText] then
 								seen[item.insertText] = true
@@ -121,13 +131,35 @@ return {
 						return out
 					end,
 				},
+
+				-- Supermaven via Blink provider, gated by first word == "log"
+				supermaven = {
+					name = "supermaven",
+					module = "blink-cmp-supermaven",
+					async = true,
+					min_keyword_length = 0,
+					should_show_items = require("utils.supermaven_snippets").gate_first_word({
+						ignore_case = true,
+						triggers = {
+							"log",
+							"ret*",
+							-- { prefix = "dbg" },
+							-- { exact = "return" },
+							-- { pattern = "t%.run" }, -- Lua pattern: matches "t.run"
+						},
+						by_filetype = {
+							lua = { "print", { prefix = "vim." } },
+							typescript = { "console*", { exact = "return" } },
+						},
+					}),
+				},
 			},
 		},
+
 		completion = {
 			list = {
 				selection = {
 					preselect = true,
-					-- auto_insert = false,
 					auto_insert = function(ctx)
 						return ctx.mode == "cmdline"
 					end,
@@ -147,21 +179,20 @@ return {
 			documentation = {
 				auto_show = true,
 				auto_show_delay_ms = 250,
-				window = {
-					border = "rounded",
-				},
+				window = { border = "rounded" },
 			},
 			ghost_text = { enabled = true },
 		},
+
 		signature = {
 			enabled = true,
 			window = {
 				border = "rounded",
 				show_documentation = false,
-				-- now this works, if getting an error when showing the signature, disable
 				treesitter_highlighting = true,
 			},
 		},
 	},
+
 	opts_extend = { "sources.default" },
 }

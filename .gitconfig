@@ -19,3 +19,13 @@
 	name = Marco Salvi
 [credential]
 	helper = osxkeychain
+
+[branch]
+    sort = -committerdate
+[tag]
+    sort = -version:refname
+[diff]
+    algorithm = histogram
+[maintenance]
+    auto = true
+    strategy = incremental

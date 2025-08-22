@@ -426,7 +426,7 @@ return {
 			desc = "Snacks [G]oto [I]mplementation",
 		},
 		{
-			"<leader>sl",
+			"<leader>sL",
 			function()
 				Snacks.picker.lsp_symbols({
 					layout = "main_preview",
@@ -435,7 +435,7 @@ return {
 			desc = "Snacks [S]earch [L]sp symbols",
 		},
 		{
-			"<leader>sL",
+			"<leader>sl",
 			function()
 				Snacks.picker.lsp_workspace_symbols({
 					layout = "main_preview",

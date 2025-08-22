@@ -8,6 +8,11 @@ return {
 	opts = {
 		show_help_hints = false,
 		enhanced_diff_hl = false,
+		hooks = {
+			diff_buf_win_enter = function()
+				vim.opt_local.foldenable = false
+			end,
+		},
 		-- hooks = {
 		-- 	-- make "diff" buffers non-modifiable
 		-- 	diff_buf_read = function()
@@ -48,6 +53,14 @@ return {
 						require("diffview.actions").listing_style()
 					end,
 					{ desc = "Toggle file panel listing style" },
+				},
+				{
+					"n",
+					"<cr>",
+					function()
+						require("diffview.actions").focus_entry()
+					end,
+					{ desc = "Open and focus the diff for the selected entry." },
 				},
 			},
 			file_history_panel = {

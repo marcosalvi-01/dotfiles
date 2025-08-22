@@ -68,7 +68,7 @@ alt-ctrl-down = 'move down'
 alt-ctrl-up = 'move up'
 alt-ctrl-right= 'move right'
 
-alt-f = 'fullscreen'
+alt-f = 'fullscreen --no-outer-gaps'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
 alt-shift-minus = 'resize smart -50'
