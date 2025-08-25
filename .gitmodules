@@ -1,0 +1,3 @@
+[submodule ".config/images"]
+	path = .config/images
+	url = https://github.com/marcosalvi-01/images.git
