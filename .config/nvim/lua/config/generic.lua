@@ -80,3 +80,9 @@ vim.api.nvim_create_user_command("Google", function(o)
 end, { nargs = 1, desc = "just google it" })
 
 vim.filetype.add({ extension = { templ = "templ" } })
+
+if vim.fn.has("nvim-0.12") == 1 then
+	vim.o.diffopt = "internal,filler,closeoff,inline:word,linematch:40"
+elseif vim.fn.has("nvim-0.11") == 1 then
+	vim.o.diffopt = "internal,filler,closeoff,linematch:40"
+end
