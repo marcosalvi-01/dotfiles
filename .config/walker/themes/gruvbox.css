@@ -47,6 +47,7 @@ slider,
 #box {
   background: @background;
   padding: 32px;
+  border-radius: 12px;
 }
 
 #search {
