@@ -1,5 +1,8 @@
 return {
 	"marcosalvi-01/spine",
+	dependencies = {
+		"echasnovski/mini.nvim",
+	},
 	keys = {
 		{
 			"<leader><BS>",

@@ -145,30 +145,30 @@ shift-down = ['volume set 0', 'mode main']
 [workspace-to-monitor-force-assignment]
 # home
 
-N = 1
-n = 1
-E = 1
-e = 1
-I = 1
-i = 1
-A = 1
-a = 1
-C = 2
-R = 2
-S = 2
-T = 2
+# N = 1
+# n = 1
+# E = 1
+# e = 1
+# I = 1
+# i = 1
+# A = 1
+# a = 1
+# C = 2
+# R = 2
+# S = 2
+# T = 2
 
 # work
 
-# N = 2
-# n = 2
-# E = 2
-# e = 2
-# I = 2
-# i = 2
-# A = 2
-# a = 2
-# C = 1
-# R = 1
-# S = 1
-# T = 1
+N = 2
+n = 2
+E = 2
+e = 2
+I = 2
+i = 2
+A = 2
+a = 2
+C = 1
+R = 1
+S = 1
+T = 1
