@@ -22,14 +22,14 @@ vim.keymap.set("n", ",", ";")
 vim.keymap.set("n", ";", ",")
 
 -- reset the horizontal scroll when doing Home
-vim.keymap.set("n", "<Home>", function()
+vim.keymap.set({ "n", "v" }, "<Home>", function()
 	local current_col = vim.fn.wincol()
 	if current_col > 1 then
 		vim.cmd("normal! 0")
 	end
 	vim.cmd("normal! _")
 end)
-vim.keymap.set("n", "<End>", "$")
+vim.keymap.set({ "n", "v" }, "<End>", "g_")
 
 vim.keymap.set("n", "Q", "`", { remap = true })
 
