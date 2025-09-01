@@ -28,6 +28,20 @@ return {
 				{ "n", "<esc>", "<cmd>tabc<CR>", { desc = "Close the diff" } },
 				{
 					"n",
+					"<leader>hp",
+					function()
+						vim.cmd("norm! [czz")
+					end,
+				},
+				{
+					"n",
+					"<leader>hn",
+					function()
+						vim.cmd("norm! ]czz")
+					end,
+				},
+				{
+					"n",
 					"<leader>e",
 					function()
 						require("diffview.actions").toggle_files()

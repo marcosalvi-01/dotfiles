@@ -1,0 +1,11 @@
+plugins:
+  gonzo:
+    shortCut: Ctrl-L
+    description: "Gonzo log analysis"
+    scopes:
+      - po
+    command: sh
+    background: false
+    args:
+      - -c
+      - "kubectl logs -f $NAME -n $NAMESPACE --context $CONTEXT | gonzo"

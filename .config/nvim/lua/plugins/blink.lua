@@ -3,12 +3,14 @@ return {
 	dependencies = {
 		"rafamadriz/friendly-snippets",
 
-		-- Supermaven + Blink provider
+		-- Supermaven
 		{
 			"supermaven-inc/supermaven-nvim",
 			opts = {
 				disable_inline_completion = true,
 				disable_keymaps = true,
+				log_level = "off",
+				ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
 			},
 		},
 		{ "Huijiro/blink-cmp-supermaven" },
@@ -132,7 +134,7 @@ return {
 					end,
 				},
 
-				-- Supermaven via Blink provider, gated by first word == "log"
+				-- Supermaven
 				supermaven = {
 					name = "supermaven",
 					module = "blink-cmp-supermaven",
@@ -140,16 +142,10 @@ return {
 					min_keyword_length = 0,
 					should_show_items = require("utils.supermaven_snippets").gate_first_word({
 						ignore_case = true,
-						triggers = {
-							"log",
-							"ret*",
-							-- { prefix = "dbg" },
-							-- { exact = "return" },
-							-- { pattern = "t%.run" }, -- Lua pattern: matches "t.run"
-						},
 						by_filetype = {
 							lua = { "print", { prefix = "vim." } },
 							typescript = { "console*", { exact = "return" } },
+							go = { "log*", "ret*" },
 						},
 					}),
 				},

@@ -7,9 +7,10 @@ return {
 		},
 	},
 	{
-		event = "VeryLazy",
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+		lazy = false,
+		branch = "master",
 		main = "nvim-treesitter.configs", -- Sets main module to use for opts
 		opts = {
 			-- Core functionality
@@ -48,7 +49,7 @@ return {
 				"java",
 				"make",
 			},
-			sync_install = false, -- Install parsers asynchronously
+			sync_install = true, -- Install parsers asynchronously
 			auto_install = true, -- Automatically install missing parsers
 			ignore_install = { "javascript" },
 			textobjects = {
