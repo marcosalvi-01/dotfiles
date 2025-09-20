@@ -5,7 +5,7 @@ window {
   font-family: "JetBrainsMono Nerd Font Mono", monospace;
   font-size: 13px;
   margin: 0px;
-  background-color: rgba(60, 56, 54, 0.55);
+  background-color: rgba(56, 52, 50, 0.35);
   border: 2px solid #d4be98;
   border-radius: 20px;
 }
@@ -16,7 +16,7 @@ window {
   color: #d4be98;
   font-weight: 600;
   font-size: 15px;
-  background-color: rgba(80, 73, 69, 0.55);
+  background-color: rgba(70, 63, 59, 0.35);
   outline: none;
   border-radius: 50px;
 }
@@ -25,7 +25,7 @@ window {
 }
 #input:focus {
   border: 2px solid #a9b665;
-  background-color: rgba(102, 92, 84, 0.65);
+  background-color: rgba(92, 82, 74, 0.45);
   box-shadow: 0 0 0 3px rgba(169, 182, 101, 0.2);
 }
 #inner-box {
