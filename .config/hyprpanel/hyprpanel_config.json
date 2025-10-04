@@ -9,7 +9,7 @@
   "theme.font.size": "1.1rem",
   "theme.font.weight": 700,
   "menus.transitionTime": 200,
-  "scalingPriority": "gdk",
+  "scalingPriority": "hyprland",
   "theme.bar.floating": true,
   "theme.bar.buttons.enableBorders": false,
   "theme.bar.border_radius": "0.4em",
@@ -124,9 +124,9 @@
   "bar.customModules.ram.leftClick": "kitty --class system_monitor -e btop",
   "bar.volume.rightClick": "pavucontrol",
   "bar.launcher.autoDetectIcon": true,
-  "menus.dashboard.shortcuts.left.shortcut1.command": "google-chrome-stable",
-  "menus.dashboard.shortcuts.left.shortcut1.icon": "",
-  "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Google Chrome",
+  "menus.dashboard.shortcuts.left.shortcut1.command": "zen-browser",
+  "menus.dashboard.shortcuts.left.shortcut1.icon": "",
+  "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Zen",
   "menus.dashboard.shortcuts.left.shortcut3.command": "vesktop",
   "menus.dashboard.shortcuts.left.shortcut4.command": "ulauncher-toggle",
   "bar.network.truncation_size": 8,
@@ -143,7 +143,9 @@
   "bar.workspaces.applicationIconMap": {
     "vesktop": "󰙯",
     "wasistlos": "",
-    "title:WhatsApp Web": ""
+    "WhatSie": "",
+    "title:WhatsApp Web": "",
+    "com.github.iwalton3.jellyfin-media-player": "󰼁"
   },
   "theme.notification.enableShadow": true,
   "notifications.monitor": 1,
@@ -160,5 +162,10 @@
   "theme.bar.buttons.modules.worldclock.enableBorder": false,
   "bar.customModules.worldclock.format": "%H:%M:%S",
   "bar.customModules.worldclock.icon": "󰥔",
-  "theme.bar.buttons.clock.spacing": "0.6em"
+  "theme.bar.buttons.clock.spacing": "0.6em",
+  "bar.customModules.storage.paths": [
+    "/"
+  ],
+  "notifications.clearDelay": 20,
+  "theme.bar.menus.enableShadow": true
 }
