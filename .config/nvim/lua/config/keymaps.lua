@@ -121,13 +121,13 @@ vim.keymap.set({ "n", "v" }, "M", function()
 	end
 end)
 
-vim.keymap.set("v", "<leader>sed", function()
+vim.keymap.set("v", "<c-s>", function()
 	-- get the selected text
 	local lines = table.concat(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() }))
 	-- exit visual mode
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, false, true), "x", true)
 	-- open the %s command
-	return vim.fn.feedkeys(":%s/" .. vim.fn.escape(lines, "/\\") .. "/", "n")
+	return vim.fn.feedkeys(":%s/\\V" .. vim.fn.escape(lines, "/\\") .. "/", "n")
 end, { desc = "Search and replace selection" })
 
 -- toggle inlay hints
@@ -269,3 +269,10 @@ end, { desc = "Close current tab" })
 vim.keymap.set({ "n", "v" }, "g.", function()
 	vim.cmd("normal! @@")
 end, { desc = "Replay last macro" })
+
+vim.keymap.set("n", "<leader>a", function()
+	vim.cmd("e #")
+end, { desc = "Alternate last two buffers" })
+vim.keymap.set("n", "<leader>A", function()
+	vim.cmd.vsplit({ args = { "#" }, mods = { split = "botright" } })
+end, { desc = "Open last buffer in vertical split" })
