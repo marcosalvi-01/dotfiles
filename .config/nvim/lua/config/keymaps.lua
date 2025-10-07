@@ -21,6 +21,8 @@ vim.keymap.set("n", "S", "i<CR><Esc>", { desc = "[S]plit lines" })
 vim.keymap.set("n", ",", ";")
 vim.keymap.set("n", ";", ",")
 
+vim.keymap.set({ "n", "v" }, "U", "<C-r>")
+
 -- reset the horizontal scroll when doing Home
 vim.keymap.set({ "n", "v" }, "<Home>", function()
 	local current_col = vim.fn.wincol()

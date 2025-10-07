@@ -12,7 +12,7 @@ path=(
     /opt/nvim-linux64/bin
     $HOME/go/bin
     $HOME/.local/scripts
-    $HOME/.local/bin
+    # $HOME/.local/bin
     $HOME/Library/Python/3.9/bin
     $HOME/.spicetify
     $path
