@@ -157,7 +157,8 @@ return {
 								border = "bottom",
 							},
 							{ win = "list", border = "none" },
-							{ win = "preview", title = "{preview}", border = "none" },
+							-- disable preview because not all vim.ui.select invocations have a file
+							-- { win = "preview", title = "{preview}", border = "none" },
 						},
 					},
 				},

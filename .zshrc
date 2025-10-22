@@ -12,6 +12,7 @@ path=(
     /opt/nvim-linux64/bin
     $HOME/go/bin
     $HOME/.local/scripts
+    $HOME/.local/bin
     # $HOME/.local/bin
     $HOME/Library/Python/3.9/bin
     $HOME/.spicetify
@@ -123,6 +124,7 @@ zle -N fortune_widget
 bindkey '^F' fortune_widget
 
 bindkey -s '^N' 'nvim\n'
+bindkey -s '^O' 'opencode\n'
 
 # y for yazi to cd into dir
 function y() {
@@ -233,3 +235,8 @@ bindkey -M viins '^E' edit-command-line
 # Load p10k config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # eval "$(starship init zsh)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/marco/.lmstudio/bin"
+# End of LM Studio CLI section
+

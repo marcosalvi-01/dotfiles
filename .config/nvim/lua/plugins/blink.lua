@@ -140,7 +140,7 @@ return {
 						by_filetype = {
 							lua = { "print", { prefix = "vim." } },
 							typescript = { "console*", { exact = "return" } },
-							go = { "log*", "ret*" },
+							go = { "log*", "ret*", "display*" },
 						},
 					}),
 				},

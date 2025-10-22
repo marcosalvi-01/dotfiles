@@ -8,9 +8,9 @@ return {
 	},
 	opts = {
 		preview = {
-			modes = { "n", "no", "c" },
+			modes = { "no", "c" },
 			icon_provider = "mini",
 		},
-		-- hybrid_modes = {  "i" },
+		hybrid_modes = {  "n" },
 	},
 }
