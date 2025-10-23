@@ -272,7 +272,10 @@ end, { desc = "Replay last macro" })
 
 vim.keymap.set("n", "<leader>a", function()
 	vim.cmd("e #")
+	vim.cmd("normal! zz")
 end, { desc = "Alternate last two buffers" })
 vim.keymap.set("n", "<leader>A", function()
 	vim.cmd.vsplit({ args = { "#" }, mods = { split = "botright" } })
 end, { desc = "Open last buffer in vertical split" })
+
+-- vim.keymap.set({ "n", "v" }, "<Tab>", ":")

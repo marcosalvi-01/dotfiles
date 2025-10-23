@@ -44,6 +44,11 @@ return {
 					cmp.scroll_documentation_down(4)
 				end,
 			},
+			["<C-s>"] = {
+				function(cmp)
+					cmp.show_signature()
+				end,
+			},
 		},
 		appearance = {
 			use_nvim_cmp_as_default = true,

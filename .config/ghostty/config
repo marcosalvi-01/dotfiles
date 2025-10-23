@@ -5,12 +5,12 @@ font-size = 18
 theme = gruvbox
 background = 1d1d1d
 foreground = d4be98
-background-opacity = 0.8
+background-opacity = 0.9
 background-blur-radius = 60
 macos-titlebar-style = hidden
 window-decoration=false
-font-family = JetBrainsMono NFM SemiBold 
-font-family-bold = JetBrainsMono NFM SemiBold
+font-family = JetBrainsMono NFM SemiBold
+#font-family-bold = JetBrainsMono NFM SemiBold
 confirm-close-surface = false
 quit-after-last-window-closed=true
 #window-padding-x = 10
@@ -23,5 +23,9 @@ keybind = super+plus=increase_font_size:1
 keybind = super+minus=decrease_font_size:1
 keybind = ctrl+v=paste_from_clipboard
 
-custom-shader = ghostty-shaders/in-game-crt.glsl
+keybind = shift+enter=text:\x1b[13;2u
+keybind = ctrl+enter=text:\x1b[13;5u
+keybind = ctrl+backspace=text:\x17
+
+#custom-shader = ghostty-shaders/in-game-crt.glsl
 #custom-shader = ghostty-shaders/inside-the-matrix.glsl
