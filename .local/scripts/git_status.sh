@@ -66,6 +66,21 @@ display_status() {
     fi
 }
 
+# Check if current directory is a git repository
+if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    output="${GRAY}Not a git repository 󰇸${RESET}"
+    terminal_width=$(tput cols)
+    clean_output=$(echo -e "$output" | sed 's/\x1b\[[0-9;]*m//g')
+    output_length=${#clean_output}
+    if [ $output_length -lt $terminal_width ]; then
+        padding=$(((terminal_width - output_length) / 2))
+        printf "%*s%s\n" "$padding" "" "$(echo -e "$output")"
+    else
+        echo -e "$output"
+    fi
+    exit 0
+fi
+
 # Check if we have an upstream branch
 current_branch=$(git branch --show-current)
 upstream_branch=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null)
