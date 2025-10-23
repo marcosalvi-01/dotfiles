@@ -35,6 +35,15 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 
+# TODO
+# zinit light jeffreytse/zsh-vi-mode
+#
+# function zvm_config() {
+#   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+#   ZVM_VI_SURROUND_BINDKEY=s-prefix
+# }
+# zvm_config
+
 # Turbo mode for plugins (load in background)
 zinit wait"0a" lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
@@ -100,6 +109,10 @@ alias pipes='pipes.sh -t 1 -f 100 -r 4000 -R -s 15 -p 4'
 alias .='nvim .'
 alias kssh="kitty +kitten ssh"
 alias m='make'
+alias kulala_cli='~/.local/share/nvim/lazy/kulala.nvim/lua/cli/kulala_cli.lua'
+alias k='kubectl'
+alias eod='epos-opensource docker'
+alias eok='epos-opensource kubernetes'
 
 # Fortune widget with ctrl+f
 fortune_widget() {
@@ -110,6 +123,7 @@ zle -N fortune_widget
 bindkey '^F' fortune_widget
 
 bindkey -s '^N' 'nvim\n'
+bindkey -s '^O' 'opencode\n'
 
 # y for yazi to cd into dir
 function y() {

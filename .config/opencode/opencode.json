@@ -5,8 +5,13 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://192.168.1.198:1234/v1"
+        "baseURL": "http://127.0.0.1:1234/v1"
       },
+      "models": {
+        "openai/gpt-oss-20b": {
+          "name": "GPT oss 20b"
+        },
+      }
     },
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -26,5 +31,43 @@
         }
       }
     }
+  },
+  "keybinds": {
+    "leader": "ctrl+n",
+    "app_help": "<leader>h",
+    "app_exit": "ctrl+c,<leader>q",
+    "editor_open": "<leader>e",
+    "theme_list": "<leader>t",
+    "project_init": "<leader>i",
+    "tool_details": "<leader>d",
+    "thinking_blocks": "<leader>b",
+    "session_export": "<leader>x",
+    "session_new": "<leader>n",
+    "session_list": "<leader>l",
+    "session_share": "<leader>s",
+    "session_unshare": "none",
+    "session_interrupt": "esc",
+    "session_compact": "<leader>c",
+    "session_child_cycle": "gui+right",
+    "session_child_cycle_reverse": "gui+left",
+    "messages_page_up": "ctrl+pgup",
+    "messages_page_down": "ctrl+pgdown",
+    "messages_half_page_up": "pgup",
+    "messages_half_page_down": "pgdown",
+    "messages_first": "ctrl+g",
+    "messages_last": "ctrl+alt+g",
+    "messages_copy": "<leader>y",
+    "messages_undo": "<leader>u",
+    "messages_redo": "<leader>r",
+    "model_list": "<leader>m",
+    "model_cycle_recent": "f2",
+    "model_cycle_recent_reverse": "shift+f2",
+    "agent_list": "<leader>a",
+    "agent_cycle": "tab",
+    "agent_cycle_reverse": "shift+tab",
+    "input_clear": "ctrl+c",
+    "input_paste": "ctrl+v",
+    "input_submit": "enter",
+    "input_newline": "shift+enter,ctrl+j"
   }
 }
