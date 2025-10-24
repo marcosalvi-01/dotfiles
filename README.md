@@ -41,4 +41,3 @@ These scripts install basic tools like nvim, tmux, zsh, and plugins. Mainly used
 - Yazi
 - Scripts
 - Opencode
-
