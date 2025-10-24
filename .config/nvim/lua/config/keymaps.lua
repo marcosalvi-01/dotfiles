@@ -50,8 +50,6 @@ vim.keymap.set("n", "<bs>", function()
 	vim.notify("All buffer changes written")
 end, { desc = "[W]rite all buffer" })
 
-vim.keymap.set("n", "<leader>-", vim.cmd.Oil, { desc = "Open file bowser (Oil)" })
-
 vim.keymap.set("n", "<leader>l", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice [L]ogs" })
 
 vim.keymap.set("n", "<leader>tw", function()
@@ -63,45 +61,61 @@ vim.keymap.set("n", "<S-CR>", 'm`O<Esc>"_cc<Esc>``', { desc = "Add new line befo
 
 -- Invert current word or operator
 vim.keymap.set("n", "!", function()
-	-- Define base pairs
-	local base_pairs = {
+	local inversions = {
 		["true"] = "false",
+		["false"] = "true",
 		["True"] = "False",
+		["False"] = "True",
 		["yes"] = "no",
+		["no"] = "yes",
 		["on"] = "off",
+		["off"] = "on",
 		["enable"] = "disable",
+		["disable"] = "enable",
 		["enabled"] = "disabled",
-		["vero"] = "falso",
+		["disabled"] = "enabled",
 		["&&"] = "||",
+		["||"] = "&&",
 		["and"] = "or",
+		["or"] = "and",
 		["!="] = "==",
+		["=="] = "!=",
+		["vero"] = "falso",
+		["falso"] = "vero",
 	}
-	-- Create complete inversions table with both directions
-	local inversions = {}
-	for word, inverse in pairs(base_pairs) do
-		inversions[word] = inverse
-		inversions[inverse] = word
+
+	-- Get current word under cursor
+	local word = vim.fn.expand("<cword>")
+	if word == "" then
+		return
 	end
 
-	-- Yank the current word (this also works for operators)
-	vim.cmd('normal! "iyiw')
-
-	-- Get the yanked text
-	local word = vim.fn.getreg("i")
-
-	-- Check if word exists in our inversions table
-	if inversions[word] then
-		-- Replace the word under cursor with its inversion
-		vim.cmd('normal! "_ciw' .. inversions[word])
-	elseif inversions[word:lower()] then
-		-- Get the inverted word
-		local inverted = inversions[word:lower()]
-		-- Preserve the original case
-		if word:sub(1, 1):match("%u") then
-			inverted = inverted:sub(1, 1):upper() .. inverted:sub(2)
+	local replacement = inversions[word]
+	if not replacement then
+		-- Try case-insensitive match
+		local lower_word = word:lower()
+		replacement = inversions[lower_word]
+		if replacement then
+			-- Preserve original case
+			if word:sub(1, 1):match("%u") then
+				replacement = replacement:sub(1, 1):upper() .. replacement:sub(2)
+			end
 		end
-		-- Replace the word under cursor
-		vim.cmd('normal! "_ciw' .. inverted)
+	end
+
+	if replacement then
+		local cursor_pos = vim.api.nvim_win_get_cursor(0)
+		local line = vim.api.nvim_get_current_line()
+		local start_col = vim.fn.matchstrpos(line, "\\<" .. vim.fn.escape(word, "\\") .. "\\>")[2]
+		local end_col = start_col + #word
+
+		local new_line = line:sub(1, start_col) .. replacement .. line:sub(end_col + 1)
+		vim.api.nvim_set_current_line(new_line)
+
+		-- Restore cursor position
+		vim.api.nvim_win_set_cursor(0, cursor_pos)
+	else
+		vim.notify("No inversion found for '" .. word .. "'", vim.log.levels.WARN)
 	end
 end, { desc = "[!]Invert current word or operator" })
 
@@ -133,20 +147,19 @@ vim.keymap.set("v", "<c-s>", function()
 end, { desc = "Search and replace selection" })
 
 -- toggle inlay hints
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(event)
-		local bufnr = event.buf
-		local client = vim.lsp.get_client_by_id(event.data.client_id)
-		-- Check that the LSP client supports inlay hints
-		if client and client.server_capabilities.inlayHintProvider then
-			vim.keymap.set("n", "<leader>ih", function()
-				local currently_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
-				vim.lsp.inlay_hint.enable(not currently_enabled, { bufnr = bufnr })
-				vim.notify("Inlay hints " .. (not currently_enabled and "enabled" or "disabled"))
-			end, { buffer = bufnr, desc = "Toggle [I]nlay [H]ints" })
+vim.keymap.set("n", "<leader>ih", function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	local clients = vim.lsp.get_clients({ bufnr = bufnr })
+	for _, client in ipairs(clients) do
+		if client.server_capabilities.inlayHintProvider then
+			local currently_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+			vim.lsp.inlay_hint.enable(not currently_enabled, { bufnr = bufnr })
+			vim.notify("Inlay hints " .. (not currently_enabled and "enabled" or "disabled"))
+			return
 		end
-	end,
-})
+	end
+	vim.notify("No LSP client with inlay hint support found")
+end, { desc = "Toggle [I]nlay [H]ints" })
 
 vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search inside current visual selection" })
 
@@ -196,28 +209,28 @@ end, { noremap = true, silent = true, desc = "Just Google it" })
 
 -- Keymap to yank all diagnostic messages from current line to clipboard
 vim.keymap.set("n", "<leader>ye", function()
-	-- Get current line number
+	local bufnr = vim.api.nvim_get_current_buf()
 	local current_line = vim.fn.line(".")
+	local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":~:.")
+	local line_content = vim.api.nvim_buf_get_lines(bufnr, current_line - 1, current_line, false)[1] or ""
 
-	-- Get all diagnostic messages for the current line
-	local diagnostics = vim.diagnostic.get(0, { lnum = current_line - 1 }) -- 0-indexed in the API
+	local diagnostics = vim.diagnostic.get(bufnr, { lnum = current_line - 1 })
 
-	-- Extract all diagnostic messages
+	if #diagnostics == 0 then
+		vim.notify("No diagnostics found on current line", vim.log.levels.INFO)
+		return
+	end
+
 	local messages = {}
 	for _, diag in ipairs(diagnostics) do
 		table.insert(messages, diag.message)
 	end
 
-	-- Join diagnostic messages with newlines
-	local diagnostic_text = table.concat(messages, "\n")
+	local diagnostic_text =
+		string.format("File: %s\nLine %d: %s\n%s", filename, current_line, line_content, table.concat(messages, "\n"))
 
-	-- If there are diagnostics, copy them to the clipboard
-	if #messages > 0 then
-		vim.fn.setreg("+", diagnostic_text)
-		print("Yanked " .. #messages .. " diagnostic message(s) to clipboard")
-	else
-		print("No diagnostics found on current line")
-	end
+	vim.fn.setreg("+", diagnostic_text)
+	vim.notify("Yanked diagnostic info to clipboard")
 end, { desc = "Yank all diagnostics from current line to clipboard" })
 
 -- insert p instead of paste while in substitute mode
@@ -274,6 +287,7 @@ end, { desc = "Replay last macro" })
 
 vim.keymap.set("n", "<leader>a", function()
 	vim.cmd("e #")
+	vim.cmd("normal! zz")
 end, { desc = "Alternate last two buffers" })
 vim.keymap.set("n", "<leader>A", function()
 	vim.cmd.vsplit({ args = { "#" }, mods = { split = "botright" } })
