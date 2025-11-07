@@ -37,8 +37,8 @@ desc = "Clear selection and unyank"
 
 [[input.prepend_keymap]]
 on   = "<Esc>"
-run  = "close"
-desc = "Cancel input"
+run  = ["close"]
+desc = "Cancel input and unyank"
 
 [[mgr.append_keymap]]
 on = ["g", "?"]

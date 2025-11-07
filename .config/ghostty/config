@@ -22,6 +22,10 @@ keybind = super+plus=increase_font_size:1
 keybind = super+minus=decrease_font_size:1
 keybind = ctrl+v=paste_from_clipboard
 
+keybind = shift+enter=text:\x1b[13;2u
+keybind = ctrl+enter=text:\x1b[13;5u
+keybind = ctrl+backspace=text:\x17
+
 #custom-shader = ghostty-shaders/in-game-crt.glsl
 #custom-shader = ghostty-shaders/inside-the-matrix.glsl
 custom-shader = ghostty-shaders/drunkard.glsl
