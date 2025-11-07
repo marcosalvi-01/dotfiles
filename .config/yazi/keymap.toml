@@ -30,6 +30,10 @@ desc = "Enter the child directory, or open the file"
 on   = "o"
 run  = "create"
 desc = "Create a file or a directory"
+[[mgr.prepend_keymap]]
+on   = "<Esc>"
+run  = ["unyank", "escape"]
+desc = "Clear selection and unyank"
 
 [[input.prepend_keymap]]
 on   = "<Esc>"

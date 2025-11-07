@@ -10,7 +10,7 @@ return {
 		preview = {
 			modes = { "no", "c" },
 			icon_provider = "mini",
+			hybrid_modes = { "n" },
 		},
-		hybrid_modes = {  "n" },
 	},
 }
