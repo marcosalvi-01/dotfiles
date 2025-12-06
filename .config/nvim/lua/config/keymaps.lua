@@ -15,7 +15,10 @@ vim.keymap.set({ "n", "v" }, "<Up>", function()
 	return "gk"
 end, { expr = true })
 
-vim.keymap.set("n", "J", "mzJ`z:delmarks z<cr>", { desc = "Join lines without moving the cursor" })
+vim.keymap.set("n", "J", function ()
+	vim.cmd("normal! mzJ`z")
+	vim.cmd("delmarks z")
+end, { desc = "Join lines without moving the cursor" })
 vim.keymap.set("n", "S", "i<CR><Esc>", { desc = "[S]plit lines" })
 
 vim.keymap.set("n", ",", ";")

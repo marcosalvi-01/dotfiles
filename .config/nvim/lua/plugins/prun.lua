@@ -32,8 +32,8 @@ return {
 		},
 	},
 	opts = {
-		tmux_pane = 1,
-		-- [sh] means that the command will be run in a temporary shell, not in the tux window
+		tmux_window = 1,
+		-- [sh] means that the command will be run in a temporary shell, not in the tmux window
 		default_pre = "[sh] tmux-shell-popup -b rounded -w 70% -h 70% -T '%s' %s %w 0",
 	},
 }

@@ -1,5 +1,6 @@
 require("config.options")
 require("config.cwl")
+require("config.ttl")
 require("config.generic")
 require("config.diagnostics")
 require("config.lazy")
