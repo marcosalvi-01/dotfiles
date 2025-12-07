@@ -53,7 +53,7 @@ end, { desc = "[W]rite all buffer" })
 
 vim.keymap.set("n", "<leader>l", "<cmd>Noice pick<cr>", { desc = "[S]earch Noice [L]ogs" })
 
-vim.keymap.set("n", "<leader>tw", function()
+vim.keymap.set("n", "<leader>w", function()
 	vim.opt.wrap = not vim.opt.wrap:get()
 end, { desc = "[T]oggle [W]rap" })
 
@@ -278,7 +278,7 @@ vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, { desc = "Rename symbol" }
 vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 vim.keymap.set("n", "<leader>D", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 
-vim.keymap.set("n", "<leader>tc", function()
+vim.keymap.set("n", "<leader>ct", function()
 	vim.cmd("tabc")
 end, { desc = "Close current tab" })
 
@@ -293,3 +293,5 @@ end, { desc = "Alternate last two buffers" })
 vim.keymap.set("n", "<leader>A", function()
 	vim.cmd.vsplit({ args = { "#" }, mods = { split = "botright" } })
 end, { desc = "Open last buffer in vertical split" })
+
+vim.keymap.set("t", "<esc>", "<C-\\><C-n>")

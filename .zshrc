@@ -114,6 +114,12 @@ alias k='kubectl'
 alias eod='epos-opensource docker'
 alias eok='epos-opensource kubernetes'
 
+nvim_terminal() {
+  nvim -c "ToggleTerm"
+}
+zle -N nvim_terminal
+bindkey '^I' nvim_terminal
+
 # Fortune widget with ctrl+f
 fortune_widget() {
     fortune
@@ -210,10 +216,16 @@ zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
 
 # fix home-end keys
+bindkey -M viins '^[[H' beginning-of-line
+bindkey -M viins '^[[F' end-of-line
+bindkey -M vicmd '^[[H' beginning-of-line
+bindkey -M vicmd '^[[F' end-of-line
+
 bindkey -M viins '^[[1~' beginning-of-line
 bindkey -M viins '^[[4~' end-of-line
 bindkey -M vicmd '^[[1~' beginning-of-line
 bindkey -M vicmd '^[[4~' end-of-line
+
 # fix delete key
 bindkey -M viins '^[[3~' delete-char
 bindkey -M vicmd '^[[3~' delete-char
