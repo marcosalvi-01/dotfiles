@@ -38,7 +38,7 @@ return {
 			map("n", "<leader>hP", gitsigns.preview_hunk_inline, { desc = "Preview current hunk (Gitsigns)" })
 			map(
 				"n",
-				"<leader>tb",
+				"<leader>bt",
 				gitsigns.toggle_current_line_blame,
 				{ desc = "Toggle blame for current line (Gitsigns)" }
 			)

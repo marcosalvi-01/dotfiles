@@ -1,6 +1,7 @@
 return {
 	{
 		event = "VeryLazy",
+		-- Provides treesitter queries for mini.ai textobjects
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",

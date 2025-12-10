@@ -16,6 +16,11 @@ local function get_buf_name()
 		return vim.fn.fnamemodify(vim.loop.cwd(), ":~")
 	end
 
+	if bufname:find("#toggleterm") then
+		local shell = bufname:match("/([^/]+);#toggleterm")
+		return "  " .. shell
+	end
+
 	local filename = vim.fn.fnamemodify(bufname, ":t")
 	if vim.bo.modified then
 		return filename .. " ●"

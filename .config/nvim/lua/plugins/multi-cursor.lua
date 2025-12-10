@@ -71,14 +71,14 @@ return {
 		},
 
 		-- Rotate visual selection contents
-		{
-			"<leader>t",
-			function()
-				require("multicursor-nvim").transposeCursors(1)
-			end,
-			mode = "v",
-			desc = "Rotate visual selection contents forward [multicursor]",
-		},
+		-- {
+		-- 	"<leader>t",
+		-- 	function()
+		-- 		require("multicursor-nvim").transposeCursors(1)
+		-- 	end,
+		-- 	mode = "v",
+		-- 	desc = "Rotate visual selection contents forward [multicursor]",
+		-- },
 
 		{
 			"<leader>T",
