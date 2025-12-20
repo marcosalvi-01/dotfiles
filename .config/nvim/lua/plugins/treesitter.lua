@@ -1,43 +1,25 @@
+---@module "lazy"
+---@type LazySpec
 return {
 	{
 		event = "VeryLazy",
 		-- Provides treesitter queries for mini.ai textobjects
 		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 		},
 	},
 	{
-		event = "VeryLazy",
 		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		branch = "main",
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
-		opts = {
-			-- Core functionality
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = false,
-			},
+		config = function()
+			local ts = require("nvim-treesitter")
 
-			-- Indentation support
-			indent = {
-				enable = true,
-				disable = { "cwl", "json" },
-			},
-
-			-- Incremental selection based on the named nodes from the grammar
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<leader>v",
-					node_incremental = "v",
-					scope_incremental = "<leader>i",
-					node_decremental = "<leader>V",
-				},
-			},
-
-			-- Parser installation settings
-			ensure_installed = {
+			-- Install core parsers at startup
+			ts.install({
 				"c",
 				"go",
 				"lua",
@@ -46,21 +28,41 @@ return {
 				"query",
 				"vim",
 				"vimdoc",
-			},
-			sync_install = false, -- Install parsers asynchronously
-			auto_install = true, -- Automatically install missing parsers
-			ignore_install = { "javascript" },
-			textobjects = {
-				swap = {
-					enable = true,
-					swap_next = {
-						["<m-up>"] = "@parameter.inner",
-					},
-					swap_previous = {
-						["<m-down>"] = "@parameter.inner",
-					},
-				},
-			},
-		},
+			})
+
+			local group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true })
+
+			local ignore_filetypes = {
+				"checkhealth",
+				"lazy",
+				"mason",
+				"snacks_dashboard",
+				"snacks_notif",
+				"snacks_win",
+			}
+
+			-- Auto-install parsers and enable highlighting on FileType
+			vim.api.nvim_create_autocmd("FileType", {
+				group = group,
+				desc = "Enable treesitter highlighting and indentation",
+				callback = function(event)
+					if vim.tbl_contains(ignore_filetypes, event.match) then
+						return
+					end
+
+					local lang = vim.treesitter.language.get_lang(event.match) or event.match
+					local buf = event.buf
+
+					-- Start highlighting immediately (works if parser exists)
+					pcall(vim.treesitter.start, buf, lang)
+
+					-- Enable treesitter indentation
+					vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+					-- Install missing parsers (async, no-op if already installed)
+					ts.install({ lang })
+				end,
+			})
+		end,
 	},
 }
