@@ -1,0 +1,4 @@
+tui:
+  openURLCommand: open
+  openDirectoryCommand: nvim
+  openFileCommand: nvim
