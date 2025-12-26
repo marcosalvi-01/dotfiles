@@ -28,6 +28,9 @@ return {
 				"query",
 				"vim",
 				"vimdoc",
+				"yaml",
+				"sql",
+				"json",
 			})
 
 			local group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true })

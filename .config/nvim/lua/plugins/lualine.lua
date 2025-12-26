@@ -102,16 +102,20 @@ return {
 						show_macro_recording,
 						color = { fg = colors.accent.red, gui = "bold" },
 					},
+					{
+						"searchcount",
+						color = { fg = colors.accent.gray, gui = "bold" },
+					},
 				},
 				lualine_x = {
 					{
-						"encoding",
+						"fileformat",
+						symbols = { unix = "", dos = "", mac = "" },
 						color = { fg = colors.accent.gray, bg = colors.bg.base, gui = "bold" },
 						separator = { left = "" },
 					},
 					{
-						"fileformat",
-						symbols = { unix = "", dos = "", mac = "" },
+						"filesize",
 						color = { fg = colors.accent.gray, bg = colors.bg.base, gui = "bold" },
 						separator = { left = "" },
 					},
