@@ -115,10 +115,10 @@ alias eod='epos-opensource docker'
 alias eok='epos-opensource kubernetes'
 
 nvim_terminal() {
-  nvim -c "ToggleTerm"
+    nvim -c "ToggleTerm"
 }
 zle -N nvim_terminal
-bindkey '^I' nvim_terminal
+bindkey '^A' nvim_terminal
 
 # Fortune widget with ctrl+f
 fortune_widget() {
