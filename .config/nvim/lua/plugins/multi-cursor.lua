@@ -51,7 +51,6 @@ return {
 			desc = "Restore previously cleared cursors [multicursor]",
 		},
 
-		-- insert for each line of visual selections
 		{
 			"I",
 			function()
@@ -60,7 +59,6 @@ return {
 			mode = "v",
 			desc = "Insert text at the start of each line in visual selection [multicursor]",
 		},
-
 		{
 			"A",
 			function()
@@ -70,23 +68,23 @@ return {
 			desc = "Append text at the end of each line in visual selection [multicursor]",
 		},
 
-		-- Rotate visual selection contents
 		{
-			"<leader>t",
+			"gn",
 			function()
-				require("multicursor-nvim").transposeCursors(1)
+				require("multicursor-nvim").matchAddCursor(1)
 			end,
-			mode = "v",
-			desc = "Rotate visual selection contents forward [multicursor]",
+			mode = { "n", "v" },
+			desc = "Add cursor at next match [multicursor]",
 		},
 
+		-- Add cursor at previous match
 		{
-			"<leader>T",
+			"gN",
 			function()
-				require("multicursor-nvim").transposeCursors(-1)
+				require("multicursor-nvim").matchAddCursor(-1)
 			end,
-			mode = "v",
-			desc = "Rotate visual selection contents backward [multicursor]",
+			mode = { "n", "v" },
+			desc = "Add cursor at previous match [multicursor]",
 		},
 	},
 }
