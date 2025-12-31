@@ -114,6 +114,7 @@ alias kulala_cli='~/.local/share/nvim/lazy/kulala.nvim/lua/cli/kulala_cli.lua'
 alias k='kubectl'
 alias eod='epos-opensource docker'
 alias eok='epos-opensource kubernetes'
+alias epos='epos-opensource'
 
 nvim_terminal() {
   nvim -c "ToggleTerm"
