@@ -29,5 +29,12 @@ return {
 				view = "confirm",
 			},
 		},
+		routes = {
+			-- Hide any notification containing "Supermaven"
+			{
+				filter = { event = "notify", find = "Supermaven" },
+				opts = { skip = true },
+			},
+		},
 	},
 }

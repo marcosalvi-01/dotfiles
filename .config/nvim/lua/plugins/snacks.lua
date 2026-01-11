@@ -320,7 +320,7 @@ return {
 				})
 			end,
 			desc = "Snacks [S]earch [W]ord",
-			mode = "n",
+			mode = { "n", "v" },
 		},
 		{
 			"<leader>sd",

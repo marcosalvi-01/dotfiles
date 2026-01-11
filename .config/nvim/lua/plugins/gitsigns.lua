@@ -5,26 +5,35 @@ return {
 		on_attach = function(bufnr)
 			local gitsigns = require("gitsigns")
 
+			-- Don't set up navigation keymaps in diffview buffers
+			local bufname = vim.api.nvim_buf_get_name(bufnr)
+			local filetype = vim.bo[bufnr].filetype
+			local is_diffview = bufname:match("diffview://") or filetype:match("^Diffview") or filetype == "diff"
+
 			local function map(mode, l, r, opts)
 				opts = opts or {}
 				opts.buffer = bufnr
 				vim.keymap.set(mode, l, r, opts)
 			end
 
-			map("n", "<leader>hn", function()
-				gitsigns.nav_hunk("next")
-				vim.defer_fn(function()
-					vim.cmd.normal("zz")
-				end, 10)
-			end, { desc = "Go to next hunk (Gitsigns)" })
+			-- Only set navigation keymaps if NOT in a diffview buffer
+			if not is_diffview then
+				map("n", "<leader>hn", function()
+					gitsigns.nav_hunk("next")
+					vim.defer_fn(function()
+						vim.cmd.normal("zz")
+					end, 10)
+				end, { desc = "Go to next hunk (Gitsigns)" })
 
-			map("n", "<leader>hp", function()
-				gitsigns.nav_hunk("prev")
-				vim.defer_fn(function()
-					vim.cmd.normal("zz")
-				end, 10)
-			end, { desc = "Go to previous hunk (Gitsigns)" })
+				map("n", "<leader>hp", function()
+					gitsigns.nav_hunk("prev")
+					vim.defer_fn(function()
+						vim.cmd.normal("zz")
+					end, 10)
+				end, { desc = "Go to previous hunk (Gitsigns)" })
+			end
 
+			-- These mappings work fine in both contexts
 			map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage/Undo current hunk (Gitsigns)" })
 			map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset current hunk (Gitsigns)" })
 			map("v", "<leader>hs", function()
@@ -42,18 +51,10 @@ return {
 				gitsigns.toggle_current_line_blame,
 				{ desc = "Toggle blame for current line (Gitsigns)" }
 			)
-			-- map("n", "<leader>hd", gitsigns.diffthis, { desc = "Diff current file (Gitsigns)" })
 			map("n", "<leader>hD", function()
 				gitsigns.diffthis("~")
 			end, { desc = "Diff current file against index (Gitsigns)" })
-
-			-- Text object
-			map(
-				{ "o", "x" },
-				"ih",
-				":<C-U>Gitsigns select_hunk<CR>",
-				{ desc = "Select hunk as text object (Gitsigns)" }
-			)
+			map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select hunk as text object (Gitsigns)" })
 		end,
 	},
 }

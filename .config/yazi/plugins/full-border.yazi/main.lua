@@ -12,12 +12,7 @@ local function setup(_, opts)
 
 			return ui.Bar(ui.Edge.TOP)
 				:area(
-					ui.Rect({
-						x = x,
-						y = math.max(0, y),
-						w = ya.clamp(0, self._area.w - x, 1),
-						h = math.min(1, self._area.h),
-					})
+					ui.Rect { x = x, y = math.max(0, y), w = ya.clamp(0, self._area.w - x, 1), h = math.min(1, self._area.h) }
 				)
 				:symbol(c)
 		end
