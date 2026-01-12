@@ -73,12 +73,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 vim.api.nvim_create_autocmd("LspDetach", { command = "setl foldexpr<" })
 
-vim.api.nvim_create_user_command("Google", function(o)
-	local escaped = vim.uri_encode(o.args)
-	local url = ("https://www.google.com/search?q=%s"):format(escaped)
-	vim.ui.open(url)
-end, { nargs = 1, desc = "just google it" })
-
 vim.filetype.add({ extension = { templ = "templ" } })
 
 if vim.fn.has("nvim-0.12") == 1 then

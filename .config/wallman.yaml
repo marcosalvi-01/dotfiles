@@ -1,0 +1,4 @@
+wallpaper_directories:
+  - ~/gruvbox-wallpapers/wallpapers
+travel_sub_directories: true
+manager: auto

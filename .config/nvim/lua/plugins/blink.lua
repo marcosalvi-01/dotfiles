@@ -2,8 +2,6 @@ return {
 	"saghen/blink.cmp",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
-
-		-- Supermaven
 		{
 			"supermaven-inc/supermaven-nvim",
 			opts = {
@@ -12,6 +10,19 @@ return {
 				log_level = "off",
 				ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
 			},
+			config = function(_, opts)
+				vim.g.blink_supermaven_enabled = false
+
+				require("supermaven-nvim").setup(opts)
+
+				-- Reset the flag when leaving insert mode
+				vim.api.nvim_create_autocmd("InsertLeave", {
+					group = vim.api.nvim_create_augroup("blink_supermaven_reset", { clear = true }),
+					callback = function()
+						vim.g.blink_supermaven_enabled = false
+					end,
+				})
+			end,
 		},
 		{ "Huijiro/blink-cmp-supermaven" },
 	},
@@ -43,7 +54,6 @@ return {
 				["<Down>"] = { "select_next", "fallback" },
 			},
 		},
-
 		keymap = {
 			preset = "default",
 			["<PageUp>"] = {
@@ -61,13 +71,21 @@ return {
 					cmp.show_signature()
 				end,
 			},
+			["<C-n>"] = {
+				function(cmp)
+					vim.g.blink_supermaven_enabled = true
+					-- Refresh the menu
+					cmp.hide()
+					vim.defer_fn(function()
+						cmp.show()
+					end, 10)
+				end,
+			},
 		},
-
 		appearance = {
 			use_nvim_cmp_as_default = true,
 			nerd_font_variant = "mono",
 		},
-
 		sources = {
 			min_keyword_length = function(ctx)
 				-- only applies when typing a command, doesn't apply to arguments
@@ -78,17 +96,21 @@ return {
 				end
 				return 0
 			end,
-
-			default = {
-				"supermaven",
-				"lazydev",
-				"lsp",
-				"path",
-				"snippets",
-				"buffer",
-				"dadbod",
-			},
-
+			default = function()
+				local sources = {
+					"lazydev",
+					"lsp",
+					"path",
+					"snippets",
+					"buffer",
+					"dadbod",
+				}
+				-- Only include supermaven when manually triggered
+				if vim.g.blink_supermaven_enabled then
+					table.insert(sources, 1, "supermaven")
+				end
+				return sources
+			end,
 			providers = {
 				snippets = {
 					opts = {
@@ -118,12 +140,15 @@ return {
 						else
 							return items
 						end
-						local seen, out = {}, {}
+						-- avoid duplicates from the corrections
+						local seen = {}
+						local out = {}
 						for _, item in ipairs(items) do
 							local raw = item.insertText
 							if raw:match(correct) then
 								local text = case(raw:sub(1, 1)) .. raw:sub(2)
-								item.insertText, item.label = text, text
+								item.insertText = text
+								item.label = text
 							end
 							if not seen[item.insertText] then
 								seen[item.insertText] = true
@@ -133,25 +158,13 @@ return {
 						return out
 					end,
 				},
-
-				-- Supermaven
 				supermaven = {
 					name = "supermaven",
 					module = "blink-cmp-supermaven",
 					async = true,
-					min_keyword_length = 0,
-					should_show_items = require("utils.supermaven_snippets").gate_first_word({
-						ignore_case = true,
-						by_filetype = {
-							lua = { "print", { prefix = "vim." } },
-							typescript = { "console*", { exact = "return" } },
-							go = { "log*", "ret*", "display*" },
-						},
-					}),
 				},
 			},
 		},
-
 		completion = {
 			list = {
 				selection = {
@@ -175,20 +188,21 @@ return {
 			documentation = {
 				auto_show = true,
 				auto_show_delay_ms = 250,
-				window = { border = "rounded" },
+				window = {
+					border = "rounded",
+				},
 			},
 			ghost_text = { enabled = true },
 		},
-
 		signature = {
 			enabled = true,
 			window = {
 				border = "rounded",
 				show_documentation = false,
+				-- now this works, if getting an error when showing the signature, disable
 				treesitter_highlighting = true,
 			},
 		},
 	},
-
 	opts_extend = { "sources.default" },
 }

@@ -11,27 +11,34 @@ return {
 		hooks = {
 			diff_buf_win_enter = function()
 				vim.opt_local.foldenable = false
+				vim.opt_local.wrap = false
 			end,
 		},
-		-- hooks = {
-		-- 	-- make "diff" buffers non-modifiable
-		-- 	diff_buf_read = function()
-		-- 		local fname = vim.fn.expand("%:h")
-		-- 		if fname:match("diffview") then
-		-- 			vim.opt_local.modifiable = false
-		-- 		end
-		-- 	end,
-		-- },
 		keymaps = {
 			view = {
-				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the diff" } },
-				{ "n", "<esc>", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+				{
+					"n",
+					"q",
+					function()
+						vim.cmd("tabc")
+					end,
+					{ desc = "Close the diff" },
+				},
+				{
+					"n",
+					"<esc>",
+					function()
+						vim.cmd("tabc")
+					end,
+					{ desc = "Close the diff" },
+				},
 				{
 					"n",
 					"<leader>hp",
 					function()
 						vim.cmd("norm! [czz")
 					end,
+					{ desc = "Previous hunk (Diffview)" },
 				},
 				{
 					"n",
@@ -39,6 +46,7 @@ return {
 					function()
 						vim.cmd("norm! ]czz")
 					end,
+					{ desc = "Next hunk (Diffview)" },
 				},
 				{
 					"n",
@@ -50,8 +58,22 @@ return {
 				},
 			},
 			file_panel = {
-				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the panel" } },
-				{ "n", "<esc>", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+				{
+					"n",
+					"q",
+					function()
+						vim.cmd("tabc")
+					end,
+					{ desc = "Close the panel" },
+				},
+				{
+					"n",
+					"<esc>",
+					function()
+						vim.cmd("tabc")
+					end,
+					{ desc = "Close the diff" },
+				},
 				{
 					"n",
 					"<leader>e",
@@ -78,8 +100,22 @@ return {
 				},
 			},
 			file_history_panel = {
-				{ "n", "q", "<cmd>tabc<CR>", { desc = "Close the panel" } },
-				{ "n", "<esc>", "<cmd>tabc<CR>", { desc = "Close the diff" } },
+				{
+					"n",
+					"q",
+					function()
+						vim.cmd("tabc")
+					end,
+					{ desc = "Close the panel" },
+				},
+				{
+					"n",
+					"<esc>",
+					function()
+						vim.cmd("tabc")
+					end,
+					{ desc = "Close the diff" },
+				},
 				{
 					"n",
 					"<leader>e",
@@ -121,25 +157,32 @@ return {
 		{
 			"<leader>hl",
 			mode = "v",
-			"<Esc><Cmd>'<,'>DiffviewFileHistory --follow<CR>",
+			function()
+				vim.cmd("'<,'>DiffviewFileHistory --follow")
+			end,
 			desc = "Visual selection history [Diffview]",
 		},
 		{
 			"<leader>hl",
-			"<cmd>. DiffviewFileHistory --follow<CR>",
+			function()
+				vim.cmd(". DiffviewFileHistory --follow")
+			end,
 			desc = "Line history [Diffview]",
 		},
 		{
 			"<leader>hb",
-			"<cmd>DiffviewFileHistory<CR>",
+			function()
+				vim.cmd("DiffviewFileHistory")
+			end,
 			desc = "Branch history [Diffview]",
 		},
 		{
 			"<leader>hf",
-			"<cmd>DiffviewFileHistory --follow %<CR>",
+			function()
+				vim.cmd("DiffviewFileHistory --follow %")
+			end,
 			desc = "File history [Diffview]",
 		},
-		-- Diff against local master branch
 		{
 			"<leader>hm",
 			function()
@@ -147,7 +190,6 @@ return {
 			end,
 			desc = "Diff against master [Diffview]",
 		},
-		-- Diff against remote master branch
 		{
 			"<leader>hM",
 			function()

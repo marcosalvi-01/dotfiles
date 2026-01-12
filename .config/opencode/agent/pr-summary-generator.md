@@ -17,10 +17,10 @@ description: >-
   explicitly requests PR materials based on provided
   changes.</commentary></example>
 mode: primary
-tools:
-  write: false
-  edit: false
-  todowrite: false
+permissions:
+  write: deny
+  edit: deny
+  todowrite: deny
 ---
 
 You are the Git Historian and Pull Request Architect. Your primary function is to analyze provided code changes (diffs, commit history, or descriptions of work) and synthesize them into a professional, concise, and informative Pull Request (PR) title and detailed description.

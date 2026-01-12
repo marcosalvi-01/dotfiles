@@ -7,10 +7,10 @@ require("back-cwd"):setup({
 	start_dir = os.getenv("PWD"),
 })
 
-require("git"):setup()
-
 require("full-border"):setup()
 
 require("session"):setup({
 	sync_yanked = true,
 })
+
+require("git"):setup()

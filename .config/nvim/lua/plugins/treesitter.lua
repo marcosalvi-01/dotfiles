@@ -18,8 +18,8 @@ return {
 		config = function()
 			local ts = require("nvim-treesitter")
 
-			-- Install core parsers at startup
-			ts.install({
+			-- Define languages to ensure are installed at startup
+			local core_languages = {
 				"c",
 				"go",
 				"lua",
@@ -31,39 +31,56 @@ return {
 				"yaml",
 				"sql",
 				"json",
-			})
-
-			local group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true })
-
-			local ignore_filetypes = {
-				"checkhealth",
-				"lazy",
-				"mason",
-				"snacks_dashboard",
-				"snacks_notif",
-				"snacks_win",
 			}
 
-			-- Auto-install parsers and enable highlighting on FileType
+			ts.install(core_languages)
+
+			-- Function to get all installed parser languages
+			local function get_installed_parsers()
+				local parsers = {}
+				-- Find all installed parser files
+				local parser_files = vim.api.nvim_get_runtime_file("parser/*.so", true)
+
+				-- Extract language names from parser filenames
+				for _, file in ipairs(parser_files) do
+					local lang = file:match("parser/([^/]+)%.so$")
+					if lang then
+						table.insert(parsers, lang)
+					end
+				end
+
+				return parsers
+			end
+
+			local function get_filetypes_for_installed_parsers()
+				local installed = get_installed_parsers()
+				local filetypes = vim.iter(installed)
+					:map(function(lang)
+						return vim.treesitter.language.get_filetypes(lang)
+					end)
+					:flatten()
+					:totable()
+				return filetypes
+			end
+
+			local ts_filetypes = get_filetypes_for_installed_parsers()
+			local group = vim.api.nvim_create_augroup("TreesitterSetup", { clear = true })
+
+			-- Enable treesitter for filetypes with installed parsers
 			vim.api.nvim_create_autocmd("FileType", {
 				group = group,
 				desc = "Enable treesitter highlighting and indentation",
+				pattern = ts_filetypes,
 				callback = function(event)
-					if vim.tbl_contains(ignore_filetypes, event.match) then
-						return
-					end
-
-					local lang = vim.treesitter.language.get_lang(event.match) or event.match
 					local buf = event.buf
+					local ft = event.match
+					local lang = vim.treesitter.language.get_lang(ft) or ft
 
-					-- Start highlighting immediately (works if parser exists)
 					pcall(vim.treesitter.start, buf, lang)
 
-					-- Enable treesitter indentation
 					vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-
-					-- Install missing parsers (async, no-op if already installed)
-					ts.install({ lang })
+					vim.wo.foldmethod = "expr"
+					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 				end,
 			})
 		end,
