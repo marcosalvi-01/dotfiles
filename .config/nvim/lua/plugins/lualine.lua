@@ -102,10 +102,6 @@ return {
 						show_macro_recording,
 						color = { fg = colors.accent.red, gui = "bold" },
 					},
-					{
-						"searchcount",
-						color = { fg = colors.accent.gray, gui = "bold" },
-					},
 				},
 				lualine_x = {
 					{
@@ -115,7 +111,7 @@ return {
 						separator = { left = "" },
 					},
 					{
-						"filesize",
+						"searchcount",
 						color = { fg = colors.accent.gray, bg = colors.bg.base, gui = "bold" },
 						separator = { left = "" },
 					},

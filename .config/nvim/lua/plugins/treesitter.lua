@@ -31,6 +31,11 @@ return {
 				"yaml",
 				"sql",
 				"json",
+				"gitcommit",
+				"turtle",
+				"java",
+				"make",
+				"python",
 			}
 
 			ts.install(core_languages)

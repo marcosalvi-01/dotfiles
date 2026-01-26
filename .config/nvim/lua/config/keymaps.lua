@@ -90,9 +90,12 @@ vim.keymap.set("n", "!", function()
 		["=="] = "!=",
 		["vero"] = "falso",
 		["falso"] = "vero",
+		[":="] = "=",
+		["="] = ":=",
 	}
 
 	-- Get current word under cursor
+	-- TODO: make sure this works also for symbols
 	local word = vim.fn.expand("<cword>")
 	if word == "" then
 		return
