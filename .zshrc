@@ -131,7 +131,7 @@ zle -N fortune_widget
 bindkey '^F' fortune_widget
 
 bindkey -s '^N' 'nvim\n'
-bindkey -s '^O' 'opencode\n'
+bindkey -s '^O' 'opencode --port\n'
 bindkey -s '^Y' 'y\n'
 
 # y for yazi to cd into dir

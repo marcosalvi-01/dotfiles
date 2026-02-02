@@ -48,7 +48,8 @@ outer.right =      0
 
 alt-enter = '''exec-and-forget open -n /Applications/kitty.app'''
 
-alt-b = '''exec-and-forget /Users/marco/.local/scripts/wallman.mac'''
+alt-b = '''exec-and-forget /Users/marco/go/bin/wallman random'''
+alt-shift-b = '''exec-and-forget /Users/marco/go/bin/wallman previous'''
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-j = 'layout floating tiling'

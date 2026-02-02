@@ -36,6 +36,9 @@ return {
 				"java",
 				"make",
 				"python",
+				"toml",
+				"typescript",
+				"dockerfile"
 			}
 
 			ts.install(core_languages)

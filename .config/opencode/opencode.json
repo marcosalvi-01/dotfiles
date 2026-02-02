@@ -1,5 +1,8 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "plugin": [
+        "opencode-gemini-auth@latest"
+    ],
     "provider": {
         "lmstudio": {
             "npm": "@ai-sdk/openai-compatible",
@@ -11,15 +14,12 @@
                 "openai/gpt-oss-20b": {
                     "name": "GPT oss 20b"
                 },
-                "zai-org/glm-4.7-flash": {
-                    "name": "GLM 4.7"
+                "qwen/qwen3-coder-30b": {
+                    "name": "Qwen3 30B"
                 },
-				"glm-4.7-flash": {
-					"name": "Unsloth GLM 4.7"
-				},
-				"qwen/qwen3-coder-30b": {
-					"name": "Qwen3 30B"
-				}
+                "mistralai/devstral-small-2-2512": {
+                    "name": "DevStral small"
+                }
             }
         },
         "ollama": {

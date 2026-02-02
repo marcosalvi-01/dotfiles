@@ -105,10 +105,7 @@ return {
 				},
 				lualine_x = {
 					{
-						"fileformat",
-						symbols = { unix = "", dos = "", mac = "" },
-						color = { fg = colors.accent.gray, bg = colors.bg.base, gui = "bold" },
-						separator = { left = "" },
+						require("opencode").statusline,
 					},
 					{
 						"searchcount",
