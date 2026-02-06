@@ -4,3 +4,6 @@
 [submodule ".config/opencode/skills"]
 	path = .config/opencode/skills
 	url = https://github.com/marcosalvi-01/skills.git
+[submodule ".config/ghostty/ghostty-shaders"]
+	path = .config/ghostty/ghostty-shaders
+	url = https://github.com/0xhckr/ghostty-shaders.git
