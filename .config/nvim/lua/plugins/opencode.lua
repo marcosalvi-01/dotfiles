@@ -107,7 +107,8 @@ return {
 				return false
 			end,
 			create_window = function(self)
-				local port = (vim.g.opencode_opts and vim.g.opencode_opts.server and vim.g.opencode_opts.server.port) or 3010
+				local port = (vim.g.opencode_opts and vim.g.opencode_opts.server and vim.g.opencode_opts.server.port) or
+				3010
 				local command = string.format("opencode --port %d", port)
 				self:tmux({ "new-window", "-t", self:session_name(), "-n", self.window, command })
 			end,
@@ -118,7 +119,12 @@ return {
 
 		---@type opencode.Opts
 		vim.g.opencode_opts = {
-			provider = tmux_provider,
+			provider = {
+				enabled = "tmux",
+				tmux = {
+					-- ...
+				}
+			}
 		}
 		-- Required for `opts.events.reload`.
 		vim.o.autoread = true

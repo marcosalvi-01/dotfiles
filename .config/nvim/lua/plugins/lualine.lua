@@ -105,9 +105,6 @@ return {
 				},
 				lualine_x = {
 					{
-						require("opencode").statusline,
-					},
-					{
 						"searchcount",
 						color = { fg = colors.accent.gray, bg = colors.bg.base, gui = "bold" },
 						separator = { left = "" },

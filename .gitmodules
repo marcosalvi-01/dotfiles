@@ -1,3 +1,6 @@
 [submodule ".config/images"]
 	path = .config/images
 	url = https://github.com/marcosalvi-01/images.git
+[submodule ".config/opencode/skills"]
+	path = .config/opencode/skills
+	url = https://github.com/marcosalvi-01/skills.git
