@@ -174,6 +174,18 @@ end, { desc = "Toggle [I]nlay [H]ints" })
 
 vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search inside current visual selection" })
 
+local function open_git_remote_repo()
+	local cwd = vim.fn.getcwd()
+	local remote = vim.trim(vim.fn.system({ "git", "-C", cwd, "remote", "get-url", "origin" }))
+	if vim.v.shell_error ~= 0 or remote == "" then
+		vim.notify("No git remote found", vim.log.levels.WARN)
+		return
+	end
+	vim.ui.open(require("snacks.gitbrowse").get_repo(remote))
+end
+
+vim.keymap.set("n", "<leader>hU", open_git_remote_repo, { desc = "Open git remote repo" })
+
 -- SMART DELETE
 local function smart_delete(key)
 	local l = vim.api.nvim_win_get_cursor(0)[1] -- Get the current cursor line number
