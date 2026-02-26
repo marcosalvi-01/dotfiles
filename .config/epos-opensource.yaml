@@ -1,5 +1,5 @@
 tui:
   openURLCommand: open
-  openDirectoryCommand: nvim
+  openDirectoryCommand: yazi
   openFileCommand: nvim
   filePickerMode: tui

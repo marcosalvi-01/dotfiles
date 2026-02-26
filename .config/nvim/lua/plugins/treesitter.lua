@@ -38,7 +38,10 @@ return {
 				"python",
 				"toml",
 				"typescript",
-				"dockerfile"
+				"dockerfile",
+				"html",
+				"helm",
+				"gomod"
 			}
 
 			ts.install(core_languages)
