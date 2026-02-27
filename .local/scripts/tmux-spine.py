@@ -361,6 +361,8 @@ KEY_UP = {curses.KEY_UP, ord("k")}
 KEY_DOWN = {curses.KEY_DOWN, ord("j")}
 KEY_RIGHT = curses.KEY_RIGHT
 KEY_LEFT = curses.KEY_LEFT
+DEFAULT_INPUT_TIMEOUT_MS = 25
+ESC_DELAY_MS = 125
 # Try to get correct Shift+Up/Down codes if available
 try:
     KEY_SHIFT_UP = curses.KEY_SR
@@ -369,6 +371,52 @@ except:
     log.warning("curses.KEY_SR/SF not available, Shift+Up/Down might not work.")
     KEY_SHIFT_UP = 567
     KEY_SHIFT_DOWN = 526
+
+# Common terminal sequences for shifted arrows when curses does not decode them.
+SHIFT_UP_SEQS = {"\x1b[1;2A", "\x1b[1;2a", "\x1b[a"}
+SHIFT_DOWN_SEQS = {"\x1b[1;2B", "\x1b[1;2b", "\x1b[b"}
+
+# Reliable fallback keys for reordering when shifted arrows are not available.
+KEY_REORDER_UP_FALLBACK = {ord("K")}
+KEY_REORDER_DOWN_FALLBACK = {ord("J")}
+
+
+def read_escape_sequence(stdscr) -> str:
+    """Read immediately available bytes after ESC and return full sequence."""
+    seq = [KEY_ESC]
+    stdscr.nodelay(True)
+    try:
+        while len(seq) < 8:
+            nxt = stdscr.getch()
+            if nxt == -1:
+                break
+            seq.append(nxt)
+    finally:
+        stdscr.nodelay(False)
+        stdscr.timeout(DEFAULT_INPUT_TIMEOUT_MS)
+
+    try:
+        return "".join(chr(ch) for ch in seq if 0 <= ch <= 255)
+    except Exception:
+        return "\x1b"
+
+
+def normalize_key(stdscr, key: int) -> int:
+    """Normalize raw key input across terminal variants."""
+    if key != KEY_ESC:
+        return key
+
+    seq = read_escape_sequence(stdscr)
+    if seq in SHIFT_UP_SEQS:
+        log.debug("mapped escape sequence to Shift+Up: %r", seq)
+        return KEY_SHIFT_UP
+    if seq in SHIFT_DOWN_SEQS:
+        log.debug("mapped escape sequence to Shift+Down: %r", seq)
+        return KEY_SHIFT_DOWN
+
+    if seq != "\x1b":
+        log.debug("unmapped escape sequence: %r", seq)
+    return KEY_ESC
 
 
 def render_session_line(
@@ -465,10 +513,18 @@ def curses_main(stdscr):
     """Main function for the curses-based popup interface."""
     use_all_sessions = "--all" in sys.argv
 
-    curses.set_escdelay(25)
+    curses.set_escdelay(ESC_DELAY_MS)
     curses.curs_set(0)
     stdscr.keypad(True)
-    stdscr.timeout(25)
+    stdscr.timeout(DEFAULT_INPUT_TIMEOUT_MS)
+
+    log.debug(
+        "input setup: TERM=%s, KEY_SR=%s, KEY_SF=%s, escdelay=%sms",
+        os.getenv("TERM", ""),
+        KEY_SHIFT_UP,
+        KEY_SHIFT_DOWN,
+        ESC_DELAY_MS,
+    )
 
     curses.start_color()
     curses.use_default_colors()
@@ -564,6 +620,8 @@ def curses_main(stdscr):
         if key == -1:
             continue
 
+        key = normalize_key(stdscr, key)
+
         log.debug("key press: %s", key)
 
         if key in (KEY_ESC, ord("q")):
@@ -600,7 +658,11 @@ def curses_main(stdscr):
             cursor = (cursor + 1) % num_items
             needs_redraw = True
 
-        elif (key == KEY_SHIFT_UP or key == KEY_LEFT) and cursor > 0:
+        elif (
+            key == KEY_SHIFT_UP
+            or key == KEY_LEFT
+            or key in KEY_REORDER_UP_FALLBACK
+        ) and cursor > 0:
             # Reorder in both modes
             names[cursor - 1], names[cursor] = names[cursor], names[cursor - 1]
             cursor -= 1
@@ -615,7 +677,11 @@ def curses_main(stdscr):
 
             needs_redraw = True
 
-        elif (key == KEY_SHIFT_DOWN or key == KEY_RIGHT) and cursor < num_items - 1:
+        elif (
+            key == KEY_SHIFT_DOWN
+            or key == KEY_RIGHT
+            or key in KEY_REORDER_DOWN_FALLBACK
+        ) and cursor < num_items - 1:
             # Reorder in both modes
             names[cursor + 1], names[cursor] = names[cursor], names[cursor + 1]
             cursor += 1
