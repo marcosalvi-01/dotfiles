@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import curses
+from dataclasses import dataclass
 import logging
 import os
 import pathlib
@@ -235,7 +236,61 @@ def save_all_sessions_order(names: List[str]) -> None:
         )
 
 
+def load_order(use_all_sessions: bool) -> List[str]:
+    """Load persisted order for the selected mode."""
+    if use_all_sessions:
+        return load_all_sessions_order()
+    return load_store()
+
+
+def save_order(use_all_sessions: bool, names: List[str]) -> None:
+    """Save persisted order for the selected mode."""
+    if use_all_sessions:
+        save_all_sessions_order(names)
+    else:
+        save_store(names)
+
+
+def build_session_names(use_all_sessions: bool, live_names: Set[str] | None = None) -> List[str]:
+    """Build the list of sessions to display for the selected mode."""
+    if not use_all_sessions:
+        return load_order(False)
+
+    if live_names is None:
+        live_names = all_live_session_names()
+
+    custom_order = load_order(True)
+    ordered_names = [name for name in custom_order if name in live_names]
+
+    # Keep custom order stable; append newly discovered live sessions at the end.
+    ordered_set = set(custom_order)
+    new_live_names = [name for name in tmx("list-sessions -F '#S'").splitlines() if name and not name.startswith("_") and name not in ordered_set]
+
+    if new_live_names:
+        save_order(True, custom_order + new_live_names)
+
+    return ordered_names + new_live_names
+
+
+def no_sessions_message(use_all_sessions: bool) -> str:
+    """Return the empty-list message for the selected mode."""
+    if use_all_sessions:
+        return "No active sessions. Press Esc/q."
+    return "No bookmarked sessions. Press Esc/q."
+
+
 # ────────────────────────── session formatting ──────────────────────────── #
+
+
+@dataclass
+class SessionState:
+    """In-memory state for popup interaction."""
+
+    use_all_sessions: bool
+    names: List[str]
+    live_names: Set[str]
+    current_name: str
+    cursor: int = 0
 
 
 def format_session_line(
@@ -259,10 +314,10 @@ def cmd_add() -> None:
         show_status("Error: Could not get current session name.")
         return
 
-    names = load_store()
+    names = load_order(False)
     names = [n for n in names if n != current_name]
     names.append(current_name)
-    save_store(names)
+    save_order(False, names)
     show_status(f"[Tmux Spine] Session added to the list.")
 
 
@@ -271,7 +326,7 @@ def cmd_add() -> None:
 
 def cmd_list() -> None:
     """List bookmarked sessions, indicating liveness and assigned index char."""
-    names = load_store()
+    names = load_order(False)
     if not names:
         print("No bookmarked sessions.")
         return
@@ -289,24 +344,9 @@ def cmd_list() -> None:
 
 def calculate_popup_dimensions(use_all_sessions: bool = False) -> Tuple[int, int]:
     """Calculate appropriate dimensions for the popup based on content."""
-    if use_all_sessions:
-        # Get sessions in custom order or default sort
-        live_names = all_live_session_names()
-        custom_order = load_all_sessions_order()
-
-        # Filter custom order to only include live sessions
-        ordered_names = [name for name in custom_order if name in live_names]
-
-        # Add any live sessions that aren't in the custom order
-        missing_names = sorted(list(live_names - set(ordered_names)))
-        names_list = ordered_names + missing_names
-
-        extra_text = "No active sessions. Press Esc/q."
-    else:
-        names_list = load_store()
-        extra_text = "No bookmarked sessions. Press Esc/q."
-
     live_names = all_live_session_names()
+    names_list = build_session_names(use_all_sessions, live_names)
+    extra_text = no_sessions_message(use_all_sessions)
     current_name = current_session()
 
     if not names_list:
@@ -419,6 +459,118 @@ def normalize_key(stdscr, key: int) -> int:
     return KEY_ESC
 
 
+def key_to_action(stdscr, key: int) -> Tuple[str, int | None]:
+    """Map a key press to a logical action."""
+    norm_key = normalize_key(stdscr, key)
+
+    if norm_key in (KEY_ESC, ord("q")):
+        return "quit", None
+    if norm_key in KEY_UP:
+        return "cursor_up", None
+    if norm_key in KEY_DOWN:
+        return "cursor_down", None
+    if (
+        norm_key == KEY_SHIFT_UP
+        or norm_key == KEY_LEFT
+        or norm_key in KEY_REORDER_UP_FALLBACK
+    ):
+        return "reorder_up", None
+    if (
+        norm_key == KEY_SHIFT_DOWN
+        or norm_key == KEY_RIGHT
+        or norm_key in KEY_REORDER_DOWN_FALLBACK
+    ):
+        return "reorder_down", None
+    if norm_key in KEY_ENTER:
+        return "select_current", None
+    if norm_key == KEY_CTRL_D:
+        return "delete", None
+    if 0 <= norm_key <= 255:
+        return "select_index", norm_key
+    return "noop", None
+
+
+def clamp_cursor(cursor: int, names: List[str]) -> int:
+    """Keep cursor within the visible item range."""
+    if not names:
+        return 0
+    max_index = min(len(names), len(INDEX_CHARS)) - 1
+    return max(0, min(cursor, max_index))
+
+
+def refresh_runtime_state(state: SessionState, refresh_names: bool = False) -> None:
+    """Refresh live sessions and current session, optionally rebuilding names."""
+    state.live_names = all_live_session_names()
+    state.current_name = current_session()
+    if refresh_names:
+        state.names = build_session_names(state.use_all_sessions, state.live_names)
+    state.cursor = clamp_cursor(state.cursor, state.names)
+
+
+def reorder_sessions(state: SessionState, direction: int) -> bool:
+    """Move selected session up/down. Returns True if state changed."""
+    num_items = min(len(state.names), len(INDEX_CHARS))
+    if num_items <= 1:
+        return False
+
+    if direction < 0:
+        if state.cursor <= 0:
+            return False
+        idx = state.cursor
+        state.names[idx - 1], state.names[idx] = state.names[idx], state.names[idx - 1]
+        state.cursor -= 1
+    else:
+        if state.cursor >= num_items - 1:
+            return False
+        idx = state.cursor
+        state.names[idx + 1], state.names[idx] = state.names[idx], state.names[idx + 1]
+        state.cursor += 1
+
+    save_order(state.use_all_sessions, state.names)
+    return True
+
+
+def delete_current_session(state: SessionState) -> bool:
+    """Handle Ctrl+D behavior for current mode. Returns True if state changed."""
+    if not (0 <= state.cursor < len(state.names)):
+        log.warning("Ctrl+D pressed with invalid cursor position: %d", state.cursor)
+        return False
+
+    name_to_delete = state.names[state.cursor]
+
+    if state.use_all_sessions:
+        log.info(
+            "Ctrl+D pressed in all-sessions mode, killing session %s",
+            name_to_delete,
+        )
+        kill_session(name_to_delete)
+
+        custom_order = load_order(True)
+        if name_to_delete in custom_order:
+            custom_order.remove(name_to_delete)
+            save_order(True, custom_order)
+
+        state.live_names = all_live_session_names()
+        state.names = build_session_names(True, state.live_names)
+    else:
+        log.debug("Ctrl+D pressed, removing bookmark for %s", name_to_delete)
+        state.names.pop(state.cursor)
+
+        current_live_names = all_live_session_names()
+        if name_to_delete in current_live_names:
+            log.info("Session %s is live, killing it.", name_to_delete)
+            kill_session(name_to_delete)
+        else:
+            log.debug("Session %s was not live, only removing bookmark.", name_to_delete)
+
+        save_order(False, state.names)
+        state.live_names = current_live_names
+
+    state.current_name = current_session()
+    state.cursor = clamp_cursor(state.cursor, state.names)
+    return True
+
+
 def render_session_line(
     stdscr, idx, name, is_live, is_cursor, row, w, is_current=False
 ):
@@ -439,15 +591,6 @@ def render_session_line(
     display_name = f"  {name}"
     dead_marker = "   dead"
     current_marker = "   active"
-
-    # Determine what parts to display
-    parts = [display_name]
-    if not is_live:
-        parts.append(dead_marker)
-    if is_current:
-        parts.append(current_marker)
-
-    full_text = "".join(parts)
 
     text_start_col = len(mark)
     available_width = w - text_start_col
@@ -544,69 +687,42 @@ def curses_main(stdscr):
     curses.init_pair(8, CURRENT_FG, HILITE_BG)
 
     stdscr.bkgd(" ", curses.color_pair(1))
-
-    # Get live sessions
     live_names = all_live_session_names()
+    state = SessionState(
+        use_all_sessions=use_all_sessions,
+        names=build_session_names(use_all_sessions, live_names),
+        live_names=live_names,
+        current_name=current_session(),
+    )
 
-    # Get session list based on mode
-    if use_all_sessions:
-        # Get sessions in custom order or default sort
-        custom_order = load_all_sessions_order()
-
-        # Filter custom order to only include live sessions
-        ordered_names = [name for name in custom_order if name in live_names]
-
-        # Add any live sessions that aren't in the custom order
-        missing_names = sorted(list(live_names - set(ordered_names)))
-        names = ordered_names + missing_names
-
-        no_sessions_message = "No active sessions. Press Esc/q."
-    else:
-        names = load_store()
-        no_sessions_message = "No bookmarked sessions. Press Esc/q."
-
-    cursor = 0
+    empty_message = no_sessions_message(use_all_sessions)
     needs_redraw = True
-    current_name = current_session()  # Get the current session name
 
     log.debug(
         "Running popup with %s sessions. Use all sessions: %s",
-        len(names),
+        len(state.names),
         use_all_sessions,
     )
 
     while True:
         if needs_redraw:
-            live_names = all_live_session_names()
+            refresh_runtime_state(state, refresh_names=state.use_all_sessions)
 
-            # If using all sessions mode, refresh the list to include any new sessions
-            if use_all_sessions:
-                custom_order = load_all_sessions_order()
-
-                # Keep only sessions that still exist
-                ordered_names = [name for name in custom_order if name in live_names]
-
-                # Add any new sessions that aren't in our custom order
-                missing_names = sorted(list(live_names - set(ordered_names)))
-                names = ordered_names + missing_names
-
-                current_name = current_session()  # Refresh current name on redraw
-
-            log.debug("Redrawing popup. Live names: %s", live_names)
+            log.debug("Redrawing popup. Live names: %s", state.live_names)
             stdscr.erase()
             h, w = stdscr.getmaxyx()
             log.debug("curses window size: %dx%d", w, h)
 
-            if not names:
-                stdscr.addstr(0, 0, no_sessions_message)
+            if not state.names:
+                stdscr.addstr(0, 0, empty_message)
             else:
-                display_count = min(len(names), h, len(INDEX_CHARS))
+                display_count = min(len(state.names), h, len(INDEX_CHARS))
 
                 for idx in range(display_count):
-                    name = names[idx]
-                    is_live = name in live_names
-                    is_cursor = idx == cursor
-                    is_current = name == current_name
+                    name = state.names[idx]
+                    is_live = name in state.live_names
+                    is_cursor = idx == state.cursor
+                    is_current = name == state.current_name
 
                     render_session_line(
                         stdscr, idx, name, is_live, is_cursor, idx, w, is_current
@@ -620,146 +736,68 @@ def curses_main(stdscr):
         if key == -1:
             continue
 
-        key = normalize_key(stdscr, key)
+        action, action_value = key_to_action(stdscr, key)
+        log.debug("key press: raw=%s action=%s", key, action)
 
-        log.debug("key press: %s", key)
-
-        if key in (KEY_ESC, ord("q")):
+        if action == "quit":
             log.debug("Exit key pressed (ESC or q)")
             return
 
-        if not names:
+        if not state.names:
             continue
 
-        num_items = min(len(names), len(INDEX_CHARS))
+        num_items = min(len(state.names), len(INDEX_CHARS))
 
-        if 0 <= key <= 255 and chr(key) in INDEX_CHARS[:num_items]:
-            try:
-                i = INDEX_CHARS.index(chr(key))
-                if i < len(names):
-                    name_to_jump = names[i]
+        if action == "select_index":
+            if action_value is None:
+                continue
+
+            key_char = chr(action_value)
+            if key_char in INDEX_CHARS[:num_items]:
+                i = INDEX_CHARS.index(key_char)
+                if i < len(state.names):
+                    name_to_jump = state.names[i]
                     log.debug(
                         "Index char '%s' pressed, jumping to session %s",
-                        chr(key),
+                        key_char,
                         name_to_jump,
                     )
                     jump_to_session(name_to_jump)
                     return
-            except IndexError:
-                log.warning("Index char maps to out-of-bounds name index.")
-            except ValueError:
-                log.error("Could not find index for character %s", chr(key))
             continue
 
-        elif key in KEY_UP:
-            cursor = (cursor - 1 + num_items) % num_items
+        if action == "cursor_up":
+            state.cursor = (state.cursor - 1 + num_items) % num_items
             needs_redraw = True
-        elif key in KEY_DOWN:
-            cursor = (cursor + 1) % num_items
+        elif action == "cursor_down":
+            state.cursor = (state.cursor + 1) % num_items
             needs_redraw = True
+        elif action == "reorder_up":
+            if reorder_sessions(state, -1):
+                needs_redraw = True
 
-        elif (
-            key == KEY_SHIFT_UP
-            or key == KEY_LEFT
-            or key in KEY_REORDER_UP_FALLBACK
-        ) and cursor > 0:
-            # Reorder in both modes
-            names[cursor - 1], names[cursor] = names[cursor], names[cursor - 1]
-            cursor -= 1
+        elif action == "reorder_down":
+            if reorder_sessions(state, 1):
+                needs_redraw = True
 
-            # Save the appropriate store based on mode
-            if use_all_sessions:
-                # In all-sessions mode, save custom order
-                save_all_sessions_order(names)
-            else:
-                # In bookmarked mode, save bookmarks
-                save_store(names)
-
-            needs_redraw = True
-
-        elif (
-            key == KEY_SHIFT_DOWN
-            or key == KEY_RIGHT
-            or key in KEY_REORDER_DOWN_FALLBACK
-        ) and cursor < num_items - 1:
-            # Reorder in both modes
-            names[cursor + 1], names[cursor] = names[cursor], names[cursor + 1]
-            cursor += 1
-
-            # Save the appropriate store based on mode
-            if use_all_sessions:
-                # In all-sessions mode, save custom order
-                save_all_sessions_order(names)
-            else:
-                # In bookmarked mode, save bookmarks
-                save_store(names)
-
-            needs_redraw = True
-
-        elif key in KEY_ENTER:
-            if 0 <= cursor < len(names):
-                name_to_jump = names[cursor]
+        elif action == "select_current":
+            if 0 <= state.cursor < len(state.names):
+                name_to_jump = state.names[state.cursor]
                 log.debug("Enter key pressed, jumping to session %s", name_to_jump)
                 jump_to_session(name_to_jump)
                 return
-            else:
-                log.warning("Enter pressed with invalid cursor position: %d", cursor)
+            log.warning("Enter pressed with invalid cursor position: %d", state.cursor)
 
-        elif key == KEY_CTRL_D:
-            if 0 <= cursor < len(names):
-                name_to_delete = names[cursor]
-
-                if use_all_sessions:
-                    # In all-sessions mode, Ctrl+D just kills the session
-                    log.info(
-                        "Ctrl+D pressed in all-sessions mode, killing session %s",
-                        name_to_delete,
-                    )
-                    kill_session(name_to_delete)
-
-                    # Also remove from custom order if it exists there
-                    custom_order = load_all_sessions_order()
-                    if name_to_delete in custom_order:
-                        custom_order.remove(name_to_delete)
-                        save_all_sessions_order(custom_order)
-
-                    # Refresh list of live sessions
-                    live_names = all_live_session_names()
-
-                    # Rebuild names list with updated order
-                    ordered_names = [
-                        name for name in custom_order if name in live_names
-                    ]
-                    missing_names = sorted(list(live_names - set(ordered_names)))
-                    names = ordered_names + missing_names
-                else:
-                    # In bookmarked mode, remove from list and optionally kill
-                    log.debug(
-                        "Ctrl+D pressed, removing bookmark for %s", name_to_delete
-                    )
-                    names.pop(cursor)
-
-                    current_live_names = all_live_session_names()
-                    if name_to_delete in current_live_names:
-                        log.info("Session %s is live, killing it.", name_to_delete)
-                        kill_session(name_to_delete)
-                    else:
-                        log.debug(
-                            "Session %s was not live, only removing bookmark.",
-                            name_to_delete,
-                        )
-
-                    save_store(names)
-
-                num_items = min(len(names), len(INDEX_CHARS))
-                if not names:
-                    cursor = 0
-                elif cursor >= num_items:
-                    cursor = max(0, num_items - 1)
-
+        elif action == "delete":
+            if delete_current_session(state):
                 needs_redraw = True
-            else:
-                log.warning("Ctrl+D pressed with invalid cursor position: %d", cursor)
+
+        elif action == "noop":
+            continue
+
+        else:
+            log.debug("Unhandled action: %s", action)
+            needs_redraw = True
 
 
 def cmd_popup_inside() -> None:

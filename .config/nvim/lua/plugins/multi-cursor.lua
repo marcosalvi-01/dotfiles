@@ -43,9 +43,9 @@ return {
 
 		-- Bring back cursors if you accidentally clear them
 		{
-			"<leader>gv",
+			"<leader>cA",
 			function()
-				require("multicursor-nvim").restoreCursors()
+				require("multicursor-nvim").alignCursors()
 			end,
 			mode = "n",
 			desc = "Restore previously cleared cursors [multicursor]",
