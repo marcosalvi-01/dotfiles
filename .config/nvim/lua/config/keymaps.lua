@@ -1,3 +1,4 @@
+-- testcommend for a git change
 -- Remap arrows
 vim.keymap.set({ "n", "v" }, "<Left>", "h")
 vim.keymap.set({ "n", "v" }, "<Right>", "l")
