@@ -34,4 +34,22 @@ return {
 			},
 		},
 	},
+	config = function(_, opts)
+		require("noice").setup(opts)
+
+		local format = require("noice.lsp.format")
+		local original_format_markdown = format.format_markdown
+
+		-- kotlin-lsp emits 4-backtick fences that Noice misparses.
+		format.format_markdown = function(contents)
+			local lines = original_format_markdown(contents)
+			for i, line in ipairs(lines) do
+				local indent, lang = line:match("^(%s*)````+([%w_+-]+)%s*$")
+				if lang == "kotlin" then
+					lines[i] = indent .. "```" .. lang
+				end
+			end
+			return lines
+		end
+	end,
 }
