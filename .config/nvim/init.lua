@@ -1,5 +1,5 @@
 require("config.options")
-require("config.cwl")
+require("config.kotlin")
 require("config.generic")
 require("config.diagnostics")
 require("config.lazy")

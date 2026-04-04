@@ -16,18 +16,15 @@ return {
 				enabled = false,
 			},
 		},
-		-- you can enable a preset for easier configuration
 		presets = {
-			bottom_search = false, -- use a classic bottom cmdline for search
-			command_palette = true, -- position the cmdline and popupmenu together
-			long_message_to_split = true, -- long messages will be sent to a split
-			inc_rename = false, -- enables an input dialog for inc-rename.nvim
-			lsp_doc_border = true, -- add a border to hover docs and signature help
+			bottom_search = false,
+			command_palette = true,
+			long_message_to_split = true,
+			inc_rename = false,
+			lsp_doc_border = true,
 		},
 		commands = {
-			history = {
-				view = "confirm",
-			},
+			history = { view = "confirm" },
 		},
 		routes = {
 			-- Hide any notification containing "Supermaven"
@@ -37,4 +34,22 @@ return {
 			},
 		},
 	},
+	config = function(_, opts)
+		require("noice").setup(opts)
+
+		local format = require("noice.lsp.format")
+		local original_format_markdown = format.format_markdown
+
+		-- kotlin-lsp emits 4-backtick fences that Noice misparses.
+		format.format_markdown = function(contents)
+			local lines = original_format_markdown(contents)
+			for i, line in ipairs(lines) do
+				local indent, lang = line:match("^(%s*)````+([%w_+-]+)%s*$")
+				if lang == "kotlin" then
+					lines[i] = indent .. "```" .. lang
+				end
+			end
+			return lines
+		end
+	end,
 }
