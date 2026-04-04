@@ -18,14 +18,14 @@ return {
 
 			-- Only set navigation keymaps if NOT in a diffview buffer
 			if not is_diffview then
-				map("n", "<leader>hn", function()
+				map("n", "<C-PageDown>", function()
 					gitsigns.nav_hunk("next")
 					vim.defer_fn(function()
 						vim.cmd.normal("zz")
 					end, 10)
 				end, { desc = "Go to next hunk (Gitsigns)" })
 
-				map("n", "<leader>hp", function()
+				map("n", "<C-PageUp>", function()
 					gitsigns.nav_hunk("prev")
 					vim.defer_fn(function()
 						vim.cmd.normal("zz")

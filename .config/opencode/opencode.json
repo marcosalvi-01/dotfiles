@@ -1,5 +1,8 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "plugin": [
+        "opencode-gemini-auth@latest"
+    ],
     "provider": {
         "lmstudio": {
             "npm": "@ai-sdk/openai-compatible",
@@ -12,13 +15,10 @@
                     "name": "GPT oss 20b"
                 },
                 "qwen/qwen3-coder-30b": {
-                    "name": "Qwen 30B"
-                },
-                "zai-org/glm-4.7-flash": {
-                    "name": "GLM 4.7 Flash"
+                    "name": "Qwen3 30B"
                 },
                 "mistralai/devstral-small-2-2512": {
-                    "name": "Devstral"
+                    "name": "DevStral small"
                 }
             }
         },
@@ -40,46 +40,5 @@
                 }
             }
         }
-    },
-    "keybinds": {
-        "leader": "ctrl+n",
-        "app_exit": "ctrl+c,ctrl+d,<leader>q",
-        "editor_open": "<leader>e",
-        "theme_list": "<leader>t",
-        "sidebar_toggle": "<leader>b",
-        "status_view": "<leader>s",
-        "session_export": "<leader>x",
-        "session_new": "<leader>n",
-        "session_list": "<leader>l",
-        "session_timeline": "<leader>g",
-        "session_share": "none",
-        "session_unshare": "none",
-        "session_interrupt": "escape",
-        "session_compact": "<leader>c",
-        "session_child_cycle": "<leader>right",
-        "session_child_cycle_reverse": "<leader>left",
-        "messages_page_up": "ctrl+pageup",
-        "messages_page_down": "ctrl+pagedown",
-        "messages_half_page_up": "pageup",
-        "messages_half_page_down": "pagedown",
-        "messages_first": "ctrl+g,home",
-        "messages_last": "ctrl+alt+g,end",
-        "messages_copy": "<leader>y",
-        "messages_undo": "<leader>u",
-        "messages_redo": "<leader>r",
-        "messages_toggle_conceal": "<leader>h",
-        "model_list": "<leader>m",
-        "model_cycle_recent": "f2",
-        "model_cycle_recent_reverse": "shift+f2",
-        "command_list": "ctrl+p",
-        "agent_list": "<leader>a",
-        "agent_cycle": "tab",
-        "agent_cycle_reverse": "shift+tab",
-        "input_clear": "ctrl+c",
-        "input_paste": "ctrl+v",
-        "input_submit": "enter",
-        "input_newline": "shift+enter,ctrl+j",
-        "history_previous": "up",
-        "history_next": "down"
     }
 }

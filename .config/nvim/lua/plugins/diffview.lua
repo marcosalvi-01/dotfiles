@@ -34,7 +34,7 @@ return {
 				},
 				{
 					"n",
-					"<leader>hp",
+					"<C-PageUp>",
 					function()
 						vim.cmd("norm! [czz")
 					end,
@@ -42,7 +42,7 @@ return {
 				},
 				{
 					"n",
-					"<leader>hn",
+					"<C-PageDown>",
 					function()
 						vim.cmd("norm! ]czz")
 					end,

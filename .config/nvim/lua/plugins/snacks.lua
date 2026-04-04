@@ -90,6 +90,7 @@ return {
   ╚═══╝  ╚══════╝ ╚═════╝ ╚═══╝  ╚═╝╚═╝╚═╝     ╚═╝]],
 			},
 		},
+		gitbrowse = {},
 		image = {},
 		indent = {
 			enabled = true,
@@ -123,7 +124,7 @@ return {
 							height = 1,
 							border = "bottom",
 						},
-						{ win = "list", border = "none" },
+						{ win = "list",    border = "none" },
 						{ win = "preview", title = "{preview}", border = "none" },
 					},
 				},
@@ -157,7 +158,8 @@ return {
 								border = "bottom",
 							},
 							{ win = "list", border = "none" },
-							{ win = "preview", title = "{preview}", border = "none" },
+							-- disable preview because not all vim.ui.select invocations have a file
+							-- { win = "preview", title = "{preview}", border = "none" },
 						},
 					},
 				},
@@ -178,8 +180,8 @@ return {
 						title = "{title}",
 						{
 							box = "vertical",
-							{ win = "list", border = "none" },
-							{ win = "input", height = 1, border = "top" },
+							{ win = "list",  border = "none" },
+							{ win = "input", height = 1,     border = "top" },
 						},
 						{ win = "preview", title = "{preview}", border = "left", width = 0.5 },
 					},
@@ -477,7 +479,7 @@ return {
 								height = 1,
 								border = "hpad",
 							},
-							{ win = "list", border = "top" },
+							{ win = "list",    border = "top" },
 							{ win = "preview", title = "{preview}", border = "none" },
 						},
 					},
@@ -532,6 +534,20 @@ return {
 				Snacks.picker.spelling()
 			end,
 			desc = "Snacks [S]earch [S]pelling",
+		},
+		{
+			"<leader>sj",
+			function()
+				Snacks.picker.jumps()
+			end,
+		},
+		{
+			"<leader>hB",
+			function()
+				Snacks.gitbrowse()
+			end,
+			mode = { "n", "v" },
+			desc = "Git browse branch",
 		},
 		{
 			"<leader>hg",

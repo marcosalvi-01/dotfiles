@@ -31,6 +31,17 @@ return {
 				"yaml",
 				"sql",
 				"json",
+				"gitcommit",
+				"turtle",
+				"java",
+				"make",
+				"python",
+				"toml",
+				"typescript",
+				"dockerfile",
+				"html",
+				"helm",
+				"gomod"
 			}
 
 			ts.install(core_languages)
