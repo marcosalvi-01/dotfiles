@@ -34,6 +34,14 @@ desc = "Create a file or a directory"
 on   = "<Esc>"
 run  = ["unyank", "escape"]
 desc = "Clear selection and unyank"
+[[mgr.prepend_keymap]]
+on = ["<S-PageUp>"]
+run = "seek -5"
+desc = "Seek preview up"
+[[mgr.prepend_keymap]]
+on = ["<S-PageDown>"]
+run = "seek 5"
+desc = "Seek preview down"
 
 [[input.prepend_keymap]]
 on   = "<Esc>"
