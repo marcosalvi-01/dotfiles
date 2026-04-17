@@ -189,11 +189,12 @@ vim.keymap.set("n", "<leader>hU", open_git_remote_repo, { desc = "Open git remot
 
 -- SMART DELETE
 local function smart_delete(key)
-	local l = vim.api.nvim_win_get_cursor(0)[1] -- Get the current cursor line number
+	local l = vim.api.nvim_win_get_cursor(0)[1]                -- Get the current cursor line number
 	local line = vim.api.nvim_buf_get_lines(0, l - 1, l, true)[1] -- Get the content of the current line
-	return (line:match("^%s*$") and '"_' or "") .. key -- If the line is empty or contains only whitespace, use the black hole register
+	return (line:match("^%s*$") and '"_' or "") ..
+	key                                                        -- If the line is empty or contains only whitespace, use the black hole register
 end
-local keys = { "d", "x", "c", "s", "C", "X" } -- Define a list of keys to apply the smart delete functionality
+local keys = { "d", "x", "c", "s", "C", "X" }                  -- Define a list of keys to apply the smart delete functionality
 -- Set keymaps for both normal and visual modes
 for _, key in pairs(keys) do
 	vim.keymap.set("n", key, function()
@@ -296,3 +297,22 @@ vim.keymap.set("n", "<leader>z", "<C-w>_<C-w>|", { desc = "Maximize window" })
 vim.keymap.set("n", "<leader>=", "<C-w>=", { desc = "Equalize windows" })
 
 vim.keymap.set("n", "<leader>v", "<C-v>", { desc = "Block selection" })
+
+vim.keymap.set("n", "<PageUp>", "<C-u>zz")
+vim.keymap.set("n", "<PageDown>", "<C-d>zz")
+
+vim.keymap.set("n", "n", "nzz")
+vim.keymap.set("n", "N", "Nzz")
+
+vim.keymap.set("n", "<C-o>", "<C-o>zz")
+vim.keymap.set("n", "<C-i>", "<C-i>zz")
+
+-- Quickfix navigation (with cycles)
+vim.keymap.set("n", "<C-p>", function()
+	vim.cmd("try | cprevious | catch | clast | catch")
+	vim.cmd.normal("zz")
+end, { desc = "[G]o to previous [E]ntry in the Quickfix list" })
+vim.keymap.set("n", "<C-n>", function()
+	vim.cmd("try | cnext | catch | cfirst | catch")
+	vim.cmd.normal("zz")
+end, { desc = "[G]o to next [E]ntry in the Quickfix list" })

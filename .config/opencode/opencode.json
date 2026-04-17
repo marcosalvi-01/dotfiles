@@ -23,7 +23,10 @@
                 },
                 "mistralai/devstral-small-2-2512": {
                     "name": "DevStral small"
-                }
+                },
+                "google/gemma-4-26b-a4b": {
+                    "name": "Gemma4"
+                },
             }
         },
         "ollama": {

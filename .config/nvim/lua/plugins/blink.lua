@@ -8,29 +8,6 @@ return {
 		"saghen/blink.cmp",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
-			{
-				"supermaven-inc/supermaven-nvim",
-				opts = {
-					disable_inline_completion = true,
-					disable_keymaps = true,
-					log_level = "off",
-					ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
-				},
-				config = function(_, opts)
-					vim.g.blink_supermaven_enabled = false
-
-					require("supermaven-nvim").setup(opts)
-
-					-- Reset the flag when leaving insert mode
-					vim.api.nvim_create_autocmd("InsertLeave", {
-						group = vim.api.nvim_create_augroup("blink_supermaven_reset", { clear = true }),
-						callback = function()
-							vim.g.blink_supermaven_enabled = false
-						end,
-					})
-				end,
-			},
-			{ "Huijiro/blink-cmp-supermaven" },
 		},
 		event = "VeryLazy",
 		version = "*",
@@ -77,16 +54,6 @@ return {
 						cmp.show_signature()
 					end,
 				},
-				["<C-n>"] = {
-					function(cmp)
-						vim.g.blink_supermaven_enabled = true
-						-- Refresh the menu
-						cmp.hide()
-						vim.defer_fn(function()
-							cmp.show()
-						end, 10)
-					end,
-				},
 			},
 			appearance = {
 				use_nvim_cmp_as_default = true,
@@ -111,10 +78,6 @@ return {
 						"buffer",
 						"dadbod",
 					}
-					-- Only include supermaven when manually triggered
-					if vim.g.blink_supermaven_enabled then
-						table.insert(sources, 1, "supermaven")
-					end
 					return sources
 				end,
 				per_filetype = {
@@ -170,11 +133,6 @@ return {
 							end
 							return out
 						end,
-					},
-					supermaven = {
-						name = "supermaven",
-						module = "blink-cmp-supermaven",
-						async = true,
 					},
 				},
 			},
