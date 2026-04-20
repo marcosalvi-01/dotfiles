@@ -292,3 +292,19 @@ vim.keymap.set("n", "<leader>z", "<C-w>_<C-w>|", { desc = "Maximize window" })
 vim.keymap.set("n", "<leader>=", "<C-w>=", { desc = "Equalize windows" })
 
 vim.keymap.set("n", "<leader>v", "<C-v>", { desc = "Block selection" })
+
+vim.keymap.set("n", "n", "nzz")
+vim.keymap.set("n", "N", "Nzz")
+
+vim.keymap.set("n", "<C-o>", "<C-o>zz")
+vim.keymap.set("n", "<C-i>", "<C-i>zz")
+
+-- Quickfix navigation (with cycles)
+vim.keymap.set("n", "<leader><left>", function()
+	vim.cmd("try | cprevious | catch | clast | catch")
+	vim.cmd.normal("zz")
+end, { desc = "[G]o to previous [E]ntry in the Quickfix list" })
+vim.keymap.set("n", "<leader><right>", function()
+	vim.cmd("try | cnext | catch | cfirst | catch")
+	vim.cmd.normal("zz")
+end, { desc = "[G]o to next [E]ntry in the Quickfix list" })

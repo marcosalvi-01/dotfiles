@@ -1,4 +1,4 @@
 tui:
     openURLCommand: xdg-open
-    openDirectoryCommand: xdg-open
-    openFileCommand: xdg-open
+    openDirectoryCommand: yazi
+    openFileCommand: nvim
