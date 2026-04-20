@@ -128,3 +128,6 @@ vim.api.nvim_create_autocmd("BufRead", {
 		vim.bo.filetype = "dosini"
 	end,
 })
+
+-- disable neovim terminal exit message (for snacks dashboard)
+vim.api.nvim_clear_autocmds({ group = "nvim.terminal", event = "TermClose" })
