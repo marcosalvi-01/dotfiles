@@ -25,6 +25,9 @@ return {
 				command = "gofumpt",
 				args = { "-extra" },
 			},
+			qmlformat = {
+				command = "/usr/lib/qt6/bin/qmlformat",
+			},
 		},
 		notify_on_error = false,
 		format_on_save = false,
@@ -48,6 +51,7 @@ return {
 			scss = { "prettier" },
 			c = { "clang" },
 			sql = { "sleek" },
+			qml = { "qmlformat" },
 		},
 	},
 }
