@@ -24,8 +24,8 @@ border_style  = { fg = "#ddc7a1" }
 # : Indicator {{{
 
 [tabs]
-tab_active   = { fg = "#ddc7a1", bg = "#45403d" }
-tab_inactive = { fg = "#a89984", bg = "#3c3836" }
+active   = { fg = "#ddc7a1", bg = "#45403d" }
+inactive = { fg = "#a89984", bg = "#3c3836" }
 
 [indicator]
 current = { fg = "#282828", bg = "#7daea3", bold = true }
@@ -36,19 +36,18 @@ preview = { underline = true }
 # : Status {{{
 
 [status]
-separator_open  = ""
-separator_close = ""
-separator_style = { fg = "#3c3836", bg = "#3c3836" }
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
 
 progress_label  = { fg = "#ddc7a1", bold = true }
 progress_normal = { fg = "#504945", bg = "#282828" }
 progress_error  = { fg = "#ea6962", bg = "#282828" }
 
-permissions_t = { fg = "#504945" }
-permissions_r = { fg = "#b8bb26" }
-permissions_w = { fg = "#fb4934" }
-permissions_x = { fg = "#b8bb26" }
-permissions_s = { fg = "#665c54" }
+perm_sep   = { fg = "#665c54" }
+perm_type  = { fg = "#504945" }
+perm_read  = { fg = "#b8bb26" }
+perm_write = { fg = "#fb4934" }
+perm_exec  = { fg = "#b8bb26" }
 
 # : }}}
 
@@ -110,7 +109,7 @@ separator_style = { fg = "#504945" }
 
 [help]
 on      = { fg = "#ea6962" }
-exec    = { fg = "#8ec07c" }
+run     = { fg = "#8ec07c" }
 desc    = { fg = "#ddc7a1" }
 hovered = { bg = "#504945", bold = true }
 footer  = { fg = "#282828", bg = "#a89984" }

@@ -48,6 +48,7 @@ return {
 			scss = { "prettier" },
 			c = { "clang" },
 			sql = { "sleek" },
+			qml = { "qmlformat" },
 		},
 	},
 }

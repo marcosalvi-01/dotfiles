@@ -28,4 +28,4 @@ keybind = ctrl+backspace=text:\x17
 
 #custom-shader = ghostty-shaders/in-game-crt.glsl
 #custom-shader = ghostty-shaders/inside-the-matrix.glsl
-custom-shader = ghostty-shaders/drunkard.glsl
+#custom-shader = ghostty-shaders/drunkard.glsl

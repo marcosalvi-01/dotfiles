@@ -117,7 +117,7 @@ alias eok='epos-opensource kubernetes'
 alias epos='epos-opensource'
 
 nvim_terminal() {
-  nvim -c "ToggleTerm"
+    nvim -c "ToggleTerm"
 }
 zle -N nvim_terminal
 bindkey '^A' nvim_terminal

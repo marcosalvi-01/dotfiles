@@ -9,6 +9,6 @@ return {
 
 	entry = function()
 		start_dir = state_option("start_dir")
-		ya.mgr_emit("cd", { Url(start_dir) })
+		ya.emit("cd", { Url(start_dir) })
 	end,
 }

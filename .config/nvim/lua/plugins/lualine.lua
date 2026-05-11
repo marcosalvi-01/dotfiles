@@ -35,7 +35,7 @@ local bubbles_theme = {
 	normal = {
 		a = { fg = colors.bg.base, bg = colors.accent.green, gui = "bold" },
 		b = { fg = colors.fg, bg = colors.bg.base, gui = "bold" },
-		c = { fg = colors.fg, bg = nil, gui = "bold" },
+		c = { fg = colors.fg, bg = "none", gui = "bold" },
 	},
 	insert = { a = { fg = colors.bg.base, bg = colors.accent.blue, gui = "bold" } },
 	visual = { a = { fg = colors.bg.base, bg = colors.accent.yellow, gui = "bold" } },
@@ -44,7 +44,7 @@ local bubbles_theme = {
 	inactive = {
 		a = { fg = colors.fg, bg = colors.bg.selection, gui = "bold" },
 		b = { fg = colors.fg, bg = colors.bg.base, gui = "bold" },
-		c = { fg = colors.fg, bg = nil, gui = "bold" },
+		c = { fg = colors.fg, bg = "none", gui = "bold" },
 	},
 }
 

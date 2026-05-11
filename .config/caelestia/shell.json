@@ -1,0 +1,117 @@
+{
+    "appearance": {
+        "deformScale": 0,
+        "font": {
+            "family": {
+                "clock": "Rubik",
+                "material": "Material Symbols Rounded",
+                "mono": "CaskaydiaCove NF",
+                "sans": "Rubik"
+            },
+            "size": {
+                "scale": 1
+            }
+        }
+    },
+    "background": {
+        "desktopClock": {
+            "background": {
+                "blur": true
+            },
+            "enabled": false
+        },
+        "enabled": false,
+        "visualiser": {
+            "enabled": false
+        },
+        "wallpaperEnabled": false
+    },
+    "bar": {
+        "activeWindow": {
+            "compact": false,
+            "inverted": false
+        },
+        "clock": {
+            "background": false,
+            "showDate": true
+        },
+        "entries": [
+            {
+                "enabled": true,
+                "id": "logo"
+            },
+            {
+                "enabled": true,
+                "id": "workspaces"
+            },
+            {
+                "enabled": true,
+                "id": "spacer"
+            },
+            {
+                "enabled": false,
+                "id": "activeWindow"
+            },
+            {
+                "enabled": true,
+                "id": "spacer"
+            },
+            {
+                "enabled": true,
+                "id": "tray"
+            },
+            {
+                "enabled": true,
+                "id": "clock"
+            },
+            {
+                "enabled": true,
+                "id": "statusIcons"
+            },
+            {
+                "enabled": true,
+                "id": "power"
+            }
+        ],
+        "excludedScreens": [
+        ],
+        "persistent": true,
+        "scrollActions": {
+            "brightness": false
+        },
+        "showOnHover": true,
+        "status": {
+            "showAudio": true,
+            "showBattery": false
+        },
+        "tray": {
+            "background": false,
+            "compact": true,
+            "recolour": false
+        },
+        "workspaces": {
+            "activeIndicator": true,
+            "maxWindowIcons": 1,
+            "occupiedBg": true,
+            "occupiedLabel": "",
+            "perMonitorWorkspaces": true,
+            "showWindows": true,
+            "shown": 4
+        }
+    },
+    "launcher": {
+        "showOnHover": false,
+        "useFuzzy": {
+            "apps": true
+        },
+        "vimKeybinds": true
+    },
+    "services": {
+        "lyricsBackend": "Auto",
+        "showLyrics": true,
+        "useFahrenheit": false,
+        "useFahrenheitPerformance": false,
+        "useTwelveHourClock": false,
+        "weatherLocation": "Rome, Italy"
+    }
+}
