@@ -27,10 +27,6 @@
         "wallpaperEnabled": false
     },
     "bar": {
-        "activeWindow": {
-            "compact": false,
-            "inverted": false
-        },
         "clock": {
             "background": false,
             "showDate": true
@@ -49,8 +45,8 @@
                 "id": "spacer"
             },
             {
-                "enabled": false,
-                "id": "activeWindow"
+                "enabled": true,
+                "id": "media"
             },
             {
                 "enabled": true,

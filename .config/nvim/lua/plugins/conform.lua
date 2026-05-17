@@ -52,6 +52,7 @@ return {
 			c = { "clang" },
 			sql = { "sleek" },
 			qml = { "qmlformat" },
+			rs = { "rustfmt" },
 		},
 	},
 }
