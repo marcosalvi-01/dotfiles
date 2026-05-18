@@ -284,7 +284,7 @@ vim.keymap.set({ "n", "v" }, "g.", function()
 end, { desc = "Replay last macro" })
 
 vim.keymap.set("n", "<leader>a", function()
-	vim.cmd("e #")
+	vim.cmd("b#")
 	vim.cmd("normal! zz")
 end, { desc = "Alternate last two buffers" })
 vim.keymap.set("n", "<leader>A", function()
