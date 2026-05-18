@@ -536,6 +536,24 @@ return {
 			desc = "Snacks [S]earch [S]pelling",
 		},
 		{
+			"<leader>sT",
+			function()
+				Snacks.picker.lines({
+					search = function(_)
+						return "TODO"
+					end,
+					finder = "grep",
+					regex = false,
+					format = "file",
+					layout = "main_preview",
+					hidden = true,
+					ignored = false,
+				})
+			end,
+			desc = "Snacks [S]earch [T]ODO",
+			mode = { "n", "v" },
+		},
+		{
 			"<leader>sj",
 			function()
 				Snacks.picker.jumps()
