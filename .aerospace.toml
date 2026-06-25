@@ -57,9 +57,9 @@ automatically-unhide-macos-hidden-apps = false
     if.app-id = 'com.spotify.client'
     run = 'move-node-to-workspace R'
 
-[[on-window-detected]]
-    if.app-id = 'notion.id'
-    run = 'move-node-to-workspace n'
+# [[on-window-detected]]
+    # if.app-id = 'notion.id'
+    # run = 'move-node-to-workspace n'
 
 [[on-window-detected]]
     if.app-id = 'notion.mail.id'

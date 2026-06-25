@@ -9,10 +9,9 @@ return {
 				},
 				source = "blink"
 			},
-			provider = _99.OpenCodeProvider,
-			model = "openai/gpt-5.3-codex",
-			-- model = "openai/gpt-5.1-codex-mini",
-			tmp_dir = "~/tmp/99",
+			provider = _99.Providers.OpenCodeProvider,
+			model = "openai/gpt-5.4-mini-fast",
+			tmp_dir = "./tmp",
 		}
 
 		_99.setup(opts)
