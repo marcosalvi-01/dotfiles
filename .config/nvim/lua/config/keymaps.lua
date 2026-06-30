@@ -298,6 +298,33 @@ vim.keymap.set("n", "<leader>=", "<C-w>=", { desc = "Equalize windows" })
 
 vim.keymap.set("n", "<leader>v", "<C-v>", { desc = "Block selection" })
 
+local function jump_hunk(direction)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local bufname = vim.api.nvim_buf_get_name(bufnr)
+	local filetype = vim.bo[bufnr].filetype
+	if bufname:match("diffview://") or filetype:match("^Diffview") or filetype == "diff" then
+		vim.cmd(direction == "next" and "normal! ]czz" or "normal! [czz")
+		return
+	end
+
+	local ok, gitsigns = pcall(require, "gitsigns")
+	if not ok then
+		return
+	end
+
+	gitsigns.nav_hunk(direction)
+	vim.schedule(function()
+		vim.cmd("normal! zz")
+	end)
+end
+
+vim.keymap.set("n", "<C-PageDown>", function()
+	jump_hunk("next")
+end, { desc = "Go to next hunk" })
+vim.keymap.set("n", "<C-PageUp>", function()
+	jump_hunk("prev")
+end, { desc = "Go to previous hunk" })
+
 vim.keymap.set("n", "<PageUp>", "<C-u>zz")
 vim.keymap.set("n", "<PageDown>", "<C-d>zz")
 

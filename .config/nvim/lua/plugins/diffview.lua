@@ -34,22 +34,6 @@ return {
 				},
 				{
 					"n",
-					"<C-PageUp>",
-					function()
-						vim.cmd("norm! [czz")
-					end,
-					{ desc = "Previous hunk (Diffview)" },
-				},
-				{
-					"n",
-					"<C-PageDown>",
-					function()
-						vim.cmd("norm! ]czz")
-					end,
-					{ desc = "Next hunk (Diffview)" },
-				},
-				{
-					"n",
 					"<leader>e",
 					function()
 						require("diffview.actions").toggle_files()

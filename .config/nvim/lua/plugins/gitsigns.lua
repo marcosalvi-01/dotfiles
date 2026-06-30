@@ -5,32 +5,10 @@ return {
 		on_attach = function(bufnr)
 			local gitsigns = require("gitsigns")
 
-			-- Don't set up navigation keymaps in diffview buffers
-			local bufname = vim.api.nvim_buf_get_name(bufnr)
-			local filetype = vim.bo[bufnr].filetype
-			local is_diffview = bufname:match("diffview://") or filetype:match("^Diffview") or filetype == "diff"
-
 			local function map(mode, l, r, opts)
 				opts = opts or {}
 				opts.buffer = bufnr
 				vim.keymap.set(mode, l, r, opts)
-			end
-
-			-- Only set navigation keymaps if NOT in a diffview buffer
-			if not is_diffview then
-				map("n", "<C-PageDown>", function()
-					gitsigns.nav_hunk("next")
-					vim.defer_fn(function()
-						vim.cmd.normal("zz")
-					end, 10)
-				end, { desc = "Go to next hunk (Gitsigns)" })
-
-				map("n", "<C-PageUp>", function()
-					gitsigns.nav_hunk("prev")
-					vim.defer_fn(function()
-						vim.cmd.normal("zz")
-					end, 10)
-				end, { desc = "Go to previous hunk (Gitsigns)" })
 			end
 
 			-- These mappings work fine in both contexts
