@@ -4,8 +4,8 @@ run  = 'shell "$SHELL" --block'
 desc = "Open shell here"
 [[mgr.prepend_keymap]]
 on = ["q"]
-run = "quit --no-cwd-file"
-desc = "Quit yazi"
+run = "close --no-cwd-file"
+desc = "Close tab or quit yazi without cd"
 [[mgr.prepend_keymap]]
 on = ["Q"]
 run = "quit"

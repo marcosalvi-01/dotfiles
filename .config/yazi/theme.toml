@@ -24,7 +24,7 @@ border_style  = { fg = "#ddc7a1" }
 # : Indicator {{{
 
 [tabs]
-active   = { fg = "#ddc7a1", bg = "#45403d" }
+active   = { fg = "#282828", bg = "#8ec07c", bold = true }
 inactive = { fg = "#a89984", bg = "#3c3836" }
 
 [indicator]

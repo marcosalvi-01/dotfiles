@@ -53,6 +53,7 @@ return {
 
 				-- Diffview
 				hl(0, "DiffText", { bg = colors.accent.teal })
+				hl(0, "DiffDelete", { fg = colors.bg.neutral, italic = true })
 
 				-- Pathfinder (gf) plugin
 				hl(0, "PathfinderDim", { link = "Comment" })
@@ -67,9 +68,9 @@ return {
 
 				-- Diagnostics
 				local diagnostic_groups = {
-					{ name = "Warn", color = colors.accent.yellow },
-					{ name = "Hint", color = colors.accent.green },
-					{ name = "Info", color = colors.accent.blue },
+					{ name = "Warn",  color = colors.accent.yellow },
+					{ name = "Hint",  color = colors.accent.green },
+					{ name = "Info",  color = colors.accent.blue },
 					{ name = "Error", color = colors.accent.red },
 				}
 
