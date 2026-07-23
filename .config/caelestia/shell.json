@@ -95,6 +95,16 @@
             "shown": 4
         }
     },
+    "general": {
+        "apps": {
+            "explorer": [
+                "yazi"
+            ],
+            "terminal": [
+                "kitty"
+            ]
+        }
+    },
     "launcher": {
         "showOnHover": false,
         "useFuzzy": {
@@ -105,6 +115,7 @@
     "services": {
         "lyricsBackend": "Auto",
         "showLyrics": true,
+        "smartScheme": true,
         "useFahrenheit": false,
         "useFahrenheitPerformance": false,
         "useTwelveHourClock": false,

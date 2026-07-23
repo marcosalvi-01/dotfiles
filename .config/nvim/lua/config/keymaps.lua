@@ -308,3 +308,5 @@ vim.keymap.set("n", "<leader><right>", function()
 	vim.cmd("try | cnext | catch | cfirst | catch")
 	vim.cmd.normal("zz")
 end, { desc = "[G]o to next [E]ntry in the Quickfix list" })
+
+vim.keymap.set("n", "<leader>,", "mzA;<Esc>`z")
