@@ -4,10 +4,11 @@ local function get_default_branch_name()
 end
 
 return {
-	"sindrets/diffview.nvim",
+	"dlyongemallo/diffview-plus.nvim",
 	opts = {
 		show_help_hints = false,
-		enhanced_diff_hl = false,
+		show_root_path = false,
+		auto_close_on_empty = true,
 		hooks = {
 			diff_buf_win_enter = function()
 				vim.opt_local.foldenable = false

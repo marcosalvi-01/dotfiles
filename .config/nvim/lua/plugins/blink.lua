@@ -8,6 +8,14 @@ return {
 		"saghen/blink.cmp",
 		dependencies = {
 			"rafamadriz/friendly-snippets",
+			{
+				"supermaven-inc/supermaven-nvim",
+				opts = {
+					disable_inline_completion = true,
+					disable_keymaps = true,
+				},
+			},
+			{ "Huijiro/blink-cmp-supermaven" },
 		},
 		event = "VeryLazy",
 		version = "*",
@@ -39,6 +47,11 @@ return {
 			},
 			keymap = {
 				preset = "default",
+				["<C-n>"] = {
+					function(cmp)
+						cmp.show({ providers = { "supermaven" } })
+					end,
+				},
 				["<PageUp>"] = {
 					function(cmp)
 						cmp.scroll_documentation_up(4)
@@ -84,6 +97,12 @@ return {
 					["99prompt"] = { "99" },
 				},
 				providers = {
+					supermaven = {
+						name = "supermaven",
+						module = "blink-cmp-supermaven",
+						async = true,
+						min_keyword_length = 0,
+					},
 					["99"] = {
 						name = "99",
 						module = "blink.compat.source",

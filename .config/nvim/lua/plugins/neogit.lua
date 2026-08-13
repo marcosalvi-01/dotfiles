@@ -2,7 +2,7 @@ return {
 	"NeogitOrg/neogit",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"sindrets/diffview.nvim",
+		"dlyongemallo/diffview-plus.nvim",
 	},
 	-- fix having the eof line count as a diff when opening diffview from neogit
 	config = function(_, opts)
