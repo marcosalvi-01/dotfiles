@@ -1,21 +1,21 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "16e8ed3"
-hash = "6849444b7c2df08eace83f3f86fb55a3"
+rev = "6af9bf2"
+hash = "336548d9f67926e12d5584f60b790f1"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
-rev = "16e8ed3"
-hash = "eff8ff12fa4e5f035a10d8aeeb4c258d"
+rev = "6af9bf2"
+hash = "f281261ff04ad7ec867c3f802a50835f"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "16e8ed3"
-hash = "f0c8c378184d5f8abd1b095a443d336d"
+rev = "6af9bf2"
+hash = "aa2562a617b637f9f8eba55f8216db05"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
-rev = "16e8ed3"
+rev = "6af9bf2"
 hash = "187cc58ba7ac3befd49c342129e6f1b6"
 
 [flavor]
