@@ -132,7 +132,6 @@ bindkey '^F' fortune_widget
 
 bindkey -s '^N' 'nvim\n'
 bindkey -s '^O' 'opencode --port\n'
-bindkey -s '^Y' 'y\n'
 
 # y for yazi to cd into dir
 function y() {
@@ -213,9 +212,24 @@ fzf-history-widget() {
     fi
     zle redisplay
 }
-
 zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
+
+# navigate into sub dir
+fcd() {
+  local dir
+  zle -I
+  dir=$(fd -t d --hidden --exclude .git . 2>/dev/null | fzf-tmux -p 80%,60% --preview 'eza -a --tree --level=2 --icons --color=always {}')
+  [[ -n "$dir" ]] && cd "$dir"
+
+  local precmd
+  for precmd in $precmd_functions; do
+    $precmd
+  done
+  zle reset-prompt
+}
+zle -N fcd
+bindkey '^Y' fcd
 
 # fix home-end keys
 bindkey -M viins '^[[H' beginning-of-line
