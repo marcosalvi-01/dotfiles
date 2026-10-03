@@ -1,7 +1,6 @@
 ---
 description: Create a conventional commit message
 agent: plan
-model: openai/gpt-5.3-codex
 ---
 
 Read the current changes of the current git branch. Only consider the staged changes on top of the current branch. Write a commit message terse and exact. Conventional Commits format. No fluff. Why over what. Prefer functional changes over internal changes.

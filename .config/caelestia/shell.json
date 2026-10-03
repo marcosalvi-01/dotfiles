@@ -27,9 +27,14 @@
         "wallpaperEnabled": false
     },
     "bar": {
+        "activeWindow": {
+            "showOnHover": false
+        },
         "clock": {
             "background": false,
-            "showDate": true
+            "showDate": true,
+            "showIcon": true,
+            "showSeconds": false
         },
         "entries": [
             {
@@ -72,14 +77,47 @@
         "excludedScreens": [
         ],
         "persistent": true,
-        "scrollActions": {
-            "brightness": false
+        "popouts": {
+            "activeWindow": false
         },
-        "showOnHover": true,
+        "scrollActions": {
+            "brightness": true
+        },
+        "showOnHover": false,
         "status": {
             "showAudio": true,
             "showBattery": false
         },
+        "statusIcons": [
+            {
+                "enabled": true,
+                "id": "lockStatus"
+            },
+            {
+                "enabled": false,
+                "id": "microphone"
+            },
+            {
+                "enabled": false,
+                "id": "kbLayout"
+            },
+            {
+                "enabled": true,
+                "id": "network"
+            },
+            {
+                "enabled": true,
+                "id": "bluetooth"
+            },
+            {
+                "enabled": false,
+                "id": "battery"
+            },
+            {
+                "enabled": true,
+                "id": "audio"
+            }
+        ],
         "tray": {
             "background": false,
             "compact": true,
@@ -87,11 +125,14 @@
         },
         "workspaces": {
             "activeIndicator": true,
+            "activeTrail": true,
             "maxWindowIcons": 1,
             "occupiedBg": true,
             "occupiedLabel": "",
             "perMonitorWorkspaces": true,
-            "showWindows": true,
+            "showUnoccupied": true,
+            "showWindows": false,
+            "showWindowsOnSpecialWorkspaces": true,
             "shown": 4
         }
     },
@@ -100,25 +141,75 @@
             "explorer": [
                 "yazi"
             ],
+            "playback": [
+                "/usr/bin/vlc",
+                "--started-from-file"
+            ],
             "terminal": [
                 "kitty"
             ]
         }
     },
     "launcher": {
+        "actionPrefix": ":",
+        "hiddenApps": [
+            "wine-Programs-7-Zip-7-Zip File Manager",
+            "wine-Programs-7-Zip-7-Zip Help",
+            "xfce4-about"
+        ],
         "showOnHover": false,
         "useFuzzy": {
             "apps": true
         },
         "vimKeybinds": true
     },
+    "notifs": {
+        "openExpanded": false
+    },
     "services": {
+        "clockFormat": "TwentyFourHour",
         "lyricsBackend": "Auto",
         "showLyrics": true,
         "smartScheme": true,
         "useFahrenheit": false,
         "useFahrenheitPerformance": false,
         "useTwelveHourClock": false,
-        "weatherLocation": "Rome, Italy"
+        "weatherLocation": "Rome, Italy",
+        "weatherUnits": "Celsius"
+    },
+    "utilities": {
+        "quickToggles": [
+            {
+                "enabled": true,
+                "id": "wifi"
+            },
+            {
+                "enabled": true,
+                "id": "bluetooth"
+            },
+            {
+                "enabled": true,
+                "id": "mic"
+            },
+            {
+                "enabled": true,
+                "id": "settings"
+            },
+            {
+                "enabled": false,
+                "id": "gameMode"
+            },
+            {
+                "enabled": true,
+                "id": "dnd"
+            },
+            {
+                "enabled": false,
+                "id": "vpn"
+            }
+        ],
+        "toasts": {
+            "fullscreen": "all"
+        }
     }
 }
