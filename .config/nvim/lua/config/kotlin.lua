@@ -1,5 +1,5 @@
 -- custom config to force enable the lsp inlay hints.
-vim.lsp.config("kotlin_lsp", {
+vim.lsp.config('kotlin_lsp', {
 	settings = {
 		jetbrains = {
 			kotlin = {
@@ -34,4 +34,4 @@ vim.lsp.config("kotlin_lsp", {
 	},
 })
 -- enable the language server
-vim.lsp.enable("kotlin_lsp")
+vim.lsp.enable('kotlin_lsp')

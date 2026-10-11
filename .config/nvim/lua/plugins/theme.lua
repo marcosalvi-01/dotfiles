@@ -53,6 +53,7 @@ return {
 
 				-- Diffview
 				hl(0, "DiffText", { bg = colors.accent.teal })
+				hl(0, "DiffDelete", { fg = colors.bg.neutral, italic = true })
 
 				-- Pathfinder (gf) plugin
 				hl(0, "PathfinderDim", { link = "Comment" })

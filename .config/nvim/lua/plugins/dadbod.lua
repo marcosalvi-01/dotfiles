@@ -17,7 +17,7 @@ return {
 	keys = {
 		{
 			"<leader>DB",
-			":DBUIToggle<CR>",
+			"<cmd>DBUIToggle<CR>",
 			mode = "",
 		},
 	},

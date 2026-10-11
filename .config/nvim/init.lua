@@ -1,6 +1,7 @@
 require("config.options")
 require("config.kotlin")
 require("config.qml")
+require("config.tilt")
 require("config.generic")
 require("config.diagnostics")
 require("config.lazy")

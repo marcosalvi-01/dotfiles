@@ -90,9 +90,12 @@ vim.keymap.set("n", "!", function()
 		["=="] = "!=",
 		["vero"] = "falso",
 		["falso"] = "vero",
+		[":="] = "=",
+		["="] = ":=",
 	}
 
 	-- Get current word under cursor
+	-- TODO: make sure this works also for symbols
 	local word = vim.fn.expand("<cword>")
 	if word == "" then
 		return
@@ -185,11 +188,12 @@ vim.keymap.set("n", "<leader>hU", open_git_remote_repo, { desc = "Open git remot
 
 -- SMART DELETE
 local function smart_delete(key)
-	local l = vim.api.nvim_win_get_cursor(0)[1] -- Get the current cursor line number
+	local l = vim.api.nvim_win_get_cursor(0)[1]                -- Get the current cursor line number
 	local line = vim.api.nvim_buf_get_lines(0, l - 1, l, true)[1] -- Get the content of the current line
-	return (line:match("^%s*$") and '"_' or "") .. key -- If the line is empty or contains only whitespace, use the black hole register
+	return (line:match("^%s*$") and '"_' or "") ..
+		key                                                    -- If the line is empty or contains only whitespace, use the black hole register
 end
-local keys = { "d", "x", "c", "s", "C", "X" } -- Define a list of keys to apply the smart delete functionality
+local keys = { "d", "x", "c", "s", "C", "X" }                  -- Define a list of keys to apply the smart delete functionality
 -- Set keymaps for both normal and visual modes
 for _, key in pairs(keys) do
 	vim.keymap.set("n", key, function()
@@ -279,7 +283,7 @@ vim.keymap.set({ "n", "v" }, "g.", function()
 end, { desc = "Replay last macro" })
 
 vim.keymap.set("n", "<leader>a", function()
-	vim.cmd("e #")
+	vim.cmd("b#")
 	vim.cmd("normal! zz")
 end, { desc = "Alternate last two buffers" })
 vim.keymap.set("n", "<leader>A", function()
@@ -293,6 +297,36 @@ vim.keymap.set("n", "<leader>=", "<C-w>=", { desc = "Equalize windows" })
 
 vim.keymap.set("n", "<leader>v", "<C-v>", { desc = "Block selection" })
 
+local function jump_hunk(direction)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local bufname = vim.api.nvim_buf_get_name(bufnr)
+	local filetype = vim.bo[bufnr].filetype
+	if bufname:match("diffview://") or filetype:match("^Diffview") or filetype == "diff" then
+		vim.cmd(direction == "next" and "normal! ]czz" or "normal! [czz")
+		return
+	end
+
+	local ok, gitsigns = pcall(require, "gitsigns")
+	if not ok then
+		return
+	end
+
+	gitsigns.nav_hunk(direction)
+	vim.schedule(function()
+		vim.cmd("normal! zz")
+	end)
+end
+
+vim.keymap.set("n", "<C-PageDown>", function()
+	jump_hunk("next")
+end, { desc = "Go to next hunk" })
+vim.keymap.set("n", "<C-PageUp>", function()
+	jump_hunk("prev")
+end, { desc = "Go to previous hunk" })
+
+vim.keymap.set("n", "<PageUp>", "<C-u>zz")
+vim.keymap.set("n", "<PageDown>", "<C-d>zz")
+
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
@@ -300,13 +334,25 @@ vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
 
 -- Quickfix navigation (with cycles)
-vim.keymap.set("n", "<leader><left>", function()
-	vim.cmd("try | cprevious | catch | clast | catch")
+vim.keymap.set("n", "<C-p>", function()
+	if vim.tbl_isempty(vim.fn.getqflist()) then
+		vim.notify("Quickfix list is empty", vim.log.levels.INFO)
+		return
+	end
+	vim.cmd("try | cprevious | catch | clast | catch | endtry")
 	vim.cmd.normal("zz")
 end, { desc = "[G]o to previous [E]ntry in the Quickfix list" })
-vim.keymap.set("n", "<leader><right>", function()
-	vim.cmd("try | cnext | catch | cfirst | catch")
+vim.keymap.set("n", "<C-n>", function()
+	if vim.tbl_isempty(vim.fn.getqflist()) then
+		vim.notify("Quickfix list is empty", vim.log.levels.INFO)
+		return
+	end
+	vim.cmd("try | cnext | catch | cfirst | endtry")
 	vim.cmd.normal("zz")
 end, { desc = "[G]o to next [E]ntry in the Quickfix list" })
 
-vim.keymap.set("n", "<leader>,", "mzA;<Esc>`z")
+vim.keymap.set("n", "<leader>td", function()
+	vim.cmd("normal! OTODO: ")
+	vim.cmd("normal gcc")
+	vim.cmd("startinsert!")
+end, { desc = "TODO comment" })

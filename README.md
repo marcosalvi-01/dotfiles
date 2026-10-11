@@ -23,7 +23,6 @@ These scripts install basic tools like nvim, tmux, zsh, and plugins. Mainly used
 - Hyprpanel
 - Neovim
 - Kitty
-- Ghostty
 - Wezterm
 - Zsh
 - Tmux

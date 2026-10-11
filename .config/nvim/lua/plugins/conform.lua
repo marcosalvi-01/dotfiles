@@ -13,11 +13,6 @@ return {
 	},
 	opts = {
 		formatters = {
-			kulala = {
-				command = "kulala-fmt",
-				args = { "format", "$FILENAME" },
-				stdin = false,
-			},
 			nixpkgs_fmt = {
 				command = "nixpkgs-fmt",
 			},
@@ -44,8 +39,7 @@ return {
 			go = { "goimports", "gofumpt" },
 			xml = { "xmlformatter" },
 			css = { "prettier" },
-			http = { "kulala-fmt" },
-			kotlin = { "kfmt" },
+			kotlin = { "ktlint" },
 			html = { "prettier" },
 			htmlangular = { "prettier" },
 			scss = { "prettier" },

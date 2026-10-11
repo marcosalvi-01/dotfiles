@@ -36,12 +36,14 @@ return {
 				"java",
 				"make",
 				"python",
+				"starlark",
 				"toml",
 				"typescript",
 				"dockerfile",
 				"html",
 				"helm",
-				"gomod"
+				"gomod",
+				"rust",
 			}
 
 			ts.install(core_languages)

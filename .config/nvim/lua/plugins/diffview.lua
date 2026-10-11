@@ -3,11 +3,16 @@ local function get_default_branch_name()
 	return res.code == 0 and "main" or "master"
 end
 
+local function jump_hunk(direction)
+	vim.cmd(direction == "next" and "normal! ]czz" or "normal! [czz")
+end
+
 return {
-	"sindrets/diffview.nvim",
+	"dlyongemallo/diffview-plus.nvim",
 	opts = {
 		show_help_hints = false,
-		enhanced_diff_hl = false,
+		show_root_path = false,
+		auto_close_on_empty = true,
 		hooks = {
 			diff_buf_win_enter = function()
 				vim.opt_local.foldenable = false
@@ -16,6 +21,22 @@ return {
 		},
 		keymaps = {
 			view = {
+				{
+					"n",
+					"<C-PageDown>",
+					function()
+						jump_hunk("next")
+					end,
+					{ desc = "Go to next hunk" },
+				},
+				{
+					"n",
+					"<C-PageUp>",
+					function()
+						jump_hunk("prev")
+					end,
+					{ desc = "Go to previous hunk" },
+				},
 				{
 					"n",
 					"q",
@@ -31,22 +52,6 @@ return {
 						vim.cmd("tabc")
 					end,
 					{ desc = "Close the diff" },
-				},
-				{
-					"n",
-					"<C-PageUp>",
-					function()
-						vim.cmd("norm! [czz")
-					end,
-					{ desc = "Previous hunk (Diffview)" },
-				},
-				{
-					"n",
-					"<C-PageDown>",
-					function()
-						vim.cmd("norm! ]czz")
-					end,
-					{ desc = "Next hunk (Diffview)" },
 				},
 				{
 					"n",

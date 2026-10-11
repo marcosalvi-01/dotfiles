@@ -67,3 +67,5 @@ vim.opt.conceallevel = 2
 vim.opt.cmdheight = 0
 
 vim.opt.pumblend = 0
+
+vim.o.winborder = 'rounded'
