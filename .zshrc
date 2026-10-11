@@ -110,7 +110,6 @@ alias pipes='pipes.sh -t 1 -f 100 -r 4000 -R -s 15 -p 4'
 alias .='nvim .'
 alias kssh="kitty +kitten ssh"
 alias m='make'
-alias kulala_cli='~/.local/share/nvim/lazy/kulala.nvim/lua/cli/kulala_cli.lua'
 alias k='kubectl'
 alias eod='epos-opensource docker'
 alias eok='epos-opensource kubernetes'
@@ -162,6 +161,7 @@ export EDITOR="nvim"
 export XDG_CONFIG_HOME=~/.config/
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
+export OPENTUI_NOTIFICATION_PROTOCOL=osc99
 
 # Fzf preview theme
 export FZF_DEFAULT_OPTS='
@@ -267,4 +267,3 @@ bindkey -M viins '^E' edit-command-line
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/marco/.lmstudio/bin"
 # End of LM Studio CLI section
-

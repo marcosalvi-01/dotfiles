@@ -15,7 +15,6 @@ return {
 
 				-- Tools
 				"jq",
-				"kulala-fmt",
 				"stylua",
 				"bashls",
 				"prettier",
